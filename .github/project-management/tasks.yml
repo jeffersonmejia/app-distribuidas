@@ -402,7 +402,7 @@
       "paths": [
         "frontend/"
       ],
-      "assignee": "Dayanarablb",
+      "assignee": "jeffersonmejia",
       "requestedAssignee": null,
       "assignmentNote": null,
       "description": "Inicializar el esqueleto React y TypeScript con Vite y definir tokens globales de identidad, superficies, tipografía, bordes, estados y tema oscuro.",
@@ -429,7 +429,7 @@
         "docker/compose.sonarqube.yml",
         "docker/.env.example"
       ],
-      "assignee": "EMLarco",
+      "assignee": "jeffersonmejia",
       "requestedAssignee": null,
       "assignmentNote": null,
       "description": "Definir archivos Compose locales para PostgreSQL del ERP y SonarQube con su propia base PostgreSQL, healthchecks, redes y variables de entorno de ejemplo.",
