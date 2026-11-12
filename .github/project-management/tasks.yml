@@ -1,0 +1,514 @@
+{
+  "tasks": [
+    {
+      "id": "ARC-001",
+      "title": "Definir contratos y límites arquitectónicos",
+      "area": "Arquitectura",
+      "priority": "Alta",
+      "branch": "Jefferson",
+      "paths": [
+        "backend/",
+        "docs/arquitectura.md"
+      ],
+      "assignee": "jeffersonmejia",
+      "requestedAssignee": null,
+      "assignmentNote": null,
+      "description": "Definir contratos entre features, documentar dependencias permitidas y establecer criterios de integración para el monolito modular.",
+      "acceptanceCriteria": [
+        "Los límites y contratos entre features están documentados.",
+        "Las dependencias permitidas y prohibidas están descritas.",
+        "Hay criterios claros para integrar cambios."
+      ],
+      "dependencies": [],
+      "state": "Pendiente",
+      "targetDate": "2026-11-15",
+      "githubIssue": 1,
+      "syncFingerprint": "38eb57743848a547278751b9c329c1e56ab0cc97b7fdf11b806861df66c6f358",
+      "completedAt": null
+    },
+    {
+      "id": "ARC-002",
+      "title": "Definir estrategia de aislamiento multitenant",
+      "area": "Multitenancy",
+      "priority": "Alta",
+      "branch": "Jefferson",
+      "paths": [
+        "docs/multitenancy.md"
+      ],
+      "assignee": "jeffersonmejia",
+      "requestedAssignee": null,
+      "assignmentNote": null,
+      "description": "Especificar el modelo de tenants y usuarios, el aislamiento mediante tenant_id, las responsabilidades de RLS y los criterios de seguridad.",
+      "acceptanceCriteria": [
+        "El modelo de tenants y usuarios está descrito.",
+        "El aislamiento por tenant_id y las responsabilidades de RLS están definidos.",
+        "Los criterios de seguridad pueden revisarse antes de implementar."
+      ],
+      "dependencies": [],
+      "state": "Pendiente",
+      "targetDate": "2026-11-15",
+      "githubIssue": 2,
+      "syncFingerprint": "fb073fc3f0a38315b4992a0e3754656a6cd5ad7714c5eeebd27d3a6549a8823a",
+      "completedAt": null
+    },
+    {
+      "id": "CRM-001",
+      "title": "Implementar gestión inicial de clientes",
+      "area": "CRM",
+      "priority": "Alta",
+      "branch": "Bruce",
+      "paths": [
+        "backend/.../features/crm/"
+      ],
+      "assignee": null,
+      "requestedAssignee": {
+        "name": "Bruce",
+        "login": "bruce_rodriguez05"
+      },
+      "assignmentNote": "El login indicado no existe en GitHub; no se asigna a otra cuenta por similitud de nombre.",
+      "description": "Diseñar entidades y casos de uso para la gestión inicial de clientes, implementar las operaciones básicas acordadas y preparar pruebas unitarias.",
+      "acceptanceCriteria": [
+        "El diseño inicial de clientes y sus casos de uso está definido.",
+        "Las operaciones básicas de clientes cumplen los contratos acordados.",
+        "Hay pruebas unitarias para los casos implementados."
+      ],
+      "dependencies": [
+        "ARC-001",
+        "ARC-002"
+      ],
+      "state": "Pendiente",
+      "targetDate": "2026-11-15",
+      "githubIssue": 4,
+      "syncFingerprint": "99f9ae8d38261eddeb7ba4d25db8321e5848855fcfb3d1ebe3a77020af14278f",
+      "completedAt": null
+    },
+    {
+      "id": "POS-001",
+      "title": "Definir flujo inicial de ventas",
+      "area": "POS",
+      "priority": "Media",
+      "branch": "Bruce",
+      "paths": [
+        "backend/.../features/pos/"
+      ],
+      "assignee": null,
+      "requestedAssignee": {
+        "name": "Bruce",
+        "login": "bruce_rodriguez05"
+      },
+      "assignmentNote": "El login indicado no existe en GitHub; no se asigna a otra cuenta por similitud de nombre.",
+      "description": "Diseñar los contratos del flujo de ventas y su relación con inventario, evitando acceder directamente a repositorios de otros módulos.",
+      "acceptanceCriteria": [
+        "El flujo inicial de ventas y sus contratos están descritos.",
+        "La relación con inventario usa un contrato explícito.",
+        "POS no depende directamente de repositorios de otros módulos."
+      ],
+      "dependencies": [
+        "ARC-001",
+        "ARC-002",
+        "INV-002"
+      ],
+      "state": "Pendiente",
+      "targetDate": "2026-11-15",
+      "githubIssue": 12,
+      "syncFingerprint": "db23ee25fea5d76400c00fe55051192d64ddbbb4b310eee808ab1353899e3d26",
+      "completedAt": null
+    },
+    {
+      "id": "INV-001",
+      "title": "Implementar catálogo y existencias",
+      "area": "Inventario",
+      "priority": "Alta",
+      "branch": "Sahid",
+      "paths": [
+        "backend/.../features/inventory/"
+      ],
+      "assignee": "Sahid-B",
+      "requestedAssignee": null,
+      "assignmentNote": null,
+      "description": "Diseñar productos y existencias, preparar los casos de uso del catálogo e incorporar pruebas unitarias.",
+      "acceptanceCriteria": [
+        "El catálogo y las existencias tienen un diseño inicial documentado.",
+        "Los casos de uso acordados están preparados.",
+        "Hay pruebas unitarias para los casos implementados."
+      ],
+      "dependencies": [
+        "ARC-001",
+        "ARC-002"
+      ],
+      "state": "Pendiente",
+      "targetDate": "2026-11-15",
+      "githubIssue": 5,
+      "syncFingerprint": "55612d365950e38dab6e8b3284f0a68274d629041aba8883d589e082bc655cd7",
+      "completedAt": null
+    },
+    {
+      "id": "INV-002",
+      "title": "Definir contrato de movimientos de inventario",
+      "area": "Inventario",
+      "priority": "Alta",
+      "branch": "Sahid",
+      "paths": [
+        "backend/.../features/inventory/",
+        "backend/.../features/pos/ (coordinación)"
+      ],
+      "assignee": "Sahid-B",
+      "requestedAssignee": null,
+      "assignmentNote": null,
+      "description": "Definir entradas, salidas y reservas, y coordinar los contratos requeridos por POS sin modificar archivos de POS.",
+      "acceptanceCriteria": [
+        "Entradas, salidas y reservas tienen contratos definidos.",
+        "El contrato necesario para POS está documentado.",
+        "La tarea no modifica archivos del módulo POS."
+      ],
+      "dependencies": [
+        "ARC-001",
+        "ARC-002"
+      ],
+      "state": "Pendiente",
+      "targetDate": "2026-11-15",
+      "githubIssue": 6,
+      "syncFingerprint": "4437abea5688c209228a2f661d9fad58081307833ff5330b8d84fedeb0473acf",
+      "completedAt": null
+    },
+    {
+      "id": "FRONT-001",
+      "title": "Implementar sistema de diseño global",
+      "area": "Frontend",
+      "priority": "Alta",
+      "branch": "Dayanara",
+      "paths": [
+        "frontend/src/theme/",
+        "frontend/src/components/"
+      ],
+      "assignee": "Dayanarablb",
+      "requestedAssignee": null,
+      "assignmentNote": null,
+      "description": "Definir tokens de diseño, crear componentes reutilizables y preparar estilos responsivos para el frontend.",
+      "acceptanceCriteria": [
+        "Los tokens globales están definidos.",
+        "Los componentes reutilizables acordados están preparados.",
+        "Los estilos base responden a distintos tamaños de pantalla."
+      ],
+      "dependencies": [],
+      "state": "Pendiente",
+      "targetDate": "2026-11-15",
+      "githubIssue": 3,
+      "syncFingerprint": "d636e1839b2fe3d17b3399c9a270a0c3efe02a31f931cb00db45ec76c706d79f",
+      "completedAt": null
+    },
+    {
+      "id": "FRONT-002",
+      "title": "Implementar layout y navegación principal",
+      "area": "Frontend",
+      "priority": "Alta",
+      "branch": "Dayanara",
+      "paths": [
+        "frontend/src/app/"
+      ],
+      "assignee": "Dayanarablb",
+      "requestedAssignee": null,
+      "assignmentNote": null,
+      "description": "Crear el layout general, organizar la navegación por módulos y preparar las rutas sin implementar pantallas de negocio.",
+      "acceptanceCriteria": [
+        "El layout general está definido.",
+        "La navegación está organizada por módulos.",
+        "Las rutas base están preparadas sin pantallas de negocio."
+      ],
+      "dependencies": [
+        "FRONT-001"
+      ],
+      "state": "Pendiente",
+      "targetDate": "2026-11-15",
+      "githubIssue": 7,
+      "syncFingerprint": "b5b29e647f15e7047bd3eb72795b1737d6c63b453644086af8ead5fd55788b20",
+      "completedAt": null
+    },
+    {
+      "id": "ACC-001",
+      "title": "Diseñar módulo contable inicial",
+      "area": "Contabilidad",
+      "priority": "Alta",
+      "branch": "Jennifer",
+      "paths": [
+        "backend/.../features/accounting/"
+      ],
+      "assignee": null,
+      "requestedAssignee": {
+        "name": "Jennifer",
+        "login": "Jntorres2001"
+      },
+      "assignmentNote": "La cuenta existe pero solo tiene permiso de lectura en este repositorio; se requiere acceso con escritura para asignar la tarea.",
+      "description": "Definir cuentas, asientos y movimientos, diseñar los contratos del módulo y preparar reglas y pruebas unitarias.",
+      "acceptanceCriteria": [
+        "El diseño de cuentas, asientos y movimientos está documentado.",
+        "Los contratos del módulo están definidos.",
+        "Las reglas iniciales y pruebas unitarias están acordadas."
+      ],
+      "dependencies": [
+        "ARC-001",
+        "ARC-002"
+      ],
+      "state": "Pendiente",
+      "targetDate": "2026-11-15",
+      "githubIssue": 8,
+      "syncFingerprint": "b7867700314f1a69e19cde5643a99f1cc06df5aa56ff3591ab468c9a65852013",
+      "completedAt": null
+    },
+    {
+      "id": "PROJ-001",
+      "title": "Implementar gestión básica de proyectos",
+      "area": "Proyectos",
+      "priority": "Media",
+      "branch": "Jennifer",
+      "paths": [
+        "backend/.../features/projects/"
+      ],
+      "assignee": null,
+      "requestedAssignee": {
+        "name": "Jennifer",
+        "login": "Jntorres2001"
+      },
+      "assignmentNote": "La cuenta existe pero solo tiene permiso de lectura en este repositorio; se requiere acceso con escritura para asignar la tarea.",
+      "description": "Diseñar proyectos, tareas y estados, preparar los casos de uso e incorporar pruebas unitarias.",
+      "acceptanceCriteria": [
+        "Proyectos, tareas y estados tienen un diseño inicial.",
+        "Los casos de uso acordados están preparados.",
+        "Hay pruebas unitarias para los casos implementados."
+      ],
+      "dependencies": [
+        "ARC-001",
+        "ARC-002"
+      ],
+      "state": "Pendiente",
+      "targetDate": "2026-11-15",
+      "githubIssue": 9,
+      "syncFingerprint": "7dff74f698d2f72a3b1473a5dd1383f7946da0fcc789f639fcebc802ad5db0a2",
+      "completedAt": null
+    },
+    {
+      "id": "QA-001",
+      "title": "Preparar estrategia de pruebas",
+      "area": "Testing",
+      "priority": "Alta",
+      "branch": "Esteban",
+      "paths": [
+        "docs/testing.md",
+        "configuraciones de pruebas acordadas"
+      ],
+      "assignee": "EMLarco",
+      "requestedAssignee": null,
+      "assignmentNote": null,
+      "description": "Definir pruebas unitarias, de integración y de contrato, establecer criterios de aceptación y documentar responsabilidades de prueba por módulo.",
+      "acceptanceCriteria": [
+        "La estrategia cubre pruebas unitarias, integración y contrato.",
+        "Los criterios de aceptación están documentados.",
+        "Las responsabilidades de prueba por módulo están claras."
+      ],
+      "dependencies": [
+        "ARC-001",
+        "ARC-002",
+        "CRM-001",
+        "POS-001",
+        "INV-001",
+        "ACC-001"
+      ],
+      "state": "Pendiente",
+      "targetDate": "2026-11-15",
+      "githubIssue": 13,
+      "syncFingerprint": "dea3ffe6b25937d6d18098bbfd730c8916556bf520ccb5eece8150397f047aed",
+      "completedAt": null
+    },
+    {
+      "id": "QUALITY-001",
+      "title": "Configurar análisis de calidad SonarQube",
+      "area": "Calidad",
+      "priority": "Alta",
+      "branch": "Esteban",
+      "paths": [
+        "configuración SonarQube",
+        "documentación"
+      ],
+      "assignee": "EMLarco",
+      "requestedAssignee": null,
+      "assignmentNote": null,
+      "description": "Revisar la infraestructura SonarQube existente, preparar análisis Java y TypeScript y definir criterios de Quality Gate sin cambiar configuraciones compartidas sin aprobación.",
+      "acceptanceCriteria": [
+        "La infraestructura existente se reutiliza.",
+        "El análisis Java y TypeScript tiene una propuesta documentada.",
+        "Los criterios de Quality Gate están definidos.",
+        "Los cambios compartidos cuentan con aprobación."
+      ],
+      "dependencies": [
+        "ARC-001",
+        "ARC-002"
+      ],
+      "state": "Pendiente",
+      "targetDate": "2026-11-15",
+      "githubIssue": 10,
+      "syncFingerprint": "9195810ab37fe3958d19b1c8da762ce0442cc53b7ea870af797699d8b9e5b6a8",
+      "completedAt": null
+    },
+    {
+      "id": "MKT-001",
+      "title": "Diseñar contratos iniciales de Marketing",
+      "area": "Marketing",
+      "priority": "Media",
+      "branch": "Esteban",
+      "paths": [
+        "backend/.../features/marketing/"
+      ],
+      "assignee": "EMLarco",
+      "requestedAssignee": null,
+      "assignmentNote": null,
+      "description": "Diseñar contratos para campañas y contactos, y definir interfaces con CRM sin modificar directamente ese módulo.",
+      "acceptanceCriteria": [
+        "Los contratos iniciales de campañas y contactos están definidos.",
+        "Las interfaces con CRM están documentadas.",
+        "La tarea no modifica directamente archivos de CRM."
+      ],
+      "dependencies": [
+        "ARC-001",
+        "ARC-002",
+        "CRM-001"
+      ],
+      "state": "Pendiente",
+      "targetDate": "2026-11-15",
+      "githubIssue": 11,
+      "syncFingerprint": "5295b854ce282d5b79c99d7ea2d531ded057849141af61f233e8661e443fa20f",
+      "completedAt": null
+    },
+    {
+      "id": "CI-001",
+      "title": "Validar Conventional Commits en Pull Requests",
+      "area": "Calidad",
+      "priority": "Alta",
+      "branch": "Jefferson",
+      "paths": [
+        ".github/workflows/commitlint.yml",
+        "commitlint.config.cjs",
+        "package.json"
+      ],
+      "assignee": null,
+      "requestedAssignee": null,
+      "assignmentNote": null,
+      "description": "Configurar commitlint con la configuración convencional y validar todos los commits de cada Pull Request dirigido a develop o main.",
+      "acceptanceCriteria": [
+        "El workflow valida el rango completo de commits del Pull Request.",
+        "Solo se aceptan los tipos feat, fix y refactor.",
+        "Los scopes son opcionales y los mensajes inválidos fallan con errores legibles."
+      ],
+      "dependencies": [],
+      "state": "Completado",
+      "targetDate": null,
+      "completedAt": "2026-11-12",
+      "githubIssue": 14,
+      "syncFingerprint": null
+    },
+    {
+      "id": "APP-001",
+      "title": "Preparar estructura base de frontend y tokens de diseño",
+      "area": "Frontend",
+      "priority": "Media",
+      "branch": "Jefferson",
+      "paths": [
+        "frontend/"
+      ],
+      "assignee": null,
+      "requestedAssignee": null,
+      "assignmentNote": null,
+      "description": "Inicializar el esqueleto React y TypeScript con Vite y definir tokens globales de identidad, superficies, tipografía, bordes, estados y tema oscuro.",
+      "acceptanceCriteria": [
+        "La aplicación React y TypeScript tiene una estructura inicial ejecutable.",
+        "Los tokens globales están definidos y documentados.",
+        "La base incluye estilos globales y soporte de tema oscuro."
+      ],
+      "dependencies": [],
+      "state": "Completado",
+      "targetDate": null,
+      "completedAt": "2026-11-12",
+      "githubIssue": 15,
+      "syncFingerprint": null
+    },
+    {
+      "id": "OPS-001",
+      "title": "Preparar servicios locales de PostgreSQL y SonarQube",
+      "area": "Calidad",
+      "priority": "Media",
+      "branch": "Jefferson",
+      "paths": [
+        "docker/compose.yml",
+        "docker/compose.sonarqube.yml",
+        "docker/.env.example"
+      ],
+      "assignee": null,
+      "requestedAssignee": null,
+      "assignmentNote": null,
+      "description": "Definir archivos Compose locales para PostgreSQL del ERP y SonarQube con su propia base PostgreSQL, healthchecks, redes y variables de entorno de ejemplo.",
+      "acceptanceCriteria": [
+        "PostgreSQL del ERP se configura con persistencia y healthcheck.",
+        "SonarQube utiliza una base separada y redes aisladas.",
+        "Las credenciales se documentan como variables locales y no se almacenan como secretos reales."
+      ],
+      "dependencies": [],
+      "state": "Completado",
+      "targetDate": null,
+      "completedAt": "2026-11-12",
+      "githubIssue": 16,
+      "syncFingerprint": null
+    },
+    {
+      "id": "PM-001",
+      "title": "Automatizar la administración del GitHub Project",
+      "area": "Arquitectura",
+      "priority": "Alta",
+      "branch": "Jefferson",
+      "paths": [
+        ".github/project-management/"
+      ],
+      "assignee": null,
+      "requestedAssignee": null,
+      "assignmentNote": null,
+      "description": "Preparar configuración YAML y sincronización idempotente con simulación por defecto, detección de conflictos, dependencias, asignaciones verificadas y fechas.",
+      "acceptanceCriteria": [
+        "El proyecto y las 13 tareas iniciales se sincronizan sin duplicados.",
+        "La simulación no escribe cambios remotos.",
+        "Las tareas completadas y su fecha quedan registradas en el proyecto."
+      ],
+      "dependencies": [],
+      "state": "Completado",
+      "targetDate": null,
+      "completedAt": "2026-11-12",
+      "githubIssue": 17,
+      "syncFingerprint": null
+    },
+    {
+      "id": "GOV-001",
+      "title": "Establecer configuración y lineamientos base del repositorio",
+      "area": "Arquitectura",
+      "priority": "Media",
+      "branch": "Jefferson",
+      "paths": [
+        "AGENTS.md",
+        ".editorconfig",
+        ".gitignore",
+        "README.md"
+      ],
+      "assignee": null,
+      "requestedAssignee": null,
+      "assignmentNote": null,
+      "description": "Documentar criterios de arquitectura, seguridad y entrega, y establecer convenciones de editor e ignorados del repositorio.",
+      "acceptanceCriteria": [
+        "Los lineamientos de desarrollo están documentados.",
+        "La configuración de editor fija formato y fin de línea.",
+        "Los archivos locales y artefactos generados se excluyen del control de versiones."
+      ],
+      "dependencies": [],
+      "state": "Completado",
+      "targetDate": null,
+      "completedAt": "2026-11-12",
+      "githubIssue": 18,
+      "syncFingerprint": null
+    }
+  ]
+}

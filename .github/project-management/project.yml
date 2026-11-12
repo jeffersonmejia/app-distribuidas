@@ -1,0 +1,17 @@
+{
+  "title": "ERP + CRM Multitenant",
+  "owner": "auto",
+  "repository": "auto",
+  "fields": [
+    { "name": "Estado", "type": "SINGLE_SELECT", "options": ["Pendiente", "En progreso", "En revisión", "Completado", "Bloqueado"] },
+    { "name": "Prioridad", "type": "SINGLE_SELECT", "options": ["Alta", "Media", "Baja"] },
+    { "name": "Área", "type": "SINGLE_SELECT", "options": ["Arquitectura", "Multitenancy", "CRM", "POS", "Inventario", "Frontend", "Contabilidad", "Proyectos", "Testing", "Calidad", "Marketing"] },
+    { "name": "Identificador de tarea", "type": "TEXT" },
+    { "name": "Fecha objetivo", "type": "DATE" },
+    { "name": "Fecha de completado", "type": "DATE" }
+  ],
+  "views": [
+    { "name": "Kanban", "layout": "BOARD", "groupBy": "Estado" },
+    { "name": "Tabla", "layout": "TABLE" }
+  ]
+}
