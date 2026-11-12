@@ -60,12 +60,9 @@
       "paths": [
         "backend/.../features/crm/"
       ],
-      "assignee": null,
-      "requestedAssignee": {
-        "name": "Bruce",
-        "login": "bruce_rodriguez05"
-      },
-      "assignmentNote": "El login indicado no existe en GitHub; no se asigna a otra cuenta por similitud de nombre.",
+      "assignee": "BruceRodri",
+      "requestedAssignee": null,
+      "assignmentNote": null,
       "description": "Diseñar entidades y casos de uso para la gestión inicial de clientes, implementar las operaciones básicas acordadas y preparar pruebas unitarias.",
       "acceptanceCriteria": [
         "El diseño inicial de clientes y sus casos de uso está definido.",
@@ -91,12 +88,9 @@
       "paths": [
         "backend/.../features/pos/"
       ],
-      "assignee": null,
-      "requestedAssignee": {
-        "name": "Bruce",
-        "login": "bruce_rodriguez05"
-      },
-      "assignmentNote": "El login indicado no existe en GitHub; no se asigna a otra cuenta por similitud de nombre.",
+      "assignee": "BruceRodri",
+      "requestedAssignee": null,
+      "assignmentNote": null,
       "description": "Diseñar los contratos del flujo de ventas y su relación con inventario, evitando acceder directamente a repositorios de otros módulos.",
       "acceptanceCriteria": [
         "El flujo inicial de ventas y sus contratos están descritos.",
@@ -233,12 +227,9 @@
       "paths": [
         "backend/.../features/accounting/"
       ],
-      "assignee": null,
-      "requestedAssignee": {
-        "name": "Jennifer",
-        "login": "Jntorres2001"
-      },
-      "assignmentNote": "La cuenta existe pero solo tiene permiso de lectura en este repositorio; se requiere acceso con escritura para asignar la tarea.",
+      "assignee": "EMLarco",
+      "requestedAssignee": null,
+      "assignmentNote": "Implementación asignada a Esteban por ser backend. Jennifer (Jntorres2001), con invitación pendiente, verifica el resultado y solicita correcciones.",
       "description": "Definir cuentas, asientos y movimientos, diseñar los contratos del módulo y preparar reglas y pruebas unitarias.",
       "acceptanceCriteria": [
         "El diseño de cuentas, asientos y movimientos está documentado.",
@@ -264,12 +255,9 @@
       "paths": [
         "backend/.../features/projects/"
       ],
-      "assignee": null,
-      "requestedAssignee": {
-        "name": "Jennifer",
-        "login": "Jntorres2001"
-      },
-      "assignmentNote": "La cuenta existe pero solo tiene permiso de lectura en este repositorio; se requiere acceso con escritura para asignar la tarea.",
+      "assignee": "EMLarco",
+      "requestedAssignee": null,
+      "assignmentNote": "Implementación asignada a Esteban por ser backend. Jennifer (Jntorres2001), con invitación pendiente, verifica el resultado y solicita correcciones.",
       "description": "Diseñar proyectos, tareas y estados, preparar los casos de uso e incorporar pruebas unitarias.",
       "acceptanceCriteria": [
         "Proyectos, tareas y estados tienen un diseño inicial.",
@@ -298,7 +286,7 @@
       ],
       "assignee": "EMLarco",
       "requestedAssignee": null,
-      "assignmentNote": null,
+      "assignmentNote": "Esteban prepara la estrategia y las pruebas; Jennifer (Jntorres2001), con invitación pendiente, verifica resultados y solicita correcciones a quien corresponda.",
       "description": "Definir pruebas unitarias, de integración y de contrato, establecer criterios de aceptación y documentar responsabilidades de prueba por módulo.",
       "acceptanceCriteria": [
         "La estrategia cubre pruebas unitarias, integración y contrato.",
@@ -331,7 +319,7 @@
       ],
       "assignee": "EMLarco",
       "requestedAssignee": null,
-      "assignmentNote": null,
+      "assignmentNote": "Esteban configura y documenta SonarQube; Jennifer (Jntorres2001), con invitación pendiente, verifica el análisis y solicita correcciones.",
       "description": "Revisar la infraestructura SonarQube existente, preparar análisis Java y TypeScript y definir criterios de Quality Gate sin cambiar configuraciones compartidas sin aprobación.",
       "acceptanceCriteria": [
         "La infraestructura existente se reutiliza.",
@@ -389,7 +377,7 @@
         "commitlint.config.cjs",
         "package.json"
       ],
-      "assignee": null,
+      "assignee": "jeffersonmejia",
       "requestedAssignee": null,
       "assignmentNote": null,
       "description": "Configurar commitlint con la configuración convencional y validar todos los commits de cada Pull Request dirigido a develop o main.",
@@ -414,7 +402,7 @@
       "paths": [
         "frontend/"
       ],
-      "assignee": null,
+      "assignee": "Dayanarablb",
       "requestedAssignee": null,
       "assignmentNote": null,
       "description": "Inicializar el esqueleto React y TypeScript con Vite y definir tokens globales de identidad, superficies, tipografía, bordes, estados y tema oscuro.",
@@ -441,7 +429,7 @@
         "docker/compose.sonarqube.yml",
         "docker/.env.example"
       ],
-      "assignee": null,
+      "assignee": "EMLarco",
       "requestedAssignee": null,
       "assignmentNote": null,
       "description": "Definir archivos Compose locales para PostgreSQL del ERP y SonarQube con su propia base PostgreSQL, healthchecks, redes y variables de entorno de ejemplo.",
@@ -466,7 +454,7 @@
       "paths": [
         ".github/project-management/"
       ],
-      "assignee": null,
+      "assignee": "jeffersonmejia",
       "requestedAssignee": null,
       "assignmentNote": null,
       "description": "Preparar configuración YAML y sincronización idempotente con simulación por defecto, detección de conflictos, dependencias, asignaciones verificadas y fechas.",
@@ -494,7 +482,7 @@
         ".gitignore",
         "README.md"
       ],
-      "assignee": null,
+      "assignee": "jeffersonmejia",
       "requestedAssignee": null,
       "assignmentNote": null,
       "description": "Documentar criterios de arquitectura, seguridad y entrega, y establecer convenciones de editor e ignorados del repositorio.",
