@@ -497,6 +497,34 @@
       "completedAt": "2026-11-12",
       "githubIssue": 18,
       "syncFingerprint": null
+    },
+    {
+      "id": "QA-002",
+      "title": "Configurar Swagger para probar APIs en desarrollo",
+      "area": "Testing",
+      "priority": "Media",
+      "branch": "Jefferson",
+      "paths": [
+        "backend/pom.xml",
+        "backend/src/main/resources/application.properties",
+        "backend/src/main/resources/application-dev.properties",
+        "docs/prueba-apis.md"
+      ],
+      "assignee": "jeffersonmejia",
+      "requestedAssignee": null,
+      "assignmentNote": null,
+      "description": "Configurar Swagger UI con Springdoc para que el equipo pueda explorar y probar las APIs REST durante el desarrollo local, manteniendo la documentación deshabilitada por defecto.",
+      "acceptanceCriteria": [
+        "Springdoc y Swagger UI están declarados como dependencias del backend.",
+        "La documentación OpenAPI está deshabilitada por defecto y se activa con el perfil dev.",
+        "Los pasos de ejecución local y las rutas de Swagger UI y OpenAPI están documentados."
+      ],
+      "dependencies": [],
+      "state": "Completado",
+      "targetDate": null,
+      "completedAt": "2026-11-12",
+      "githubIssue": 19,
+      "syncFingerprint": "eddf0f9300657708a23a2b19bea549f6b9cdf8dcb384febe992c315da306de92"
     }
   ]
 }
