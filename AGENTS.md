@@ -68,3 +68,11 @@
   ```
 
   Reemplaza `develop` por `main` cuando corresponda y resuelve conflictos antes de continuar. No uses `git push --force`.
+
+## Flujo de integración
+
+- Usa las ramas de trabajo existentes; no crees ramas temporales para tareas de documentación o gestión del proyecto.
+- Para el trabajo de Jefferson, confirma y publica los cambios en `Jefferson`.
+- Integra `Jefferson` en `develop` después de validar los commits y revisar el cambio.
+- Integra `develop` en `main` mediante un Pull Request. `main` requiere Pull Requests; no hagas push ni merge directo a esa rama.
+- Mantén los cambios de cada tema en commits separados y con Conventional Commits.
