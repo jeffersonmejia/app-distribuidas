@@ -525,6 +525,30 @@
       "completedAt": "2026-11-12",
       "githubIssue": 19,
       "syncFingerprint": "eddf0f9300657708a23a2b19bea549f6b9cdf8dcb384febe992c315da306de92"
+    },
+    {
+      "id": "WIKI-001",
+      "title": "Organizar y publicar la wiki técnica",
+      "area": "Arquitectura",
+      "priority": "Media",
+      "branch": "Jefferson",
+      "paths": [
+        "GitHub Wiki"
+      ],
+      "assignee": "jeffersonmejia",
+      "requestedAssignee": null,
+      "assignmentNote": null,
+      "description": "Organizar la wiki en una página breve con índice y secciones numeradas que resuman requisitos, arquitectura, módulos, seguridad, entorno, API, calidad y gestión.",
+      "acceptanceCriteria": [
+        "La wiki presenta un índice numerado en el mismo orden que sus secciones.",
+        "La documentación va directa al grano y evita páginas duplicadas."
+      ],
+      "dependencies": [],
+      "state": "Completado",
+      "targetDate": null,
+      "completedAt": "2026-11-12",
+      "githubIssue": 21,
+      "syncFingerprint": null
     }
   ]
 }
