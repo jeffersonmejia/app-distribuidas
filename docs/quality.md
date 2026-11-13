@@ -21,14 +21,11 @@ La cobertura diferencial se calcula con JaCoCo XML y LCOV usando ejecuciones sep
 
 ## Activación del bloqueo en GitHub
 
-El workflow informa los análisis, pero **no bloquea merges por sí solo** hasta activar las reglas del repositorio. Después de publicar el workflow en una rama, ejecutar al menos un análisis de CodeQL exitoso y confirmar el nombre del check:
+El ruleset `Protect develop` aplica estas reglas en `develop`: exige Pull Request, los checks de Conventional Commits, pruebas/cobertura y CodeQL, además de bloquear hallazgos nuevos de CodeQL con severidad de seguridad High o Critical y severidad general Error. Los pushes directos se rechazan, incluso para administradores. Los PR elegibles se integran automáticamente con squash cuando no tienen conflictos y todos los requisitos se cumplen.
 
-1. Crear un ruleset de rama dirigido a `develop`.
-2. Exigir los checks `Tests and 80% changed-code coverage` y los dos checks `CodeQL (java-kotlin)` y `CodeQL (javascript-typescript)`.
-3. En `Require code scanning results`, seleccionar `CodeQL`, bloquear alertas de seguridad `High or higher` y alertas generales `Errors`.
-4. Confirmar que un PR de prueba hacia `develop` muestra cobertura diferencial y resultados de CodeQL antes de considerar activo el bloqueo.
+El workflow `auto-develop.yml` activa auto-merge y comenta en el PR mencionando a su autor cuando falla un check obligatorio o hay conflictos. Como usa `pull_request_target` para responder a PR de colaboradores con permisos de escritura, no descarga ni ejecuta el código del PR. GitHub toma ese workflow de la rama predeterminada (`main`); por eso la automatización de auto-merge estará activa para nuevos PR una vez que este archivo llegue a `main` mediante un PR.
 
-El workflow usa `pull_request`, permisos mínimos de lectura para el contenido y permisos `security-events: write` para publicar SARIF. No usa `pull_request_target` ni ejecuta código de PR con un runner propio.
+El gate de calidad sigue ejecutándose con `pull_request`, permisos mínimos de lectura para el contenido y `security-events: write` para publicar SARIF. No ejecuta código de PR con un runner propio.
 
 ## Responsabilidades
 

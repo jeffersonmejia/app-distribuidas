@@ -1,0 +1,174 @@
+name: Automatic integration to develop
+
+on:
+  pull_request_target:
+    branches:
+      - develop
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - ready_for_review
+      - closed
+  check_run:
+    types:
+      - completed
+  push:
+    branches:
+      - develop
+
+permissions:
+  contents: read
+  checks: read
+  pull-requests: write
+  statuses: read
+
+jobs:
+  integrate:
+    name: Queue eligible pull request
+    runs-on: ubuntu-latest
+    steps:
+      - name: Enable automatic merge or report blockers
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const marker = '<!-- develop-auto-integration -->';
+            const requiredChecks = new Set([
+              'Validar commits',
+              'Tests and 80% changed-code coverage',
+              'CodeQL (java-kotlin)',
+              'CodeQL (javascript-typescript)',
+              'CodeQL',
+            ]);
+
+            let pullRequests = [];
+            if (context.eventName === 'pull_request_target') {
+              pullRequests = [context.payload.pull_request];
+            } else if (context.eventName === 'check_run') {
+              const sha = context.payload.check_run.head_sha;
+              const associated = await github.rest.repos.listPullRequestsAssociatedWithCommit({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                commit_sha: sha,
+              });
+              pullRequests = associated.data.filter((pr) =>
+                pr.base.ref === 'develop' && pr.state === 'open' && pr.head.sha === sha
+              );
+            } else {
+              const open = await github.rest.pulls.list({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                state: 'open',
+                base: 'develop',
+                per_page: 100,
+              });
+              pullRequests = open.data;
+            }
+
+            for (const candidate of pullRequests) {
+              const response = await github.rest.pulls.get({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: candidate.number,
+              });
+              const pr = response.data;
+              if (pr.base.ref !== 'develop') continue;
+
+              const comments = await github.rest.issues.listComments({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: pr.number,
+                per_page: 100,
+              });
+              const automationComment = comments.data.find((comment) => comment.body?.includes(marker));
+
+              if (context.eventName === 'pull_request_target' && context.payload.action === 'closed') {
+                if (automationComment && pr.merged) {
+                  await github.rest.issues.updateComment({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    comment_id: automationComment.id,
+                    body: `${marker}\n@${pr.user.login} Se integró automáticamente en develop.`,
+                  });
+                }
+                continue;
+              }
+
+              if (pr.state !== 'open') continue;
+
+              if (pr.draft) continue;
+
+              const checkRuns = await github.rest.checks.listForRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: pr.head.sha,
+                per_page: 100,
+              });
+              const latestRequiredChecks = new Map();
+              for (const check of checkRuns.data.check_runs) {
+                if (!requiredChecks.has(check.name)) continue;
+                const previous = latestRequiredChecks.get(check.name);
+                if (!previous || Date.parse(check.started_at || check.created_at) >
+                  Date.parse(previous.started_at || previous.created_at)) {
+                  latestRequiredChecks.set(check.name, check);
+                }
+              }
+              const failedChecks = [...latestRequiredChecks.values()]
+                .filter((check) => ['failure', 'cancelled', 'timed_out', 'action_required'].includes(check.conclusion))
+                .map((check) => check.name);
+              const statuses = await github.rest.repos.getCombinedStatusForRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: pr.head.sha,
+              });
+              const failedStatuses = statuses.data.statuses
+                .filter((status) => requiredChecks.has(status.context) && ['failure', 'error'].includes(status.state))
+                .map((status) => status.context);
+              const blockers = [...new Set([...failedChecks, ...failedStatuses])];
+
+              if (pr.mergeable_state === 'dirty') {
+                blockers.push('conflictos con develop');
+              }
+
+              if (blockers.length > 0) {
+                const body = `${marker}\n@${pr.user.login} Este PR no se integró: fallaron ${[...new Set(blockers)].map((name) => `\`${name}\``).join(', ')}. Corrige el problema y actualiza el PR; la integración se reintentará automáticamente.`;
+                if (automationComment) {
+                  await github.rest.issues.updateComment({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    comment_id: automationComment.id,
+                    body,
+                  });
+                } else {
+                  await github.rest.issues.createComment({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: pr.number,
+                    body,
+                  });
+                }
+                continue;
+              }
+
+              const nodeId = pr.node_id;
+              await github.graphql(
+                `mutation($pullRequestId: ID!) {
+                  enablePullRequestAutoMerge(input: {
+                    pullRequestId: $pullRequestId,
+                    mergeMethod: SQUASH
+                  }) {
+                    pullRequest { id }
+                  }
+                }`,
+                { pullRequestId: nodeId },
+              );
+
+              if (automationComment) {
+                await github.rest.issues.updateComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  comment_id: automationComment.id,
+                  body: `${marker}\n@${pr.user.login} Los bloqueos detectados ya no aparecen. GitHub dejó el PR en cola para integrarse automáticamente cuando todos los checks requeridos pasen y no haya conflictos.`,
+                });
+              }
+            }
