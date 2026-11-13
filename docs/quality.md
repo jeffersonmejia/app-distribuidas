@@ -32,7 +32,7 @@ El workflow usa `pull_request`, permisos mínimos de lectura para el contenido y
 
 ## Responsabilidades
 
-Jefferson (`jeffersonmejia`) define el alcance y los criterios. Jennifer (`Jntorres2001`) ejecuta pruebas unitarias, de integración y de rendimiento con k6 según sus tareas y los umbrales acordados; no redefine los criterios del gate. Las pruebas k6 se limitan a los flujos críticos definidos en [`testing.md`](testing.md).
+Jefferson (`jeffersonmejia`) define el alcance y los criterios. Jennifer (`Jntorres2001`) ejecuta pruebas unitarias, de integración y de rendimiento con k6 según sus tareas y los umbrales acordados; no redefine los criterios del gate. También puede revisar de forma continua el código ya implementado con análisis estático/SonarQube Community local mientras las tareas de integración o rendimiento esperan dependencias. En QA-005 registra evidencia en [`quality-templates/formato_sonar_qube.docx`](quality-templates/formato_sonar_qube.docx), genera un PDF breve con imagen, descripción, prioridad y responsable, y avisa por el grupo de WhatsApp del proyecto mencionando al responsable para que corrija sobre la marcha. Seguridad, exposición de datos y aislamiento tenant son P0; defectos críticos/altos de flujos principales P1; defectos relevantes P2; hallazgos menores P3. No se incluyen secretos ni datos reales de clientes/tenants. SonarQube ayuda a corregir sobre la marcha; no es un gate de PR. Las pruebas k6 se limitan a los flujos críticos definidos en [`testing.md`](testing.md).
 
 ## Referencias
 
