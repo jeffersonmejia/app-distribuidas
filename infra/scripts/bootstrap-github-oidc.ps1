@@ -48,12 +48,18 @@ foreach ($role in @('Contributor', 'User Access Administrator')) {
     }
 }
 
-$subject = "repo:$GithubOwner/$GithubRepository`:environment:$Environment"
+$repositoryIdentityJson = & gh api "repos/$repository" --jq '{owner_id: .owner.id, repository_id: .id}'
+if ($LASTEXITCODE -ne 0) { throw "GitHub CLI no pudo leer los identificadores del repositorio." }
+$repositoryIdentity = $repositoryIdentityJson | ConvertFrom-Json
+if (-not $repositoryIdentity.owner_id -or -not $repositoryIdentity.repository_id) {
+    throw "GitHub CLI no devolvió los identificadores del propietario y del repositorio."
+}
+$subject = "repo:$($GithubOwner)@$($repositoryIdentity.owner_id)/$($GithubRepository)@$($repositoryIdentity.repository_id):environment:$Environment"
 $credentials = Invoke-AzJson @('ad', 'app', 'federated-credential', 'list', '--id', [string]$application.id)
 if (-not ($credentials | Where-Object { $_.subject -eq $subject })) {
     $credentialFile = Join-Path ([System.IO.Path]::GetTempPath()) ("github-oidc-" + [guid]::NewGuid().ToString('N') + '.json')
     $credential = @{
-        name        = "github-$Environment"
+        name        = "github-$Environment-immutable"
         issuer      = 'https://token.actions.githubusercontent.com'
         subject     = $subject
         description = "GitHub Actions for $repository ($Environment)"

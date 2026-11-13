@@ -50,7 +50,7 @@ module "application" {
     JAVA_TOOL_OPTIONS   = "-XX:MaxRAMPercentage=70"
   }
   backend_secure_environment = {
-    DB_RUNTIME_PASSWORD  = var.db_runtime_password
+    DB_RUNTIME_PASSWORD   = var.db_runtime_password
     DB_MIGRATION_PASSWORD = var.db_migration_password
   }
   tags = local.common_tags
