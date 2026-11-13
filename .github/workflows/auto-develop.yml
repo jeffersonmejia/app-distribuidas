@@ -135,7 +135,7 @@ jobs:
           owner: ${{ github.repository_owner }}
           repositories: app-distribuidas
           permission-checks: read
-          permission-contents: read
+          permission-contents: write
           permission-issues: write
           permission-pull-requests: write
           permission-statuses: read

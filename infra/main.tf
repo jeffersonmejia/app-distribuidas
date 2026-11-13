@@ -7,7 +7,7 @@ module "registry" {
 
   name                        = "appdist${var.resource_suffix}"
   resource_group_name         = data.azurerm_resource_group.app.name
-  location                    = "East US"
+  location                    = "Brazil South"
   github_actions_principal_id = var.github_actions_principal_id
   tags                        = local.common_tags
 }
@@ -34,7 +34,7 @@ module "application" {
   name                  = "aci-appdist-${var.environment}"
   dns_name_label        = "appdist-${var.environment}-${var.resource_suffix}"
   resource_group_name   = data.azurerm_resource_group.app.name
-  location              = "East US"
+  location              = "Brazil South"
   frontend_image        = "${module.registry.login_server}/frontend:${var.frontend_image_tag}"
   backend_image         = "${module.registry.login_server}/backend:${var.backend_image_tag}"
   registry_id           = module.registry.id

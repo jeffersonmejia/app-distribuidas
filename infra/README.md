@@ -82,13 +82,21 @@ Este paso crea el recurso facturable más pequeño de la preparación y asigna `
 
 ## Desplegar
 
-Para que el workflow aparezca en GitHub Actions, estos archivos deben incorporarse a `develop` mediante el flujo normal de Pull Request.
+Al incorporar cambios de `infra/`, `backend/`, `frontend/`, los archivos de dependencias o el propio workflow a `develop`, GitHub Actions ejecuta `terraform plan` y aplica automáticamente el plan. Terraform crea o actualiza únicamente los recursos cuya configuración cambió. Los cambios solo de documentación no inician el deployment. El backend de la aplicación y su regla amplia de firewall permanecen desactivados automáticamente.
 
-En GitHub abre **Actions → Deploy develop to Azure → Run workflow**:
+Para revisar sin aplicar, usa **Actions → Deploy develop to Azure → Run workflow** y elige `plan`. La opción manual `deploy` también construye y publica imágenes; puede generar cargos.
+
+En ejecución automática:
+
+- Se construye y publica la imagen frontend.
+- Se calcula el plan de Terraform y se aplica solo si el plan muestra cambios.
+- No se construye la imagen backend ni se habilitan sus recursos mientras `enable_backend` siga desactivado.
+
+En una ejecución manual de **Actions → Deploy develop to Azure → Run workflow**:
 
 - `plan`: muestra cambios, no los aplica.
-- `deploy`: crea o actualiza ACR, publica imágenes y aplica PostgreSQL/ACI; puede generar cargos.
+- `deploy`: crea o actualiza los recursos definidos, publica imágenes y aplica el plan; puede generar cargos.
 - `enable_backend` empieza desactivado. Actívalo solo después de cargar issuer, audience y secretos de roles.
 - `allow_azure_services_postgres` también empieza desactivado. Para activar el backend debes aceptar explícitamente la regla de red amplia descrita arriba.
 
-El workflow no se ejecuta al hacer push y no ejecuta pruebas. La compilación Java omite compilación/ejecución de pruebas con `-Dmaven.test.skip=true`; el build React solo compila los recursos.
+Antes de la primera ejecución automática debe crearse el backend remoto de estado con `infra/scripts/bootstrap-state.ps1`; ese almacenamiento tiene un costo bajo. El workflow no ejecuta las pruebas del proyecto. La compilación Java omite compilación/ejecución de pruebas con `-Dmaven.test.skip=true`; el build React solo compila los recursos.

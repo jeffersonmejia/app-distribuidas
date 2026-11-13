@@ -1,6 +1,17 @@
 name: Deploy develop to Azure
 
 on:
+  push:
+    branches:
+      - develop
+    paths:
+      - '.github/workflows/deploy-develop.yml'
+      - '.dockerignore'
+      - 'infra/**'
+      - 'backend/**'
+      - 'frontend/**'
+      - 'package.json'
+      - 'package-lock.json'
   workflow_dispatch:
     inputs:
       operation:
@@ -48,8 +59,8 @@ jobs:
       TF_VAR_postgres_admin_password: ${{ secrets.POSTGRES_ADMIN_PASSWORD }}
       TF_VAR_db_runtime_password: ${{ secrets.DB_RUNTIME_PASSWORD }}
       TF_VAR_db_migration_password: ${{ secrets.DB_MIGRATION_PASSWORD }}
-      TF_VAR_enable_backend: ${{ inputs.enable_backend }}
-      TF_VAR_allow_azure_services_postgres: ${{ inputs.allow_azure_services_postgres }}
+      TF_VAR_enable_backend: ${{ github.event_name == 'push' && 'false' || inputs.enable_backend }}
+      TF_VAR_allow_azure_services_postgres: ${{ github.event_name == 'push' && 'false' || inputs.allow_azure_services_postgres }}
       TF_VAR_auth_issuer_uri: ${{ vars.AUTH_ISSUER_URI }}
       TF_VAR_auth_audience: ${{ vars.AUTH_AUDIENCE }}
       TF_IN_AUTOMATION: "true"
@@ -63,6 +74,24 @@ jobs:
         run: |
           echo "Run this workflow only from the develop branch." >&2
           exit 1
+
+      - name: Check required Azure and database credentials
+        shell: bash
+        env:
+          AZURE_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
+          AZURE_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
+          AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+          AZURE_RESOURCE_GROUP: ${{ vars.AZURE_RESOURCE_GROUP }}
+          AZURE_RESOURCE_SUFFIX: ${{ vars.AZURE_RESOURCE_SUFFIX }}
+          AZURE_PRINCIPAL_ID: ${{ vars.AZURE_PRINCIPAL_ID }}
+          POSTGRES_ADMIN_PASSWORD: ${{ secrets.POSTGRES_ADMIN_PASSWORD }}
+        run: |
+          for name in AZURE_CLIENT_ID AZURE_TENANT_ID AZURE_SUBSCRIPTION_ID AZURE_RESOURCE_GROUP AZURE_RESOURCE_SUFFIX AZURE_PRINCIPAL_ID POSTGRES_ADMIN_PASSWORD; do
+            if [[ -z "${!name}" ]]; then
+              echo "Configure $name in the develop GitHub environment before deployment." >&2
+              exit 1
+            fi
+          done
 
       - name: Check backend prerequisites
         if: inputs.enable_backend
@@ -146,11 +175,11 @@ jobs:
             -backend-config="subscription_id=$AZURE_SUBSCRIPTION_ID"
 
       - name: Create the registry before publishing images
-        if: inputs.operation == 'deploy'
+        if: github.event_name == 'push' || inputs.operation == 'deploy'
         run: terraform -chdir=infra apply -input=false -auto-approve -target=module.registry
 
       - name: Sign in to Azure Container Registry
-        if: inputs.operation == 'deploy'
+        if: github.event_name == 'push' || inputs.operation == 'deploy'
         shell: bash
         env:
           REGISTRY_NAME: appdist${{ vars.AZURE_RESOURCE_SUFFIX }}
@@ -162,7 +191,7 @@ jobs:
           done
 
       - name: Build and push frontend and backend images
-        if: inputs.operation == 'deploy'
+        if: github.event_name == 'push' || inputs.operation == 'deploy'
         shell: bash
         env:
           REGISTRY_NAME: appdist${{ vars.AZURE_RESOURCE_SUFFIX }}
@@ -170,8 +199,17 @@ jobs:
         run: |
           registry_login_server="${REGISTRY_NAME}.azurecr.io"
           docker build --file infra/docker/frontend.Dockerfile --tag "$registry_login_server/frontend:$IMAGE_TAG" .
-          docker build --file infra/docker/backend.Dockerfile --tag "$registry_login_server/backend:$IMAGE_TAG" .
           docker push "$registry_login_server/frontend:$IMAGE_TAG"
+
+      - name: Build and push backend image
+        if: (github.event_name == 'push' || inputs.operation == 'deploy') && inputs.enable_backend
+        shell: bash
+        env:
+          REGISTRY_NAME: appdist${{ vars.AZURE_RESOURCE_SUFFIX }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          registry_login_server="${REGISTRY_NAME}.azurecr.io"
+          docker build --file infra/docker/backend.Dockerfile --tag "$registry_login_server/backend:$IMAGE_TAG" .
           docker push "$registry_login_server/backend:$IMAGE_TAG"
 
       - name: Create PostgreSQL before bootstrapping application roles
@@ -220,9 +258,9 @@ jobs:
         run: terraform -chdir=infra plan -input=false -out="$RUNNER_TEMP/develop.tfplan"
 
       - name: Apply the Terraform plan
-        if: inputs.operation == 'deploy'
+        if: github.event_name == 'push' || inputs.operation == 'deploy'
         run: terraform -chdir=infra apply -input=false -auto-approve "$RUNNER_TEMP/develop.tfplan"
 
       - name: Show the deployed frontend URL
-        if: inputs.operation == 'deploy'
+        if: github.event_name == 'push' || inputs.operation == 'deploy'
         run: terraform -chdir=infra output -raw frontend_url

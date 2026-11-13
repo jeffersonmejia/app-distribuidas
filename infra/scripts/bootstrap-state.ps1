@@ -4,6 +4,7 @@ param(
     [string]$Environment = "develop",
     [string]$ResourceGroupName = "rg-app-distribuidas-tfstate",
     [string]$Location = "eastus",
+    [string]$StorageLocation = "brazilsouth",
     [string]$StateStorageAccountName
 )
 
@@ -24,7 +25,7 @@ if ($LASTEXITCODE -ne 0 -or $storageProvider -ne 'Registered') {
 }
 $null = az group create --name $ResourceGroupName --location $Location --tags project=app-distribuidas purpose=terraform-state --output none
 if ($LASTEXITCODE -ne 0) { throw "No se pudo crear el grupo de recursos del state." }
-$null = az storage account create --name $StateStorageAccountName --resource-group $ResourceGroupName --location $Location --sku Standard_LRS --kind StorageV2 --https-only true --min-tls-version TLS1_2 --allow-blob-public-access false --output none
+$null = az storage account create --name $StateStorageAccountName --resource-group $ResourceGroupName --location $StorageLocation --sku Standard_LRS --kind StorageV2 --https-only true --min-tls-version TLS1_2 --allow-blob-public-access false --output none
 if ($LASTEXITCODE -ne 0) { throw "No se pudo crear la cuenta Storage para el state." }
 $null = az storage container create --account-name $StateStorageAccountName --name tfstate --auth-mode login --public-access off --output none
 if ($LASTEXITCODE -ne 0) { throw "No se pudo crear el contenedor privado tfstate." }
