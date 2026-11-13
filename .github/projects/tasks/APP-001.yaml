@@ -1,0 +1,74 @@
+id: APP-001
+github:
+  repository: jeffersonmejia/app-distribuidas
+  issue_number: 15
+issue:
+  title: '[APP-001] Preparar estructura base de frontend y tokens de diseño'
+  body: '<!-- managed-task-id: APP-001 -->
+
+
+    ## Descripción
+
+    Inicializar el esqueleto React y TypeScript con Vite y definir tokens globales de identidad, superficies, tipografía, bordes, estados y tema oscuro.
+
+
+    ## Criterios de aceptación
+
+    - La aplicación React y TypeScript tiene una estructura inicial ejecutable.
+
+    - Los tokens globales están definidos y documentados.
+
+    - La base incluye estilos globales y soporte de tema oscuro.
+
+
+    ## Gestión
+
+    - Área: Frontend
+
+    - Prioridad: Media
+
+    - Estado: Completado
+
+    - Responsable: @jeffersonmejia
+
+    - Rama: Jefferson
+
+    - Rutas: frontend/
+
+    - Dependencias: Ninguna
+
+    - Fecha de completado: 2026-11-12'
+  state: closed
+  assignees:
+  - jeffersonmejia
+  labels:
+  - enhancement
+  - frontend
+project:
+  Repository: jeffersonmejia/app-distribuidas
+  Title: '[APP-001] Preparar estructura base de frontend y tokens de diseño'
+  Status: Done
+  Estado: Done
+  Área: Frontend
+  Fecha de completado: '2026-11-12'
+  Identificador de tarea: APP-001
+  Prioridad: Media
+  Fecha objetivo: '2026-11-22'
+planning:
+  acceptanceCriteria:
+  - La aplicación React y TypeScript tiene una estructura inicial ejecutable.
+  - Los tokens globales están definidos y documentados.
+  - La base incluye estilos globales y soporte de tema oscuro.
+  paths:
+  - frontend/
+  priority: Media
+  assignmentNote: null
+  assignee: jeffersonmejia
+  state: Done
+  completedAt: '2026-11-12'
+  area: Frontend
+  dependencies: []
+  targetDate: '2026-11-22'
+  description: Inicializar el esqueleto React y TypeScript con Vite y definir tokens globales de identidad, superficies, tipografía, bordes, estados y tema oscuro.
+  requestedAssignee: null
+  branch: Jefferson

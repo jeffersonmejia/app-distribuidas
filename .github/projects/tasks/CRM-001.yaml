@@ -1,0 +1,66 @@
+id: CRM-001
+github:
+  repository: jeffersonmejia/app-distribuidas
+  issue_number: 4
+issue:
+  title: '[CRM-001] Implementar gestión inicial de clientes'
+  body: '<!-- managed-task-id: CRM-001 -->
+
+
+    ## Descripción
+
+    Diseñar entidades y casos de uso para la gestión inicial de clientes, implementar las operaciones básicas acordadas y preparar pruebas unitarias.
+
+
+    ## Criterios de aceptación
+
+    - El diseño inicial de clientes y sus casos de uso está definido.
+
+    - Las operaciones básicas de clientes cumplen los contratos acordados.
+
+    - Hay pruebas unitarias para los casos implementados.
+
+
+    ## Gestión
+
+    - Área: CRM
+
+    - Prioridad: Alta
+
+    - Estado: Pendiente
+
+    - Responsable: @BruceRodri
+
+    - Rama: Bruce
+
+    - Rutas: backend/.../features/crm/
+
+    - Dependencias: Ninguna
+
+
+    ## Bloqueo actual
+
+    Bloqueada por: TEN-001 (@jeffersonmejia).'
+  state: open
+  assignees:
+  - BruceRodri
+  labels:
+  - backend
+  - database
+  - enhancement
+  - testing
+project:
+  Repository: jeffersonmejia/app-distribuidas
+  Title: '[CRM-001] Implementar gestión inicial de clientes'
+  Status: Blocked
+  Estado: Blocked
+  Prioridad: Alta
+  Área: CRM
+  Identificador de tarea: CRM-001
+  Fecha objetivo: '2026-11-18'
+planning:
+  targetDate: '2026-11-18'
+  state: Blocked
+  priority: Alta
+  blocked_by:
+  - TEN-001

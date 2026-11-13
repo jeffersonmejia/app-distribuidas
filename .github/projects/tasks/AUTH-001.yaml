@@ -1,0 +1,39 @@
+id: AUTH-001
+github:
+  repository: jeffersonmejia/app-distribuidas
+  issue_number: 26
+issue:
+  title: '[AUTH-001] Acordar autenticación y permisos del MVP'
+  body: "<!-- managed-task-id: AUTH-001 -->\n\n**Feature:** Multitenancy  \n**Responsable:** @jeffersonmejia  \n**Rutas:** docs/multitenancy.md, docs/autenticacion.md  \n**Dependencias:** ARC-002  \n**Fecha objetivo:** 2026-11-13\n\n## Alcance\nDefinir mecanismo de autenticación, identidad del actor, selector de tenant, roles y permisos. No comenzar una implementación que dependa de decisiones sin aprobar.\n\n## Criterios de aceptación\n- [ ] Documentar mecanismo y ciclo de credenciales.\n- [ ] Definir roles, permisos y selector tenant como dato no confiable.\n- [ ] Especificar rechazos sin actor, membresía o permiso.\n- [ ] No aceptar actor_id ni permisos del cliente como autorización."
+  state: open
+  assignees:
+  - jeffersonmejia
+  labels:
+  - backend
+  - documentation
+project:
+  Repository: jeffersonmejia/app-distribuidas
+  Title: '[AUTH-001] Acordar autenticación y permisos del MVP'
+  Status: Todo
+  Estado: Todo
+  Prioridad: Alta
+  Área: Multitenancy
+  Identificador de tarea: AUTH-001
+  Fecha objetivo: '2026-11-13'
+planning:
+  area: Multitenancy
+  assignee: jeffersonmejia
+  paths:
+  - docs/multitenancy.md
+  - docs/autenticacion.md
+  dependencies:
+  - ARC-002
+  targetDate: '2026-11-13'
+  state: Todo
+  priority: Alta
+  description: Definir mecanismo de autenticación, identidad del actor, selector de tenant, roles y permisos. No comenzar una implementación que dependa de decisiones sin aprobar.
+  acceptanceCriteria:
+  - Documentar mecanismo y ciclo de credenciales.
+  - Definir roles, permisos y selector tenant como dato no confiable.
+  - Especificar rechazos sin actor, membresía o permiso.
+  - No aceptar actor_id ni permisos del cliente como autorización.

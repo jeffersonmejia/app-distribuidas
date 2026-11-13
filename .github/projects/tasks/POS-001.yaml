@@ -1,0 +1,76 @@
+id: POS-001
+github:
+  repository: jeffersonmejia/app-distribuidas
+  issue_number: 12
+issue:
+  title: '[POS-001] Definir flujo inicial de ventas'
+  body: '<!-- managed-task-id: POS-001 -->
+
+
+    ## Descripción
+
+    Diseñar los contratos del flujo de ventas y su relación con inventario, evitando acceder directamente a repositorios de otros módulos.
+
+
+    ## Criterios de aceptación
+
+    - El flujo inicial de ventas y sus contratos están descritos.
+
+    - La relación con inventario usa un contrato explícito.
+
+    - POS no depende directamente de repositorios de otros módulos.
+
+
+    ## Gestión
+
+    - Área: POS
+
+    - Prioridad: Media
+
+    - Estado: Completado
+
+    - Responsable: @BruceRodri
+
+    - Rama: Bruce
+
+    - Rutas: backend/.../features/pos/
+
+    - Dependencias: INV-002'
+  state: closed
+  assignees:
+  - BruceRodri
+  labels:
+  - backend
+  - database
+  - enhancement
+  - testing
+project:
+  Repository: jeffersonmejia/app-distribuidas
+  Title: '[POS-001] Definir flujo inicial de ventas'
+  Status: Done
+  Estado: Done
+  Prioridad: Media
+  Área: POS
+  Identificador de tarea: POS-001
+  Fecha objetivo: '2026-11-22'
+planning:
+  acceptanceCriteria:
+  - El flujo inicial de ventas y sus contratos están descritos.
+  - La relación con inventario usa un contrato explícito.
+  - POS no depende directamente de repositorios de otros módulos.
+  paths:
+  - backend/.../features/pos/
+  priority: Media
+  assignmentNote: null
+  assignee: BruceRodri
+  state: Done
+  completedAt: null
+  area: POS
+  dependencies:
+  - ARC-001
+  - ARC-002
+  - INV-002
+  targetDate: '2026-11-22'
+  description: Diseñar los contratos del flujo de ventas y su relación con inventario, evitando acceder directamente a repositorios de otros módulos.
+  requestedAssignee: null
+  branch: Bruce

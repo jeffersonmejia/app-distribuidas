@@ -1,0 +1,82 @@
+id: QUALITY-001
+github:
+  repository: jeffersonmejia/app-distribuidas
+  issue_number: 10
+issue:
+  title: '[QUALITY-001] Definir alcance de calidad para etapa posterior'
+  body: '<!-- managed-task-id: QUALITY-001 -->
+
+
+    ## Descripción
+
+    Definir y documentar el alcance de calidad para una etapa posterior, reutilizando la infraestructura SonarQube ya preparada. El análisis Java/TypeScript, los Quality Gates y sus workflows quedan fuera del scaffolding inicial.
+
+
+    ## Criterios de aceptación
+
+    - El documento distingue la infraestructura SonarQube existente de la configuración de análisis pendiente.
+
+    - El documento define el Quality Gate inicial: 80% de cobertura en código nuevo, cero bugs nuevos de severidad crítica, cero vulnerabilidades nuevas de severidad crítica y 100% de Security Hotspots revisados.
+
+    - El documento limita el bloqueo deseado del Quality Gate al código nuevo de Pull Requests hacia develop e identifica la limitación de Community Build y la verificación pendiente de su rama principal.
+
+    - No se configuran scanners, Quality Gates, cobertura ni workflows de análisis en esta tarea.
+
+
+    ## Gestión
+
+    - Área: Calidad
+
+    - Prioridad: Alta
+
+    - Estado: Completado
+
+    - Responsable de definición: @jeffersonmejia
+
+    - Responsable de ejecución posterior: @Jntorres2001
+
+    - Rama: Jefferson
+
+    - Rutas: docs/quality.md
+
+    - Dependencias: ARC-001, ARC-002
+
+    - Fecha de completado: 2026-11-12'
+  state: closed
+  assignees:
+  - jeffersonmejia
+  labels:
+  - devops
+  - documentation
+  - testing
+project:
+  Repository: jeffersonmejia/app-distribuidas
+  Title: '[QUALITY-001] Definir alcance de calidad para etapa posterior'
+  Status: Done
+  Estado: Done
+  Prioridad: Alta
+  Área: Calidad
+  Identificador de tarea: QUALITY-001
+  Fecha objetivo: '2026-11-22'
+  Fecha de completado: '2026-11-12'
+planning:
+  acceptanceCriteria:
+  - El documento distingue la infraestructura SonarQube existente de la configuración de análisis pendiente.
+  - 'El documento define el Quality Gate inicial: 80% de cobertura en código nuevo, cero bugs y vulnerabilidades nuevos de severidad crítica, y 100% de Security Hotspots revisados.'
+  - El documento limita el bloqueo deseado del Quality Gate al código nuevo de Pull Requests hacia develop e identifica la limitación de Community Build y la verificación pendiente de su rama principal.
+  - No se configuran scanners, Quality Gates, cobertura ni workflows de análisis en esta tarea.
+  paths:
+  - docs/quality.md
+  priority: Alta
+  assignmentNote: null
+  assignee: jeffersonmejia
+  state: Done
+  completedAt: '2026-11-12'
+  area: Calidad
+  dependencies:
+  - ARC-001
+  - ARC-002
+  targetDate: '2026-11-22'
+  description: Definir y documentar el alcance de calidad para una etapa posterior, reutilizando la infraestructura SonarQube ya preparada. El análisis Java/TypeScript, los Quality Gates y sus workflows quedan fuera del scaffolding inicial.
+  requestedAssignee: null
+  branch: Jefferson

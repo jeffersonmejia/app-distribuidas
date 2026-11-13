@@ -1,0 +1,70 @@
+id: WIKI-001
+github:
+  repository: jeffersonmejia/app-distribuidas
+  issue_number: 21
+issue:
+  title: '[WIKI-001] Organizar y publicar la wiki técnica'
+  body: '<!-- managed-task-id: WIKI-001 -->
+
+
+    ## Descripción
+
+    Organizar la wiki en una página breve con índice y secciones numeradas que resuman requisitos, arquitectura, módulos, seguridad, entorno, API, calidad y gestión.
+
+
+    ## Criterios de aceptación
+
+    - La wiki presenta un índice numerado en el mismo orden que sus secciones.
+
+    - La documentación va directa al grano y evita páginas duplicadas.
+
+
+    ## Gestión
+
+    - Área: Arquitectura
+
+    - Prioridad: Media
+
+    - Estado: Completado
+
+    - Responsable: @jeffersonmejia
+
+    - Rama: Jefferson
+
+    - Rutas: GitHub Wiki
+
+    - Dependencias: Ninguna
+
+    - Fecha de completado: 2026-11-12'
+  state: closed
+  assignees:
+  - jeffersonmejia
+  labels:
+  - documentation
+project:
+  Repository: jeffersonmejia/app-distribuidas
+  Title: '[WIKI-001] Organizar y publicar la wiki técnica'
+  Status: Done
+  Estado: Done
+  Prioridad: Media
+  Área: Arquitectura
+  Identificador de tarea: WIKI-001
+  Fecha de completado: '2026-11-12'
+  Fecha objetivo: '2026-11-22'
+planning:
+  acceptanceCriteria:
+  - La wiki presenta un índice numerado en el mismo orden que sus secciones.
+  - La documentación va directa al grano y evita páginas duplicadas.
+  paths:
+  - GitHub Wiki
+  priority: Media
+  assignmentNote: null
+  assignee: jeffersonmejia
+  state: Done
+  completedAt: '2026-11-12'
+  area: Arquitectura
+  dependencies: []
+  targetDate: '2026-11-22'
+  description: Organizar la wiki en una página breve con índice y secciones numeradas que resuman requisitos, arquitectura, módulos, seguridad, entorno, API, calidad y gestión.
+  requestedAssignee: null
+  branch: Jefferson

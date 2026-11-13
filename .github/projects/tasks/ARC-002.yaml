@@ -1,0 +1,72 @@
+id: ARC-002
+github:
+  repository: jeffersonmejia/app-distribuidas
+  issue_number: 2
+issue:
+  title: '[ARC-002] Definir estrategia de aislamiento multitenant'
+  body: '<!-- managed-task-id: ARC-002 -->
+
+
+    ## Descripción
+
+    Especificar el modelo de tenants y usuarios, el aislamiento mediante tenant_id, las responsabilidades de RLS y los criterios de seguridad.
+
+
+    ## Criterios de aceptación
+
+    - El modelo de tenants y usuarios está descrito.
+
+    - El aislamiento por tenant_id y las responsabilidades de RLS están definidos.
+
+    - Los criterios de seguridad pueden revisarse antes de implementar.
+
+
+    ## Gestión
+
+    - Área: Multitenancy
+
+    - Prioridad: Alta
+
+    - Estado: Completado
+
+    - Responsable: @jeffersonmejia
+
+    - Rama: Jefferson
+
+    - Rutas: docs/multitenancy.md
+
+    - Dependencias: Ninguna'
+  state: closed
+  assignees:
+  - jeffersonmejia
+  labels:
+  - backend
+  - database
+  - documentation
+project:
+  Repository: jeffersonmejia/app-distribuidas
+  Title: '[ARC-002] Definir estrategia de aislamiento multitenant'
+  Status: Done
+  Estado: Done
+  Prioridad: Alta
+  Área: Multitenancy
+  Identificador de tarea: ARC-002
+  Fecha objetivo: '2026-11-22'
+planning:
+  acceptanceCriteria:
+  - El modelo de tenants y usuarios está descrito.
+  - El aislamiento por tenant_id y las responsabilidades de RLS están definidos.
+  - Los criterios de seguridad pueden revisarse antes de implementar.
+  paths:
+  - docs/multitenancy.md
+  priority: Alta
+  assignmentNote: null
+  assignee: jeffersonmejia
+  state: Done
+  completedAt: null
+  area: Multitenancy
+  dependencies: []
+  targetDate: '2026-11-22'
+  description: Especificar el modelo de tenants y usuarios, el aislamiento mediante tenant_id, las responsabilidades de RLS y los criterios de seguridad.
+  requestedAssignee: null
+  branch: Jefferson
