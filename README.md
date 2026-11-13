@@ -19,4 +19,4 @@ Las decisiones de alcance y diseño se asignan a Jefferson. Las demás personas 
 
 ## Directorios vacíos
 
-La estructura local incluye directorios vacíos preparados para las features. Git no versiona directorios vacíos; por eso no se agregan archivos `.gitkeep` ni archivos ficticios. Al clonar el repositorio, cada desarrollador debe crear localmente las carpetas vacías que necesite para su módulo.
+La estructura preparada para las features conserva sus directorios vacíos requeridos con archivos `.gitkeep`. Estos marcadores no contienen código y se retiran cuando el directorio recibe su primer archivo real.

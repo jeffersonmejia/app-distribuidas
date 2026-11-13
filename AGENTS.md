@@ -5,6 +5,7 @@
 - Aplican a todas las personas y herramientas de IA, sin importar proveedor o modelo. Lee estas reglas y las instrucciones locales antes de cambiar código.
 - Mantén la arquitectura Feature-First y limita cada cambio al alcance solicitado. Prefiere soluciones claras, pequeñas, mantenibles y con tipos explícitos; evita duplicación y abstracciones prematuras.
 - Los cambios funcionales deben incluir o actualizar pruebas pertinentes. Ejecuta y reporta las verificaciones relevantes; no afirmes que algo funciona si no lo comprobaste.
+- En el scaffolding, conserva con `.gitkeep` los directorios requeridos que estén vacíos; retira el marcador al agregar contenido real y nunca lo sustituyas por código ficticio.
 
 ## Equipo y responsabilidades
 
