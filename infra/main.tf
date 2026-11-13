@@ -15,17 +15,17 @@ module "registry" {
 module "postgres" {
   source = "./modules/postgres"
 
-  name                          = "pg-appdist-${var.environment}-${var.resource_suffix}"
-  resource_group_name           = data.azurerm_resource_group.app.name
-  location                      = var.postgres_region
-  sku_name                      = var.postgres_sku
-  storage_mb                    = var.postgres_storage_mb
-  backup_retention_days         = var.postgres_backup_days
-  database_name                 = var.postgres_database_name
-  administrator_login           = var.postgres_admin_username
-  administrator_password        = var.postgres_admin_password
-  allow_azure_services          = var.enable_backend && var.allow_azure_services_postgres
-  tags                          = local.common_tags
+  name                   = "pg-appdist-${var.environment}-${var.resource_suffix}"
+  resource_group_name    = data.azurerm_resource_group.app.name
+  location               = var.postgres_region
+  sku_name               = var.postgres_sku
+  storage_mb             = var.postgres_storage_mb
+  backup_retention_days  = var.postgres_backup_days
+  database_name          = var.postgres_database_name
+  administrator_login    = var.postgres_admin_username
+  administrator_password = var.postgres_admin_password
+  allow_azure_services   = var.enable_backend && var.allow_azure_services_postgres
+  tags                   = local.common_tags
 }
 
 module "application" {
@@ -41,13 +41,13 @@ module "application" {
   registry_login_server = module.registry.login_server
   enable_backend        = var.enable_backend
   backend_environment = {
-    AUTH_ISSUER_URI     = var.auth_issuer_uri
-    AUTH_AUDIENCE       = var.auth_audience
-    DB_RUNTIME_URL      = "jdbc:postgresql://${module.postgres.fqdn}:5432/${var.postgres_database_name}?sslmode=require"
-    DB_RUNTIME_USER     = "erp_runtime_login"
-    DB_MIGRATION_URL    = "jdbc:postgresql://${module.postgres.fqdn}:5432/${var.postgres_database_name}?sslmode=require"
-    DB_MIGRATION_USER   = "erp_migrator"
-    JAVA_TOOL_OPTIONS   = "-XX:MaxRAMPercentage=70"
+    AUTH_ISSUER_URI   = var.auth_issuer_uri
+    AUTH_AUDIENCE     = var.auth_audience
+    DB_RUNTIME_URL    = "jdbc:postgresql://${module.postgres.fqdn}:5432/${var.postgres_database_name}?sslmode=require"
+    DB_RUNTIME_USER   = "erp_runtime_login"
+    DB_MIGRATION_URL  = "jdbc:postgresql://${module.postgres.fqdn}:5432/${var.postgres_database_name}?sslmode=require"
+    DB_MIGRATION_USER = "erp_migrator"
+    JAVA_TOOL_OPTIONS = "-XX:MaxRAMPercentage=70"
   }
   backend_secure_environment = {
     DB_RUNTIME_PASSWORD   = var.db_runtime_password
