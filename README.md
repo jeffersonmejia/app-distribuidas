@@ -11,9 +11,9 @@ El alcance de esta entrega es preparar el MVP inicial, no completar todo el ERP/
 | Jefferson | `jeffersonmejia` | Backend y DevOps; define arquitectura y alcance técnico. |
 | Esteban | `EMLarco` | Backend; ejecuta las tareas backend acordadas. |
 | Sahid | `Sahid-B` | Backend; ejecuta las tareas backend acordadas. |
-| Jennifer | `Jntorres2001` | Testing: pruebas unitarias, de integración y de rendimiento con k6, cuando el alcance esté definido y exista funcionalidad que probar. |
+| Jennifer | `Jntorres2001` | Testing: pruebas unitarias, de integración y de rendimiento con k6, cuando el alcance esté definido y exista funcionalidad que probar y supervisa constantemente la calidad con sonarqube. |
 | Dayanara | `Dayanarablb` | Frontend. |
-| Bruce | `BruceRodri` | Backend; ejecuta las tareas backend acordadas por feature. |
+| Bruce | `BruceRodri` | Backend; ejecuta las tareas backend. |
 
 Las decisiones de alcance y diseño se asignan a Jefferson. Las demás personas ejecutan tareas con alcance y criterios de aceptación definidos. Durante el scaffolding inicial no se implementan pruebas ni código de aplicación; las tareas de testing se ejecutan cuando ese trabajo esté autorizado y disponible.
 
