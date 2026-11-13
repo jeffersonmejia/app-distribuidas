@@ -4,7 +4,7 @@ github:
   issue_number: 31
 issue:
   title: '[ACC-002] Implementar registro contable del MVP'
-  body: "<!-- managed-task-id: ACC-002 -->\n\n**Feature:** Contabilidad  \n**Responsable:** @EMLarco  \n**Rutas:** backend/src/main/java/com/erp/features/accounting/, backend/src/main/resources/db/migration/, backend/src/test/java/com/erp/features/accounting/  \n**Dependencias:** ACC-001, TEN-001, POS-002  \n**Fecha objetivo:** 2026-11-20\n\n## Alcance\nImplementar únicamente las reglas aprobadas en ACC-001; no inventar precisión monetaria ni reglas de contabilización.\n\n## Criterios de aceptación\n- [ ] Reglas y precisión monetaria coinciden con la decisión aprobada.\n- [ ] Registros tienen tenant_id y constraints tenant-scoped.\n- [ ] Registro derivado de venta es idempotente y transaccional según contrato.\n- [ ] Migraciones y pruebas cubren balance, rollback y aislamiento.\n\n## Bloqueo actual\nBloqueada por: ACC-001 (@EMLarco), TEN-001 (@jeffersonmejia), POS-002 (@BruceRodri)."
+  body: "<!-- managed-task-id: ACC-002 -->\n\n**Feature:** Contabilidad  \n**Responsable:** @EMLarco  \n**Rutas:** backend/src/main/java/com/erp/features/accounting/, backend/src/main/resources/db/migration/, backend/src/test/java/com/erp/features/accounting/  \n**Dependencias:** ACC-001, TEN-001, POS-002  \n**Fecha objetivo:** 2026-11-20\n\n## Alcance\nImplementar únicamente las reglas aprobadas en ACC-001; no inventar precisión monetaria ni reglas de contabilización.\n\n## Criterios de aceptación\n- [ ] Reglas y precisión monetaria coinciden con la decisión aprobada.\n- [ ] Registros tienen tenant_id y constraints tenant-scoped.\n- [ ] Registro derivado de venta es idempotente y transaccional según contrato.\n- [ ] Migraciones y pruebas cubren balance, rollback y aislamiento.\n\n## Bloqueo actual\nBloqueada por: ACC-001 (@EMLarco), POS-002 (@BruceRodri)."
   state: open
   assignees:
   - EMLarco
@@ -37,7 +37,6 @@ planning:
   priority: Media
   blocked_by:
   - ACC-001
-  - TEN-001
   - POS-002
   description: Implementar únicamente las reglas aprobadas en ACC-001; no inventar precisión monetaria ni reglas de contabilización.
   acceptanceCriteria:

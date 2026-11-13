@@ -4,7 +4,7 @@ github:
   issue_number: 39
 issue:
   title: '[OPS-002] Preparar ejecución reproducible y seguridad del entorno'
-  body: "<!-- managed-task-id: OPS-002 -->\n\n**Feature:** Calidad  \n**Responsable:** @jeffersonmejia  \n**Rutas:** docker/, backend/, frontend/, .github/workflows/, docs/  \n**Dependencias:** INT-001  \n**Fecha objetivo:** 2026-11-21\n\n## Alcance\nDejar el MVP ejecutable desde copia limpia con variables separadas y sin secretos versionados; no asumir proveedor de despliegue.\n\n## Criterios de aceptación\n- [ ] PostgreSQL y servicios existentes arrancan y reportan healthcheck.\n- [ ] Build y verificaciones se documentan con comandos PowerShell.\n- [ ] Variables de ejemplo no contienen credenciales reales.\n- [ ] Documentar recuperación local y límites del entorno de desarrollo."
+  body: "<!-- managed-task-id: OPS-002 -->\n\n**Feature:** Calidad  \n**Responsable:** @jeffersonmejia  \n**Rutas:** docker/, backend/, frontend/, .github/workflows/, docs/  \n**Dependencias:** INT-001  \n**Fecha objetivo:** 2026-11-23\n\n## Alcance\nDejar el MVP ejecutable desde copia limpia con variables separadas y sin secretos versionados; no asumir proveedor de despliegue.\n\n## Criterios de aceptación\n- [ ] PostgreSQL y servicios existentes arrancan y reportan healthcheck.\n- [ ] Build y verificaciones se documentan con comandos PowerShell.\n- [ ] Variables de ejemplo no contienen credenciales reales.\n- [ ] Documentar recuperación local y límites del entorno de desarrollo.\n\n## Bloqueo actual\nBloqueada por: INT-001 (@jeffersonmejia)."
   state: open
   assignees:
   - jeffersonmejia
@@ -14,12 +14,12 @@ issue:
 project:
   Repository: jeffersonmejia/app-distribuidas
   Title: '[OPS-002] Preparar ejecución reproducible y seguridad del entorno'
-  Status: Todo
-  Estado: Todo
+  Status: Blocked
+  Estado: Blocked
   Prioridad: Media
   Área: Calidad
   Identificador de tarea: OPS-002
-  Fecha objetivo: '2026-11-21'
+  Fecha objetivo: '2026-11-23'
 planning:
   area: Calidad
   assignee: jeffersonmejia
@@ -31,9 +31,11 @@ planning:
   - docs/
   dependencies:
   - INT-001
-  targetDate: '2026-11-21'
-  state: Todo
+  targetDate: '2026-11-23'
+  state: Blocked
   priority: Media
+  blocked_by:
+  - INT-001
   description: Dejar el MVP ejecutable desde copia limpia con variables separadas y sin secretos versionados; no asumir proveedor de despliegue.
   acceptanceCriteria:
   - PostgreSQL y servicios existentes arrancan y reportan healthcheck.

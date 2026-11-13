@@ -4,7 +4,7 @@ github:
   issue_number: 33
 issue:
   title: '[FRONT-003] Completar interfaz de clientes y sesión'
-  body: "<!-- managed-task-id: FRONT-003 -->\n\n**Feature:** Frontend  \n**Responsable:** @Dayanarablb  \n**Rutas:** frontend/src/features/identity/, frontend/src/features/crm/, frontend/src/app/  \n**Dependencias:** FRONT-001, AUTH-002, TEN-001, CRM-001  \n**Fecha objetivo:** 2026-11-19\n\n## Alcance\nImplementar acceso, selección autorizada de tenant y gestión de clientes sobre contratos backend aprobados.\n\n## Criterios de aceptación\n- [ ] Sesión, tenant y CRUD consumen APIs reales.\n- [ ] Errores no filtran detalles sensibles.\n- [ ] Listas usan máximo 5 y estados de carga, vacío y error.\n- [ ] Navegación se adapta a tamaños de pantalla acordados.\n\n## Bloqueo actual\nBloqueada por: FRONT-001 (@Dayanarablb), AUTH-002 (@EMLarco), TEN-001 (@jeffersonmejia), CRM-001 (@BruceRodri)."
+  body: "<!-- managed-task-id: FRONT-003 -->\n\n**Feature:** Frontend  \n**Responsable:** @Dayanarablb  \n**Rutas:** frontend/src/features/identity/, frontend/src/features/tenancy/, frontend/src/features/crm/, frontend/src/app/  \n**Dependencias:** FRONT-001, FRONT-002, AUTH-002, TEN-001, CRM-001  \n**Fecha objetivo:** 2026-11-19\n\n## Alcance\nImplementar acceso, selección de tenant y gestión de clientes sobre contratos backend aprobados. El backend valida identidad, membresía activa y permisos; el tenant elegido por el usuario es solo un selector y nunca una prueba de autorización.\n\n## Criterios de aceptación\n- [ ] Sesión, selección de tenant y CRUD consumen APIs reales.\n- [ ] La interfaz no usa actor_id, tenant_id ni permisos del cliente como autorización.\n- [ ] Errores no filtran detalles sensibles.\n- [ ] Listas usan máximo 5 y muestran estados de carga, vacío y error.\n- [ ] Navegación se adapta a tamaños de pantalla acordados.\n- [ ] Pruebas de componentes cubren los flujos y estados implementados.\n\n## Bloqueo actual\nBloqueada por: FRONT-001 (@Dayanarablb), FRONT-002 (@Dayanarablb), CRM-001 (@BruceRodri)."
   state: open
   assignees:
   - Dayanarablb
@@ -25,10 +25,12 @@ planning:
   assignee: Dayanarablb
   paths:
   - frontend/src/features/identity/
+  - frontend/src/features/tenancy/
   - frontend/src/features/crm/
   - frontend/src/app/
   dependencies:
   - FRONT-001
+  - FRONT-002
   - AUTH-002
   - TEN-001
   - CRM-001
@@ -37,12 +39,13 @@ planning:
   priority: Alta
   blocked_by:
   - FRONT-001
-  - AUTH-002
-  - TEN-001
+  - FRONT-002
   - CRM-001
   description: Implementar acceso, selección autorizada de tenant y gestión de clientes sobre contratos backend aprobados.
   acceptanceCriteria:
-  - Sesión, tenant y CRUD consumen APIs reales.
+  - Sesión, selección de tenant y CRUD consumen APIs reales.
+  - La interfaz no usa actor_id, tenant_id ni permisos del cliente como autorización.
   - Errores no filtran detalles sensibles.
   - Listas usan máximo 5 y estados de carga, vacío y error.
   - Navegación se adapta a tamaños de pantalla acordados.
+  - Pruebas de componentes cubren los flujos y estados implementados.

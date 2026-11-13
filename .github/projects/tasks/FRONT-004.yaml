@@ -4,7 +4,7 @@ github:
   issue_number: 34
 issue:
   title: '[FRONT-004] Completar interfaz de inventario y ventas'
-  body: "<!-- managed-task-id: FRONT-004 -->\n\n**Feature:** Frontend  \n**Responsable:** @Dayanarablb  \n**Rutas:** frontend/src/features/inventory/, frontend/src/features/pos/  \n**Dependencias:** FRONT-001, INV-003, POS-002  \n**Fecha objetivo:** 2026-11-20\n\n## Alcance\nImplementar consulta de disponibilidad y registro de venta usando APIs de Inventory y POS.\n\n## Criterios de aceptación\n- [ ] Consultar disponibilidad tenant-scoped y registrar ventas válidas.\n- [ ] Stock insuficiente y errores se muestran claramente.\n- [ ] No mostrar venta confirmada antes de responder el backend.\n- [ ] Incluye estados de carga, error y éxito.\n\n## Bloqueo actual\nBloqueada por: FRONT-001 (@Dayanarablb), INV-003 (@Sahid-B), POS-002 (@BruceRodri)."
+  body: "<!-- managed-task-id: FRONT-004 -->\n\n**Feature:** Frontend  \n**Responsable:** @Dayanarablb  \n**Rutas:** frontend/src/features/inventory/, frontend/src/features/pos/  \n**Dependencias:** FRONT-001, FRONT-002, INV-003, POS-002  \n**Fecha objetivo:** 2026-11-20\n\n## Alcance\nImplementar consulta de disponibilidad y registro de venta usando APIs aprobadas de Inventory y POS. El backend autoriza cada operación para el tenant activo.\n\n## Criterios de aceptación\n- [ ] Consultar disponibilidad y registrar ventas mediante APIs tenant-scoped autorizadas por el backend.\n- [ ] La interfaz no usa tenant_id ni permisos del cliente como autorización.\n- [ ] Stock insuficiente y errores se muestran claramente.\n- [ ] No mostrar venta confirmada antes de responder el backend.\n- [ ] Incluye estados de carga, error y éxito.\n- [ ] Pruebas de componentes cubren validación, éxito y errores de API.\n\n## Bloqueo actual\nBloqueada por: FRONT-001 (@Dayanarablb), FRONT-002 (@Dayanarablb), INV-003 (@Sahid-B), POS-002 (@BruceRodri)."
   state: open
   assignees:
   - Dayanarablb
@@ -28,6 +28,7 @@ planning:
   - frontend/src/features/pos/
   dependencies:
   - FRONT-001
+  - FRONT-002
   - INV-003
   - POS-002
   targetDate: '2026-11-20'
@@ -35,11 +36,14 @@ planning:
   priority: Alta
   blocked_by:
   - FRONT-001
+  - FRONT-002
   - INV-003
   - POS-002
   description: Implementar consulta de disponibilidad y registro de venta usando APIs de Inventory y POS.
   acceptanceCriteria:
-  - Consultar disponibilidad tenant-scoped y registrar ventas válidas.
+  - Consultar disponibilidad y registrar ventas mediante APIs tenant-scoped autorizadas por el backend.
+  - La interfaz no usa tenant_id ni permisos del cliente como autorización.
   - Stock insuficiente y errores se muestran claramente.
   - No mostrar venta confirmada antes de responder el backend.
   - Incluye estados de carga, error y éxito.
+  - Pruebas de componentes cubren validación, éxito y errores de API.

@@ -47,13 +47,9 @@ issue:
 project:
   Repository: jeffersonmejia/app-distribuidas
   Title: '[INV-002] Definir contrato de movimientos de inventario'
-  Status: Todo
+  Status: In Progress
   Estado: Todo
   Prioridad: Alta
   Área: Inventario
   Identificador de tarea: INV-002
   Fecha objetivo: '2026-11-14'
-planning:
-  targetDate: '2026-11-14'
-  state: Todo
-  priority: Alta

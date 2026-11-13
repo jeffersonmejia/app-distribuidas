@@ -4,43 +4,7 @@ github:
   issue_number: 5
 issue:
   title: '[INV-001] Implementar catálogo y existencias'
-  body: '<!-- managed-task-id: INV-001 -->
-
-
-    ## Descripción
-
-    Diseñar productos y existencias, preparar los casos de uso del catálogo e incorporar pruebas unitarias.
-
-
-    ## Criterios de aceptación
-
-    - El catálogo y las existencias tienen un diseño inicial documentado.
-
-    - Los casos de uso acordados están preparados.
-
-    - Hay pruebas unitarias para los casos implementados.
-
-
-    ## Gestión
-
-    - Área: Inventario
-
-    - Prioridad: Alta
-
-    - Estado: Pendiente
-
-    - Responsable: @Sahid-B
-
-    - Rama: Sahid
-
-    - Rutas: backend/.../features/inventory/
-
-    - Dependencias: Ninguna
-
-
-    ## Bloqueo actual
-
-    Bloqueada por: TEN-001 (@jeffersonmejia).'
+  body: "<!-- managed-task-id: INV-001 -->\n\n## Descripción\nDiseñar productos y existencias, preparar los casos de uso del catálogo e incorporar pruebas unitarias.\n\n## Criterios de aceptación\n- El catálogo y las existencias tienen un diseño inicial documentado.\n- Los casos de uso acordados están preparados.\n- Hay pruebas unitarias para los casos implementados.\n\n## Gestión\n- Área: Inventario\n- Prioridad: Alta\n- Estado: Pendiente\n- Responsable: @Sahid-B\n- Rama: Sahid\n- Rutas: backend/.../features/inventory/\n- Dependencias: Ninguna\n\n## Estado\nLista para ejecución; sus dependencias están resueltas."
   state: open
   assignees:
   - Sahid-B
@@ -52,15 +16,14 @@ issue:
 project:
   Repository: jeffersonmejia/app-distribuidas
   Title: '[INV-001] Implementar catálogo y existencias'
-  Status: Blocked
-  Estado: Blocked
+  Status: Todo
+  Estado: Todo
   Prioridad: Alta
   Área: Inventario
   Identificador de tarea: INV-001
   Fecha objetivo: '2026-11-18'
 planning:
   targetDate: '2026-11-18'
-  state: Blocked
+  state: Todo
   priority: Alta
-  blocked_by:
-  - TEN-001
+  blocked_by: []
