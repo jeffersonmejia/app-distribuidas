@@ -10,7 +10,7 @@ El gate se ejecuta en Pull Requests dirigidos a `develop` y al actualizar esa ra
 - Los hallazgos de seguridad restantes deben revisarse manualmente en GitHub antes de integrar el PR.
 - Duplicación y code smells no bloquean esta etapa.
 
-La cobertura diferencial se calcula con JaCoCo XML y LCOV usando `diff-cover`; esto permite aplicar el umbral a líneas cambiadas sin depender de un servidor de análisis. Los cambios que no tocan código cubierto no consumen el umbral.
+La cobertura diferencial se calcula con JaCoCo XML y LCOV usando ejecuciones separadas de `diff-cover`, porque los dos formatos no se pueden combinar en un solo informe. Cada lenguaje modificado debe cubrir al menos el 80% de sus líneas nuevas o modificadas. Los cambios que no tocan código cubierto no consumen el umbral. En `pull_request` se compara con la rama base; en `push`, con el commit anterior al push.
 
 ## Configuración del repositorio
 

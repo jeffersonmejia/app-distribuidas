@@ -46,6 +46,26 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Select changed-code comparison base
+        id: coverage-base
+        shell: bash
+        env:
+          BEFORE_SHA: ${{ github.event.before }}
+          PR_BASE_REF: ${{ github.base_ref }}
+        run: |
+          if [[ "$GITHUB_EVENT_NAME" == "pull_request" ]]; then
+            base_ref="origin/$PR_BASE_REF"
+          elif [[ -n "$BEFORE_SHA" && ! "$BEFORE_SHA" =~ ^0+$ ]]; then
+            base_ref="$BEFORE_SHA"
+          else
+            base_ref="$(git rev-parse HEAD^)"
+          fi
+          if ! git rev-parse --verify "$base_ref^{commit}" >/dev/null 2>&1; then
+            echo "No se encontró el commit base de cobertura: $base_ref" >&2
+            exit 1
+          fi
+          echo "ref=$base_ref" >> "$GITHUB_OUTPUT"
+
       - name: Run backend tests and create JaCoCo report
         run: mvn --batch-mode --no-transfer-progress -f backend/pom.xml test org.jacoco:jacoco-maven-plugin:0.8.16:report
 
@@ -63,18 +83,32 @@ jobs:
         shell: bash
         run: |
           python -m pip install --disable-pip-version-check diff-cover==10.6.0
-          coverage_reports=(frontend/coverage/lcov.info)
+          base_ref='${{ steps.coverage-base.outputs.ref }}'
+          changed_java=false
+          changed_frontend=false
+          if git diff --name-only "$base_ref...HEAD" -- backend/src/main/java | grep -Eq '\.java$'; then
+            changed_java=true
+          fi
+          if git diff --name-only "$base_ref...HEAD" -- frontend/src | grep -Eq '\.(js|jsx|ts|tsx)$'; then
+            changed_frontend=true
+          fi
           if [[ -f backend/target/site/jacoco/jacoco.xml ]]; then
-            coverage_reports=(backend/target/site/jacoco/jacoco.xml "${coverage_reports[@]}")
-          elif git diff --name-only origin/develop...HEAD -- backend/src/main/java | grep -Eq '\.java$'; then
+            if [[ "$changed_java" == "true" ]]; then
+              diff-cover backend/target/site/jacoco/jacoco.xml \
+                --compare-branch="$base_ref" \
+                --src-roots backend/src/main/java \
+                --fail-under=80
+            fi
+          elif [[ "$changed_java" == "true" ]]; then
             echo 'JaCoCo no produjo el informe requerido para cambios Java.' >&2
             exit 1
           fi
-          diff-cover \
-            "${coverage_reports[@]}" \
-            --compare-branch=origin/develop \
-            --src-roots backend/src/main/java frontend \
-            --fail-under=80
+          if [[ "$changed_frontend" == "true" ]]; then
+            diff-cover frontend/coverage/lcov.info \
+              --compare-branch="$base_ref" \
+              --src-roots frontend \
+              --fail-under=80
+          fi
 
   codeql:
     name: CodeQL (${{ matrix.language }})

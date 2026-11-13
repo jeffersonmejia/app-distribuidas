@@ -13,6 +13,8 @@ El proveedor autentica al usuario y emite un access token firmado. El cliente lo
 
 El backend no registra el bearer token, su firma ni credenciales. Las respuestas de error son genéricas y no contienen claims, secretos, consultas, stack traces ni detalles de membresía.
 
+La protección CSRF de Spring Security permanece habilitada. El JWT se recibe solo en la cabecera `Authorization: Bearer` y no se guarda en cookies; el navegador no adjunta esa cabecera automáticamente a solicitudes de otro sitio. Si futuras rutas usan autenticación con cookies o sesiones, deben exigir y validar token CSRF. No desactivar CSRF globalmente.
+
 ## Configuración operativa
 
 Configurar `AUTH_ISSUER_URI` y `AUTH_AUDIENCE` por entorno mediante el gestor de configuración/secrets de despliegue. Si faltan o no corresponden al proveedor configurado, el servicio no debe aceptar solicitudes autenticadas. Solo transportar tokens por TLS; los clientes mantienen y renuevan tokens según las reglas del proveedor. El backend no escribe tokens en cookies ni en almacenamiento propio.
