@@ -1,7 +1,9 @@
 package com.erp.features.identity.infrastructure.security;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -20,6 +22,8 @@ import org.springframework.context.annotation.Import;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.BadJwtException;
+import org.springframework.security.web.FilterChainProxy;
+import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.test.web.servlet.MockMvc;
 
 //SOLID: SRP — ESTA SUITE VERIFICA LA BARRERA HTTP Y LA IDENTIDAD DEL ACTOR.
@@ -36,6 +40,15 @@ class SecurityConfigurationTest {
 
     @MockBean
     private JwtDecoder jwtDecoder;
+
+    @Autowired
+    private FilterChainProxy filterChainProxy;
+
+    @Test
+    void keepsCsrfFilterInSecurityChain() {
+        assertTrue(filterChainProxy.getFilters("/private/action").stream()
+                .anyMatch(CsrfFilter.class::isInstance));
+    }
 
     @Test
     void rejectsRequestsWithoutBearerToken() throws Exception {
@@ -56,6 +69,28 @@ class SecurityConfigurationTest {
         mockMvc.perform(get("/private/actor").with(jwt().jwt(token -> token.subject(ACTOR_ID.toString()))))
                 .andExpect(status().isOk())
                 .andExpect(content().string(ACTOR_ID.toString()));
+    }
+
+    @Test
+    void acceptsStateChangingRequestWithCsrfToken() throws Exception {
+        when(jwtDecoder.decode("valid")).thenReturn(validJwt());
+        mockMvc.perform(post("/private/action")
+                        .header("Authorization", "Bearer valid")
+                        .with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(content().string("ok"));
+    }
+
+    private Jwt validJwt() {
+        Instant now = Instant.now();
+        return Jwt.withTokenValue("valid")
+                .header("alg", "RS256")
+                .issuer("https://issuer.example.test/")
+                .subject(ACTOR_ID.toString())
+                .audience(List.of("erp-api"))
+                .issuedAt(now)
+                .expiresAt(now.plusSeconds(300))
+                .build();
     }
 
     @Test
