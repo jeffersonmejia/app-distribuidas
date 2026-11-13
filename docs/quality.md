@@ -5,7 +5,7 @@
 El gate se ejecuta en Pull Requests dirigidos a `develop` y al actualizar esa rama. No requiere SonarQube Server, SonarQube Cloud, una licencia ni secretos externos.
 
 - La cobertura de las líneas de código fuente nuevas o modificadas debe ser al menos **80%**.
-- CodeQL analiza Java/Kotlin y JavaScript/TypeScript con las consultas `security-extended`.
+- CodeQL analiza Java/Kotlin y JavaScript/TypeScript con las consultas `security-extended`; el paso Java se omite solo mientras el scaffolding no contenga fuentes `.java`.
 - GitHub debe bloquear alertas nuevas de seguridad **High o Critical**, y alertas de calidad de severidad **Error**.
 - Los hallazgos de seguridad restantes deben revisarse manualmente en GitHub antes de integrar el PR.
 - Duplicación y code smells no bloquean esta etapa.
