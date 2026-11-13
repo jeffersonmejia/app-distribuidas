@@ -4,7 +4,7 @@
 
 El MVP usa una única base PostgreSQL compartida y un esquema compartido. Cada fila de negocio propiedad de un cliente pertenece a exactamente un tenant mediante `tenant_id`. La autorización del backend es obligatoria; PostgreSQL RLS añade una segunda barrera para el acceso a filas.
 
-Este documento define el diseño. En el scaffolding inicial no implementa autenticación, selección de tenant, `tenant_id` en entidades, políticas RLS ni pruebas de aplicación.
+Este documento define el diseño y las reglas implementadas por AUTH-001/AUTH-002 y TEN-001. La API usa el contrato JWT documentado en [Autenticación](autenticacion.md).
 
 ## Modelo de tenants, identidades y membresías
 
@@ -18,12 +18,12 @@ El módulo `identity` autentica al actor y expone su identificador estable. El m
 ## Resolución del contexto por solicitud
 
 1. El backend autentica la solicitud y obtiene el actor desde una credencial validada. No acepta `actor_id` ni permisos declarados por el cliente como prueba de identidad.
-2. La solicitud puede indicar el tenant que desea usar mediante el mecanismo de transporte que se acuerde para la API. Ese valor es solo un selector: no prueba autorización.
+2. La solicitud indica el tenant mediante `X-Tenant-ID`. Ese valor es solo un selector: no prueba autorización.
 3. `tenancy` valida la membresía activa del actor y los permisos requeridos. Si no existe, está revocada o no autoriza la operación, el backend la rechaza antes de acceder a datos de negocio.
 4. El backend crea un contexto inmutable por solicitud/transacción con `tenant_id` y `actor_id`. Todo caso de uso tenant-scoped lo recibe explícitamente.
-5. La selección se aplica al ámbito de una transacción de base de datos y se elimina automáticamente al confirmar o revertirla. No se conserva contexto tenant en una conexión del pool entre solicitudes.
+5. `tenancy.api` ejecuta la operación autorizada dentro de una transacción. Fija `app.actor_id` y el selector como `app.requested_tenant_id` locales a la transacción para consultar solo la membresía de ese actor y tenant. Solo después de validar membresía, permiso y estado fija `app.tenant_id` con `set_config(..., true)`. Los valores desaparecen al confirmar o revertir la transacción.
 
-El selector HTTP (subdominio, ruta o header), el formato concreto de permisos y el mecanismo de autenticación quedan para sus tareas de diseño e implementación. Ninguno puede sustituir la validación de membresía en el backend.
+Los permisos son códigos explícitos almacenados en `tenant_membership_permission`; no se convierten desde roles ni claims del token. Cada caso de uso debe pedir el código que requiere a `TenantAccess.execute`. Ningún selector o claim puede sustituir la validación de membresía en el backend.
 
 ## Reglas de persistencia
 
@@ -46,7 +46,9 @@ Cuando se implemente RLS, se aplicará a todas las tablas tenant-scoped como def
 - La aplicación se conecta con un rol de runtime sin superusuario, sin `BYPASSRLS` y distinto del propietario de tablas. Las migraciones usan credenciales separadas y restringidas. Se evalúa `FORCE ROW LEVEL SECURITY` en tablas tenant-scoped para que el propietario también esté sujeto a políticas cuando corresponda.
 - Operaciones como backups y migraciones que deban leer todas las filas usan una identidad administrativa separada, controlada y no reutilizada por la aplicación.
 
-Como mecanismo de propagación para una conexión compartida, la implementación puede fijar `app.tenant_id` de forma local a la transacción (`set_config(..., true)`) después de validar la membresía. RLS que dependa de un parámetro de sesión es una barrera contra errores de consultas ordinarias, no una defensa frente a ejecución arbitraria de SQL con el rol runtime: el servidor y su cuenta de base de datos siguen siendo componentes de confianza. Por eso se requieren consultas parametrizadas, privilegios mínimos y acceso a PostgreSQL solo desde servicios confiables.
+La migración `V20261113_001` protege el registro de tenants y membresías con RLS. Las políticas no conceden acceso cuando falta el contexto. `tenant` es el registro global de control del propio aislamiento, una excepción al requisito de `tenant_id`; las filas de membresía y permisos sí guardan `tenant_id NOT NULL` y tienen una referencia compuesta que impide relaciones entre tenants. RLS que dependa de parámetros de transacción es una barrera contra errores de consultas ordinarias, no una defensa frente a ejecución arbitraria de SQL con el rol runtime: el servidor y su cuenta de base de datos siguen siendo componentes de confianza. Por eso se requieren consultas parametrizadas, privilegios mínimos y acceso a PostgreSQL solo desde servicios confiables.
+
+`AUTH-001` establece JWT bearer validado por issuer, audiencia, vigencia y firma, con `sub` UUID; `X-Tenant-ID` no es confiable y los permisos se consultan en la membresía. `AUTH-002` configura Spring Security sin sesiones. `TenantMembershipAdministration` crea, actualiza y revoca membresías dentro de la transacción tenant autorizada; exige `tenancy:membership:manage` y no permite que el actor se conceda permisos a sí mismo. `TenantLifecycleAdministration` suspende y reactiva un tenant con `tenancy:tenant:manage`. La creación inicial del tenant y la primera membresía son tareas de provisión operacional: no hay endpoint público para crear organizaciones ni para autoasignarse permisos. Las credenciales de Flyway y de runtime son distintas; runtime no es superusuario, no tiene `BYPASSRLS` y no es dueño de las tablas.
 
 ## Responsabilidades por módulo
 
