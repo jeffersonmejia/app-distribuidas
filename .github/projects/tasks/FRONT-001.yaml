@@ -20,6 +20,8 @@ issue:
 
     - Los estilos base responden a distintos tamaños de pantalla.
 
+    - Los componentes reutilizables tienen pruebas de renderizado e interacción pertinentes.
+
 
     ## Gestión
 
@@ -55,3 +57,8 @@ planning:
   targetDate: '2026-11-14'
   state: Todo
   priority: Alta
+  acceptanceCriteria:
+  - Los tokens globales están definidos.
+  - Los componentes reutilizables acordados están preparados.
+  - Los estilos base responden a distintos tamaños de pantalla.
+  - Los componentes reutilizables tienen pruebas de renderizado e interacción pertinentes.

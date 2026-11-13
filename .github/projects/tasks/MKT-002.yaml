@@ -4,7 +4,7 @@ github:
   issue_number: 32
 issue:
   title: '[MKT-002] Implementar campañas y contactos de Marketing'
-  body: "<!-- managed-task-id: MKT-002 -->\n\n**Feature:** Marketing  \n**Responsable:** @EMLarco  \n**Rutas:** backend/src/main/java/com/erp/features/marketing/, backend/src/main/resources/db/migration/, backend/src/test/java/com/erp/features/marketing/  \n**Dependencias:** TEN-001, MKT-001, CRM-001  \n**Fecha objetivo:** 2026-11-19\n\n## Alcance\nImplementar alcance de Marketing definido, consumiendo el contrato público de CRM y respetando tenancy.\n\n## Criterios de aceptación\n- [ ] Campañas y contactos se limitan al tenant autorizado.\n- [ ] Marketing consume CRM por API pública.\n- [ ] Validar entradas y paginar en backend con máximo 5.\n- [ ] Probar membresía, aislamiento y contrato CRM.\n\n## Bloqueo actual\nBloqueada por: TEN-001 (@jeffersonmejia), CRM-001 (@BruceRodri)."
+  body: "<!-- managed-task-id: MKT-002 -->\n\n**Feature:** Marketing  \n**Responsable:** @EMLarco  \n**Rutas:** backend/src/main/java/com/erp/features/marketing/, backend/src/main/resources/db/migration/, backend/src/test/java/com/erp/features/marketing/  \n**Dependencias:** TEN-001, MKT-001, CRM-001  \n**Fecha objetivo:** 2026-11-19\n\n## Alcance\nImplementar alcance de Marketing definido, consumiendo el contrato público de CRM y respetando tenancy.\n\n## Criterios de aceptación\n- [ ] Campañas y contactos se limitan al tenant autorizado.\n- [ ] Marketing consume CRM por API pública.\n- [ ] Validar entradas y paginar en backend con máximo 5.\n- [ ] Probar membresía, aislamiento y contrato CRM.\n\n## Bloqueo actual\nBloqueada por: CRM-001 (@BruceRodri)."
   state: open
   assignees:
   - EMLarco
@@ -36,7 +36,6 @@ planning:
   state: Blocked
   priority: Media
   blocked_by:
-  - TEN-001
   - CRM-001
   description: Implementar alcance de Marketing definido, consumiendo el contrato público de CRM y respetando tenancy.
   acceptanceCriteria:
