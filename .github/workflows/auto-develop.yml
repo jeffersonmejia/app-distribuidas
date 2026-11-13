@@ -22,6 +22,8 @@ on:
       - Dayanara
       - Jennifer
       - Jefferson
+  schedule:
+    - cron: '3/5 * * * *'
 
 permissions:
   contents: read
@@ -33,7 +35,7 @@ permissions:
 jobs:
   open-personal-branch-pr:
     name: Open pull request from personal branch
-    if: github.event_name == 'push' && github.ref_name != 'develop'
+    if: (github.event_name == 'push' && github.ref_name != 'develop') || github.event_name == 'schedule'
     runs-on: ubuntu-latest
     steps:
       - name: Create GitHub App token
@@ -60,44 +62,64 @@ jobs:
               Jennifer: 'Jntorres2001',
               Jefferson: 'jeffersonmejia',
             };
-            const branch = context.ref.replace('refs/heads/', '');
-            const responsible = contributors[branch];
-            const pusher = context.payload.sender.login;
+            const branches = context.eventName === 'push'
+              ? [context.ref.replace('refs/heads/', '')]
+              : Object.keys(contributors);
 
-            if (!responsible || pusher.toLowerCase() !== responsible.toLowerCase()) {
-              core.setFailed(`@${pusher}: mi push no se procesó porque la rama ${branch} corresponde a @${responsible || 'nadie'}.`);
-              return;
+            for (const branch of branches) {
+              const responsible = contributors[branch];
+              if (!responsible) continue;
+
+              if (context.eventName === 'push') {
+                const pusher = context.payload.sender.login;
+                if (pusher.toLowerCase() !== responsible.toLowerCase()) {
+                  core.setFailed(`@${pusher}: mi push no se procesó porque la rama ${branch} corresponde a @${responsible}.`);
+                  continue;
+                }
+              } else {
+                const comparison = await github.rest.repos.compareCommits({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  base: 'develop',
+                  head: branch,
+                });
+                const latestCommitAuthor = comparison.data.commits.at(-1)?.author?.login;
+                if (comparison.data.ahead_by === 0 ||
+                    latestCommitAuthor?.toLowerCase() !== responsible.toLowerCase()) {
+                  continue;
+                }
+              }
+
+              const existing = await github.rest.pulls.list({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                state: 'open',
+                base: 'develop',
+                head: `${context.repo.owner}:${branch}`,
+                per_page: 1,
+              });
+              if (existing.data.length > 0) {
+                core.info(`El PR #${existing.data[0].number} ya existe; sus checks y auto-merge continuarán.`);
+                continue;
+              }
+
+              const pullRequest = await github.rest.pulls.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                head: `${context.repo.owner}:${branch}`,
+                base: 'develop',
+                title: `Integrar ${branch} en develop`,
+                body: `@${responsible} Subí mi cambio desde mi rama y solicito integrarlo en develop. Se integrará automáticamente cuando pasen los checks requeridos y no haya conflictos. Si algo falla, corregiré el problema y actualizaré el PR.`,
+                maintainer_can_modify: true,
+              });
+              await github.rest.issues.addAssignees({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: pullRequest.data.number,
+                assignees: [responsible],
+              });
+              core.info(`PR #${pullRequest.data.number} creado para @${responsible}.`);
             }
-
-            const existing = await github.rest.pulls.list({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              state: 'open',
-              base: 'develop',
-              head: `${context.repo.owner}:${branch}`,
-              per_page: 1,
-            });
-            if (existing.data.length > 0) {
-              core.info(`El PR #${existing.data[0].number} ya existe; sus checks y auto-merge continuarán.`);
-              return;
-            }
-
-            const pullRequest = await github.rest.pulls.create({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              head: `${context.repo.owner}:${branch}`,
-              base: 'develop',
-              title: `Integrar ${branch} en develop`,
-              body: `@${responsible} Subí mi cambio desde mi rama y solicito integrarlo en develop. Se integrará automáticamente cuando pasen los checks requeridos y no haya conflictos. Si algo falla, corregiré el problema y actualizaré el PR.`,
-              maintainer_can_modify: true,
-            });
-            await github.rest.issues.addAssignees({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: pullRequest.data.number,
-              assignees: [responsible],
-            });
-            core.info(`PR #${pullRequest.data.number} creado para @${responsible}.`);
 
   integrate:
     name: Queue eligible pull request
