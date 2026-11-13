@@ -96,7 +96,7 @@ Antes de diseñar o modificar entidades, repositorios, relaciones o esquema de b
 ## Commit y push
 
 - La configuración compartida y las dependencias de Commitlint están en la raíz: `commitlint.config.cjs` y `package.json`.
-- Usa Conventional Commits: `tipo(scope): descripción`, con tipo y scope en minúsculas; el scope es opcional. Los únicos tipos permitidos son `feat`, `fix` y `refactor`.
+- Usa Conventional Commits: `tipo(scope): descripción`, con tipo y scope en minúsculas; el scope es opcional. Los únicos tipos permitidos son `feat`, `fix`, `refactor` y `docs`.
 - Ejemplos válidos: `feat(crm): agrega clientes`, `fix: corrige cálculo`, `docs: actualiza guía`.
 - Antes de confirmar, prepara solo los archivos del cambio y revisa lo que enviarás:
 
@@ -135,5 +135,5 @@ Antes de diseñar o modificar entidades, repositorios, relaciones o esquema de b
 - Usa las ramas de trabajo existentes; no crees ramas temporales para tareas de documentación o gestión del proyecto.
 - Para el trabajo de Jefferson, confirma y publica los cambios en `Jefferson`.
 - Integra `Jefferson` en `develop` después de validar los commits y revisar el cambio.
-- Integra `develop` en `main` mediante un Pull Request. `main` requiere Pull Requests; no hagas push ni merge directo a esa rama.
+- Integra `develop` en `main` mediante un Pull Request con al menos una aprobación. `main` requiere Pull Requests y revisión manual; no hagas push ni merge directo a esa rama.
 - Mantén los cambios de cada tema en commits separados y con Conventional Commits.

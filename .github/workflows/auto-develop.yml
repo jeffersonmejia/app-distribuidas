@@ -16,23 +16,144 @@ on:
   push:
     branches:
       - develop
+      - Bruce
+      - Esteban
+      - Sahid
+      - Dayanara
+      - Jennifer
+      - Jefferson
+  schedule:
+    - cron: '3/5 * * * *'
 
 permissions:
   contents: read
   checks: read
   pull-requests: write
+  issues: write
   statuses: read
 
 jobs:
-  integrate:
-    name: Queue eligible pull request
+  open-personal-branch-pr:
+    name: Open pull request from personal branch
+    if: (github.event_name == 'push' && github.ref_name != 'develop') || github.event_name == 'schedule'
     runs-on: ubuntu-latest
     steps:
+      - name: Create GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@v3
+        with:
+          client-id: ${{ vars.AUTO_DEVELOP_APP_CLIENT_ID }}
+          private-key: ${{ secrets.AUTO_DEVELOP_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: app-distribuidas
+          permission-contents: read
+          permission-issues: write
+          permission-pull-requests: write
+      - name: Open pull request for the matching contributor
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ steps.app-token.outputs.token }}
+          script: |
+            const contributors = {
+              Bruce: 'BruceRodri',
+              Esteban: 'EMLarco',
+              Sahid: 'Sahid-B',
+              Dayanara: 'Dayanarablb',
+              Jennifer: 'Jntorres2001',
+              Jefferson: 'jeffersonmejia',
+            };
+            const branches = context.eventName === 'push'
+              ? [context.ref.replace('refs/heads/', '')]
+              : Object.keys(contributors);
+
+            for (const branch of branches) {
+              const responsible = contributors[branch];
+              if (!responsible) continue;
+
+              if (context.eventName === 'push') {
+                const pusher = context.payload.sender.login;
+                if (pusher.toLowerCase() !== responsible.toLowerCase()) {
+                  core.setFailed(`@${pusher}: mi push no se procesó porque la rama ${branch} corresponde a @${responsible}.`);
+                  continue;
+                }
+              } else {
+                const comparison = await github.rest.repos.compareCommits({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  base: 'develop',
+                  head: branch,
+                });
+                const latestCommitAuthor = comparison.data.commits.at(-1)?.author?.login;
+                if (comparison.data.ahead_by === 0 ||
+                    latestCommitAuthor?.toLowerCase() !== responsible.toLowerCase()) {
+                  continue;
+                }
+              }
+
+              const existing = await github.rest.pulls.list({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                state: 'open',
+                base: 'develop',
+                head: `${context.repo.owner}:${branch}`,
+                per_page: 1,
+              });
+              if (existing.data.length > 0) {
+                core.info(`El PR #${existing.data[0].number} ya existe; sus checks y auto-merge continuarán.`);
+                continue;
+              }
+
+              const pullRequest = await github.rest.pulls.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                head: `${context.repo.owner}:${branch}`,
+                base: 'develop',
+                title: `Integrar ${branch} en develop`,
+                body: `@${responsible} Subí mi cambio desde mi rama y solicito integrarlo en develop. Se integrará automáticamente cuando pasen los checks requeridos y no haya conflictos. Si algo falla, corregiré el problema y actualizaré el PR.`,
+                maintainer_can_modify: true,
+              });
+              await github.rest.issues.addAssignees({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: pullRequest.data.number,
+                assignees: [responsible],
+              });
+              core.info(`PR #${pullRequest.data.number} creado para @${responsible}.`);
+            }
+
+  integrate:
+    name: Queue eligible pull request
+    if: github.event_name != 'push' || github.ref_name == 'develop'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@v3
+        with:
+          client-id: ${{ vars.AUTO_DEVELOP_APP_CLIENT_ID }}
+          private-key: ${{ secrets.AUTO_DEVELOP_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: app-distribuidas
+          permission-checks: read
+          permission-contents: write
+          permission-issues: write
+          permission-pull-requests: write
+          permission-statuses: read
+          permission-workflows: write
       - name: Enable automatic merge or report blockers
         uses: actions/github-script@v7
         with:
+          github-token: ${{ steps.app-token.outputs.token }}
           script: |
             const marker = '<!-- develop-auto-integration -->';
+            const contributors = {
+              Bruce: 'BruceRodri',
+              Esteban: 'EMLarco',
+              Sahid: 'Sahid-B',
+              Dayanara: 'Dayanarablb',
+              Jennifer: 'Jntorres2001',
+              Jefferson: 'jeffersonmejia',
+            };
             const requiredChecks = new Set([
               'Validar commits',
               'Tests and 80% changed-code coverage',
@@ -73,6 +194,7 @@ jobs:
               });
               const pr = response.data;
               if (pr.base.ref !== 'develop') continue;
+              const responsible = contributors[pr.head.ref] || pr.user.login;
 
               const comments = await github.rest.issues.listComments({
                 owner: context.repo.owner,
@@ -88,7 +210,7 @@ jobs:
                     owner: context.repo.owner,
                     repo: context.repo.repo,
                     comment_id: automationComment.id,
-                    body: `${marker}\n@${pr.user.login} Se integró automáticamente en develop.`,
+                    body: `${marker}\n@${responsible} Mi cambio se integró automáticamente en develop.`,
                   });
                 }
                 continue;
@@ -131,7 +253,7 @@ jobs:
               }
 
               if (blockers.length > 0) {
-                const body = `${marker}\n@${pr.user.login} Este PR no se integró: fallaron ${[...new Set(blockers)].map((name) => `\`${name}\``).join(', ')}. Corrige el problema y actualiza el PR; la integración se reintentará automáticamente.`;
+                const body = `${marker}\n@${responsible} No pude integrar mi cambio: fallaron ${[...new Set(blockers)].map((name) => `\`${name}\``).join(', ')}. Voy a corregir el problema y actualizar el PR; la integración se reintentará automáticamente.`;
                 if (automationComment) {
                   await github.rest.issues.updateComment({
                     owner: context.repo.owner,
@@ -168,7 +290,52 @@ jobs:
                   owner: context.repo.owner,
                   repo: context.repo.repo,
                   comment_id: automationComment.id,
-                  body: `${marker}\n@${pr.user.login} Los bloqueos detectados ya no aparecen. GitHub dejó el PR en cola para integrarse automáticamente cuando todos los checks requeridos pasen y no haya conflictos.`,
+                  body: `${marker}\n@${responsible} Ya corregí los bloqueos de mi PR. GitHub lo dejó en cola para integrarse automáticamente cuando pasen todos los checks requeridos y no haya conflictos.`,
                 });
               }
             }
+
+  open-main-review-pr:
+    name: Open manual review pull request to main
+    if: github.event_name == 'push' && github.ref_name == 'develop'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@v3
+        with:
+          client-id: ${{ vars.AUTO_DEVELOP_APP_CLIENT_ID }}
+          private-key: ${{ secrets.AUTO_DEVELOP_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: app-distribuidas
+          permission-contents: read
+          permission-pull-requests: write
+      - name: Open pull request for manual review
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ steps.app-token.outputs.token }}
+          script: |
+            const open = await github.rest.pulls.list({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              base: 'main',
+              head: `${context.repo.owner}:develop`,
+              per_page: 1,
+            });
+
+            if (open.data.length > 0) {
+              core.info(`El PR #${open.data[0].number} ya reúne los cambios de develop para revisión manual.`);
+              return;
+            }
+
+            const pullRequest = await github.rest.pulls.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              head: 'develop',
+              base: 'main',
+              title: 'Promover develop a main',
+              body: 'Solicito revisión manual de los cambios integrados en develop antes de promoverlos a main. Este PR no se fusiona automáticamente.',
+              maintainer_can_modify: true,
+            });
+            core.info(`PR #${pullRequest.data.number} abierto para revisión manual; no se activará auto-merge.`);
