@@ -65,7 +65,7 @@ jobs:
             const pusher = context.payload.sender.login;
 
             if (!responsible || pusher.toLowerCase() !== responsible.toLowerCase()) {
-              core.setFailed(`@${pusher}: la rama ${branch} está asociada a @${responsible || 'nadie'}. No se abrió un PR.`);
+              core.setFailed(`@${pusher}: mi push no se procesó porque la rama ${branch} corresponde a @${responsible || 'nadie'}.`);
               return;
             }
 
@@ -88,7 +88,7 @@ jobs:
               head: `${context.repo.owner}:${branch}`,
               base: 'develop',
               title: `Integrar ${branch} en develop`,
-              body: `@${responsible} Tu cambio ya tiene un PR automático hacia develop. GitHub lo integrará cuando pase los checks requeridos y no haya conflictos. Si algo falla, recibirás el detalle aquí.`,
+              body: `@${responsible} Subí mi cambio desde mi rama y solicito integrarlo en develop. Se integrará automáticamente cuando pasen los checks requeridos y no haya conflictos. Si algo falla, corregiré el problema y actualizaré el PR.`,
               maintainer_can_modify: true,
             });
             await github.rest.issues.addAssignees({
@@ -187,7 +187,7 @@ jobs:
                     owner: context.repo.owner,
                     repo: context.repo.repo,
                     comment_id: automationComment.id,
-                    body: `${marker}\n@${responsible} Se integró automáticamente en develop.`,
+                    body: `${marker}\n@${responsible} Mi cambio se integró automáticamente en develop.`,
                   });
                 }
                 continue;
@@ -230,7 +230,7 @@ jobs:
               }
 
               if (blockers.length > 0) {
-                const body = `${marker}\n@${responsible} Este PR no se integró: fallaron ${[...new Set(blockers)].map((name) => `\`${name}\``).join(', ')}. Corrige el problema y actualiza el PR; la integración se reintentará automáticamente.`;
+                const body = `${marker}\n@${responsible} No pude integrar mi cambio: fallaron ${[...new Set(blockers)].map((name) => `\`${name}\``).join(', ')}. Voy a corregir el problema y actualizar el PR; la integración se reintentará automáticamente.`;
                 if (automationComment) {
                   await github.rest.issues.updateComment({
                     owner: context.repo.owner,
@@ -267,7 +267,7 @@ jobs:
                   owner: context.repo.owner,
                   repo: context.repo.repo,
                   comment_id: automationComment.id,
-                  body: `${marker}\n@${responsible} Los bloqueos detectados ya no aparecen. GitHub dejó el PR en cola para integrarse automáticamente cuando todos los checks requeridos pasen y no haya conflictos.`,
+                  body: `${marker}\n@${responsible} Ya corregí los bloqueos de mi PR. GitHub lo dejó en cola para integrarse automáticamente cuando pasen todos los checks requeridos y no haya conflictos.`,
                 });
               }
             }
