@@ -1,0 +1,76 @@
+id: GOV-001
+github:
+  repository: jeffersonmejia/app-distribuidas
+  issue_number: 18
+issue:
+  title: '[GOV-001] Establecer configuración y lineamientos base del repositorio'
+  body: '<!-- managed-task-id: GOV-001 -->
+
+
+    ## Descripción
+
+    Documentar criterios de arquitectura, seguridad y entrega, y establecer convenciones de editor e ignorados del repositorio.
+
+
+    ## Criterios de aceptación
+
+    - Los lineamientos de desarrollo están documentados.
+
+    - La configuración de editor fija formato y fin de línea.
+
+    - Los archivos locales y artefactos generados se excluyen del control de versiones.
+
+
+    ## Gestión
+
+    - Área: Arquitectura
+
+    - Prioridad: Media
+
+    - Estado: Completado
+
+    - Responsable: @jeffersonmejia
+
+    - Rama: Jefferson
+
+    - Rutas: AGENTS.md, .editorconfig, .gitignore, README.md
+
+    - Dependencias: Ninguna
+
+    - Fecha de completado: 2026-11-12'
+  state: closed
+  assignees:
+  - jeffersonmejia
+  labels:
+  - documentation
+project:
+  Repository: jeffersonmejia/app-distribuidas
+  Title: '[GOV-001] Establecer configuración y lineamientos base del repositorio'
+  Status: Done
+  Estado: Done
+  Área: Arquitectura
+  Fecha de completado: '2026-11-12'
+  Identificador de tarea: GOV-001
+  Prioridad: Media
+  Fecha objetivo: '2026-11-22'
+planning:
+  acceptanceCriteria:
+  - Los lineamientos de desarrollo están documentados.
+  - La configuración de editor fija formato y fin de línea.
+  - Los archivos locales y artefactos generados se excluyen del control de versiones.
+  paths:
+  - AGENTS.md
+  - .editorconfig
+  - .gitignore
+  - README.md
+  priority: Media
+  assignmentNote: null
+  assignee: jeffersonmejia
+  state: Done
+  completedAt: '2026-11-12'
+  area: Arquitectura
+  dependencies: []
+  targetDate: '2026-11-22'
+  description: Documentar criterios de arquitectura, seguridad y entrega, y establecer convenciones de editor e ignorados del repositorio.
+  requestedAssignee: null
+  branch: Jefferson

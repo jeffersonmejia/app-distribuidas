@@ -22,3 +22,9 @@ pnpm-debug.log*
 .vscode/
 .DS_Store
 Thumbs.db
+
+# GitHub Projects as Code: sincronización local
+.github/projects/.cache/
+**/__pycache__/
+.pytest_cache/
+.venv/

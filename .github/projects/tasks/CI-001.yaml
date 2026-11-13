@@ -1,0 +1,76 @@
+id: CI-001
+github:
+  repository: jeffersonmejia/app-distribuidas
+  issue_number: 14
+issue:
+  title: '[CI-001] Validar Conventional Commits en Pull Requests'
+  body: '<!-- managed-task-id: CI-001 -->
+
+
+    ## Descripción
+
+    Configurar commitlint con la configuración convencional y validar todos los commits de cada Pull Request dirigido a develop o main.
+
+
+    ## Criterios de aceptación
+
+    - El workflow valida el rango completo de commits del Pull Request.
+
+    - Solo se aceptan los tipos feat, fix y refactor.
+
+    - Los scopes son opcionales y los mensajes inválidos fallan con errores legibles.
+
+
+    ## Gestión
+
+    - Área: Calidad
+
+    - Prioridad: Alta
+
+    - Estado: Completado
+
+    - Responsable: @jeffersonmejia
+
+    - Rama: Jefferson
+
+    - Rutas: .github/workflows/commitlint.yml, commitlint.config.cjs, package.json
+
+    - Dependencias: Ninguna
+
+    - Fecha de completado: 2026-11-12'
+  state: closed
+  assignees:
+  - jeffersonmejia
+  labels:
+  - devops
+  - testing
+project:
+  Repository: jeffersonmejia/app-distribuidas
+  Title: '[CI-001] Validar Conventional Commits en Pull Requests'
+  Status: Done
+  Estado: Done
+  Prioridad: Alta
+  Área: Calidad
+  Identificador de tarea: CI-001
+  Fecha de completado: '2026-11-12'
+  Fecha objetivo: '2026-11-22'
+planning:
+  acceptanceCriteria:
+  - El workflow valida el rango completo de commits del Pull Request.
+  - Solo se aceptan los tipos feat, fix y refactor.
+  - Los scopes son opcionales y los mensajes inválidos fallan con errores legibles.
+  paths:
+  - .github/workflows/commitlint.yml
+  - commitlint.config.cjs
+  - package.json
+  priority: Alta
+  assignmentNote: null
+  assignee: jeffersonmejia
+  state: Done
+  completedAt: '2026-11-12'
+  area: Calidad
+  dependencies: []
+  targetDate: '2026-11-22'
+  description: Configurar commitlint con la configuración convencional y validar todos los commits de cada Pull Request dirigido a develop o main.
+  requestedAssignee: null
+  branch: Jefferson

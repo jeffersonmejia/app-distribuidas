@@ -1,0 +1,41 @@
+id: AUTH-002
+github:
+  repository: jeffersonmejia/app-distribuidas
+  issue_number: 27
+issue:
+  title: '[AUTH-002] Implementar identidad y autorización del backend'
+  body: "<!-- managed-task-id: AUTH-002 -->\n\n**Feature:** Multitenancy  \n**Responsable:** @EMLarco  \n**Rutas:** backend/src/main/java/com/erp/features/identity/, backend/src/test/java/com/erp/features/identity/  \n**Dependencias:** AUTH-001  \n**Fecha objetivo:** 2026-11-16\n\n## Alcance\nImplementar autenticación y publicación del actor autenticado según el contrato aprobado.\n\n## Criterios de aceptación\n- [ ] El actor proviene de credenciales validadas.\n- [ ] Las rutas privadas rechazan solicitudes no autenticadas o no autorizadas.\n- [ ] Credenciales y errores no aparecen en logs ni respuestas.\n- [ ] Pruebas cubren acceso permitido y denegado.\n\n## Bloqueo actual\nBloqueada por: AUTH-001 (@jeffersonmejia)."
+  state: open
+  assignees:
+  - EMLarco
+  labels:
+  - backend
+  - testing
+project:
+  Repository: jeffersonmejia/app-distribuidas
+  Title: '[AUTH-002] Implementar identidad y autorización del backend'
+  Status: Blocked
+  Estado: Blocked
+  Prioridad: Alta
+  Área: Multitenancy
+  Identificador de tarea: AUTH-002
+  Fecha objetivo: '2026-11-16'
+planning:
+  area: Multitenancy
+  assignee: EMLarco
+  paths:
+  - backend/src/main/java/com/erp/features/identity/
+  - backend/src/test/java/com/erp/features/identity/
+  dependencies:
+  - AUTH-001
+  targetDate: '2026-11-16'
+  state: Blocked
+  priority: Alta
+  blocked_by:
+  - AUTH-001
+  description: Implementar autenticación y publicación del actor autenticado según el contrato aprobado.
+  acceptanceCriteria:
+  - El actor proviene de credenciales validadas.
+  - Las rutas privadas rechazan solicitudes no autenticadas o no autorizadas.
+  - Credenciales y errores no aparecen en logs ni respuestas.
+  - Pruebas cubren acceso permitido y denegado.

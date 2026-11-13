@@ -1,0 +1,45 @@
+id: TEN-001
+github:
+  repository: jeffersonmejia/app-distribuidas
+  issue_number: 28
+issue:
+  title: '[TEN-001] Implementar tenants, membresías y contexto por solicitud'
+  body: "<!-- managed-task-id: TEN-001 -->\n\n**Feature:** Multitenancy  \n**Responsable:** @jeffersonmejia  \n**Rutas:** backend/src/main/java/com/erp/features/tenancy/, backend/src/main/resources/db/migration/, backend/src/test/java/com/erp/features/tenancy/, docs/multitenancy.md  \n**Dependencias:** AUTH-002  \n**Fecha objetivo:** 2026-11-17\n\n## Alcance\nImplementar ciclo tenant/membresía y contexto tenant/actor validado, con persistencia Code First y migraciones compatibles.\n\n## Criterios de aceptación\n- [ ] Validar membresía activa y permisos antes del acceso a datos.\n- [ ] Propagar contexto explícito sin reutilizarlo entre solicitudes.\n- [ ] Tablas tenant-scoped usan tenant_id NOT NULL y constraints tenant-scoped.\n- [ ] RLS falla cerrada y runtime no es propietario privilegiado ni BYPASSRLS.\n- [ ] Probar acceso cruzado, falta de contexto, rollback y limpieza del contexto.\n\n## Bloqueo actual\nBloqueada por: AUTH-002 (@EMLarco)."
+  state: open
+  assignees:
+  - jeffersonmejia
+  labels:
+  - backend
+  - database
+  - testing
+project:
+  Repository: jeffersonmejia/app-distribuidas
+  Title: '[TEN-001] Implementar tenants, membresías y contexto por solicitud'
+  Status: Blocked
+  Estado: Blocked
+  Prioridad: Alta
+  Área: Multitenancy
+  Identificador de tarea: TEN-001
+  Fecha objetivo: '2026-11-17'
+planning:
+  area: Multitenancy
+  assignee: jeffersonmejia
+  paths:
+  - backend/src/main/java/com/erp/features/tenancy/
+  - backend/src/main/resources/db/migration/
+  - backend/src/test/java/com/erp/features/tenancy/
+  - docs/multitenancy.md
+  dependencies:
+  - AUTH-002
+  targetDate: '2026-11-17'
+  state: Blocked
+  priority: Alta
+  blocked_by:
+  - AUTH-002
+  description: Implementar ciclo tenant/membresía y contexto tenant/actor validado, con persistencia Code First y migraciones compatibles.
+  acceptanceCriteria:
+  - Validar membresía activa y permisos antes del acceso a datos.
+  - Propagar contexto explícito sin reutilizarlo entre solicitudes.
+  - Tablas tenant-scoped usan tenant_id NOT NULL y constraints tenant-scoped.
+  - RLS falla cerrada y runtime no es propietario privilegiado ni BYPASSRLS.
+  - Probar acceso cruzado, falta de contexto, rollback y limpieza del contexto.

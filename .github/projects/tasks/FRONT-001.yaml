@@ -1,0 +1,57 @@
+id: FRONT-001
+github:
+  repository: jeffersonmejia/app-distribuidas
+  issue_number: 3
+issue:
+  title: '[FRONT-001] Implementar sistema de diseño global'
+  body: '<!-- managed-task-id: FRONT-001 -->
+
+
+    ## Descripción
+
+    Definir tokens de diseño, crear componentes reutilizables y preparar estilos responsivos para el frontend.
+
+
+    ## Criterios de aceptación
+
+    - Los tokens globales están definidos.
+
+    - Los componentes reutilizables acordados están preparados.
+
+    - Los estilos base responden a distintos tamaños de pantalla.
+
+
+    ## Gestión
+
+    - Área: Frontend
+
+    - Prioridad: Alta
+
+    - Estado: Pendiente
+
+    - Responsable: @Dayanarablb
+
+    - Rama: Dayanara
+
+    - Rutas: frontend/src/theme/, frontend/src/components/
+
+    - Dependencias: Ninguna'
+  state: open
+  assignees:
+  - Dayanarablb
+  labels:
+  - enhancement
+  - frontend
+project:
+  Repository: jeffersonmejia/app-distribuidas
+  Title: '[FRONT-001] Implementar sistema de diseño global'
+  Status: Todo
+  Estado: Todo
+  Prioridad: Alta
+  Área: Frontend
+  Identificador de tarea: FRONT-001
+  Fecha objetivo: '2026-11-14'
+planning:
+  targetDate: '2026-11-14'
+  state: Todo
+  priority: Alta

@@ -1,0 +1,88 @@
+id: QA-001
+github:
+  repository: jeffersonmejia/app-distribuidas
+  issue_number: 13
+issue:
+  title: '[QA-001] Definir estrategia inicial de pruebas'
+  body: '<!-- managed-task-id: QA-001 -->
+
+
+    ## Descripción
+
+    Definir y documentar la estrategia inicial de pruebas unitarias, de integración y de rendimiento con k6. Jefferson (jeffersonmejia) es responsable de la definición. Jennifer (Jntorres2001) ejecutará las pruebas cuando existan funcionalidades y criterios definidos. Esta tarea no implementa pruebas ni código durante el scaffolding inicial.
+
+
+    ## Criterios de aceptación
+
+    - La estrategia está documentada en `docs/testing.md`.
+
+    - Incluye pruebas unitarias, de integración y de rendimiento con k6.
+
+    - Define como flujos críticos POS/registro de venta, consulta de inventario y búsqueda/listado de clientes CRM.
+
+    - Define el perfil inicial de 1 a 10 VUs y 5 minutos a carga estable.
+
+    - Define umbrales: errores HTTP <1%, p95 de lecturas <500 ms y p95 de escrituras <1 s.
+
+    - Separa la verificación de aislamiento tenant de los umbrales de rendimiento.
+
+    - No crea scripts k6 ni pruebas de aplicación durante el scaffolding inicial.
+
+
+    ## Gestión
+
+    - Área: Calidad y testing
+
+    - Prioridad: Alta
+
+    - Estado: Completado
+
+    - Responsable de definición: @jeffersonmejia
+
+    - Responsable de ejecución: @Jntorres2001
+
+    - Rama: Jefferson
+
+    - Rutas: docs/testing.md
+
+    - Dependencias: Funcionalidades implementadas por feature'
+  state: closed
+  assignees:
+  - jeffersonmejia
+  labels:
+  - documentation
+  - testing
+project:
+  Repository: jeffersonmejia/app-distribuidas
+  Title: '[QA-001] Definir estrategia inicial de pruebas'
+  Status: Done
+  Estado: Done
+  Prioridad: Alta
+  Área: Testing
+  Identificador de tarea: QA-001
+  Fecha objetivo: '2026-11-22'
+planning:
+  acceptanceCriteria:
+  - La estrategia cubre pruebas unitarias, integración y contrato.
+  - Los criterios de aceptación están documentados.
+  - Las responsabilidades de prueba por módulo están claras.
+  paths:
+  - docs/testing.md
+  - configuraciones de pruebas acordadas
+  priority: Alta
+  assignmentNote: Esteban prepara la estrategia y las pruebas; Jennifer (Jntorres2001), con invitación pendiente, verifica resultados y solicita correcciones a quien corresponda.
+  assignee: EMLarco
+  state: Done
+  completedAt: null
+  area: Testing
+  dependencies:
+  - ARC-001
+  - ARC-002
+  - CRM-001
+  - POS-001
+  - INV-001
+  - ACC-001
+  targetDate: '2026-11-22'
+  description: Definir pruebas unitarias, de integración y de contrato, establecer criterios de aceptación y documentar responsabilidades de prueba por módulo.
+  requestedAssignee: null
+  branch: Esteban

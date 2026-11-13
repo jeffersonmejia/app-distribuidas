@@ -1,0 +1,78 @@
+id: QA-002
+github:
+  repository: jeffersonmejia/app-distribuidas
+  issue_number: 19
+issue:
+  title: '[QA-002] Configurar Swagger para probar APIs en desarrollo'
+  body: '<!-- managed-task-id: QA-002 -->
+
+
+    ## Descripción
+
+    Configurar Swagger UI con Springdoc para que el equipo pueda explorar y probar las APIs REST durante el desarrollo local, manteniendo la documentación deshabilitada por defecto.
+
+
+    ## Criterios de aceptación
+
+    - Springdoc y Swagger UI están declarados como dependencias del backend.
+
+    - La documentación OpenAPI está deshabilitada por defecto y se activa con el perfil dev.
+
+    - Los pasos de ejecución local y las rutas de Swagger UI y OpenAPI están documentados.
+
+
+    ## Gestión
+
+    - Área: Testing
+
+    - Prioridad: Media
+
+    - Estado: Completado
+
+    - Responsable: @jeffersonmejia
+
+    - Rama: Jefferson
+
+    - Rutas: backend/pom.xml, backend/src/main/resources/application.properties, backend/src/main/resources/application-dev.properties, docs/prueba-apis.md
+
+    - Dependencias: Ninguna
+
+    - Fecha de completado: 2026-11-12'
+  state: closed
+  assignees:
+  - jeffersonmejia
+  labels:
+  - backend
+  - documentation
+  - testing
+project:
+  Repository: jeffersonmejia/app-distribuidas
+  Title: '[QA-002] Configurar Swagger para probar APIs en desarrollo'
+  Status: Done
+  Estado: Done
+  Prioridad: Media
+  Área: Testing
+  Identificador de tarea: QA-002
+  Fecha de completado: '2026-11-12'
+  Fecha objetivo: '2026-11-22'
+planning:
+  acceptanceCriteria:
+  - Springdoc y Swagger UI están declarados como dependencias del backend.
+  - La documentación OpenAPI está deshabilitada por defecto y se activa con el perfil dev.
+  - Los pasos de ejecución local y las rutas de Swagger UI y OpenAPI están documentados.
+  paths:
+  - backend/pom.xml
+  - backend/src/main/resources/application.properties
+  - backend/src/main/resources/application-dev.properties
+  - docs/prueba-apis.md
+  priority: Media
+  assignmentNote: null
+  assignee: jeffersonmejia
+  state: Done
+  completedAt: '2026-11-12'
+  area: Testing
+  dependencies: []
+  targetDate: '2026-11-22'
+  description: Configurar Swagger UI con Springdoc para que el equipo pueda explorar y probar las APIs REST durante el desarrollo local, manteniendo la documentación deshabilitada por defecto.
+  requestedAssignee: null
+  branch: Jefferson

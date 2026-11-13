@@ -1,0 +1,59 @@
+id: ACC-001
+github:
+  repository: jeffersonmejia/app-distribuidas
+  issue_number: 8
+issue:
+  title: '[ACC-001] Diseñar módulo contable inicial'
+  body: '<!-- managed-task-id: ACC-001 -->
+
+
+    ## Descripción
+
+    Definir cuentas, asientos y movimientos, diseñar los contratos del módulo y preparar reglas y pruebas unitarias.
+
+
+    ## Criterios de aceptación
+
+    - El diseño de cuentas, asientos y movimientos está documentado.
+
+    - Los contratos del módulo están definidos.
+
+    - Las reglas iniciales y pruebas unitarias están acordadas.
+
+
+    ## Gestión
+
+    - Área: Contabilidad
+
+    - Prioridad: Alta
+
+    - Estado: Pendiente
+
+    - Responsable: @EMLarco
+
+    - Rama: Esteban
+
+    - Rutas: backend/.../features/accounting/
+
+    - Dependencias: Ninguna'
+  state: open
+  assignees:
+  - EMLarco
+  labels:
+  - backend
+  - database
+  - documentation
+  - testing
+project:
+  Repository: jeffersonmejia/app-distribuidas
+  Title: '[ACC-001] Diseñar módulo contable inicial'
+  Status: Todo
+  Estado: Todo
+  Prioridad: Alta
+  Área: Contabilidad
+  Identificador de tarea: ACC-001
+  Fecha objetivo: '2026-11-14'
+planning:
+  targetDate: '2026-11-14'
+  state: Todo
+  priority: Alta

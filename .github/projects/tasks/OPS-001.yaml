@@ -1,0 +1,76 @@
+id: OPS-001
+github:
+  repository: jeffersonmejia/app-distribuidas
+  issue_number: 16
+issue:
+  title: '[OPS-001] Preparar servicios locales de PostgreSQL y SonarQube'
+  body: '<!-- managed-task-id: OPS-001 -->
+
+
+    ## Descripción
+
+    Definir archivos Compose locales para PostgreSQL del ERP y SonarQube con su propia base PostgreSQL, healthchecks, redes y variables de entorno de ejemplo.
+
+
+    ## Criterios de aceptación
+
+    - PostgreSQL del ERP se configura con persistencia y healthcheck.
+
+    - SonarQube utiliza una base separada y redes aisladas.
+
+    - Las credenciales se documentan como variables locales y no se almacenan como secretos reales.
+
+
+    ## Gestión
+
+    - Área: Calidad
+
+    - Prioridad: Media
+
+    - Estado: Completado
+
+    - Responsable: @jeffersonmejia
+
+    - Rama: Jefferson
+
+    - Rutas: docker/compose.yml, docker/compose.sonarqube.yml, docker/.env.example
+
+    - Dependencias: Ninguna
+
+    - Fecha de completado: 2026-11-12'
+  state: closed
+  assignees:
+  - jeffersonmejia
+  labels:
+  - database
+  - devops
+project:
+  Repository: jeffersonmejia/app-distribuidas
+  Title: '[OPS-001] Preparar servicios locales de PostgreSQL y SonarQube'
+  Status: Done
+  Estado: Done
+  Área: Calidad
+  Fecha de completado: '2026-11-12'
+  Identificador de tarea: OPS-001
+  Prioridad: Media
+  Fecha objetivo: '2026-11-22'
+planning:
+  acceptanceCriteria:
+  - PostgreSQL del ERP se configura con persistencia y healthcheck.
+  - SonarQube utiliza una base separada y redes aisladas.
+  - Las credenciales se documentan como variables locales y no se almacenan como secretos reales.
+  paths:
+  - docker/compose.yml
+  - docker/compose.sonarqube.yml
+  - docker/.env.example
+  priority: Media
+  assignmentNote: null
+  assignee: jeffersonmejia
+  state: Done
+  completedAt: '2026-11-12'
+  area: Calidad
+  dependencies: []
+  targetDate: '2026-11-22'
+  description: Definir archivos Compose locales para PostgreSQL del ERP y SonarQube con su propia base PostgreSQL, healthchecks, redes y variables de entorno de ejemplo.
+  requestedAssignee: null
+  branch: Jefferson

@@ -1,0 +1,57 @@
+id: INT-001
+github:
+  repository: jeffersonmejia/app-distribuidas
+  issue_number: 36
+issue:
+  title: '[INT-001] Integrar features y validar construcción completa'
+  body: "<!-- managed-task-id: INT-001 -->\n\n**Feature:** Arquitectura  \n**Responsable:** @jeffersonmejia  \n**Rutas:** backend/, frontend/, docs/arquitectura.md  \n**Dependencias:** AUTH-002, TEN-001, CRM-001, INV-003, POS-002, ACC-002, PROJ-001, MKT-002  \n**Fecha objetivo:** 2026-11-20\n\n## Alcance\nIntegrar Pull Requests en develop y resolver incompatibilidades entre límites de módulo, contratos, migraciones y frontend.\n\n## Criterios de aceptación\n- [ ] Build y checks backend/frontend pasan desde develop.\n- [ ] No se agregan dependencias internas ni ciclos entre features.\n- [ ] Migraciones aplican desde una base limpia y Hibernate valida esquema.\n- [ ] Rutas, DTOs, errores y permisos coinciden en frontend/backend.\n\n## Bloqueo actual\nBloqueada por: AUTH-002 (@EMLarco), TEN-001 (@jeffersonmejia), CRM-001 (@BruceRodri), INV-003 (@Sahid-B), POS-002 (@BruceRodri), ACC-002 (@EMLarco), PROJ-001 (@EMLarco), MKT-002 (@EMLarco)."
+  state: open
+  assignees:
+  - jeffersonmejia
+  labels:
+  - backend
+  - frontend
+  - testing
+project:
+  Repository: jeffersonmejia/app-distribuidas
+  Title: '[INT-001] Integrar features y validar construcción completa'
+  Status: Blocked
+  Estado: Blocked
+  Prioridad: Alta
+  Área: Arquitectura
+  Identificador de tarea: INT-001
+  Fecha objetivo: '2026-11-20'
+planning:
+  area: Arquitectura
+  assignee: jeffersonmejia
+  paths:
+  - backend/
+  - frontend/
+  - docs/arquitectura.md
+  dependencies:
+  - AUTH-002
+  - TEN-001
+  - CRM-001
+  - INV-003
+  - POS-002
+  - ACC-002
+  - PROJ-001
+  - MKT-002
+  targetDate: '2026-11-20'
+  state: Blocked
+  priority: Alta
+  blocked_by:
+  - AUTH-002
+  - TEN-001
+  - CRM-001
+  - INV-003
+  - POS-002
+  - ACC-002
+  - PROJ-001
+  - MKT-002
+  description: Integrar Pull Requests en develop y resolver incompatibilidades entre límites de módulo, contratos, migraciones y frontend.
+  acceptanceCriteria:
+  - Build y checks backend/frontend pasan desde develop.
+  - No se agregan dependencias internas ni ciclos entre features.
+  - Migraciones aplican desde una base limpia y Hibernate valida esquema.
+  - Rutas, DTOs, errores y permisos coinciden en frontend/backend.

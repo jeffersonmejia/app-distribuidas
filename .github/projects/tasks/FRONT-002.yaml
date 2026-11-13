@@ -1,0 +1,72 @@
+id: FRONT-002
+github:
+  repository: jeffersonmejia/app-distribuidas
+  issue_number: 7
+issue:
+  title: '[FRONT-002] Implementar layout y navegación principal'
+  body: '<!-- managed-task-id: FRONT-002 -->
+
+
+    ## Descripción
+
+    Crear el layout general, organizar la navegación por módulos y preparar las rutas sin implementar pantallas de negocio.
+
+
+    ## Criterios de aceptación
+
+    - El layout general está definido.
+
+    - La navegación está organizada por módulos.
+
+    - Las rutas base están preparadas sin pantallas de negocio.
+
+
+    ## Gestión
+
+    - Área: Frontend
+
+    - Prioridad: Alta
+
+    - Estado: Completado
+
+    - Responsable: @Dayanarablb
+
+    - Rama: Dayanara
+
+    - Rutas: frontend/src/app/
+
+    - Dependencias: FRONT-001'
+  state: closed
+  assignees:
+  - Dayanarablb
+  labels:
+  - enhancement
+  - frontend
+project:
+  Repository: jeffersonmejia/app-distribuidas
+  Title: '[FRONT-002] Implementar layout y navegación principal'
+  Status: Done
+  Estado: Done
+  Prioridad: Alta
+  Área: Frontend
+  Identificador de tarea: FRONT-002
+  Fecha objetivo: '2026-11-22'
+planning:
+  acceptanceCriteria:
+  - El layout general está definido.
+  - La navegación está organizada por módulos.
+  - Las rutas base están preparadas sin pantallas de negocio.
+  paths:
+  - frontend/src/app/
+  priority: Alta
+  assignmentNote: null
+  assignee: Dayanarablb
+  state: Done
+  completedAt: null
+  area: Frontend
+  dependencies:
+  - FRONT-001
+  targetDate: '2026-11-22'
+  description: Crear el layout general, organizar la navegación por módulos y preparar las rutas sin implementar pantallas de negocio.
+  requestedAssignee: null
+  branch: Dayanara

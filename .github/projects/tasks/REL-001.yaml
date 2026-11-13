@@ -1,0 +1,49 @@
+id: REL-001
+github:
+  repository: jeffersonmejia/app-distribuidas
+  issue_number: 41
+issue:
+  title: '[REL-001] Ejecutar aceptación final y preparar entrega del MVP'
+  body: "<!-- managed-task-id: REL-001 -->\n\n**Feature:** Arquitectura  \n**Responsable:** @jeffersonmejia  \n**Rutas:** README.md, docs/, frontend/, backend/  \n**Dependencias:** QA-003, QA-004, OPS-002, SEC-001  \n**Fecha objetivo:** 2026-11-22\n\n## Alcance\nEjecutar aceptación del MVP integrado y preparar entrega para revisión del equipo el 22 de noviembre.\n\n## Criterios de aceptación\n- [ ] Verificar acceso/tenant, clientes, inventario/venta y módulos entregados de extremo a extremo.\n- [ ] No quedan defectos bloqueantes ni conflictos de sincronización pendientes.\n- [ ] Instrucciones permiten arrancar, probar y recuperar el entorno local.\n- [ ] Declarar funcionalidades completas y todo alcance que quede pendiente.\n\n## Bloqueo actual\nBloqueada por: QA-003 (@Jntorres2001), QA-004 (@Jntorres2001), OPS-002 (@jeffersonmejia), SEC-001 (@jeffersonmejia)."
+  state: open
+  assignees:
+  - jeffersonmejia
+  labels:
+  - documentation
+  - testing
+project:
+  Repository: jeffersonmejia/app-distribuidas
+  Title: '[REL-001] Ejecutar aceptación final y preparar entrega del MVP'
+  Status: Blocked
+  Estado: Blocked
+  Prioridad: Alta
+  Área: Arquitectura
+  Identificador de tarea: REL-001
+  Fecha objetivo: '2026-11-22'
+planning:
+  area: Arquitectura
+  assignee: jeffersonmejia
+  paths:
+  - README.md
+  - docs/
+  - frontend/
+  - backend/
+  dependencies:
+  - QA-003
+  - QA-004
+  - OPS-002
+  - SEC-001
+  targetDate: '2026-11-22'
+  state: Blocked
+  priority: Alta
+  blocked_by:
+  - QA-003
+  - QA-004
+  - OPS-002
+  - SEC-001
+  description: Ejecutar aceptación del MVP integrado y preparar entrega para revisión del equipo el 22 de noviembre.
+  acceptanceCriteria:
+  - Verificar acceso/tenant, clientes, inventario/venta y módulos entregados de extremo a extremo.
+  - No quedan defectos bloqueantes ni conflictos de sincronización pendientes.
+  - Instrucciones permiten arrancar, probar y recuperar el entorno local.
+  - Declarar funcionalidades completas y todo alcance que quede pendiente.
