@@ -1,0 +1,75 @@
+id: MKT-001
+github:
+  repository: jeffersonmejia/app-distribuidas
+  issue_number: 11
+issue:
+  title: '[MKT-001] Diseñar contratos iniciales de Marketing'
+  body: '<!-- managed-task-id: MKT-001 -->
+
+
+    ## Descripción
+
+    Diseñar contratos para campañas y contactos, y definir interfaces con CRM sin modificar directamente ese módulo.
+
+
+    ## Criterios de aceptación
+
+    - Los contratos iniciales de campañas y contactos están definidos.
+
+    - Las interfaces con CRM están documentadas.
+
+    - La tarea no modifica directamente archivos de CRM.
+
+
+    ## Gestión
+
+    - Área: Marketing
+
+    - Prioridad: Media
+
+    - Estado: Completado
+
+    - Responsable: @EMLarco
+
+    - Rama: Esteban
+
+    - Rutas: backend/.../features/marketing/
+
+    - Dependencias: CRM-001'
+  state: closed
+  assignees:
+  - EMLarco
+  labels:
+  - backend
+  - documentation
+  - enhancement
+project:
+  Repository: jeffersonmejia/app-distribuidas
+  Title: '[MKT-001] Diseñar contratos iniciales de Marketing'
+  Status: Done
+  Estado: Done
+  Prioridad: Media
+  Área: Marketing
+  Identificador de tarea: MKT-001
+  Fecha objetivo: '2026-11-22'
+planning:
+  acceptanceCriteria:
+  - Los contratos iniciales de campañas y contactos están definidos.
+  - Las interfaces con CRM están documentadas.
+  - La tarea no modifica directamente archivos de CRM.
+  paths:
+  - backend/.../features/marketing/
+  priority: Media
+  assignmentNote: null
+  assignee: EMLarco
+  state: Done
+  completedAt: null
+  area: Marketing
+  dependencies:
+  - ARC-001
+  - ARC-002
+  - CRM-001
+  targetDate: '2026-11-22'
+  description: Diseñar contratos para campañas y contactos, y definir interfaces con CRM sin modificar directamente ese módulo.
+  requestedAssignee: null
+  branch: Esteban

@@ -9,7 +9,7 @@
 
 ## Equipo y responsabilidades
 
-Identifica a la persona solicitante por su usuario de GitHub cuando esté disponible y adapta la ayuda a su rol. Si no se puede identificar con certeza, pregunta antes de asumirlo.
+Antes de aplicar autoridad o responsabilidades personales, identifica al solicitante con GitHub CLI (`gh api user --jq .login`). Aplica el rol y la autoridad de Jefferson descritos aquí únicamente si el comando confirma exactamente `jeffersonmejia`. No infieras su identidad por la rama activa, la ruta, el nombre visible ni el historial. Si GitHub CLI no confirma esa cuenta, ignora esta instrucción especial de autoridad de Jefferson y sigue únicamente las instrucciones explícitas y autorizadas del solicitante; si el alcance no queda claro, consúltalo antes de cambiarlo. No pidas al solicitante que vuelva a explicar esta regla en cada asignación.
 
 | Persona | Usuario de GitHub | Rol |
 | --- | --- | --- |
@@ -18,7 +18,7 @@ Identifica a la persona solicitante por su usuario de GitHub cuando esté dispon
 | Esteban | `EMLarco` | Backend. Ejecuta trabajo asignado por feature. |
 | Sahid | `Sahid-B` | Backend. Ejecuta trabajo asignado por feature. |
 | Dayanara | `Dayanarablb` | Frontend. Ejecuta trabajo de frontend con alcance definido. |
-| Jennifer | `Jntorres2001` | Testing: pruebas unitarias, de integración y de rendimiento con k6. Ejecuta pruebas con alcance y criterios definidos. |
+| Jennifer | `Jntorres2001` | Testing y calidad: pruebas unitarias, de integración y de rendimiento con k6; revisión preventiva de calidad y hallazgos con análisis estático/SonarQube local. Ejecuta y reporta con alcance y criterios definidos. |
 
 Jefferson es responsable de definir el alcance y los criterios de aceptación. El resto del equipo ejecuta tareas ya definidas; no debe tomar decisiones de alcance por su cuenta. Si una decisión o requisito no está definido, registra la pregunta y consúltala con Jefferson antes de implementarlo.
 
@@ -29,6 +29,8 @@ Jefferson es responsable de definir el alcance y los criterios de aceptación. E
 - Si dos tareas chocan o requieren modificar el mismo alcance de una feature, no implementes ambas en paralelo. Marca como `Blocked` en GitHub Projects la tarea que debe esperar, indica cuál trabajo la bloquea y quién debe completarlo. Reanúdala cuando se resuelva el conflicto.
 - No marques tareas bloqueadas por una duda de diseño como listas para ejecución; consulta a Jefferson y actualiza el alcance primero.
 - Jennifer ejecuta las pruebas unitarias, de integración y de rendimiento con k6 que correspondan a las features implementadas, siguiendo criterios y umbrales definidos por Jefferson. No se crean pruebas de aplicación durante el scaffolding inicial prohibido por `requerimientos_iniciales.md`.
+- El bloqueo de pruebas de integración o rendimiento por dependencias no impide asignar a Jennifer revisiones independientes de código ya implementado. Puede ejecutar análisis estático/SonarQube Community local, revisar hallazgos y reportar evidencia y recomendaciones al responsable de la feature, sin modificar código ajeno ni cambiar criterios de aceptación. Estas revisiones no se bloquean ni hacen gate de PR por SonarQube.
+- En QA-005, Jennifer usa SonarQube para revisar el código de forma continua y ayudar a corregir hallazgos mientras avanza el desarrollo. Registra evidencia en `docs/quality-templates/formato_sonar_qube.docx`, prepara un PDF breve con imagen, descripción, prioridad y responsable, y avisa por el grupo de WhatsApp del proyecto mencionando al responsable y pidiendo atención pronta según prioridad. Prioriza P0 los riesgos de seguridad, exposición de datos o aislamiento tenant; P1 los defectos críticos/altos en flujos principales; P2 los defectos relevantes; P3 los hallazgos menores. No incluyas secretos ni datos reales de clientes/tenants en evidencia. SonarQube ayuda a corregir sobre la marcha, no es un gate de PR.
 
 ### Política de calidad obligatoria
 

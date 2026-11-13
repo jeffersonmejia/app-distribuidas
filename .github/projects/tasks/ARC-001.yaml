@@ -1,0 +1,72 @@
+id: ARC-001
+github:
+  repository: jeffersonmejia/app-distribuidas
+  issue_number: 1
+issue:
+  title: '[ARC-001] Definir contratos y límites arquitectónicos'
+  body: '<!-- managed-task-id: ARC-001 -->
+
+
+    ## Descripción
+
+    Definir contratos entre features, documentar dependencias permitidas y establecer criterios de integración para el monolito modular.
+
+
+    ## Criterios de aceptación
+
+    - Los límites y contratos entre features están documentados.
+
+    - Las dependencias permitidas y prohibidas están descritas.
+
+    - Hay criterios claros para integrar cambios.
+
+
+    ## Gestión
+
+    - Área: Arquitectura
+
+    - Prioridad: Alta
+
+    - Estado: Completado
+
+    - Responsable: @jeffersonmejia
+
+    - Rama: Jefferson
+
+    - Rutas: backend/, docs/arquitectura.md
+
+    - Dependencias: Ninguna'
+  state: closed
+  assignees:
+  - jeffersonmejia
+  labels:
+  - backend
+  - documentation
+project:
+  Repository: jeffersonmejia/app-distribuidas
+  Title: '[ARC-001] Definir contratos y límites arquitectónicos'
+  Status: Done
+  Estado: Done
+  Prioridad: Alta
+  Área: Arquitectura
+  Identificador de tarea: ARC-001
+  Fecha objetivo: '2026-11-22'
+planning:
+  acceptanceCriteria:
+  - Los límites y contratos entre features están documentados.
+  - Las dependencias permitidas y prohibidas están descritas.
+  - Hay criterios claros para integrar cambios.
+  paths:
+  - backend/
+  - docs/arquitectura.md
+  priority: Alta
+  assignmentNote: null
+  assignee: jeffersonmejia
+  state: Done
+  completedAt: null
+  area: Arquitectura
+  dependencies: []
+  targetDate: '2026-11-22'
+  description: Definir contratos entre features, documentar dependencias permitidas y establecer criterios de integración para el monolito modular.
+  requestedAssignee: null
+  branch: Jefferson

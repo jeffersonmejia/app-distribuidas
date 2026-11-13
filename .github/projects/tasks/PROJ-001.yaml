@@ -1,0 +1,29 @@
+id: PROJ-001
+github:
+  repository: jeffersonmejia/app-distribuidas
+  issue_number: 9
+issue:
+  title: '[PROJ-001] Implementar gestión básica de proyectos'
+  body: "<!-- managed-task-id: PROJ-001 -->\n\n## Descripción\nDiseñar proyectos, tareas y estados, preparar los casos de uso e incorporar pruebas unitarias.\n\n## Criterios de aceptación\n- Proyectos, tareas y estados tienen un diseño inicial.\n- Los casos de uso acordados están preparados.\n- Hay pruebas unitarias para los casos implementados.\n\n## Gestión\n- Área: Proyectos\n- Prioridad: Media\n- Estado: Pendiente\n- Responsable: @EMLarco\n- Rama: Esteban\n- Rutas: backend/.../features/projects/\n- Dependencias: Ninguna\n\n## Estado\nLista para ejecución; sus dependencias están resueltas."
+  state: open
+  assignees:
+  - EMLarco
+  labels:
+  - backend
+  - database
+  - enhancement
+  - testing
+project:
+  Repository: jeffersonmejia/app-distribuidas
+  Title: '[PROJ-001] Implementar gestión básica de proyectos'
+  Status: Todo
+  Estado: Todo
+  Prioridad: Media
+  Área: Proyectos
+  Identificador de tarea: PROJ-001
+  Fecha objetivo: '2026-11-19'
+planning:
+  targetDate: '2026-11-19'
+  state: Todo
+  priority: Media
+  blocked_by: []

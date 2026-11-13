@@ -1,0 +1,8 @@
+owner: jeffersonmejia
+repository: jeffersonmejia/app-distribuidas
+project_title: ERP + CRM Multitenant
+project_number: null
+project_id: null
+tasks_dir: .github/projects/tasks
+schema_file: .github/projects/schema.yaml
+database_file: .github/projects/.cache/sync.sqlite3

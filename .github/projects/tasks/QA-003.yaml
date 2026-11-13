@@ -1,0 +1,43 @@
+id: QA-003
+github:
+  repository: jeffersonmejia/app-distribuidas
+  issue_number: 37
+issue:
+  title: '[QA-003] Verificar integración y aislamiento multitenant'
+  body: "<!-- managed-task-id: QA-003 -->\n\n**Feature:** Testing  \n**Responsable:** @Jntorres2001  \n**Rutas:** backend/src/test/, docs/multitenancy.md  \n**Dependencias:** TEN-001, INT-001  \n**Fecha objetivo:** 2026-11-23\n\n## Alcance\nEjecutar pruebas unitarias y de integración de los flujos implementados, con foco en autorización, RLS y contratos.\n\n## Criterios de aceptación\n- [ ] Tenant A no lee ni modifica datos de tenant B.\n- [ ] Sin actor/membresía/contexto no se accede a datos tenant-scoped.\n- [ ] Probar con rol runtime no privilegiado y referencias cruzadas.\n- [ ] Reportar resultados y asignar defectos al owner del feature.\n\n## Bloqueo actual\nBloqueada por: INT-001 (@jeffersonmejia)."
+  state: open
+  assignees:
+  - Jntorres2001
+  labels:
+  - backend
+  - database
+  - testing
+project:
+  Repository: jeffersonmejia/app-distribuidas
+  Title: '[QA-003] Verificar integración y aislamiento multitenant'
+  Status: Blocked
+  Estado: Blocked
+  Prioridad: Alta
+  Área: Testing
+  Identificador de tarea: QA-003
+  Fecha objetivo: '2026-11-23'
+planning:
+  area: Testing
+  assignee: Jntorres2001
+  paths:
+  - backend/src/test/
+  - docs/multitenancy.md
+  dependencies:
+  - TEN-001
+  - INT-001
+  targetDate: '2026-11-23'
+  state: Blocked
+  priority: Alta
+  blocked_by:
+  - INT-001
+  description: Ejecutar pruebas unitarias y de integración de los flujos implementados, con foco en autorización, RLS y contratos.
+  acceptanceCriteria:
+  - Tenant A no lee ni modifica datos de tenant B.
+  - Sin actor/membresía/contexto no se accede a datos tenant-scoped.
+  - Probar con rol runtime no privilegiado y referencias cruzadas.
+  - Reportar resultados y asignar defectos al owner del feature.

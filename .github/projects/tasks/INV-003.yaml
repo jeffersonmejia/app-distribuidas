@@ -1,0 +1,46 @@
+id: INV-003
+github:
+  repository: jeffersonmejia/app-distribuidas
+  issue_number: 29
+issue:
+  title: '[INV-003] Implementar movimientos y disponibilidad de inventario'
+  body: "<!-- managed-task-id: INV-003 -->\n\n**Feature:** Inventario  \n**Responsable:** @Sahid-B  \n**Rutas:** backend/src/main/java/com/erp/features/inventory/, backend/src/main/resources/db/migration/, backend/src/test/java/com/erp/features/inventory/  \n**Dependencias:** TEN-001, INV-001, INV-002  \n**Fecha objetivo:** 2026-11-18\n\n## Alcance\nImplementar entradas, salidas, reservas y consulta de disponibilidad usando el contrato acordado y límites transaccionales explícitos.\n\n## Criterios de aceptación\n- [ ] Cada movimiento pertenece al tenant validado y conserva trazabilidad.\n- [ ] La actualización de existencias es transaccional y evita stock inconsistente.\n- [ ] POS consume API pública sin acceder a repositorios internos.\n- [ ] Migraciones y pruebas cubren disponibilidad, rollback y errores.\n\n## Bloqueo actual\nBloqueada por: INV-001 (@Sahid-B), INV-002 (@Sahid-B)."
+  state: open
+  assignees:
+  - Sahid-B
+  labels:
+  - backend
+  - database
+  - testing
+project:
+  Repository: jeffersonmejia/app-distribuidas
+  Title: '[INV-003] Implementar movimientos y disponibilidad de inventario'
+  Status: Blocked
+  Estado: Blocked
+  Prioridad: Alta
+  Área: Inventario
+  Identificador de tarea: INV-003
+  Fecha objetivo: '2026-11-18'
+planning:
+  area: Inventario
+  assignee: Sahid-B
+  paths:
+  - backend/src/main/java/com/erp/features/inventory/
+  - backend/src/main/resources/db/migration/
+  - backend/src/test/java/com/erp/features/inventory/
+  dependencies:
+  - TEN-001
+  - INV-001
+  - INV-002
+  targetDate: '2026-11-18'
+  state: Blocked
+  priority: Alta
+  blocked_by:
+  - INV-001
+  - INV-002
+  description: Implementar entradas, salidas, reservas y consulta de disponibilidad usando el contrato acordado y límites transaccionales explícitos.
+  acceptanceCriteria:
+  - Cada movimiento pertenece al tenant validado y conserva trazabilidad.
+  - La actualización de existencias es transaccional y evita stock inconsistente.
+  - POS consume API pública sin acceder a repositorios internos.
+  - Migraciones y pruebas cubren disponibilidad, rollback y errores.

@@ -20,10 +20,10 @@
         "Hay criterios claros para integrar cambios."
       ],
       "dependencies": [],
-      "state": "Pendiente",
-      "targetDate": "2026-11-15",
+      "state": "Completado",
+      "targetDate": "2026-11-22",
       "githubIssue": 1,
-      "syncFingerprint": "38eb57743848a547278751b9c329c1e56ab0cc97b7fdf11b806861df66c6f358",
+      "syncFingerprint": null,
       "completedAt": null
     },
     {
@@ -45,10 +45,10 @@
         "Los criterios de seguridad pueden revisarse antes de implementar."
       ],
       "dependencies": [],
-      "state": "Pendiente",
-      "targetDate": "2026-11-15",
+      "state": "Completado",
+      "targetDate": "2026-11-22",
       "githubIssue": 2,
-      "syncFingerprint": "fb073fc3f0a38315b4992a0e3754656a6cd5ad7714c5eeebd27d3a6549a8823a",
+      "syncFingerprint": null,
       "completedAt": null
     },
     {
@@ -74,9 +74,9 @@
         "ARC-002"
       ],
       "state": "Pendiente",
-      "targetDate": "2026-11-15",
+      "targetDate": "2026-11-22",
       "githubIssue": 4,
-      "syncFingerprint": "99f9ae8d38261eddeb7ba4d25db8321e5848855fcfb3d1ebe3a77020af14278f",
+      "syncFingerprint": null,
       "completedAt": null
     },
     {
@@ -102,10 +102,10 @@
         "ARC-002",
         "INV-002"
       ],
-      "state": "Pendiente",
-      "targetDate": "2026-11-15",
+      "state": "Completado",
+      "targetDate": "2026-11-22",
       "githubIssue": 12,
-      "syncFingerprint": "db23ee25fea5d76400c00fe55051192d64ddbbb4b310eee808ab1353899e3d26",
+      "syncFingerprint": null,
       "completedAt": null
     },
     {
@@ -131,9 +131,9 @@
         "ARC-002"
       ],
       "state": "Pendiente",
-      "targetDate": "2026-11-15",
+      "targetDate": "2026-11-22",
       "githubIssue": 5,
-      "syncFingerprint": "55612d365950e38dab6e8b3284f0a68274d629041aba8883d589e082bc655cd7",
+      "syncFingerprint": null,
       "completedAt": null
     },
     {
@@ -160,9 +160,9 @@
         "ARC-002"
       ],
       "state": "Pendiente",
-      "targetDate": "2026-11-15",
+      "targetDate": "2026-11-22",
       "githubIssue": 6,
-      "syncFingerprint": "4437abea5688c209228a2f661d9fad58081307833ff5330b8d84fedeb0473acf",
+      "syncFingerprint": null,
       "completedAt": null
     },
     {
@@ -186,9 +186,9 @@
       ],
       "dependencies": [],
       "state": "Pendiente",
-      "targetDate": "2026-11-15",
+      "targetDate": "2026-11-22",
       "githubIssue": 3,
-      "syncFingerprint": "d636e1839b2fe3d17b3399c9a270a0c3efe02a31f931cb00db45ec76c706d79f",
+      "syncFingerprint": null,
       "completedAt": null
     },
     {
@@ -212,10 +212,10 @@
       "dependencies": [
         "FRONT-001"
       ],
-      "state": "Pendiente",
-      "targetDate": "2026-11-15",
+      "state": "Completado",
+      "targetDate": "2026-11-22",
       "githubIssue": 7,
-      "syncFingerprint": "b5b29e647f15e7047bd3eb72795b1737d6c63b453644086af8ead5fd55788b20",
+      "syncFingerprint": null,
       "completedAt": null
     },
     {
@@ -241,9 +241,9 @@
         "ARC-002"
       ],
       "state": "Pendiente",
-      "targetDate": "2026-11-15",
+      "targetDate": "2026-11-22",
       "githubIssue": 8,
-      "syncFingerprint": "b7867700314f1a69e19cde5643a99f1cc06df5aa56ff3591ab468c9a65852013",
+      "syncFingerprint": null,
       "completedAt": null
     },
     {
@@ -269,9 +269,9 @@
         "ARC-002"
       ],
       "state": "Pendiente",
-      "targetDate": "2026-11-15",
+      "targetDate": "2026-11-22",
       "githubIssue": 9,
-      "syncFingerprint": "7dff74f698d2f72a3b1473a5dd1383f7946da0fcc789f639fcebc802ad5db0a2",
+      "syncFingerprint": null,
       "completedAt": null
     },
     {
@@ -301,10 +301,10 @@
         "INV-001",
         "ACC-001"
       ],
-      "state": "Pendiente",
-      "targetDate": "2026-11-15",
+      "state": "Completado",
+      "targetDate": "2026-11-22",
       "githubIssue": 13,
-      "syncFingerprint": "dea3ffe6b25937d6d18098bbfd730c8916556bf520ccb5eece8150397f047aed",
+      "syncFingerprint": null,
       "completedAt": null
     },
     {
@@ -331,7 +331,7 @@
         "ARC-002"
       ],
       "state": "Completado",
-      "targetDate": "2026-11-15",
+      "targetDate": "2026-11-22",
       "githubIssue": 10,
       "syncFingerprint": null,
       "completedAt": "2026-11-12"
@@ -359,10 +359,10 @@
         "ARC-002",
         "CRM-001"
       ],
-      "state": "Pendiente",
-      "targetDate": "2026-11-15",
+      "state": "Completado",
+      "targetDate": "2026-11-22",
       "githubIssue": 11,
-      "syncFingerprint": "5295b854ce282d5b79c99d7ea2d531ded057849141af61f233e8661e443fa20f",
+      "syncFingerprint": null,
       "completedAt": null
     },
     {
@@ -387,7 +387,7 @@
       ],
       "dependencies": [],
       "state": "Completado",
-      "targetDate": null,
+      "targetDate": "2026-11-22",
       "completedAt": "2026-11-12",
       "githubIssue": 14,
       "syncFingerprint": null
@@ -412,7 +412,7 @@
       ],
       "dependencies": [],
       "state": "Completado",
-      "targetDate": null,
+      "targetDate": "2026-11-22",
       "completedAt": "2026-11-12",
       "githubIssue": 15,
       "syncFingerprint": null
@@ -439,7 +439,7 @@
       ],
       "dependencies": [],
       "state": "Completado",
-      "targetDate": null,
+      "targetDate": "2026-11-22",
       "completedAt": "2026-11-12",
       "githubIssue": 16,
       "syncFingerprint": null
@@ -464,7 +464,7 @@
       ],
       "dependencies": [],
       "state": "Completado",
-      "targetDate": null,
+      "targetDate": "2026-11-22",
       "completedAt": "2026-11-12",
       "githubIssue": 17,
       "syncFingerprint": null
@@ -492,7 +492,7 @@
       ],
       "dependencies": [],
       "state": "Completado",
-      "targetDate": null,
+      "targetDate": "2026-11-22",
       "completedAt": "2026-11-12",
       "githubIssue": 18,
       "syncFingerprint": null
@@ -520,10 +520,10 @@
       ],
       "dependencies": [],
       "state": "Completado",
-      "targetDate": null,
+      "targetDate": "2026-11-22",
       "completedAt": "2026-11-12",
       "githubIssue": 19,
-      "syncFingerprint": "eddf0f9300657708a23a2b19bea549f6b9cdf8dcb384febe992c315da306de92"
+      "syncFingerprint": null
     },
     {
       "id": "WIKI-001",
@@ -544,7 +544,7 @@
       ],
       "dependencies": [],
       "state": "Completado",
-      "targetDate": null,
+      "targetDate": "2026-11-22",
       "completedAt": "2026-11-12",
       "githubIssue": 21,
       "syncFingerprint": null

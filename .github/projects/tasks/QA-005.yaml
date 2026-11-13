@@ -1,0 +1,81 @@
+id: QA-005
+github:
+  repository: jeffersonmejia/app-distribuidas
+  issue_number: 44
+issue:
+  title: '[QA-005] Revisar calidad continua con SonarQube local'
+  body: '<!-- managed-task-id: QA-005 -->
+
+
+    ## Objetivo
+
+    Revisar continuamente con SonarQube Community local el código disponible y ayudar a corregir hallazgos durante el desarrollo, sin esperar a INT-001.
+
+
+    ## Flujo de trabajo
+
+    - Completar el Word docs/quality-templates/formato_sonar_qube.docx con la evidencia.
+
+    - Exportar un PDF breve con captura, descripción del problema, prioridad y responsable.
+
+    - Compartir el PDF en el grupo de WhatsApp del proyecto, mencionar al responsable y pedir que lo atienda pronto según su prioridad.
+
+    - Volver a analizar los cambios disponibles para confirmar la corrección.
+
+    - Prioridad: P0 seguridad/datos/aislamiento tenant; P1 defectos críticos o altos en flujos principales; P2 defectos relevantes; P3 hallazgos menores.
+
+    - No incluir secretos ni datos reales de clientes/tenants.
+
+
+    ## Criterios de aceptación
+
+    - Revisiones frecuentes sobre features implementadas, con hallazgos confirmados y prioridad asignada.
+
+    - Evidencia breve en el Word, PDF compartido y seguimiento de correcciones.
+
+    - SonarQube es apoyo local opcional y no bloquea Pull Requests.
+
+
+    ## Gestión
+
+    - Categoría: Calidad
+
+    - Prioridad: Media
+
+    - Responsable: @Jntorres2001
+
+    - Rutas revisadas: backend/, frontend/, docs/quality.md, docs/quality-templates/formato_sonar_qube.docx, docker/compose.sonarqube.yml
+
+    - Dependencias: Ninguna'
+  state: open
+  assignees:
+  - Jntorres2001
+  labels:
+  - devops
+  - testing
+project:
+  Repository: jeffersonmejia/app-distribuidas
+  Title: '[QA-005] Revisar calidad continua con SonarQube local'
+  Status: Todo
+  Estado: Todo
+  Identificador de tarea: QA-005
+  Prioridad: Media
+  Área: Calidad
+planning:
+  area: Calidad
+  assignee: Jntorres2001
+  paths:
+  - backend/
+  - frontend/
+  - docs/quality.md
+  - docs/quality-templates/formato_sonar_qube.docx
+  - docker/compose.sonarqube.yml
+  dependencies: []
+  state: Todo
+  priority: Media
+  description: Revisar continuamente con SonarQube local, completar el Word de evidencia, compartir un PDF breve en WhatsApp mencionando al responsable y confirmar correcciones durante el desarrollo.
+  acceptanceCriteria:
+  - Revisiones frecuentes con hallazgos confirmados y prioridad P0-P3.
+  - Evidencia breve en el Word y PDF con captura, descripción, prioridad y responsable.
+  - Compartir el PDF en el grupo de WhatsApp del proyecto y dar seguimiento a la corrección.
+  - No exponer secretos/datos reales; SonarQube local no bloquea PRs.

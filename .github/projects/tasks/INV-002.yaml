@@ -1,0 +1,55 @@
+id: INV-002
+github:
+  repository: jeffersonmejia/app-distribuidas
+  issue_number: 6
+issue:
+  title: '[INV-002] Definir contrato de movimientos de inventario'
+  body: '<!-- managed-task-id: INV-002 -->
+
+
+    ## Descripción
+
+    Definir entradas, salidas y reservas, y coordinar los contratos requeridos por POS sin modificar archivos de POS.
+
+
+    ## Criterios de aceptación
+
+    - Entradas, salidas y reservas tienen contratos definidos.
+
+    - El contrato necesario para POS está documentado.
+
+    - La tarea no modifica archivos del módulo POS.
+
+
+    ## Gestión
+
+    - Área: Inventario
+
+    - Prioridad: Alta
+
+    - Estado: Pendiente
+
+    - Responsable: @Sahid-B
+
+    - Rama: Sahid
+
+    - Rutas: backend/.../features/inventory/, backend/.../features/pos/ (coordinación)
+
+    - Dependencias: Ninguna'
+  state: open
+  assignees:
+  - Sahid-B
+  labels:
+  - backend
+  - database
+  - documentation
+  - enhancement
+project:
+  Repository: jeffersonmejia/app-distribuidas
+  Title: '[INV-002] Definir contrato de movimientos de inventario'
+  Status: In Progress
+  Estado: Todo
+  Prioridad: Alta
+  Área: Inventario
+  Identificador de tarea: INV-002
+  Fecha objetivo: '2026-11-14'

@@ -10,7 +10,7 @@ El gate se ejecuta en Pull Requests dirigidos a `develop` y al actualizar esa ra
 - Los hallazgos de seguridad restantes deben revisarse manualmente en GitHub antes de integrar el PR.
 - Duplicación y code smells no bloquean esta etapa.
 
-La cobertura diferencial se calcula con JaCoCo XML y LCOV usando `diff-cover`; esto permite aplicar el umbral a líneas cambiadas sin depender de un servidor de análisis. Los cambios que no tocan código cubierto no consumen el umbral.
+La cobertura diferencial se calcula con JaCoCo XML y LCOV usando ejecuciones separadas de `diff-cover`, porque los dos formatos no se pueden combinar en un solo informe. Cada lenguaje modificado debe cubrir al menos el 80% de sus líneas nuevas o modificadas. Los cambios que no tocan código cubierto no consumen el umbral. En `pull_request` se compara con la rama base; en `push`, con el commit anterior al push.
 
 ## Configuración del repositorio
 
@@ -32,7 +32,7 @@ El workflow usa `pull_request`, permisos mínimos de lectura para el contenido y
 
 ## Responsabilidades
 
-Jefferson (`jeffersonmejia`) define el alcance y los criterios. Jennifer (`Jntorres2001`) ejecuta pruebas unitarias, de integración y de rendimiento con k6 según sus tareas y los umbrales acordados; no redefine los criterios del gate. Las pruebas k6 se limitan a los flujos críticos definidos en [`testing.md`](testing.md).
+Jefferson (`jeffersonmejia`) define el alcance y los criterios. Jennifer (`Jntorres2001`) ejecuta pruebas unitarias, de integración y de rendimiento con k6 según sus tareas y los umbrales acordados; no redefine los criterios del gate. También puede revisar de forma continua el código ya implementado con análisis estático/SonarQube Community local mientras las tareas de integración o rendimiento esperan dependencias. En QA-005 registra evidencia en [`quality-templates/formato_sonar_qube.docx`](quality-templates/formato_sonar_qube.docx), genera un PDF breve con imagen, descripción, prioridad y responsable, y avisa por el grupo de WhatsApp del proyecto mencionando al responsable para que corrija sobre la marcha. Seguridad, exposición de datos y aislamiento tenant son P0; defectos críticos/altos de flujos principales P1; defectos relevantes P2; hallazgos menores P3. No se incluyen secretos ni datos reales de clientes/tenants. SonarQube ayuda a corregir sobre la marcha; no es un gate de PR. Las pruebas k6 se limitan a los flujos críticos definidos en [`testing.md`](testing.md).
 
 ## Referencias
 

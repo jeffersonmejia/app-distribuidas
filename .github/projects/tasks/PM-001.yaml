@@ -1,0 +1,74 @@
+id: PM-001
+github:
+  repository: jeffersonmejia/app-distribuidas
+  issue_number: 17
+issue:
+  title: '[PM-001] Automatizar la administración del GitHub Project'
+  body: '<!-- managed-task-id: PM-001 -->
+
+
+    ## Descripción
+
+    Preparar configuración YAML y sincronización idempotente con simulación por defecto, detección de conflictos, dependencias, asignaciones verificadas y fechas.
+
+
+    ## Criterios de aceptación
+
+    - El proyecto y las 13 tareas iniciales se sincronizan sin duplicados.
+
+    - La simulación no escribe cambios remotos.
+
+    - Las tareas completadas y su fecha quedan registradas en el proyecto.
+
+
+    ## Gestión
+
+    - Área: Arquitectura
+
+    - Prioridad: Alta
+
+    - Estado: Completado
+
+    - Responsable: @jeffersonmejia
+
+    - Rama: Jefferson
+
+    - Rutas: .github/project-management/
+
+    - Dependencias: Ninguna
+
+    - Fecha de completado: 2026-11-12'
+  state: closed
+  assignees:
+  - jeffersonmejia
+  labels:
+  - devops
+  - documentation
+project:
+  Repository: jeffersonmejia/app-distribuidas
+  Title: '[PM-001] Automatizar la administración del GitHub Project'
+  Status: Done
+  Estado: Done
+  Área: Arquitectura
+  Fecha de completado: '2026-11-12'
+  Identificador de tarea: PM-001
+  Prioridad: Alta
+  Fecha objetivo: '2026-11-22'
+planning:
+  acceptanceCriteria:
+  - El proyecto y las 13 tareas iniciales se sincronizan sin duplicados.
+  - La simulación no escribe cambios remotos.
+  - Las tareas completadas y su fecha quedan registradas en el proyecto.
+  paths:
+  - .github/project-management/
+  priority: Alta
+  assignmentNote: null
+  assignee: jeffersonmejia
+  state: Done
+  completedAt: '2026-11-12'
+  area: Arquitectura
+  dependencies: []
+  targetDate: '2026-11-22'
+  description: Preparar configuración YAML y sincronización idempotente con simulación por defecto, detección de conflictos, dependencias, asignaciones verificadas y fechas.
+  requestedAssignee: null
+  branch: Jefferson
