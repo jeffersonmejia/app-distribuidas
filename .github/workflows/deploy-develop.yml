@@ -1,0 +1,228 @@
+name: Deploy develop to Azure
+
+on:
+  workflow_dispatch:
+    inputs:
+      operation:
+        description: "plan no crea recursos; deploy puede generar cargos."
+        type: choice
+        options: [plan, deploy]
+        default: plan
+        required: true
+      enable_backend:
+        description: "Despliega Spring Boot. Requiere AUTH_ISSUER_URI y AUTH_AUDIENCE."
+        type: boolean
+        default: false
+        required: true
+      allow_azure_services_postgres:
+        description: "Abre PostgreSQL a todos los servicios Azure, incluso otras suscripciones."
+        type: boolean
+        default: false
+        required: true
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: azure-develop-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: ${{ inputs.operation }}
+    runs-on: ubuntu-latest
+    environment: develop
+    timeout-minutes: 60
+    env:
+      ARM_USE_OIDC: "true"
+      ARM_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
+      ARM_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
+      ARM_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+      TF_VAR_azure_subscription_id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+      TF_VAR_resource_group_name: ${{ vars.AZURE_RESOURCE_GROUP }}
+      TF_VAR_resource_suffix: ${{ vars.AZURE_RESOURCE_SUFFIX }}
+      TF_VAR_github_actions_principal_id: ${{ vars.AZURE_PRINCIPAL_ID }}
+      TF_VAR_frontend_image_tag: ${{ github.sha }}
+      TF_VAR_backend_image_tag: ${{ github.sha }}
+      TF_VAR_postgres_admin_password: ${{ secrets.POSTGRES_ADMIN_PASSWORD }}
+      TF_VAR_db_runtime_password: ${{ secrets.DB_RUNTIME_PASSWORD }}
+      TF_VAR_db_migration_password: ${{ secrets.DB_MIGRATION_PASSWORD }}
+      TF_VAR_enable_backend: ${{ inputs.enable_backend }}
+      TF_VAR_allow_azure_services_postgres: ${{ inputs.allow_azure_services_postgres }}
+      TF_VAR_auth_issuer_uri: ${{ vars.AUTH_ISSUER_URI }}
+      TF_VAR_auth_audience: ${{ vars.AUTH_AUDIENCE }}
+      TF_IN_AUTOMATION: "true"
+      TF_INPUT: "false"
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Restrict deployment to the develop branch
+        if: github.ref != 'refs/heads/develop'
+        run: |
+          echo "Run this workflow only from the develop branch." >&2
+          exit 1
+
+      - name: Check backend prerequisites
+        if: inputs.enable_backend
+        shell: bash
+        env:
+          ALLOW_AZURE_SERVICES: ${{ inputs.allow_azure_services_postgres }}
+          AUTH_ISSUER_URI: ${{ vars.AUTH_ISSUER_URI }}
+          AUTH_AUDIENCE: ${{ vars.AUTH_AUDIENCE }}
+          DB_RUNTIME_PASSWORD: ${{ secrets.DB_RUNTIME_PASSWORD }}
+          DB_MIGRATION_PASSWORD: ${{ secrets.DB_MIGRATION_PASSWORD }}
+        run: |
+          if [[ "$ALLOW_AZURE_SERVICES" != "true" ]]; then
+            echo "The public ACI backend has no fixed egress IP. Enable the documented Azure-services firewall only after accepting its scope." >&2
+            exit 1
+          fi
+          for name in AUTH_ISSUER_URI AUTH_AUDIENCE DB_RUNTIME_PASSWORD DB_MIGRATION_PASSWORD; do
+            if [[ -z "${!name}" ]]; then
+              echo "Configure $name in the develop GitHub environment before enabling the backend." >&2
+              exit 1
+            fi
+          done
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.11.4
+          terraform_wrapper: false
+
+      - name: Sign in to Azure with GitHub OIDC
+        uses: azure/login@v2
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Confirm target subscription
+        shell: bash
+        env:
+          EXPECTED_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+        run: |
+          actual="$(az account show --query id --output tsv)"
+          if [[ "$actual" != "$EXPECTED_SUBSCRIPTION_ID" ]]; then
+            echo "Azure CLI authenticated to a different subscription." >&2
+            exit 1
+          fi
+
+      - name: Check Terraform formatting
+        run: terraform fmt -check -recursive infra
+
+      - name: Check Terraform state configuration
+        shell: bash
+        env:
+          STATE_STORAGE: ${{ vars.AZURE_TF_STATE_STORAGE }}
+          STATE_RESOURCE_GROUP: ${{ vars.AZURE_TF_STATE_RESOURCE_GROUP }}
+        run: |
+          for name in STATE_STORAGE STATE_RESOURCE_GROUP; do
+            if [[ -z "${!name}" ]]; then
+              echo "Configure the Terraform state backend by running infra/scripts/bootstrap-state.ps1 and setting the GitHub environment variables." >&2
+              exit 1
+            fi
+          done
+
+      - name: Initialize remote Terraform state
+        shell: bash
+        env:
+          STATE_STORAGE: ${{ vars.AZURE_TF_STATE_STORAGE }}
+          STATE_RESOURCE_GROUP: ${{ vars.AZURE_TF_STATE_RESOURCE_GROUP }}
+          AZURE_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
+          AZURE_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
+          AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+        run: |
+          terraform -chdir=infra init -input=false \
+            -backend-config="resource_group_name=$STATE_RESOURCE_GROUP" \
+            -backend-config="storage_account_name=$STATE_STORAGE" \
+            -backend-config="container_name=tfstate" \
+            -backend-config="key=app-distribuidas/develop.tfstate" \
+            -backend-config="use_oidc=true" \
+            -backend-config="use_azuread_auth=true" \
+            -backend-config="client_id=$AZURE_CLIENT_ID" \
+            -backend-config="tenant_id=$AZURE_TENANT_ID" \
+            -backend-config="subscription_id=$AZURE_SUBSCRIPTION_ID"
+
+      - name: Create the registry before publishing images
+        if: inputs.operation == 'deploy'
+        run: terraform -chdir=infra apply -input=false -auto-approve -target=module.registry
+
+      - name: Sign in to Azure Container Registry
+        if: inputs.operation == 'deploy'
+        shell: bash
+        env:
+          REGISTRY_NAME: appdist${{ vars.AZURE_RESOURCE_SUFFIX }}
+        run: |
+          for attempt in {1..12}; do
+            if az acr login --name "$REGISTRY_NAME"; then exit 0; fi
+            if [[ "$attempt" -eq 12 ]]; then exit 1; fi
+            sleep 10
+          done
+
+      - name: Build and push frontend and backend images
+        if: inputs.operation == 'deploy'
+        shell: bash
+        env:
+          REGISTRY_NAME: appdist${{ vars.AZURE_RESOURCE_SUFFIX }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          registry_login_server="${REGISTRY_NAME}.azurecr.io"
+          docker build --file infra/docker/frontend.Dockerfile --tag "$registry_login_server/frontend:$IMAGE_TAG" .
+          docker build --file infra/docker/backend.Dockerfile --tag "$registry_login_server/backend:$IMAGE_TAG" .
+          docker push "$registry_login_server/frontend:$IMAGE_TAG"
+          docker push "$registry_login_server/backend:$IMAGE_TAG"
+
+      - name: Create PostgreSQL before bootstrapping application roles
+        if: inputs.operation == 'deploy' && inputs.enable_backend
+        run: terraform -chdir=infra apply -input=false -auto-approve -target=module.postgres
+
+      - name: Create least-privilege PostgreSQL roles
+        if: inputs.operation == 'deploy' && inputs.enable_backend
+        shell: bash
+        env:
+          RESOURCE_GROUP: ${{ vars.AZURE_RESOURCE_GROUP }}
+          SERVER_NAME: pg-appdist-develop-${{ vars.AZURE_RESOURCE_SUFFIX }}
+          POSTGRES_ADMIN_USERNAME: pgadmin
+          POSTGRES_ADMIN_PASSWORD: ${{ secrets.POSTGRES_ADMIN_PASSWORD }}
+          DB_RUNTIME_PASSWORD: ${{ secrets.DB_RUNTIME_PASSWORD }}
+          DB_MIGRATION_PASSWORD: ${{ secrets.DB_MIGRATION_PASSWORD }}
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes postgresql-client
+          runner_ip="$(curl --fail --silent --show-error https://api.ipify.org)"
+          if [[ ! "$runner_ip" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Could not determine the GitHub runner IPv4 address." >&2
+            exit 1
+          fi
+          rule_name="gha-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          az postgres flexible-server firewall-rule create \
+            --resource-group "$RESOURCE_GROUP" --server-name "$SERVER_NAME" \
+            --name "$rule_name" --start-ip-address "$runner_ip" --end-ip-address "$runner_ip" \
+            --output none
+          cleanup_firewall() {
+            az postgres flexible-server firewall-rule delete \
+              --resource-group "$RESOURCE_GROUP" --server-name "$SERVER_NAME" \
+              --name "$rule_name" --yes --output none || true
+          }
+          trap cleanup_firewall EXIT
+          export PGHOST="$(terraform -chdir=infra output -raw postgres_fqdn)"
+          export PGPORT=5432 PGDATABASE=erp_crm PGUSER="$POSTGRES_ADMIN_USERNAME" PGPASSWORD="$POSTGRES_ADMIN_PASSWORD"
+          for attempt in {1..36}; do
+            if psql "sslmode=require" -v ON_ERROR_STOP=1 -c 'SELECT 1' >/dev/null 2>&1; then break; fi
+            if [[ "$attempt" -eq 36 ]]; then echo "PostgreSQL did not accept the temporary runner firewall rule." >&2; exit 1; fi
+            sleep 10
+          done
+          psql "sslmode=require" -v ON_ERROR_STOP=1 --file=infra/scripts/bootstrap-db-roles.sql
+
+      - name: Create a Terraform plan
+        run: terraform -chdir=infra plan -input=false -out="$RUNNER_TEMP/develop.tfplan"
+
+      - name: Apply the Terraform plan
+        if: inputs.operation == 'deploy'
+        run: terraform -chdir=infra apply -input=false -auto-approve "$RUNNER_TEMP/develop.tfplan"
+
+      - name: Show the deployed frontend URL
+        if: inputs.operation == 'deploy'
+        run: terraform -chdir=infra output -raw frontend_url
