@@ -14,3 +14,4 @@ El alcance de la entrega es preparar el MVP, no completar todo el ERP y CRM. Inc
 | Jennifer | `Jntorres2001` | Testing, pruebas unitarias, de integración y de rendimiento con k6, cuando el alcance esté definido y exista funcionalidad que probar y supervisa constantemente la calidad con sonarqube. |
 | Dayanara | `Dayanarablb` | Frontend |
 | Bruce | `BruceRodri` | Backend, ejecuta las tareas backend. 
+
