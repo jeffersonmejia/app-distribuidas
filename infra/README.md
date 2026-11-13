@@ -53,6 +53,8 @@ gh auth login
 gh auth status
 ```
 
+La GitHub App `app-distribuidas-auto-develop` se instala solo en este repositorio. Para crear PRs, comentar bloqueos y activar auto-merge en PRs que modifican workflows, requiere permisos de repositorio **Checks: read**, **Commit statuses: read**, **Contents: read/write**, **Issues: read/write**, **Pull requests: read/write** y **Workflows: read/write**. GitHub debe aprobar los permisos nuevos de `Contents` y `Workflows` en la instalación antes de que el flujo pueda integrar PRs con cambios bajo `.github/workflows/`.
+
 Genera tres contraseñas aleatorias independientes, crea `infra/.env` desde el ejemplo y carga los valores sin imprimirlos:
 
 ```powershell
