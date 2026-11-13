@@ -4,38 +4,34 @@ github:
   issue_number: 27
 issue:
   title: '[AUTH-002] Implementar identidad y autorización del backend'
-  body: "<!-- managed-task-id: AUTH-002 -->\n\n**Feature:** Multitenancy  \n**Responsable:** @EMLarco  \n**Rutas:** backend/src/main/java/com/erp/features/identity/, backend/src/test/java/com/erp/features/identity/  \n**Dependencias:** AUTH-001  \n**Fecha objetivo:** 2026-11-16\n\n## Alcance\nImplementar autenticación y publicación del actor autenticado según el contrato aprobado.\n\n## Criterios de aceptación\n- [ ] El actor proviene de credenciales validadas.\n- [ ] Las rutas privadas rechazan solicitudes no autenticadas o no autorizadas.\n- [ ] Credenciales y errores no aparecen en logs ni respuestas.\n- [ ] Pruebas cubren acceso permitido y denegado.\n\n## Bloqueo actual\nBloqueada por: AUTH-001 (@jeffersonmejia)."
-  state: open
+  body: "<!-- managed-task-id: AUTH-002 -->\n\n**Feature:** Multitenancy  \n**Responsable:** @jeffersonmejia  \n**Rutas:** backend/pom.xml, backend/src/main/java/com/erp/features/identity/, backend/src/test/java/com/erp/features/identity/  \n**Dependencias:** AUTH-001  \n**Fecha objetivo:** 2026-11-16\n\n## Alcance\nImplementar identidad autenticada y protección stateless del backend según el contrato JWT de AUTH-001.\n\n## Criterios de aceptación\n- [x] El actor proviene de credenciales validadas y de `sub` UUID.\n- [x] Las rutas privadas rechazan solicitudes no autenticadas; tenancy valida membresía/permisos antes de datos tenant-scoped.\n- [x] Credenciales y errores no aparecen en logs ni respuestas.\n- [x] Pruebas cubren acceso permitido, token ausente/inválido y validación de audiencia/actor."
+  state: closed
   assignees:
-  - EMLarco
+  - jeffersonmejia
   labels:
   - backend
   - testing
 project:
   Repository: jeffersonmejia/app-distribuidas
   Title: '[AUTH-002] Implementar identidad y autorización del backend'
-  Status: Blocked
-  Estado: Blocked
+  Status: Done
+  Estado: Done
   Prioridad: Alta
   Área: Multitenancy
   Identificador de tarea: AUTH-002
   Fecha objetivo: '2026-11-16'
+  Fecha de completado: '2026-11-13'
 planning:
   area: Multitenancy
-  assignee: EMLarco
-  paths:
-  - backend/src/main/java/com/erp/features/identity/
-  - backend/src/test/java/com/erp/features/identity/
-  dependencies:
-  - AUTH-001
+  assignee: jeffersonmejia
+  paths: [backend/pom.xml, backend/src/main/java/com/erp/features/identity/, backend/src/test/java/com/erp/features/identity/]
+  dependencies: [AUTH-001]
   targetDate: '2026-11-16'
-  state: Blocked
+  state: Done
   priority: Alta
-  blocked_by:
-  - AUTH-001
-  description: Implementar autenticación y publicación del actor autenticado según el contrato aprobado.
+  description: Implementar identidad autenticada y protección stateless del backend según el contrato JWT.
   acceptanceCriteria:
-  - El actor proviene de credenciales validadas.
-  - Las rutas privadas rechazan solicitudes no autenticadas o no autorizadas.
+  - El actor proviene de credenciales validadas y de sub UUID.
+  - Las rutas privadas rechazan solicitudes no autenticadas.
   - Credenciales y errores no aparecen en logs ni respuestas.
   - Pruebas cubren acceso permitido y denegado.
