@@ -309,33 +309,32 @@
     },
     {
       "id": "QUALITY-001",
-      "title": "Configurar análisis de calidad SonarQube",
+      "title": "Definir alcance de calidad para etapa posterior",
       "area": "Calidad",
       "priority": "Alta",
-      "branch": "Esteban",
+      "branch": "Jefferson",
       "paths": [
-        "configuración SonarQube",
-        "documentación"
+        "docs/quality.md"
       ],
-      "assignee": "EMLarco",
+      "assignee": "jeffersonmejia",
       "requestedAssignee": null,
-      "assignmentNote": "Esteban configura y documenta SonarQube; Jennifer (Jntorres2001), con invitación pendiente, verifica el análisis y solicita correcciones.",
-      "description": "Revisar la infraestructura SonarQube existente, preparar análisis Java y TypeScript y definir criterios de Quality Gate sin cambiar configuraciones compartidas sin aprobación.",
+      "assignmentNote": null,
+      "description": "Definir y documentar el alcance de calidad para una etapa posterior, reutilizando la infraestructura SonarQube ya preparada. El análisis Java/TypeScript, los Quality Gates y sus workflows quedan fuera del scaffolding inicial.",
       "acceptanceCriteria": [
-        "La infraestructura existente se reutiliza.",
-        "El análisis Java y TypeScript tiene una propuesta documentada.",
-        "Los criterios de Quality Gate están definidos.",
-        "Los cambios compartidos cuentan con aprobación."
+        "El documento distingue la infraestructura SonarQube existente de la configuración de análisis pendiente.",
+        "El documento define el Quality Gate inicial: 80% de cobertura en código nuevo, cero bugs y vulnerabilidades nuevos de severidad crítica, y 100% de Security Hotspots revisados.",
+        "El documento limita el bloqueo deseado del Quality Gate al código nuevo de Pull Requests hacia develop e identifica la limitación de Community Build y la verificación pendiente de su rama principal.",
+        "No se configuran scanners, Quality Gates, cobertura ni workflows de análisis en esta tarea."
       ],
       "dependencies": [
         "ARC-001",
         "ARC-002"
       ],
-      "state": "Pendiente",
+      "state": "Completado",
       "targetDate": "2026-11-15",
       "githubIssue": 10,
-      "syncFingerprint": "9195810ab37fe3958d19b1c8da762ce0442cc53b7ea870af797699d8b9e5b6a8",
-      "completedAt": null
+      "syncFingerprint": null,
+      "completedAt": "2026-11-12"
     },
     {
       "id": "MKT-001",
