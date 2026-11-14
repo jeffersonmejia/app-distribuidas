@@ -273,16 +273,25 @@ jobs:
               }
 
               const nodeId = pr.node_id;
+              const mainComparison = await github.rest.repos.compareCommits({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                base: 'main',
+                head: pr.head.sha,
+              });
+              const mergeMethod = ['ahead', 'identical'].includes(mainComparison.data.status)
+                ? 'MERGE'
+                : 'SQUASH';
               await github.graphql(
-                `mutation($pullRequestId: ID!) {
+                `mutation($pullRequestId: ID!, $mergeMethod: PullRequestMergeMethod!) {
                   enablePullRequestAutoMerge(input: {
                     pullRequestId: $pullRequestId,
-                    mergeMethod: SQUASH
+                    mergeMethod: $mergeMethod
                   }) {
                     pullRequest { id }
                   }
                 }`,
-                { pullRequestId: nodeId },
+                { pullRequestId: nodeId, mergeMethod },
               );
 
               if (automationComment) {
