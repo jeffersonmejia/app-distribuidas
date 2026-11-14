@@ -96,8 +96,9 @@ Antes de diseñar o modificar entidades, repositorios, relaciones o esquema de b
 ## Commits y publicación
 
 - La configuración compartida y las dependencias de Commitlint están en la raíz: `commitlint.config.cjs` y `package.json`.
-- Usa Conventional Commits: `tipo(scope): descripción`, con tipo y scope en minúsculas; el scope es opcional. Los únicos tipos permitidos son `feat`, `fix`, `refactor` y `docs`.
-- Ejemplos válidos: `feat(crm): agrega clientes`, `fix: corrige cálculo`, `docs: actualiza guía`.
+- Usa Conventional Commits: `tipo(scope): descripción`, con tipo y scope en minúsculas; el scope es opcional. Los únicos tipos permitidos son `feat`, `fix`, `refactor`, `docs` y `chore`.
+- Usa `chore` para mantenimiento del repositorio y commits de promoción/integración generados por automatización; reserva `feat` para cambios funcionales.
+- Ejemplos válidos: `feat(crm): agrega clientes`, `fix: corrige cálculo`, `docs: actualiza guía`, `chore: integra Jefferson en develop`, `chore: promueve cambios de develop a main`.
 - No hagas commits salvo que el solicitante lo pida explícitamente. Cuando lo pida, prepara solo los archivos del cambio y revisa el contenido antes de confirmar.
 - Si el solicitante pide validar commits para un PR, valida todos los commits contra su rama base (`develop` o `main`) con Commitlint.
 - Trabaja sobre la rama personal existente de la persona responsable: `Bruce`, `Dayanara`, `Esteban`, `Jefferson`, `Jennifer` o `Sahid`. Para Jefferson, usa localmente `Jefferson`.
