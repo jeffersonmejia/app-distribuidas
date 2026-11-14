@@ -37,7 +37,12 @@ issue:
 
     - Rutas: frontend/src/theme/, frontend/src/components/
 
-    - Dependencias: Ninguna'
+    - Dependencias: Ninguna
+
+
+    ## Especificación de lógica
+
+    [Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/FRONT-001.md).'
   state: open
   assignees:
   - Dayanarablb
@@ -62,3 +67,5 @@ planning:
   - Los componentes reutilizables acordados están preparados.
   - Los estilos base responden a distintos tamaños de pantalla.
   - Los componentes reutilizables tienen pruebas de renderizado e interacción pertinentes.
+  paths:
+  - docs/tasks/FRONT-001.md
