@@ -58,6 +58,7 @@ project:
   Área: Contabilidad
   Identificador de tarea: ACC-001
   Fecha objetivo: '2026-11-13'
+  Bloqueado por: "Nadie"
 planning:
   targetDate: '2026-11-14'
   state: Todo

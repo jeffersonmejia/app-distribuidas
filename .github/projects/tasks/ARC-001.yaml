@@ -51,6 +51,7 @@ project:
   Área: Arquitectura
   Identificador de tarea: ARC-001
   Fecha objetivo: '2026-11-22'
+  Bloqueado por: "Nadie"
 planning:
   acceptanceCriteria:
   - Los límites y contratos entre features están documentados.

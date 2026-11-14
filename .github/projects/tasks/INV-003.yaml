@@ -21,6 +21,7 @@ project:
   Área: Inventario
   Identificador de tarea: INV-003
   Fecha objetivo: '2026-11-14'
+  Bloqueado por: "@Sahid-B (INV-001, INV-002)"
 planning:
   area: Inventario
   assignee: Sahid-B

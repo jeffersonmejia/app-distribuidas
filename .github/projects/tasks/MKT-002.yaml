@@ -4,7 +4,12 @@ github:
   issue_number: 32
 issue:
   title: '[MKT-002] Implementar campañas y contactos de Marketing'
-  body: "<!-- managed-task-id: MKT-002 -->\n\n**Feature:** Marketing  \n**Responsable:** @EMLarco  \n**Rutas:** backend/src/main/java/com/erp/features/marketing/, backend/src/main/resources/db/migration/, backend/src/test/java/com/erp/features/marketing/  \n**Dependencias:** TEN-001, MKT-001, CRM-001  \n**Fecha objetivo:** 2026-11-19\n\n## Alcance\nImplementar alcance de Marketing definido, consumiendo el contrato público de CRM y respetando tenancy.\n\n## Criterios de aceptación\n- [ ] Campañas y contactos se limitan al tenant autorizado.\n- [ ] Marketing consume CRM por API pública.\n- [ ] Validar entradas y paginar en backend con máximo 5.\n- [ ] Probar membresía, aislamiento y contrato CRM.\n\n## Bloqueo actual\nBloqueada por definición/aprobación del alcance mínimo de campañas y sus campos antes de persistirlos. Responsable de decisión: @jeffersonmejia; ver especificación.\n\n## Especificación de lógica\n[Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/MKT-002.md)."
+  body: "<!-- managed-task-id: MKT-002 -->
+**Feature:** Marketing **Responsable:** @EMLarco **Rutas:** backend/src/main/java/com/erp/features/marketing/, backend/src/main/resources/db/migration/, backend/src/test/java/com/erp/features/marketing/ **Dependencias:** TEN-001, MKT-001, CRM-001 **Fecha objetivo:** 2026-11-19
+## Alcance Implementar campañas del sistema completo con contactos de CRM, consentimiento administrado por Marketing y envío manual de correo por Gmail SMTP.
+## Criterios de aceptación - [ ] Nombre, descripción, fecha de inicio y fecha de fin son obligatorios. - [ ] Estados manuales: Borrador → Programada → Activa → Finalizada; Cancelada desde cualquier estado no terminal. - [ ] Consentimiento y bajas se guardan tenant-scoped en Marketing, vinculados al UUID del cliente CRM; excluir bajas y contactos sin consentimiento. - [ ] Plantillas reutilizables con asunto, cuerpo HTML enriquecido con estilo/iconografía de la app y versión texto. - [ ] Envío manual por Gmail SMTP; fechas no disparan envíos automáticos. - [ ] Límite de pruebas: 20 destinatarios por día; secretos SMTP no se guardan en Git ni aparecen en logs. - [ ] Consumir CRM solo por API pública; validar tenant, permisos, aislamiento y paginación máxima de 5.
+## Bloqueo actual Ninguno. Las decisiones de alcance están aprobadas.
+## Especificación de lógica [Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/MKT-002.md)."
   state: open
   assignees:
   - EMLarco
@@ -15,12 +20,13 @@ issue:
 project:
   Repository: jeffersonmejia/app-distribuidas
   Title: '[MKT-002] Implementar campañas y contactos de Marketing'
-  Status: Blocked
-  Estado: Blocked
+  Status: "Todo"
+  Estado: "Todo"
   Prioridad: Media
   Área: Marketing
   Identificador de tarea: MKT-002
-  Fecha objetivo: '2026-11-15'
+  Fecha objetivo: "2026-11-19"
+  Bloqueado por: "Nadie"
 planning:
   area: Marketing
   assignee: EMLarco
@@ -33,13 +39,15 @@ planning:
   - TEN-001
   - MKT-001
   - CRM-001
-  targetDate: '2026-11-19'
-  state: Blocked
+  targetDate: "2026-11-19"
+  state: "Todo"
   priority: Media
   blocked_by: []
-  description: Implementar alcance de Marketing definido, consumiendo el contrato público de CRM y respetando tenancy.
+  description: "Implementar campañas completas con consentimiento tenant-scoped, plantillas HTML/texto y envío manual mediante Gmail SMTP."
   acceptanceCriteria:
-  - Campañas y contactos se limitan al tenant autorizado.
-  - Marketing consume CRM por API pública.
-  - Validar entradas y paginar en backend con máximo 5.
-  - Probar membresía, aislamiento y contrato CRM.
+  - "Campañas requieren nombre, descripción, fecha de inicio y fecha de fin."
+  - "Estados y transiciones manuales coinciden con las reglas aprobadas."
+  - "Marketing consume CRM por API pública y guarda consentimiento/bajas propios tenant-scoped."
+  - "Solo contactos activos con consentimiento reciben campañas; bajas quedan excluidas."
+  - "Envío manual por Gmail SMTP con plantilla reutilizable HTML/texto; máximo 20 destinatarios por día durante pruebas."
+  - "Verificaciones cubren autorización tenant, aislamiento, paginación máxima 5 y fallos de envío."

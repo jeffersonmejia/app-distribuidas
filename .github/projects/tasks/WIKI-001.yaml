@@ -51,6 +51,7 @@ project:
   Identificador de tarea: WIKI-001
   Fecha de completado: '2026-11-12'
   Fecha objetivo: '2026-11-22'
+  Bloqueado por: "Nadie"
 planning:
   acceptanceCriteria:
   - La wiki presenta un índice numerado en el mismo orden que sus secciones.

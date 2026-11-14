@@ -53,6 +53,7 @@ project:
   Área: POS
   Identificador de tarea: POS-001
   Fecha objetivo: '2026-11-22'
+  Bloqueado por: "Nadie"
 planning:
   acceptanceCriteria:
   - El flujo inicial de ventas y sus contratos están descritos.

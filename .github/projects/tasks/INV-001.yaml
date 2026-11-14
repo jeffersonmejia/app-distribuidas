@@ -63,6 +63,7 @@ project:
   Área: Inventario
   Identificador de tarea: INV-001
   Fecha objetivo: '2026-11-14'
+  Bloqueado por: "Nadie"
 planning:
   targetDate: '2026-11-18'
   state: Todo
