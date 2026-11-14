@@ -109,7 +109,7 @@ jobs:
                 head: `${context.repo.owner}:${branch}`,
                 base: 'develop',
                 title: `chore: integra ${branch} en develop`,
-                body: `@${responsible} Se subieron cambios desde la rama ${branch} y se solicita integrarlos en develop. La integración será automática cuando pasen los checks requeridos y no haya conflictos. Si algún check falla o hay conflictos, el responsable deberá corregirlos y actualizar el PR.`,
+                body: `chore: integra ${branch} en develop\n\n@${responsible} Se subieron cambios desde la rama ${branch} y se solicita integrarlos en develop. La integración será automática cuando pasen los checks requeridos y no haya conflictos. Si algún check falla o hay conflictos, el responsable deberá corregirlos y actualizar el PR.`,
                 maintainer_can_modify: true,
               });
               await github.rest.issues.addAssignees({
@@ -347,7 +347,7 @@ jobs:
               head: 'develop',
               base: 'main',
               title: 'chore: promueve cambios de develop a main',
-              body: 'Se promueven a main los cambios integrados en develop. Se solicita una revisión manual antes de completar la promoción; este PR no se fusiona automáticamente.',
+              body: 'chore: promueve cambios de develop a main\n\nSe promueven a main los cambios integrados en develop. Se solicita una revisión manual antes de completar la promoción; este PR no se fusiona automáticamente.',
               maintainer_can_modify: true,
             });
             core.info(`PR #${pullRequest.data.number} abierto para revisión manual; no se activará auto-merge.`);

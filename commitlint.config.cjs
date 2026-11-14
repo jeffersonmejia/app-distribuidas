@@ -8,6 +8,7 @@ module.exports = {
       'chore: integra Jefferson en develop (#64)',
       'chore: integra Jefferson en develop (#65)',
       'chore: Merge pull request #63 from jeffersonmejia/develop',
+      'chore: Merge pull request #67 from jeffersonmejia/develop',
     ]).has(message.split(/\r?\n/, 1)[0]),
   ],
   rules: {
