@@ -27,7 +27,7 @@ issue:
 
     - Prioridad: Alta
 
-    - Estado: En progreso
+    - Estado: Completada
 
     - Responsable: @Sahid-B
 
@@ -41,7 +41,7 @@ issue:
     ## Especificación de lógica
 
     [Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/INV-002.md).'
-  state: open
+  state: closed
   assignees:
   - Sahid-B
   labels:
@@ -52,13 +52,15 @@ issue:
 project:
   Repository: jeffersonmejia/app-distribuidas
   Title: '[INV-002] Definir contrato de movimientos de inventario'
-  Status: In Progress
-  Estado: In Progress
+  Status: Done
+  Estado: Done
   Prioridad: Alta
   Área: Inventario
   Identificador de tarea: INV-002
   Fecha objetivo: '2026-11-13'
   Bloqueado por: "Nadie"
 planning:
+  state: Done
+  blocked_by: []
   paths:
   - docs/tasks/INV-002.md
