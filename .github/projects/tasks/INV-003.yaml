@@ -4,7 +4,7 @@ github:
   issue_number: 29
 issue:
   title: '[INV-003] Implementar movimientos y disponibilidad de inventario'
-  body: "<!-- managed-task-id: INV-003 -->\n\n**Feature:** Inventario  \n**Responsable:** @Sahid-B  \n**Rutas:** backend/src/main/java/com/erp/features/inventory/, backend/src/main/resources/db/migration/, backend/src/test/java/com/erp/features/inventory/  \n**Dependencias:** TEN-001, INV-001, INV-002  \n**Fecha objetivo:** 2026-11-18\n\n## Alcance\nImplementar entradas, salidas, reservas y consulta de disponibilidad usando el contrato acordado y límites transaccionales explícitos.\n\n## Criterios de aceptación\n- [ ] Cada movimiento pertenece al tenant validado y conserva trazabilidad.\n- [ ] La actualización de existencias es transaccional y evita stock inconsistente.\n- [ ] POS consume API pública sin acceder a repositorios internos.\n- [ ] Migraciones y pruebas cubren disponibilidad, rollback y errores.\n\n## Bloqueo actual\nBloqueada por: INV-001 (@Sahid-B), INV-002 (@Sahid-B)."
+  body: "<!-- managed-task-id: INV-003 -->\n\n**Feature:** Inventario  \n**Responsable:** @Sahid-B  \n**Rutas:** backend/src/main/java/com/erp/features/inventory/, backend/src/main/resources/db/migration/, backend/src/test/java/com/erp/features/inventory/  \n**Dependencias:** TEN-001, INV-001, INV-002  \n**Fecha objetivo:** 2026-11-18\n\n## Alcance\nImplementar entradas, salidas, reservas y consulta de disponibilidad usando el contrato acordado y límites transaccionales explícitos.\n\n## Criterios de aceptación\n- [ ] Cada movimiento pertenece al tenant validado y conserva trazabilidad.\n- [ ] La actualización de existencias es transaccional y evita stock inconsistente.\n- [ ] POS consume API pública sin acceder a repositorios internos.\n- [ ] Migraciones y pruebas cubren disponibilidad, rollback y errores.\n\n## Bloqueo actual\nBloqueada por: INV-001 (@Sahid-B), INV-002 (@Sahid-B).\n\n## Especificación de lógica\n[Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/INV-003.md)."
   state: open
   assignees:
   - Sahid-B
@@ -20,7 +20,7 @@ project:
   Prioridad: Alta
   Área: Inventario
   Identificador de tarea: INV-003
-  Fecha objetivo: '2026-11-18'
+  Fecha objetivo: '2026-11-14'
 planning:
   area: Inventario
   assignee: Sahid-B
@@ -28,6 +28,7 @@ planning:
   - backend/src/main/java/com/erp/features/inventory/
   - backend/src/main/resources/db/migration/
   - backend/src/test/java/com/erp/features/inventory/
+  - docs/tasks/INV-003.md
   dependencies:
   - TEN-001
   - INV-001

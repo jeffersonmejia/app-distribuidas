@@ -4,7 +4,53 @@ github:
   issue_number: 9
 issue:
   title: '[PROJ-001] Implementar gestión básica de proyectos'
-  body: "<!-- managed-task-id: PROJ-001 -->\n\n## Descripción\nDiseñar proyectos, tareas y estados, preparar los casos de uso e incorporar pruebas unitarias.\n\n## Criterios de aceptación\n- Proyectos, tareas y estados tienen un diseño inicial.\n- Los casos de uso acordados están preparados.\n- Hay pruebas unitarias para los casos implementados.\n\n## Gestión\n- Área: Proyectos\n- Prioridad: Media\n- Estado: Pendiente\n- Responsable: @EMLarco\n- Rama: Esteban\n- Rutas: backend/.../features/projects/\n- Dependencias: Ninguna\n\n## Estado\nLista para ejecución; sus dependencias están resueltas."
+  body: '<!-- managed-task-id: PROJ-001 -->
+
+
+    ## Descripción
+
+    Diseñar proyectos, tareas y estados, preparar los casos de uso e incorporar pruebas unitarias.
+
+
+    ## Criterios de aceptación
+
+    - Proyectos, tareas y estados tienen un diseño inicial.
+
+    - Los casos de uso acordados están preparados.
+
+    - Hay pruebas unitarias para los casos implementados.
+
+
+    ## Gestión
+
+    - Área: Proyectos
+
+    - Prioridad: Media
+
+    - Estado: Bloqueado
+
+    - Responsable: @EMLarco
+
+    - Rama: Esteban
+
+    - Rutas: backend/.../features/projects/
+
+    - Dependencias: Ninguna
+
+
+    ## Estado
+
+    Bloqueada; ver bloqueo actual.
+
+
+    ## Especificación de lógica
+
+    [Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/PROJ-001.md).
+
+
+    ## Bloqueo actual
+
+    Pendiente de aprobación de campos obligatorios, catálogo/transiciones de estado, permisos, borrado/retención y relación de tareas por @jeffersonmejia.'
   state: open
   assignees:
   - EMLarco
@@ -16,14 +62,16 @@ issue:
 project:
   Repository: jeffersonmejia/app-distribuidas
   Title: '[PROJ-001] Implementar gestión básica de proyectos'
-  Status: Todo
-  Estado: Todo
+  Status: Blocked
+  Estado: Blocked
   Prioridad: Media
   Área: Proyectos
   Identificador de tarea: PROJ-001
-  Fecha objetivo: '2026-11-19'
+  Fecha objetivo: '2026-11-14'
 planning:
   targetDate: '2026-11-19'
-  state: Todo
+  state: Blocked
   priority: Media
   blocked_by: []
+  paths:
+  - docs/tasks/PROJ-001.md
