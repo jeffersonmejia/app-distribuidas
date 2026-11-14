@@ -273,13 +273,16 @@ jobs:
               }
 
               const nodeId = pr.node_id;
-              const mainComparison = await github.rest.repos.compareCommits({
+              const commits = await github.rest.pulls.listCommits({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                base: 'main',
-                head: pr.head.sha,
+                pull_number: pr.number,
+                per_page: 100,
               });
-              const mergeMethod = ['ahead', 'identical'].includes(mainComparison.data.status)
+              const isMainReconciliation = commits.data.some((commit) =>
+                commit.commit.message.split(/\r?\n/, 1)[0] === 'chore: reconcilia develop con main'
+              );
+              const mergeMethod = isMainReconciliation
                 ? 'MERGE'
                 : 'SQUASH';
               await github.graphql(
