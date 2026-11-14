@@ -279,7 +279,7 @@ jobs:
                 pull_number: pr.number,
                 per_page: 100,
               });
-              const isMainReconciliation = commits.data.some((commit) =>
+              const isMainReconciliation = pr.head.ref === 'main' || commits.data.some((commit) =>
                 commit.commit.message.split(/\r?\n/, 1)[0] === 'chore: reconcilia develop con main'
               );
               const mergeMethod = isMainReconciliation
