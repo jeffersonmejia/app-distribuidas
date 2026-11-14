@@ -91,7 +91,7 @@ Antes de diseñar o modificar entidades, repositorios, relaciones o esquema de b
 
 ## Entrega
 
-- Resume qué cambió, qué verificaste y cualquier limitación relevante. No hagas commits automáticamente; hazlos solo si te lo piden.
+- Resume qué cambió, qué verificaste y cualquier limitación relevante. Para tareas autorizadas que modifican archivos, prepara un commit Conventional Commit y publícalo en la rama personal existente de la persona responsable; no pidas otra confirmación para hacer ese paso. No hagas commits ni publiques cambios en tareas de solo lectura, cuando el solicitante pida explícitamente que no lo hagas o si la sincronización encuentra conflictos.
 
 ## Commits y publicación
 
@@ -99,15 +99,19 @@ Antes de diseñar o modificar entidades, repositorios, relaciones o esquema de b
 - Usa Conventional Commits: `tipo(scope): descripción`, con tipo y scope en minúsculas; el scope es opcional. Los únicos tipos permitidos son `feat`, `fix`, `refactor`, `docs` y `chore`.
 - Usa `chore` para mantenimiento del repositorio y commits de promoción/integración generados por automatización; reserva `feat` para cambios funcionales.
 - Ejemplos válidos: `feat(crm): agrega clientes`, `fix: corrige cálculo`, `docs: actualiza guía`, `chore: integra Jefferson en develop`, `chore: promueve cambios de develop a main`.
-- No hagas commits salvo que el solicitante lo pida explícitamente. Cuando lo pida, prepara solo los archivos del cambio y revisa el contenido antes de confirmar.
+- Al terminar un cambio autorizado, prepara solo los archivos relacionados, revisa el contenido y crea el commit Conventional Commit correspondiente. Después publica los cambios en la rama personal existente de la persona responsable.
 - Si el solicitante pide validar commits para un PR, valida todos los commits contra su rama base (`develop` o `main`) con Commitlint.
 - Trabaja sobre la rama personal existente de la persona responsable: `Bruce`, `Dayanara`, `Esteban`, `Jefferson`, `Jennifer` o `Sahid`. Para Jefferson, usa localmente `Jefferson`.
 - Los únicos nombres de rama permitidos son `Bruce`, `Dayanara`, `Esteban`, `Jefferson`, `Jennifer`, `Sahid`, `develop` y `main`. No crees ramas alternativas, temporales, `codex/*`, `patch-*` ni ramas por tarea o Pull Request.
 - La automatización abre Pull Requests desde la misma rama personal hacia `develop`; nunca debe crear una rama intermedia.
-- No publiques ramas nuevas en GitHub. Publica cambios únicamente en la rama personal existente cuando el solicitante lo autorice explícitamente.
+- No publiques ramas nuevas en GitHub. Publica cambios únicamente en la rama personal existente de la persona responsable; su autorización para la tarea incluye el commit y el push de ese trabajo, salvo que pida explícitamente no hacerlo.
 
 ## Flujo de integración
 
+- Antes de empezar cada tarea en el repositorio, revisa `git status` y la rama activa para detectar cambios preparados, no preparados, archivos nuevos y commits locales pendientes. Preserva el trabajo existente; no lo descartes ni lo sobrescribas.
+- Sincroniza siempre la rama personal existente de la persona responsable con lo último de `origin/develop` mediante `git fetch origin` y `git pull --no-rebase origin develop` antes de modificar archivos. Si la sincronización trae commits o cambios, publícalos en esa misma rama personal antes de empezar la tarea.
+- Si el pull presenta conflictos, detén la tarea antes de editar sus archivos y comunica qué archivos entraron en conflicto. No resuelvas esos conflictos sin instrucción del solicitante.
+- Si la sincronización termina sin conflictos y el solicitante ya dio una tarea, continúa con ella sin pedir confirmación ni enviar un aviso intermedio. Si todavía no dio una tarea, infórmale que la rama quedó lista para trabajar.
 - Mantén los cambios de cada tema en commits separados y con Conventional Commits cuando se autoricen commits.
 - La integración de cambios a `develop` debe seguir el workflow autorizado y sus checks; no hagas push directo a `develop`.
 - Integra `develop` en `main` mediante un Pull Request con al menos una aprobación. `main` requiere revisión manual; no hagas push ni merge directo a esa rama.

@@ -109,7 +109,7 @@ jobs:
                 head: `${context.repo.owner}:${branch}`,
                 base: 'develop',
                 title: `chore: integra ${branch} en develop`,
-                body: `@${responsible} Subí mi cambio desde mi rama y solicito integrarlo en develop. Se integrará automáticamente cuando pasen los checks requeridos y no haya conflictos. Si algo falla, corregiré el problema y actualizaré el PR.`,
+                body: `@${responsible} Se subieron cambios desde la rama ${branch} y se solicita integrarlos en develop. La integración será automática cuando pasen los checks requeridos y no haya conflictos. Si algún check falla o hay conflictos, el responsable deberá corregirlos y actualizar el PR.`,
                 maintainer_can_modify: true,
               });
               await github.rest.issues.addAssignees({
@@ -210,7 +210,7 @@ jobs:
                     owner: context.repo.owner,
                     repo: context.repo.repo,
                     comment_id: automationComment.id,
-                    body: `${marker}\n@${responsible} Mi cambio se integró automáticamente en develop.`,
+                    body: `${marker}\n@${responsible} Los cambios de la rama ${pr.head.ref} se integraron automáticamente en develop.`,
                   });
                 }
                 continue;
@@ -253,7 +253,7 @@ jobs:
               }
 
               if (blockers.length > 0) {
-                const body = `${marker}\n@${responsible} No pude integrar mi cambio: fallaron ${[...new Set(blockers)].map((name) => `\`${name}\``).join(', ')}. Voy a corregir el problema y actualizar el PR; la integración se reintentará automáticamente.`;
+                const body = `${marker}\n@${responsible} No se pudo integrar el cambio: fallaron ${[...new Set(blockers)].map((name) => `\`${name}\``).join(', ')}. El responsable debe corregir los problemas y actualizar el PR; la integración se reintentará automáticamente.`;
                 if (automationComment) {
                   await github.rest.issues.updateComment({
                     owner: context.repo.owner,
@@ -302,7 +302,7 @@ jobs:
                   owner: context.repo.owner,
                   repo: context.repo.repo,
                   comment_id: automationComment.id,
-                  body: `${marker}\n@${responsible} Ya corregí los bloqueos de mi PR. GitHub lo dejó en cola para integrarse automáticamente cuando pasen todos los checks requeridos y no haya conflictos.`,
+                  body: `${marker}\n@${responsible} Se corrigieron los bloqueos del PR. El PR quedó en cola para integrarse automáticamente cuando pasen todos los checks requeridos y no haya conflictos.`,
                 });
               }
             }
@@ -347,7 +347,7 @@ jobs:
               head: 'develop',
               base: 'main',
               title: 'chore: promueve cambios de develop a main',
-              body: 'Solicito revisión manual de los cambios integrados en develop antes de promoverlos a main. Este PR no se fusiona automáticamente.',
+              body: 'Se promueven a main los cambios integrados en develop. Se solicita una revisión manual antes de completar la promoción; este PR no se fusiona automáticamente.',
               maintainer_can_modify: true,
             });
             core.info(`PR #${pullRequest.data.number} abierto para revisión manual; no se activará auto-merge.`);
