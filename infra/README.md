@@ -1,6 +1,6 @@
 # Infraestructura Azure — develop
 
-Terraform modular para PostgreSQL Flexible Server en **Brazil South**, Azure Container Instances en **East US**, Azure Container Registry Basic, y GitHub Actions con Azure OIDC.
+Terraform modular para PostgreSQL Flexible Server, Azure Container Instances y Azure Container Registry Basic en **Brazil South**, y GitHub Actions con Azure OIDC.
 
 ## Estado de esta preparación
 

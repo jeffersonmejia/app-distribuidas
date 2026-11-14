@@ -59,9 +59,9 @@ Las únicas dependencias entre features son a través del contrato público de l
 
 ## Multitenancy y datos
 
-PostgreSQL es compartido. Toda consulta o escritura sobre datos pertenecientes a un tenant debe recibir el contexto de `tenancy` y limitarse a ese `tenant_id`. Los datos globales y las excepciones deben documentarse explícitamente. El modelo, el flujo de contexto y las responsabilidades de RLS están definidos en [ARC-002](multitenancy.md); su implementación sigue pendiente.
+PostgreSQL es compartido. Toda consulta o escritura sobre datos pertenecientes a un tenant debe recibir el contexto de `tenancy` y limitarse a ese `tenant_id`. Los datos globales y las excepciones deben documentarse explícitamente. El modelo y las reglas de ARC-002 están documentados en [multitenancy.md](multitenancy.md); la identidad y tenancy ya tienen implementación y pruebas. Cada nueva tabla tenant-scoped sigue teniendo que implementar y probar sus propias políticas RLS antes de exponer datos.
 
-La política para JPA/Hibernate Code First, migraciones Flyway y convenciones de persistencia está en [Persistencia ORM Code First](orm-code-first.md). Su implementación también sigue pendiente.
+La política para JPA/Hibernate Code First, migraciones Flyway y convenciones de persistencia está en [orm-code-first.md](orm-code-first.md). JPA, Flyway y PostgreSQL ya están incorporados; las entidades, migraciones y validaciones siguen siendo responsabilidad de cada feature.
 
 ## Criterios de integración
 

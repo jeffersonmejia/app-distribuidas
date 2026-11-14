@@ -2,9 +2,9 @@
 
 ## Estado y alcance
 
-**Decisión aceptada para la implementación posterior.** El modelo de objetos de cada feature se expresa con JPA/Hibernate y los cambios de esquema se entregan mediante migraciones Flyway revisadas. Este documento define convenciones; no agrega dependencias ni implementa entidades, repositorios, migraciones o configuración ejecutable.
+**Decisión obligatoria para el backend.** El modelo de objetos de cada feature se expresa con JPA/Hibernate y los cambios de esquema se entregan mediante migraciones Flyway revisadas. El backend ya incorpora Spring Data JPA, Flyway y el driver PostgreSQL. Este documento define las convenciones persistentes; las entidades, repositorios y migraciones de cada feature se implementan dentro de su tarea.
 
-El backend hoy no declara Spring Data JPA, el driver PostgreSQL ni Flyway. Se incorporarán en una tarea de implementación autorizada.
+El backend declara Spring Data JPA, Flyway y el driver PostgreSQL en backend/pom.xml. Tenancy y CRM ya tienen entidades y migraciones. La adopción por otra feature requiere sus propios cambios de modelo, migración, validación y pruebas; no se debe describir como una capacidad aún no instalada.
 
 ## Decisiones obligatorias
 
