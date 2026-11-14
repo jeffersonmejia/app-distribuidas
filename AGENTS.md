@@ -93,47 +93,22 @@ Antes de diseñar o modificar entidades, repositorios, relaciones o esquema de b
 
 - Resume qué cambió, qué verificaste y cualquier limitación relevante. No hagas commits automáticamente; hazlos solo si te lo piden.
 
-## Commit y push
+## Commits y publicación
 
 - La configuración compartida y las dependencias de Commitlint están en la raíz: `commitlint.config.cjs` y `package.json`.
-- Usa Conventional Commits: `tipo(scope): descripción`, con tipo y scope en minúsculas; el scope es opcional. Los únicos tipos permitidos son `feat`, `fix`, `refactor` y `docs`.
-- Ejemplos válidos: `feat(crm): agrega clientes`, `fix: corrige cálculo`, `docs: actualiza guía`.
-- Antes de confirmar, prepara solo los archivos del cambio y revisa lo que enviarás:
-
-  ```bash
-  git status
-  git add <rutas-del-cambio>
-  git diff --cached
-  git commit -m "feat(crm): agrega clientes"
-  ```
-
-- Valida todos los commits que entrarán al PR contra su rama base (`develop` o `main`), no solo el último. Desde la raíz del repo:
-
-  ```bash
-  git fetch origin
-  npx --no-install commitlint --from origin/develop --to HEAD --verbose
-  ```
-
-  Sustituye `origin/develop` por `origin/main` si esa es la base del PR. Si falla, corrige cada mensaje inválido antes de hacer push. El workflow de GitHub ejecuta esta misma validación para todos los commits del PR.
-- En el primer push de una rama, establece upstream; en los siguientes, usa `git push`:
-
-  ```bash
-  git push --set-upstream origin feat/crm-clientes
-  ```
-
-- Si el remoto rechaza el push porque la rama base avanzó, actualiza referencias y rebasa sobre la rama base antes de revalidar y volver a enviar:
-
-  ```bash
-  git fetch origin
-  git rebase origin/develop
-  ```
-
-  Reemplaza `develop` por `main` cuando corresponda y resuelve conflictos antes de continuar. No uses `git push --force`.
+- Usa Conventional Commits: `tipo(scope): descripción`, con tipo y scope en minúsculas; el scope es opcional. Los únicos tipos permitidos son `feat`, `fix`, `refactor`, `docs` y `chore`.
+- Usa `chore` para mantenimiento del repositorio y commits de promoción/integración generados por automatización; reserva `feat` para cambios funcionales.
+- Ejemplos válidos: `feat(crm): agrega clientes`, `fix: corrige cálculo`, `docs: actualiza guía`, `chore: integra Jefferson en develop`, `chore: promueve cambios de develop a main`.
+- No hagas commits salvo que el solicitante lo pida explícitamente. Cuando lo pida, prepara solo los archivos del cambio y revisa el contenido antes de confirmar.
+- Si el solicitante pide validar commits para un PR, valida todos los commits contra su rama base (`develop` o `main`) con Commitlint.
+- Trabaja sobre la rama personal existente de la persona responsable: `Bruce`, `Dayanara`, `Esteban`, `Jefferson`, `Jennifer` o `Sahid`. Para Jefferson, usa localmente `Jefferson`.
+- Los únicos nombres de rama permitidos son `Bruce`, `Dayanara`, `Esteban`, `Jefferson`, `Jennifer`, `Sahid`, `develop` y `main`. No crees ramas alternativas, temporales, `codex/*`, `patch-*` ni ramas por tarea o Pull Request.
+- La automatización abre Pull Requests desde la misma rama personal hacia `develop`; nunca debe crear una rama intermedia.
+- No publiques ramas nuevas en GitHub. Publica cambios únicamente en la rama personal existente cuando el solicitante lo autorice explícitamente.
 
 ## Flujo de integración
 
-- Usa las ramas de trabajo existentes; no crees ramas temporales para tareas de documentación o gestión del proyecto.
-- Para el trabajo de Jefferson, confirma y publica los cambios en `Jefferson`.
-- Integra `Jefferson` en `develop` después de validar los commits y revisar el cambio.
-- Integra `develop` en `main` mediante un Pull Request con al menos una aprobación. `main` requiere Pull Requests y revisión manual; no hagas push ni merge directo a esa rama.
-- Mantén los cambios de cada tema en commits separados y con Conventional Commits.
+- Mantén los cambios de cada tema en commits separados y con Conventional Commits cuando se autoricen commits.
+- La integración de cambios a `develop` debe seguir el workflow autorizado y sus checks; no hagas push directo a `develop`.
+- Integra `develop` en `main` mediante un Pull Request con al menos una aprobación. `main` requiere revisión manual; no hagas push ni merge directo a esa rama.
+- No cierres, fusiones ni modifiques PRs sin instrucción explícita del solicitante.

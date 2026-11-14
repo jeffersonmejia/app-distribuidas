@@ -108,7 +108,7 @@ jobs:
                 repo: context.repo.repo,
                 head: `${context.repo.owner}:${branch}`,
                 base: 'develop',
-                title: `Integrar ${branch} en develop`,
+                title: `chore: integra ${branch} en develop`,
                 body: `@${responsible} Subí mi cambio desde mi rama y solicito integrarlo en develop. Se integrará automáticamente cuando pasen los checks requeridos y no haya conflictos. Si algo falla, corregiré el problema y actualizaré el PR.`,
                 maintainer_can_modify: true,
               });
@@ -273,16 +273,28 @@ jobs:
               }
 
               const nodeId = pr.node_id;
+              const commits = await github.rest.pulls.listCommits({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: pr.number,
+                per_page: 100,
+              });
+              const isMainReconciliation = commits.data.some((commit) =>
+                commit.commit.message.split(/\r?\n/, 1)[0] === 'chore: reconcilia develop con main'
+              );
+              const mergeMethod = isMainReconciliation
+                ? 'MERGE'
+                : 'SQUASH';
               await github.graphql(
-                `mutation($pullRequestId: ID!) {
+                `mutation($pullRequestId: ID!, $mergeMethod: PullRequestMergeMethod!) {
                   enablePullRequestAutoMerge(input: {
                     pullRequestId: $pullRequestId,
-                    mergeMethod: SQUASH
+                    mergeMethod: $mergeMethod
                   }) {
                     pullRequest { id }
                   }
                 }`,
-                { pullRequestId: nodeId },
+                { pullRequestId: nodeId, mergeMethod },
               );
 
               if (automationComment) {
@@ -334,7 +346,7 @@ jobs:
               repo: context.repo.repo,
               head: 'develop',
               base: 'main',
-              title: 'Promover develop a main',
+              title: 'chore: promueve cambios de develop a main',
               body: 'Solicito revisión manual de los cambios integrados en develop antes de promoverlos a main. Este PR no se fusiona automáticamente.',
               maintainer_can_modify: true,
             });
