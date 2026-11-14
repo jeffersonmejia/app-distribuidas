@@ -53,6 +53,7 @@ project:
   Identificador de tarea: GOV-001
   Prioridad: Media
   Fecha objetivo: '2026-11-22'
+  Bloqueado por: "Nadie"
 planning:
   acceptanceCriteria:
   - Los lineamientos de desarrollo están documentados.

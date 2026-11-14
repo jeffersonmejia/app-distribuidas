@@ -21,6 +21,7 @@ project:
   Área: Frontend
   Identificador de tarea: FRONT-003
   Fecha objetivo: '2026-11-15'
+  Bloqueado por: "@Dayanarablb (FRONT-001, FRONT-002)"
 planning:
   area: Frontend
   assignee: Dayanarablb

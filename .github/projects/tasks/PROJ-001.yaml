@@ -4,53 +4,12 @@ github:
   issue_number: 9
 issue:
   title: '[PROJ-001] Implementar gestión básica de proyectos'
-  body: '<!-- managed-task-id: PROJ-001 -->
-
-
-    ## Descripción
-
-    Diseñar proyectos, tareas y estados, preparar los casos de uso e incorporar pruebas unitarias.
-
-
-    ## Criterios de aceptación
-
-    - Proyectos, tareas y estados tienen un diseño inicial.
-
-    - Los casos de uso acordados están preparados.
-
-    - Hay pruebas unitarias para los casos implementados.
-
-
-    ## Gestión
-
-    - Área: Proyectos
-
-    - Prioridad: Media
-
-    - Estado: Bloqueado
-
-    - Responsable: @EMLarco
-
-    - Rama: Esteban
-
-    - Rutas: backend/.../features/projects/
-
-    - Dependencias: Ninguna
-
-
-    ## Estado
-
-    Bloqueada; ver bloqueo actual.
-
-
-    ## Especificación de lógica
-
-    [Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/PROJ-001.md).
-
-
-    ## Bloqueo actual
-
-    Pendiente de aprobación de campos obligatorios, catálogo/transiciones de estado, permisos, borrado/retención y relación de tareas por @jeffersonmejia.'
+  body: "<!-- managed-task-id: PROJ-001 -->
+## Descripción Implementar gestión tenant-scoped de proyectos y tareas con las reglas aprobadas.
+## Criterios de aceptación - El nombre del proyecto y el título de cada tarea son obligatorios; demás campos aprobados son opcionales. - Cada tarea pertenece a un solo proyecto; prioridad opcional Alta/Media/Baja. - Estados Pendiente, En progreso, Bloqueada y Completada cumplen las transiciones aprobadas; Completada puede reabrirse como En progreso. - CRUD requiere permiso explícito por tenant y operación; no hay permisos por defecto ni roles implícitos. - Borrado lógico restaurable, sin purga automática; purga permanente manual con permiso explícito. - Persistencia y consultas respetan tenant_id, RLS, restricciones y paginación máxima 5.
+## Gestión - Área: Proyectos - Prioridad: Media - Estado: Todo - Responsable: @EMLarco - Rama: Esteban - Rutas: backend/src/main/java/com/erp/features/projects/, backend/src/main/resources/db/migration/, backend/src/test/java/com/erp/features/projects/ - Dependencias: Ninguna
+## Especificación de lógica [Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/PROJ-001.md).
+## Bloqueo actual Ninguno. Las decisiones de alcance están aprobadas."
   state: open
   assignees:
   - EMLarco
@@ -62,16 +21,27 @@ issue:
 project:
   Repository: jeffersonmejia/app-distribuidas
   Title: '[PROJ-001] Implementar gestión básica de proyectos'
-  Status: Blocked
-  Estado: Blocked
+  Status: "Todo"
+  Estado: "Todo"
   Prioridad: Media
   Área: Proyectos
   Identificador de tarea: PROJ-001
-  Fecha objetivo: '2026-11-14'
+  Fecha objetivo: "2026-11-19"
+  Bloqueado por: "Nadie"
 planning:
-  targetDate: '2026-11-19'
-  state: Blocked
+  targetDate: "2026-11-19"
+  state: "Todo"
   priority: Media
   blocked_by: []
   paths:
-  - docs/tasks/PROJ-001.md
+  - "backend/src/main/java/com/erp/features/projects/"
+  - "backend/src/main/resources/db/migration/"
+  - "backend/src/test/java/com/erp/features/projects/"
+  - "docs/tasks/PROJ-001.md"
+  acceptanceCriteria:
+  - "Proyecto requiere nombre; descripción y fechas opcionales. Tarea requiere título; descripción, responsable, prioridad y vencimiento opcionales."
+  - "Cada tarea pertenece a un único proyecto; prioridades Alta, Media y Baja."
+  - "Estados y transiciones coinciden con la lógica aprobada, incluido retorno al estado previo tras bloqueo y reapertura de completadas."
+  - "Permisos explícitos por tenant y operación para leer, crear, editar y eliminar; denegado por defecto."
+  - "Borrado lógico restaurable, sin purga automática; purga permanente solo manual y con permiso."
+  - "Persistencia tenant-scoped, ACID, RLS fail-closed y paginación backend máxima 5."
