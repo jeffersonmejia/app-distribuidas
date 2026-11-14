@@ -4,8 +4,49 @@ github:
   issue_number: 4
 issue:
   title: '[CRM-001] Implementar gestión inicial de clientes'
-  body: "<!-- managed-task-id: CRM-001 -->\n\n## Descripción\nDiseñar entidades y casos de uso para la gestión inicial de clientes, implementar las operaciones básicas acordadas y preparar pruebas unitarias.\n\n## Criterios de aceptación\n- El diseño inicial de clientes y sus casos de uso está definido.\n- Las operaciones básicas de clientes cumplen los contratos acordados.\n- Hay pruebas unitarias para los casos implementados.\n\n## Gestión\n- Área: CRM\n- Prioridad: Alta\n- Estado: Pendiente\n- Responsable: @BruceRodri\n- Rama: Bruce\n- Rutas: backend/.../features/crm/\n- Dependencias: Ninguna\n\n## Estado\nLista para ejecución; sus dependencias están resueltas."
-  state: open
+  body: '<!-- managed-task-id: CRM-001 -->
+
+
+    ## Descripción
+
+    Diseñar entidades y casos de uso para la gestión inicial de clientes, implementar las operaciones básicas acordadas y preparar pruebas unitarias.
+
+
+    ## Criterios de aceptación
+
+    - El diseño inicial de clientes y sus casos de uso está definido.
+
+    - Las operaciones básicas de clientes cumplen los contratos acordados.
+
+    - Hay pruebas unitarias para los casos implementados.
+
+
+    ## Gestión
+
+    - Área: CRM
+
+    - Prioridad: Alta
+
+    - Estado: Pendiente
+
+    - Responsable: @BruceRodri
+
+    - Rama: Bruce
+
+    - Rutas: backend/.../features/crm/
+
+    - Dependencias: Ninguna
+
+
+    ## Estado
+
+    Lista para ejecución; sus dependencias están resueltas.
+
+
+    ## Especificación de lógica
+
+    [Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/crm/requerimientos.md).'
+  state: closed
   assignees:
   - BruceRodri
   labels:
@@ -16,14 +57,16 @@ issue:
 project:
   Repository: jeffersonmejia/app-distribuidas
   Title: '[CRM-001] Implementar gestión inicial de clientes'
-  Status: Todo
-  Estado: Todo
+  Status: Done
+  Estado: Done
   Prioridad: Alta
   Área: CRM
   Identificador de tarea: CRM-001
-  Fecha objetivo: '2026-11-18'
+  Fecha objetivo: '2026-11-13'
 planning:
   targetDate: '2026-11-18'
   state: Todo
   priority: Alta
   blocked_by: []
+  paths:
+  - docs/crm/requerimientos.md

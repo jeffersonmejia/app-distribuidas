@@ -4,7 +4,7 @@ github:
   issue_number: 41
 issue:
   title: '[REL-001] Ejecutar aceptación final y preparar entrega del MVP'
-  body: "<!-- managed-task-id: REL-001 -->\n\n**Feature:** Arquitectura  \n**Responsable:** @jeffersonmejia  \n**Rutas:** README.md, docs/, frontend/, backend/  \n**Dependencias:** QA-003, QA-004, OPS-002, SEC-001  \n**Fecha objetivo:** 2026-11-25\n\n## Alcance\nEjecutar aceptación del MVP integrado y preparar entrega para revisión del equipo el 25 de noviembre.\n\n## Criterios de aceptación\n- [ ] Verificar acceso/tenant, clientes, inventario/venta y módulos entregados de extremo a extremo.\n- [ ] No quedan defectos bloqueantes ni conflictos de sincronización pendientes.\n- [ ] Instrucciones permiten arrancar, probar y recuperar el entorno local.\n- [ ] Declarar funcionalidades completas y todo alcance que quede pendiente.\n\n## Bloqueo actual\nBloqueada por: QA-003 (@Jntorres2001), QA-004 (@Jntorres2001), OPS-002 (@jeffersonmejia), SEC-001 (@jeffersonmejia)."
+  body: "<!-- managed-task-id: REL-001 -->\n\n**Feature:** Arquitectura  \n**Responsable:** @jeffersonmejia  \n**Rutas:** README.md, docs/, frontend/, backend/  \n**Dependencias:** QA-003, QA-004, OPS-002, SEC-001  \n**Fecha objetivo:** 2026-11-25\n\n## Alcance\nEjecutar aceptación del MVP integrado y preparar entrega para revisión del equipo el 25 de noviembre.\n\n## Criterios de aceptación\n- [ ] Verificar acceso/tenant, clientes, inventario/venta y módulos entregados de extremo a extremo.\n- [ ] No quedan defectos bloqueantes ni conflictos de sincronización pendientes.\n- [ ] Instrucciones permiten arrancar, probar y recuperar el entorno local.\n- [ ] Declarar funcionalidades completas y todo alcance que quede pendiente.\n\n## Bloqueo actual\nBloqueada por: QA-003 (@Jntorres2001), QA-004 (@Jntorres2001), OPS-002 (@jeffersonmejia), SEC-001 (@jeffersonmejia).\n\n## Especificación de lógica\n[Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/REL-001.md)."
   state: open
   assignees:
   - jeffersonmejia
@@ -19,7 +19,7 @@ project:
   Prioridad: Alta
   Área: Arquitectura
   Identificador de tarea: REL-001
-  Fecha objetivo: '2026-11-25'
+  Fecha objetivo: '2026-11-16'
 planning:
   area: Arquitectura
   assignee: jeffersonmejia
@@ -28,6 +28,7 @@ planning:
   - docs/
   - frontend/
   - backend/
+  - docs/tasks/REL-001.md
   dependencies:
   - QA-003
   - QA-004

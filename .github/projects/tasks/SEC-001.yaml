@@ -4,7 +4,7 @@ github:
   issue_number: 40
 issue:
   title: '[SEC-001] Revisar seguridad y cerrar hallazgos del MVP'
-  body: "<!-- managed-task-id: SEC-001 -->\n\n**Feature:** Calidad  \n**Responsable:** @jeffersonmejia  \n**Rutas:** backend/, frontend/, .github/workflows/, docs/  \n**Dependencias:** AUTH-002, TEN-001, INT-001  \n**Fecha objetivo:** 2026-11-23\n\n## Alcance\nRevisar flujos implementados frente a OWASP Top 10:2025, autorización tenant, validación, secretos, dependencias y errores.\n\n## Criterios de aceptación\n- [ ] No quedan alertas High/Critical ni errores sin triage.\n- [ ] Cada hallazgo de seguridad se revisa manualmente.\n- [ ] Logs y respuestas no exponen secretos ni datos de otros tenants.\n- [ ] Hallazgos bloqueantes se corrigen y verifican antes de aceptar.\n\n## Bloqueo actual\nBloqueada por: INT-001 (@jeffersonmejia)."
+  body: "<!-- managed-task-id: SEC-001 -->\n\n**Feature:** Calidad  \n**Responsable:** @jeffersonmejia  \n**Rutas:** backend/, frontend/, .github/workflows/, docs/  \n**Dependencias:** AUTH-002, TEN-001, INT-001  \n**Fecha objetivo:** 2026-11-23\n\n## Alcance\nRevisar flujos implementados frente a OWASP Top 10:2025, autorización tenant, validación, secretos, dependencias y errores.\n\n## Criterios de aceptación\n- [ ] No quedan alertas High/Critical ni errores sin triage.\n- [ ] Cada hallazgo de seguridad se revisa manualmente.\n- [ ] Logs y respuestas no exponen secretos ni datos de otros tenants.\n- [ ] Hallazgos bloqueantes se corrigen y verifican antes de aceptar.\n\n## Bloqueo actual\nBloqueada por: INT-001 (@jeffersonmejia).\n\n## Especificación de lógica\n[Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/SEC-001.md)."
   state: open
   assignees:
   - jeffersonmejia
@@ -20,7 +20,7 @@ project:
   Prioridad: Alta
   Área: Calidad
   Identificador de tarea: SEC-001
-  Fecha objetivo: '2026-11-23'
+  Fecha objetivo: '2026-11-16'
 planning:
   area: Calidad
   assignee: jeffersonmejia
@@ -29,6 +29,7 @@ planning:
   - frontend/
   - .github/workflows/
   - docs/
+  - docs/tasks/SEC-001.md
   dependencies:
   - AUTH-002
   - TEN-001

@@ -46,7 +46,12 @@ issue:
 
     - Rutas revisadas: backend/, frontend/, docs/quality.md, docs/quality-templates/formato_sonar_qube.docx, docker/compose.sonarqube.yml
 
-    - Dependencias: Ninguna'
+    - Dependencias: Ninguna
+
+
+    ## Especificación de lógica
+
+    [Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/QA-005.md).'
   state: open
   assignees:
   - Jntorres2001
@@ -61,6 +66,7 @@ project:
   Identificador de tarea: QA-005
   Prioridad: Media
   Área: Calidad
+  Fecha objetivo: '2026-11-22'
 planning:
   area: Calidad
   assignee: Jntorres2001
@@ -70,6 +76,7 @@ planning:
   - docs/quality.md
   - docs/quality-templates/formato_sonar_qube.docx
   - docker/compose.sonarqube.yml
+  - docs/tasks/QA-005.md
   dependencies: []
   state: Todo
   priority: Media

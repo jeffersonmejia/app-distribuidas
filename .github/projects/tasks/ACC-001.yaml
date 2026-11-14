@@ -27,7 +27,7 @@ issue:
 
     - Prioridad: Alta
 
-    - Estado: Pendiente
+    - Estado: Completado
 
     - Responsable: @EMLarco
 
@@ -35,8 +35,13 @@ issue:
 
     - Rutas: backend/.../features/accounting/
 
-    - Dependencias: Ninguna'
-  state: open
+    - Dependencias: Ninguna
+
+
+    ## Estado
+
+    Completada; el Issue está cerrado y el Project registra Done. Los detalles de reglas y precisión monetaria deben localizarse/aprobarse antes de implementar ACC-002.'
+  state: closed
   assignees:
   - EMLarco
   labels:
@@ -47,12 +52,12 @@ issue:
 project:
   Repository: jeffersonmejia/app-distribuidas
   Title: '[ACC-001] Diseñar módulo contable inicial'
-  Status: Todo
-  Estado: Todo
+  Status: Done
+  Estado: Done
   Prioridad: Alta
   Área: Contabilidad
   Identificador de tarea: ACC-001
-  Fecha objetivo: '2026-11-14'
+  Fecha objetivo: '2026-11-13'
 planning:
   targetDate: '2026-11-14'
   state: Todo

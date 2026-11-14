@@ -4,7 +4,7 @@ github:
   issue_number: 38
 issue:
   title: '[QA-004] Medir rendimiento de flujos críticos con k6'
-  body: "<!-- managed-task-id: QA-004 -->\n\n**Feature:** Testing  \n**Responsable:** @Jntorres2001  \n**Rutas:** tests/performance/, docs/testing.md  \n**Dependencias:** QA-003, POS-002, INV-003, CRM-001  \n**Fecha objetivo:** 2026-11-24\n\n## Alcance\nEjecutar pruebas k6 de venta POS, disponibilidad de inventario y búsqueda de clientes en entorno de pruebas.\n\n## Criterios de aceptación\n- [ ] Usar ramp-up 1→10 VUs y 10 VUs durante 5 minutos; nunca producción.\n- [ ] Errores HTTP <1%, lecturas p95 <500 ms y escrituras p95 <1 s.\n- [ ] Reportar entorno, datos, duración, error rate y p95 por operación.\n- [ ] Fallas generan corrección asignada al owner antes de liberar.\n\n## Bloqueo actual\nBloqueada por: QA-003 (@Jntorres2001), POS-002 (@BruceRodri), INV-003 (@Sahid-B), CRM-001 (@BruceRodri)."
+  body: "<!-- managed-task-id: QA-004 -->\n\n**Feature:** Testing  \n**Responsable:** @Jntorres2001  \n**Rutas:** tests/performance/, docs/testing.md  \n**Dependencias:** QA-003, POS-002, INV-003, CRM-001  \n**Fecha objetivo:** 2026-11-24\n\n## Alcance\nEjecutar pruebas k6 de venta POS, disponibilidad de inventario y búsqueda de clientes en entorno de pruebas.\n\n## Criterios de aceptación\n- [ ] Usar ramp-up 1→10 VUs y 10 VUs durante 5 minutos; nunca producción.\n- [ ] Errores HTTP <1%, lecturas p95 <500 ms y escrituras p95 <1 s.\n- [ ] Reportar entorno, datos, duración, error rate y p95 por operación.\n- [ ] Fallas generan corrección asignada al owner antes de liberar.\n\n## Bloqueo actual\nBloqueada por: QA-003 (@Jntorres2001), POS-002 (@BruceRodri) e INV-003 (@Sahid-B). CRM-001 está completada.\n\n## Especificación de lógica\n[Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/QA-004.md)."
   state: open
   assignees:
   - Jntorres2001
@@ -18,13 +18,14 @@ project:
   Prioridad: Media
   Área: Testing
   Identificador de tarea: QA-004
-  Fecha objetivo: '2026-11-24'
+  Fecha objetivo: '2026-11-16'
 planning:
   area: Testing
   assignee: Jntorres2001
   paths:
   - tests/performance/
   - docs/testing.md
+  - docs/tasks/QA-004.md
   dependencies:
   - QA-003
   - POS-002
@@ -37,7 +38,6 @@ planning:
   - QA-003
   - POS-002
   - INV-003
-  - CRM-001
   description: Ejecutar pruebas k6 de venta POS, disponibilidad de inventario y búsqueda de clientes en entorno de pruebas.
   acceptanceCriteria:
   - Usar ramp-up 1→10 VUs y 10 VUs durante 5 minutos; nunca producción.

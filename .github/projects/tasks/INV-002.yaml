@@ -27,7 +27,7 @@ issue:
 
     - Prioridad: Alta
 
-    - Estado: Pendiente
+    - Estado: En progreso
 
     - Responsable: @Sahid-B
 
@@ -35,7 +35,12 @@ issue:
 
     - Rutas: backend/.../features/inventory/, backend/.../features/pos/ (coordinación)
 
-    - Dependencias: Ninguna'
+    - Dependencias: Ninguna
+
+
+    ## Especificación de lógica
+
+    [Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/INV-002.md).'
   state: open
   assignees:
   - Sahid-B
@@ -48,8 +53,11 @@ project:
   Repository: jeffersonmejia/app-distribuidas
   Title: '[INV-002] Definir contrato de movimientos de inventario'
   Status: In Progress
-  Estado: Todo
+  Estado: In Progress
   Prioridad: Alta
   Área: Inventario
   Identificador de tarea: INV-002
-  Fecha objetivo: '2026-11-14'
+  Fecha objetivo: '2026-11-13'
+planning:
+  paths:
+  - docs/tasks/INV-002.md

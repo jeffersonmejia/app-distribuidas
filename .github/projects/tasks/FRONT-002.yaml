@@ -39,7 +39,12 @@ issue:
 
     - Dependencias: FRONT-001
 
-    - Bloqueo actual: FRONT-001 sigue pendiente; este layout no está implementado.'
+    - Bloqueo actual: FRONT-001 sigue pendiente; este layout no está implementado.
+
+
+    ## Especificación de lógica
+
+    [Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/FRONT-002.md).'
   state: open
   assignees:
   - Dayanarablb
@@ -54,7 +59,7 @@ project:
   Prioridad: Alta
   Área: Frontend
   Identificador de tarea: FRONT-002
-  Fecha objetivo: '2026-11-16'
+  Fecha objetivo: '2026-11-14'
 planning:
   acceptanceCriteria:
   - El layout general está definido.
@@ -63,6 +68,7 @@ planning:
   - Pruebas de componentes cubren navegación y renderizado del layout.
   paths:
   - frontend/src/app/
+  - docs/tasks/FRONT-002.md
   priority: Alta
   assignmentNote: null
   assignee: Dayanarablb
