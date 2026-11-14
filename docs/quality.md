@@ -23,7 +23,7 @@ La cobertura diferencial se calcula con JaCoCo XML y LCOV usando ejecuciones sep
 
 El ruleset `Protect develop` aplica estas reglas en `develop`: exige Pull Request, los checks de Conventional Commits, pruebas/cobertura y CodeQL, además de bloquear hallazgos nuevos de CodeQL con severidad de seguridad High o Critical y severidad general Error. Los pushes directos se rechazan, incluso para administradores. Los PR elegibles se integran automáticamente con squash cuando no tienen conflictos y todos los requisitos se cumplen.
 
-El workflow `auto-develop.yml` activa auto-merge y comenta en el PR mencionando a su autor cuando falla un check obligatorio o hay conflictos. Como usa `pull_request_target` para responder a PR de colaboradores con permisos de escritura, no descarga ni ejecuta el código del PR. GitHub toma ese workflow de la rama predeterminada (`main`); por eso la automatización de auto-merge estará activa para nuevos PR una vez que este archivo llegue a `main` mediante un PR.
+El workflow `auto-develop.yml` abre PRs desde las ramas personales hacia `develop`, activa auto-merge solo cuando no hay conflictos y deja que los checks requeridos decidan cuándo integrar. Si algo bloquea la integración, comenta en el PR mencionando a su responsable. Como usa `pull_request_target` para responder a PR de colaboradores con permisos de escritura, no descarga ni ejecuta el código del PR. Cada actualización de `develop` abre o actualiza un PR hacia `main`; ese PR no se fusiona automáticamente y `Protect main` exige una aprobación.
 
 El gate de calidad sigue ejecutándose con `pull_request`, permisos mínimos de lectura para el contenido y `security-events: write` para publicar SARIF. No ejecuta código de PR con un runner propio.
 
