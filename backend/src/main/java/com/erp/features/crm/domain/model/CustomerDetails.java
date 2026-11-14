@@ -1,14 +1,9 @@
 package com.erp.features.crm.domain.model;
 
 import java.util.Locale;
-import java.util.regex.Pattern;
 
 //SOLID: SRP — ESTE TIPO VALIDA Y NORMALIZA LOS DATOS DE UN CLIENTE.
 public record CustomerDetails(String fullName, String cedula, String email, String phone) {
-    private static final Pattern EMAIL = Pattern.compile(
-            "^[^\\s@.]+(?:\\.[^\\s@.]+)*@[a-z0-9]+(?:[a-z0-9-]*[a-z0-9])?"
-                    + "(?:\\.[a-z0-9]+(?:[a-z0-9-]*[a-z0-9])?)+$");
-
     public CustomerDetails {
         fullName = optional(fullName);
         if (fullName == null) {
@@ -21,7 +16,7 @@ public record CustomerDetails(String fullName, String cedula, String email, Stri
         email = optional(email);
         if (email != null) {
             email = email.toLowerCase(Locale.ROOT);
-            if (!EMAIL.matcher(email).matches()) {
+            if (!validEmail(email)) {
                 throw new IllegalArgumentException("invalid email");
             }
         }
@@ -33,6 +28,52 @@ public record CustomerDetails(String fullName, String cedula, String email, Stri
             return null;
         }
         return value.trim();
+    }
+
+    //SOLID: SRP — ESTA FUNCIÓN VALIDA EL CORREO EN UNA SOLA PASADA.
+    private static boolean validEmail(String value) {
+        boolean localHasCharacter = false;
+        int index = 0;
+        while (index < value.length() && value.charAt(index) != '@') {
+            char character = value.charAt(index++);
+            if (character == '.') {
+                if (!localHasCharacter) {
+                    return false;
+                }
+                localHasCharacter = false;
+            } else {
+                if (character == ' ' || (character >= '\t' && character <= '\r')) {
+                    return false;
+                }
+                localHasCharacter = true;
+            }
+        }
+        if (!localHasCharacter || index == value.length()) {
+            return false;
+        }
+        index++;
+        boolean labelHasCharacter = false;
+        boolean lastWasHyphen = false;
+        int dots = 0;
+        while (index < value.length()) {
+            char character = value.charAt(index++);
+            if (character == '.') {
+                if (!labelHasCharacter || lastWasHyphen) {
+                    return false;
+                }
+                dots++;
+                labelHasCharacter = false;
+                lastWasHyphen = false;
+            } else if ((character >= 'a' && character <= 'z') || (character >= '0' && character <= '9')) {
+                labelHasCharacter = true;
+                lastWasHyphen = false;
+            } else if (character == '-' && labelHasCharacter) {
+                lastWasHyphen = true;
+            } else {
+                return false;
+            }
+        }
+        return dots > 0 && labelHasCharacter && !lastWasHyphen;
     }
 
     private static boolean validCedula(String value) {

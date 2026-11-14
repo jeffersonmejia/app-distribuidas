@@ -3,7 +3,9 @@ package com.erp.features.crm.domain.model;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTimeoutPreemptively;
 
+import java.time.Duration;
 import org.junit.jupiter.api.Test;
 
 //SOLID: SRP — ESTA SUITE COMPRUEBA LAS REGLAS DE DATOS DEL CLIENTE.
@@ -31,5 +33,23 @@ class CustomerDetailsTest {
         assertThrows(IllegalArgumentException.class, () -> new CustomerDetails("Ana", null, "invalid", null));
         assertThrows(IllegalArgumentException.class, () -> new CustomerDetails("Ana", null, "a..b@example.com", null));
         assertThrows(IllegalArgumentException.class, () -> new CustomerDetails("Ana", null, "a@-example.com", null));
+    }
+
+    @Test
+    void validatesDomainLabelsAndLongHostileInputsInLinearTime() {
+        assertEquals("name.part@sub-do.main.example",
+                new CustomerDetails("Ana", null, " Name.Part@Sub-Do.Main.Example ", null).email());
+        for (String email : new String[]{"a.@example.com", ".a@example.com", "a@example-.com",
+                "a@example..com", "a@example", "a@example.com@"}) {
+            assertThrows(IllegalArgumentException.class, () -> new CustomerDetails("Ana", null, email, null));
+        }
+        String repeatedLabels = "a@0." + "00.".repeat(100_000);
+        String repeatedHyphens = "a@a" + "-".repeat(300_000) + ".com";
+        assertTimeoutPreemptively(Duration.ofSeconds(3), () -> {
+            assertThrows(IllegalArgumentException.class,
+                    () -> new CustomerDetails("Ana", null, repeatedLabels, null));
+            assertThrows(IllegalArgumentException.class,
+                    () -> new CustomerDetails("Ana", null, repeatedHyphens, null));
+        });
     }
 }
