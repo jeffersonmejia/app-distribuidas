@@ -47,7 +47,7 @@ resource "azurerm_container_group" "this" {
       http_get {
         path   = "/"
         port   = 80
-        scheme = "Http"
+        scheme = "http"
       }
       initial_delay_seconds = 10
       period_seconds        = 30
