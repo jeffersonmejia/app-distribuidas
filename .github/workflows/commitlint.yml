@@ -2,6 +2,11 @@ name: Conventional Commits
 
 on:
   pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - edited
     branches:
       - develop
       - main
@@ -17,7 +22,7 @@ jobs:
       - name: Obtener historial del Pull Request
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
+          ref: ${{ github.event.pull_request.base.sha }}
           fetch-depth: 0
           persist-credentials: false
 
