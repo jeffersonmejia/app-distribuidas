@@ -108,10 +108,11 @@ Antes de diseñar o modificar entidades, repositorios, relaciones o esquema de b
 
 ## Flujo de integración
 
-- Antes de empezar cada tarea en el repositorio, revisa `git status` y la rama activa para detectar cambios preparados, no preparados, archivos nuevos y commits locales pendientes. Preserva el trabajo existente; no lo descartes ni lo sobrescribas.
-- Sincroniza siempre la rama personal existente de la persona responsable con lo último de `origin/develop` mediante `git fetch origin` y `git pull --no-rebase origin develop` antes de modificar archivos. Si la sincronización trae commits o cambios, publícalos en esa misma rama personal antes de empezar la tarea.
+- Al inicio de una nueva sesión de trabajo en el repositorio, revisa `git status` y la rama activa para detectar cambios preparados, no preparados, archivos nuevos y commits locales pendientes. Preserva el trabajo existente; no lo descartes ni lo sobrescribas.
+- Al inicio de esa sesión, sincroniza una sola vez la rama personal existente de la persona responsable con lo último de `origin/develop` mediante `git fetch origin` y `git pull --no-rebase origin develop`. Si la sincronización trae commits o cambios, publícalos en esa misma rama personal antes de empezar el trabajo.
+- Antes de otra tarea dentro de la misma sesión, revisa el estado y la rama, pero no repitas el pull automáticamente. Vuelve a sincronizar antes de editar solo si `develop` avanzó desde la última sincronización o si se reanuda el trabajo en una nueva sesión.
 - Si el pull presenta conflictos, detén la tarea antes de editar sus archivos y comunica qué archivos entraron en conflicto. No resuelvas esos conflictos sin instrucción del solicitante.
-- Si la sincronización termina sin conflictos y el solicitante ya dio una tarea, continúa con ella sin pedir confirmación ni enviar un aviso intermedio. Si todavía no dio una tarea, infórmale que la rama quedó lista para trabajar.
+- Si la sincronización inicial o requerida termina sin conflictos y el solicitante ya dio una tarea, continúa con ella sin pedir confirmación ni enviar un aviso intermedio. Si todavía no dio una tarea, infórmale que la rama quedó lista para trabajar.
 - Mantén los cambios de cada tema en commits separados y con Conventional Commits cuando se autoricen commits.
 - La integración de cambios a `develop` debe seguir el workflow autorizado y sus checks; no hagas push directo a `develop`.
 - Integra `develop` en `main` mediante un Pull Request con al menos una aprobación. `main` requiere revisión manual; no hagas push ni merge directo a esa rama.
