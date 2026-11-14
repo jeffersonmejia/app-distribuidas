@@ -1,5 +1,5 @@
 version: 1
-refreshed_at: '2026-11-14T13:58:33+00:00'
+refreshed_at: '2026-11-14T14:02:48+00:00'
 project:
   id: PVT_kwHOBAk3Fs4BrVCX
   number: 5
@@ -2000,7 +2000,7 @@ items:
   - fieldName: Fecha objetivo
     value: '2026-11-20'
   - fieldName: Bloqueado por
-    value: '@BruceRodri (POS-002)'
+    value: '@BruceRodri (POS-002), @jeffersonmejia (reglas contables y precisión monetaria)'
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIVTAU
   content:
     __typename: Issue
