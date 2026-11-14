@@ -73,7 +73,7 @@ jobs:
               if (context.eventName === 'push') {
                 const pusher = context.payload.sender.login;
                 if (pusher.toLowerCase() !== responsible.toLowerCase()) {
-                  core.setFailed(`@${pusher}: mi push no se procesó porque la rama ${branch} corresponde a @${responsible}.`);
+                  core.info(`Omito abrir un PR desde @${pusher}: la rama ${branch} pertenece a @${responsible}. Los PR existentes siguen su curso.`);
                   continue;
                 }
               } else {
