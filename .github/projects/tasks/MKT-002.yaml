@@ -21,6 +21,7 @@ project:
   Área: Marketing
   Identificador de tarea: MKT-002
   Fecha objetivo: '2026-11-15'
+  Bloqueado por: "@jeffersonmejia (decisión de alcance)"
 planning:
   area: Marketing
   assignee: EMLarco

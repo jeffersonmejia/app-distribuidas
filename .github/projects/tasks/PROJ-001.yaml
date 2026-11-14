@@ -68,6 +68,7 @@ project:
   Área: Proyectos
   Identificador de tarea: PROJ-001
   Fecha objetivo: '2026-11-14'
+  Bloqueado por: "@jeffersonmejia (decisión de alcance)"
 planning:
   targetDate: '2026-11-19'
   state: Blocked

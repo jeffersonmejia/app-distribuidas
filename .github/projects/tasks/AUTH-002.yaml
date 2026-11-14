@@ -21,6 +21,7 @@ project:
   Identificador de tarea: AUTH-002
   Fecha objetivo: '2026-11-16'
   Fecha de completado: '2026-11-13'
+  Bloqueado por: "Nadie"
 planning:
   area: Multitenancy
   assignee: jeffersonmejia

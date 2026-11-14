@@ -54,6 +54,7 @@ project:
   Identificador de tarea: APP-001
   Prioridad: Media
   Fecha objetivo: '2026-11-22'
+  Bloqueado por: "Nadie"
 planning:
   acceptanceCriteria:
   - La aplicación React y TypeScript tiene una estructura inicial ejecutable.

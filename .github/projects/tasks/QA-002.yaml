@@ -55,6 +55,7 @@ project:
   Identificador de tarea: QA-002
   Fecha de completado: '2026-11-12'
   Fecha objetivo: '2026-11-22'
+  Bloqueado por: "Nadie"
 planning:
   acceptanceCriteria:
   - Springdoc y Swagger UI están declarados como dependencias del backend.

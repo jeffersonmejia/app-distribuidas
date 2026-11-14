@@ -1,5 +1,5 @@
 version: 1
-refreshed_at: '2026-11-14T13:38:46+00:00'
+refreshed_at: '2026-11-14T13:58:33+00:00'
 project:
   id: PVT_kwHOBAk3Fs4BrVCX
   number: 5
@@ -133,6 +133,10 @@ fields:
   id: PVTF_lAHOBAk3Fs4BrVCXzhpoev8
   name: Fecha de completado
   dataType: DATE
+- __typename: ProjectV2Field
+  id: PVTF_lAHOBAk3Fs4BrVCXzhp4JGQ
+  name: Bloqueado por
+  dataType: TEXT
 items:
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIMDTE
   content:
@@ -204,6 +208,8 @@ items:
     value: '2026-11-11'
   - fieldName: Fecha de completado
     value: '2026-11-12'
+  - fieldName: Bloqueado por
+    value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIMDy8
   content:
     __typename: Issue
@@ -277,6 +283,8 @@ items:
     value: '2026-11-11'
   - fieldName: Fecha de completado
     value: '2026-11-12'
+  - fieldName: Bloqueado por
+    value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIMEbc
   content:
     __typename: Issue
@@ -352,6 +360,8 @@ items:
     value: FRONT-001
   - fieldName: Fecha objetivo
     value: '2026-11-14'
+  - fieldName: Bloqueado por
+    value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIMGp8
   content:
     __typename: Issue
@@ -436,6 +446,8 @@ items:
     value: CRM-001
   - fieldName: Fecha objetivo
     value: '2026-11-13'
+  - fieldName: Bloqueado por
+    value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIMHjE
   content:
     __typename: Issue
@@ -520,6 +532,8 @@ items:
     value: INV-001
   - fieldName: Fecha objetivo
     value: '2026-11-14'
+  - fieldName: Bloqueado por
+    value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIMIVs
   content:
     __typename: Issue
@@ -599,6 +613,8 @@ items:
     value: INV-002
   - fieldName: Fecha objetivo
     value: '2026-11-13'
+  - fieldName: Bloqueado por
+    value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIMJeY
   content:
     __typename: Issue
@@ -676,6 +692,8 @@ items:
     value: FRONT-002
   - fieldName: Fecha objetivo
     value: '2026-11-14'
+  - fieldName: Bloqueado por
+    value: '@Dayanarablb (FRONT-001)'
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIMKTA
   content:
     __typename: Issue
@@ -755,6 +773,8 @@ items:
     value: ACC-001
   - fieldName: Fecha objetivo
     value: '2026-11-13'
+  - fieldName: Bloqueado por
+    value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIMLNc
   content:
     __typename: Issue
@@ -844,6 +864,8 @@ items:
     value: PROJ-001
   - fieldName: Fecha objetivo
     value: '2026-11-14'
+  - fieldName: Bloqueado por
+    value: '@jeffersonmejia (decisión de alcance)'
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIML7M
   content:
     __typename: Issue
@@ -923,6 +945,8 @@ items:
     value: '2026-11-12'
   - fieldName: Fecha de completado
     value: '2026-11-12'
+  - fieldName: Bloqueado por
+    value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIMMbQ
   content:
     __typename: Issue
@@ -996,6 +1020,8 @@ items:
     value: '2026-11-12'
   - fieldName: Fecha de completado
     value: '2026-11-13'
+  - fieldName: Bloqueado por
+    value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIMM-s
   content:
     __typename: Issue
@@ -1072,6 +1098,8 @@ items:
     value: '2026-11-13'
   - fieldName: Fecha de completado
     value: '2026-11-13'
+  - fieldName: Bloqueado por
+    value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIMNrY
   content:
     __typename: Issue
@@ -1152,6 +1180,8 @@ items:
     value: '2026-11-12'
   - fieldName: Fecha de completado
     value: '2026-11-12'
+  - fieldName: Bloqueado por
+    value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIMftA
   content:
     __typename: Issue
@@ -1224,6 +1254,8 @@ items:
     value: '2026-11-12'
   - fieldName: Fecha objetivo
     value: '2026-11-13'
+  - fieldName: Bloqueado por
+    value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIMgbo
   content:
     __typename: Issue
@@ -1296,6 +1328,8 @@ items:
     value: Media
   - fieldName: Fecha objetivo
     value: '2026-11-12'
+  - fieldName: Bloqueado por
+    value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIMgp4
   content:
     __typename: Issue
@@ -1368,6 +1402,8 @@ items:
     value: Media
   - fieldName: Fecha objetivo
     value: '2026-11-13'
+  - fieldName: Bloqueado por
+    value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIMg2M
   content:
     __typename: Issue
@@ -1440,6 +1476,8 @@ items:
     value: Alta
   - fieldName: Fecha objetivo
     value: '2026-11-12'
+  - fieldName: Bloqueado por
+    value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIMhGU
   content:
     __typename: Issue
@@ -1509,6 +1547,8 @@ items:
     value: Media
   - fieldName: Fecha objetivo
     value: '2026-11-13'
+  - fieldName: Bloqueado por
+    value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhINwQw
   content:
     __typename: Issue
@@ -1584,6 +1624,8 @@ items:
     value: '2026-11-12'
   - fieldName: Fecha objetivo
     value: '2026-11-13'
+  - fieldName: Bloqueado por
+    value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIOYZU
   content:
     __typename: Issue
@@ -1651,6 +1693,8 @@ items:
     value: '2026-11-12'
   - fieldName: Fecha objetivo
     value: '2026-11-12'
+  - fieldName: Bloqueado por
+    value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIOgt4
   content:
     __typename: PullRequest
@@ -1667,6 +1711,8 @@ items:
     value: Media
   - fieldName: Fecha objetivo
     value: '2026-11-12'
+  - fieldName: Bloqueado por
+    value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIOg6M
   content:
     __typename: PullRequest
@@ -1683,6 +1729,8 @@ items:
     value: Media
   - fieldName: Fecha objetivo
     value: '2026-11-12'
+  - fieldName: Bloqueado por
+    value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIOkxQ
   content:
     __typename: PullRequest
@@ -1699,6 +1747,8 @@ items:
     value: Media
   - fieldName: Fecha objetivo
     value: '2026-11-11'
+  - fieldName: Bloqueado por
+    value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIVS-c
   content:
     __typename: Issue
@@ -1738,6 +1788,8 @@ items:
     value: '2026-11-11'
   - fieldName: Fecha de completado
     value: '2026-11-13'
+  - fieldName: Bloqueado por
+    value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIVS-4
   content:
     __typename: Issue
@@ -1775,6 +1827,8 @@ items:
     value: AUTH-002
   - fieldName: Fecha objetivo
     value: '2026-11-11'
+  - fieldName: Bloqueado por
+    value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIVS_M
   content:
     __typename: Issue
@@ -1818,6 +1872,8 @@ items:
     value: '2026-11-11'
   - fieldName: Fecha de completado
     value: '2026-11-13'
+  - fieldName: Bloqueado por
+    value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIVS_k
   content:
     __typename: Issue
@@ -1858,6 +1914,8 @@ items:
     value: INV-003
   - fieldName: Fecha objetivo
     value: '2026-11-14'
+  - fieldName: Bloqueado por
+    value: '@Sahid-B (INV-001, INV-002)'
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIVS_0
   content:
     __typename: Issue
@@ -1898,6 +1956,8 @@ items:
     value: POS-002
   - fieldName: Fecha objetivo
     value: '2026-11-15'
+  - fieldName: Bloqueado por
+    value: '@Sahid-B (INV-003)'
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIVTAE
   content:
     __typename: Issue
@@ -1939,6 +1999,8 @@ items:
     value: ACC-002
   - fieldName: Fecha objetivo
     value: '2026-11-20'
+  - fieldName: Bloqueado por
+    value: '@BruceRodri (POS-002)'
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIVTAU
   content:
     __typename: Issue
@@ -1979,6 +2041,8 @@ items:
     value: MKT-002
   - fieldName: Fecha objetivo
     value: '2026-11-15'
+  - fieldName: Bloqueado por
+    value: '@jeffersonmejia (decisión de alcance)'
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIVTAw
   content:
     __typename: Issue
@@ -2017,6 +2081,8 @@ items:
     value: FRONT-003
   - fieldName: Fecha objetivo
     value: '2026-11-15'
+  - fieldName: Bloqueado por
+    value: '@Dayanarablb (FRONT-001, FRONT-002)'
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIVTBU
   content:
     __typename: Issue
@@ -2055,6 +2121,8 @@ items:
     value: FRONT-004
   - fieldName: Fecha objetivo
     value: '2026-11-20'
+  - fieldName: Bloqueado por
+    value: '@Dayanarablb (FRONT-001, FRONT-002), @Sahid-B (INV-003), @BruceRodri (POS-002)'
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIVTBw
   content:
     __typename: Issue
@@ -2093,20 +2161,22 @@ items:
     value: FRONT-005
   - fieldName: Fecha objetivo
     value: '2026-11-15'
+  - fieldName: Bloqueado por
+    value: '@Dayanarablb (FRONT-001, FRONT-002), @EMLarco (PROJ-001, MKT-002, ACC-002)'
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIVTCI
   content:
     __typename: Issue
     id: I_kwDOVrRmwc8AAAABe0dh_Q
     number: 36
     title: '[INT-001] Integrar features y validar construcción completa'
-    body: "<!-- managed-task-id: INT-001 -->\n\n**Feature:** Arquitectura  \n**Responsable:** @jeffersonmejia  \n**Rutas:** backend/, frontend/, docs/arquitectura.md  \n**Dependencias:** AUTH-002, TEN-001, CRM-001, INV-003, POS-002, ACC-002, PROJ-001, MKT-002, FRONT-001, FRONT-002, FRONT-003, FRONT-004, FRONT-005  \n**Fecha objetivo:** 2026-11-22\n\n## Alcance\nIntegrar Pull Requests en develop y resolver incompatibilidades entre límites de módulo, contratos, migraciones y frontend.\n\n## Criterios de aceptación\n- [ ] Build y checks backend/frontend pasan desde develop.\n- [ ] No se agregan dependencias internas ni ciclos entre features.\n- [ ] Migraciones aplican desde una base limpia y Hibernate valida esquema.\n- [ ] Rutas, DTOs, errores y permisos coinciden en frontend/backend.\n\n## Bloqueo actual\nBloqueada por: INV-003 (@Sahid-B), POS-002 (@BruceRodri), ACC-002 (@EMLarco), PROJ-001 (@EMLarco), MKT-002 (@EMLarco), FRONT-001 (@Dayanarablb), FRONT-002 (@Dayanarablb), FRONT-003 (@Dayanarablb),\
+    body: "<!-- managed-task-id: INT-001 -->\n\n**Feature:** Arquitectura  \n**Responsable:** @EMLarco  \n**Rutas:** backend/, frontend/, docs/arquitectura.md  \n**Dependencias:** AUTH-002, TEN-001, CRM-001, INV-003, POS-002, ACC-002, PROJ-001, MKT-002, FRONT-001, FRONT-002, FRONT-003, FRONT-004, FRONT-005  \n**Fecha objetivo:** 2026-11-22\n\n## Alcance\nIntegrar Pull Requests en develop y resolver incompatibilidades entre límites de módulo, contratos, migraciones y frontend.\n\n## Criterios de aceptación\n- [ ] Build y checks backend/frontend pasan desde develop.\n- [ ] No se agregan dependencias internas ni ciclos entre features.\n- [ ] Migraciones aplican desde una base limpia y Hibernate valida esquema.\n- [ ] Rutas, DTOs, errores y permisos coinciden en frontend/backend.\n\n## Bloqueo actual\nBloqueada por: INV-003 (@Sahid-B), POS-002 (@BruceRodri), ACC-002 (@EMLarco), PROJ-001 (@EMLarco), MKT-002 (@EMLarco), FRONT-001 (@Dayanarablb), FRONT-002 (@Dayanarablb), FRONT-003 (@Dayanarablb),\
       \ FRONT-004 (@Dayanarablb), FRONT-005 (@Dayanarablb).\n\n## Especificación de lógica\n[Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/INT-001.md)."
     state: OPEN
     url: https://github.com/jeffersonmejia/app-distribuidas/issues/36
     repository:
       nameWithOwner: jeffersonmejia/app-distribuidas
     assignees:
-    - login: jeffersonmejia
+    - login: EMLarco
     labels:
     - id: LA_kwDOVrRmwc8AAAADCkyT8A
       name: backend
@@ -2134,13 +2204,15 @@ items:
     value: INT-001
   - fieldName: Fecha objetivo
     value: '2026-11-15'
+  - fieldName: Bloqueado por
+    value: '@Sahid-B (INV-003), @BruceRodri (POS-002), @EMLarco (ACC-002, PROJ-001, MKT-002), @Dayanarablb (FRONT-001, FRONT-002, FRONT-003, FRONT-004, FRONT-005)'
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIVTCo
   content:
     __typename: Issue
     id: I_kwDOVrRmwc8AAAABe0driw
     number: 37
     title: '[QA-003] Verificar integración y aislamiento multitenant'
-    body: "<!-- managed-task-id: QA-003 -->\n\n**Feature:** Testing  \n**Responsable:** @Jntorres2001  \n**Rutas:** backend/src/test/, docs/multitenancy.md  \n**Dependencias:** TEN-001, INT-001  \n**Fecha objetivo:** 2026-11-23\n\n## Alcance\nEjecutar pruebas unitarias y de integración de los flujos implementados, con foco en autorización, RLS y contratos.\n\n## Criterios de aceptación\n- [ ] Tenant A no lee ni modifica datos de tenant B.\n- [ ] Sin actor/membresía/contexto no se accede a datos tenant-scoped.\n- [ ] Probar con rol runtime no privilegiado y referencias cruzadas.\n- [ ] Reportar resultados y asignar defectos al owner del feature.\n\n## Bloqueo actual\nBloqueada por: INT-001 (@jeffersonmejia).\n\n## Especificación de lógica\n[Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/QA-003.md)."
+    body: "<!-- managed-task-id: QA-003 -->\n\n**Feature:** Testing  \n**Responsable:** @Jntorres2001  \n**Rutas:** backend/src/test/, docs/multitenancy.md  \n**Dependencias:** TEN-001, INT-001  \n**Fecha objetivo:** 2026-11-23\n\n## Alcance\nEjecutar pruebas unitarias y de integración de los flujos implementados, con foco en autorización, RLS y contratos.\n\n## Criterios de aceptación\n- [ ] Tenant A no lee ni modifica datos de tenant B.\n- [ ] Sin actor/membresía/contexto no se accede a datos tenant-scoped.\n- [ ] Probar con rol runtime no privilegiado y referencias cruzadas.\n- [ ] Reportar resultados y asignar defectos al owner del feature.\n\n## Bloqueo actual\nBloqueada por: INT-001 (@EMLarco).\n\n## Especificación de lógica\n[Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/QA-003.md)."
     state: OPEN
     url: https://github.com/jeffersonmejia/app-distribuidas/issues/37
     repository:
@@ -2174,6 +2246,8 @@ items:
     value: QA-003
   - fieldName: Fecha objetivo
     value: '2026-11-16'
+  - fieldName: Bloqueado por
+    value: '@EMLarco (INT-001)'
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIVTDE
   content:
     __typename: Issue
@@ -2208,19 +2282,21 @@ items:
     value: QA-004
   - fieldName: Fecha objetivo
     value: '2026-11-16'
+  - fieldName: Bloqueado por
+    value: '@Jntorres2001 (QA-003), @BruceRodri (POS-002), @Sahid-B (INV-003)'
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIVTDY
   content:
     __typename: Issue
     id: I_kwDOVrRmwc8AAAABe0dyFA
     number: 39
     title: '[OPS-002] Preparar ejecución reproducible y seguridad del entorno'
-    body: "<!-- managed-task-id: OPS-002 -->\n\n**Feature:** Calidad  \n**Responsable:** @jeffersonmejia  \n**Rutas:** docker/, backend/, frontend/, .github/workflows/, docs/  \n**Dependencias:** INT-001  \n**Fecha objetivo:** 2026-11-23\n\n## Alcance\nDejar el MVP reproducible desde copia limpia y documentar el despliegue Azure existente definido en Terraform; no agregar un proveedor alternativo.\n\n## Criterios de aceptación\n- [ ] PostgreSQL y servicios existentes arrancan y reportan healthcheck.\n- [ ] Build y verificaciones se documentan con comandos PowerShell.\n- [ ] Variables de ejemplo no contienen credenciales reales.\n- [ ] Documentar recuperación local y límites del entorno de desarrollo.\n\n## Bloqueo actual\nBloqueada por: INT-001 (@jeffersonmejia).\n\n## Especificación de lógica\n[Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/OPS-002.md)."
+    body: "<!-- managed-task-id: OPS-002 -->\n\n**Feature:** Calidad  \n**Responsable:** @BruceRodri  \n**Rutas:** docker/, backend/, frontend/, .github/workflows/, docs/  \n**Dependencias:** INT-001  \n**Fecha objetivo:** 2026-11-23\n\n## Alcance\nDejar el MVP reproducible desde copia limpia y documentar el despliegue Azure existente definido en Terraform; no agregar un proveedor alternativo.\n\n## Criterios de aceptación\n- [ ] PostgreSQL y servicios existentes arrancan y reportan healthcheck.\n- [ ] Build y verificaciones se documentan con comandos PowerShell.\n- [ ] Variables de ejemplo no contienen credenciales reales.\n- [ ] Documentar recuperación local y límites del entorno de desarrollo.\n\n## Bloqueo actual\nBloqueada por: INT-001 (@EMLarco).\n\n## Especificación de lógica\n[Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/OPS-002.md)."
     state: OPEN
     url: https://github.com/jeffersonmejia/app-distribuidas/issues/39
     repository:
       nameWithOwner: jeffersonmejia/app-distribuidas
     assignees:
-    - login: jeffersonmejia
+    - login: BruceRodri
     labels:
     - id: LA_kwDOVrRmwc8AAAADCbVYYw
       name: documentation
@@ -2245,19 +2321,21 @@ items:
     value: OPS-002
   - fieldName: Fecha objetivo
     value: '2026-11-16'
+  - fieldName: Bloqueado por
+    value: '@EMLarco (INT-001)'
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIVTD4
   content:
     __typename: Issue
     id: I_kwDOVrRmwc8AAAABe0dzuA
     number: 40
     title: '[SEC-001] Revisar seguridad y cerrar hallazgos del MVP'
-    body: "<!-- managed-task-id: SEC-001 -->\n\n**Feature:** Calidad  \n**Responsable:** @jeffersonmejia  \n**Rutas:** backend/, frontend/, .github/workflows/, docs/  \n**Dependencias:** AUTH-002, TEN-001, INT-001  \n**Fecha objetivo:** 2026-11-23\n\n## Alcance\nRevisar flujos implementados frente a OWASP Top 10:2025, autorización tenant, validación, secretos, dependencias y errores.\n\n## Criterios de aceptación\n- [ ] No quedan alertas High/Critical ni errores sin triage.\n- [ ] Cada hallazgo de seguridad se revisa manualmente.\n- [ ] Logs y respuestas no exponen secretos ni datos de otros tenants.\n- [ ] Hallazgos bloqueantes se corrigen y verifican antes de aceptar.\n\n## Bloqueo actual\nBloqueada por: INT-001 (@jeffersonmejia).\n\n## Especificación de lógica\n[Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/SEC-001.md)."
+    body: "<!-- managed-task-id: SEC-001 -->\n\n**Feature:** Calidad  \n**Responsable:** @EMLarco  \n**Rutas:** backend/, frontend/, .github/workflows/, docs/  \n**Dependencias:** AUTH-002, TEN-001, INT-001  \n**Fecha objetivo:** 2026-11-23\n\n## Alcance\nRevisar flujos implementados frente a OWASP Top 10:2025, autorización tenant, validación, secretos, dependencias y errores.\n\n## Criterios de aceptación\n- [ ] No quedan alertas High/Critical ni errores sin triage.\n- [ ] Cada hallazgo de seguridad se revisa manualmente.\n- [ ] Logs y respuestas no exponen secretos ni datos de otros tenants.\n- [ ] Hallazgos bloqueantes se corrigen y verifican antes de aceptar.\n\n## Bloqueo actual\nBloqueada por: INT-001 (@EMLarco).\n\n## Especificación de lógica\n[Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/SEC-001.md)."
     state: OPEN
     url: https://github.com/jeffersonmejia/app-distribuidas/issues/40
     repository:
       nameWithOwner: jeffersonmejia/app-distribuidas
     assignees:
-    - login: jeffersonmejia
+    - login: EMLarco
     labels:
     - id: LA_kwDOVrRmwc8AAAADCkyT8A
       name: backend
@@ -2285,19 +2363,21 @@ items:
     value: SEC-001
   - fieldName: Fecha objetivo
     value: '2026-11-16'
+  - fieldName: Bloqueado por
+    value: '@EMLarco (INT-001)'
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIVTEM
   content:
     __typename: Issue
     id: I_kwDOVrRmwc8AAAABe0d1AQ
     number: 41
     title: '[REL-001] Ejecutar aceptación final y preparar entrega del MVP'
-    body: "<!-- managed-task-id: REL-001 -->\n\n**Feature:** Arquitectura  \n**Responsable:** @jeffersonmejia  \n**Rutas:** README.md, docs/, frontend/, backend/  \n**Dependencias:** QA-003, QA-004, OPS-002, SEC-001  \n**Fecha objetivo:** 2026-11-25\n\n## Alcance\nEjecutar aceptación del MVP integrado y preparar entrega para revisión del equipo el 25 de noviembre.\n\n## Criterios de aceptación\n- [ ] Verificar acceso/tenant, clientes, inventario/venta y módulos entregados de extremo a extremo.\n- [ ] No quedan defectos bloqueantes ni conflictos de sincronización pendientes.\n- [ ] Instrucciones permiten arrancar, probar y recuperar el entorno local.\n- [ ] Declarar funcionalidades completas y todo alcance que quede pendiente.\n\n## Bloqueo actual\nBloqueada por: QA-003 (@Jntorres2001), QA-004 (@Jntorres2001), OPS-002 (@jeffersonmejia), SEC-001 (@jeffersonmejia).\n\n## Especificación de lógica\n[Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/REL-001.md)."
+    body: "<!-- managed-task-id: REL-001 -->\n\n**Feature:** Arquitectura  \n**Responsable:** @EMLarco  \n**Rutas:** README.md, docs/, frontend/, backend/  \n**Dependencias:** QA-003, QA-004, OPS-002, SEC-001  \n**Fecha objetivo:** 2026-11-25\n\n## Alcance\nEjecutar aceptación del MVP integrado y preparar entrega para revisión del equipo el 25 de noviembre.\n\n## Criterios de aceptación\n- [ ] Verificar acceso/tenant, clientes, inventario/venta y módulos entregados de extremo a extremo.\n- [ ] No quedan defectos bloqueantes ni conflictos de sincronización pendientes.\n- [ ] Instrucciones permiten arrancar, probar y recuperar el entorno local.\n- [ ] Declarar funcionalidades completas y todo alcance que quede pendiente.\n\n## Bloqueo actual\nBloqueada por: QA-003 (@Jntorres2001), QA-004 (@Jntorres2001), OPS-002 (@BruceRodri), SEC-001 (@EMLarco).\n\n## Especificación de lógica\n[Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/REL-001.md)."
     state: OPEN
     url: https://github.com/jeffersonmejia/app-distribuidas/issues/41
     repository:
       nameWithOwner: jeffersonmejia/app-distribuidas
     assignees:
-    - login: jeffersonmejia
+    - login: EMLarco
     labels:
     - id: LA_kwDOVrRmwc8AAAADCbVYYw
       name: documentation
@@ -2322,6 +2402,8 @@ items:
     value: REL-001
   - fieldName: Fecha objetivo
     value: '2026-11-16'
+  - fieldName: Bloqueado por
+    value: '@Jntorres2001 (QA-003, QA-004), @BruceRodri (OPS-002), @EMLarco (SEC-001)'
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIk65M
   content:
     __typename: Issue
@@ -2406,6 +2488,8 @@ items:
     value: Calidad
   - fieldName: Fecha objetivo
     value: '2026-11-22'
+  - fieldName: Bloqueado por
+    value: Nadie
 labels:
 - id: LA_kwDOVrRmwc8AAAADCbVYVQ
   name: accessibility

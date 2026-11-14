@@ -52,6 +52,7 @@ project:
   Área: Multitenancy
   Identificador de tarea: ARC-002
   Fecha objetivo: '2026-11-22'
+  Bloqueado por: "Nadie"
 planning:
   acceptanceCriteria:
   - El modelo de tenants y usuarios está descrito.

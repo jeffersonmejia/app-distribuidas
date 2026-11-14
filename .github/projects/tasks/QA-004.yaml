@@ -19,6 +19,7 @@ project:
   Área: Testing
   Identificador de tarea: QA-004
   Fecha objetivo: '2026-11-16'
+  Bloqueado por: "@Jntorres2001 (QA-003), @BruceRodri (POS-002), @Sahid-B (INV-003)"
 planning:
   area: Testing
   assignee: Jntorres2001

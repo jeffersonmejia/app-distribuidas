@@ -54,6 +54,7 @@ project:
   Identificador de tarea: OPS-001
   Prioridad: Media
   Fecha objetivo: '2026-11-22'
+  Bloqueado por: "Nadie"
 planning:
   acceptanceCriteria:
   - PostgreSQL del ERP se configura con persistencia y healthcheck.

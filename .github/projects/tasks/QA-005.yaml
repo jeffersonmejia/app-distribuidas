@@ -67,6 +67,7 @@ project:
   Prioridad: Media
   Área: Calidad
   Fecha objetivo: '2026-11-22'
+  Bloqueado por: "Nadie"
 planning:
   area: Calidad
   assignee: Jntorres2001

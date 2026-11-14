@@ -4,7 +4,7 @@ github:
   issue_number: 37
 issue:
   title: '[QA-003] Verificar integración y aislamiento multitenant'
-  body: "<!-- managed-task-id: QA-003 -->\n\n**Feature:** Testing  \n**Responsable:** @Jntorres2001  \n**Rutas:** backend/src/test/, docs/multitenancy.md  \n**Dependencias:** TEN-001, INT-001  \n**Fecha objetivo:** 2026-11-23\n\n## Alcance\nEjecutar pruebas unitarias y de integración de los flujos implementados, con foco en autorización, RLS y contratos.\n\n## Criterios de aceptación\n- [ ] Tenant A no lee ni modifica datos de tenant B.\n- [ ] Sin actor/membresía/contexto no se accede a datos tenant-scoped.\n- [ ] Probar con rol runtime no privilegiado y referencias cruzadas.\n- [ ] Reportar resultados y asignar defectos al owner del feature.\n\n## Bloqueo actual\nBloqueada por: INT-001 (@jeffersonmejia).\n\n## Especificación de lógica\n[Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/QA-003.md)."
+  body: "<!-- managed-task-id: QA-003 -->\n\n**Feature:** Testing  \n**Responsable:** @Jntorres2001  \n**Rutas:** backend/src/test/, docs/multitenancy.md  \n**Dependencias:** TEN-001, INT-001  \n**Fecha objetivo:** 2026-11-23\n\n## Alcance\nEjecutar pruebas unitarias y de integración de los flujos implementados, con foco en autorización, RLS y contratos.\n\n## Criterios de aceptación\n- [ ] Tenant A no lee ni modifica datos de tenant B.\n- [ ] Sin actor/membresía/contexto no se accede a datos tenant-scoped.\n- [ ] Probar con rol runtime no privilegiado y referencias cruzadas.\n- [ ] Reportar resultados y asignar defectos al owner del feature.\n\n## Bloqueo actual\nBloqueada por: INT-001 (@EMLarco).\n\n## Especificación de lógica\n[Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/QA-003.md)."
   state: open
   assignees:
   - Jntorres2001
@@ -21,6 +21,7 @@ project:
   Área: Testing
   Identificador de tarea: QA-003
   Fecha objetivo: '2026-11-16'
+  Bloqueado por: "@EMLarco (INT-001)"
 planning:
   area: Testing
   assignee: Jntorres2001

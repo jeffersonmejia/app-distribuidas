@@ -54,6 +54,7 @@ project:
   Identificador de tarea: PM-001
   Prioridad: Alta
   Fecha objetivo: '2026-11-22'
+  Bloqueado por: "Nadie"
 planning:
   acceptanceCriteria:
   - El proyecto y las 13 tareas iniciales se sincronizan sin duplicados.

@@ -59,6 +59,7 @@ project:
   Identificador de tarea: QUALITY-001
   Fecha objetivo: '2026-11-22'
   Fecha de completado: '2026-11-12'
+  Bloqueado por: "Nadie"
 planning:
   acceptanceCriteria:
   - El documento distingue la infraestructura SonarQube existente de la configuración de análisis pendiente.

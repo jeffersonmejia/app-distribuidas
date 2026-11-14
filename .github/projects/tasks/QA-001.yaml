@@ -61,6 +61,7 @@ project:
   Área: Testing
   Identificador de tarea: QA-001
   Fecha objetivo: '2026-11-22'
+  Bloqueado por: "Nadie"
 planning:
   acceptanceCriteria:
   - La estrategia cubre pruebas unitarias, integración y contrato.

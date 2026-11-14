@@ -23,6 +23,7 @@ project:
   Identificador de tarea: TEN-001
   Fecha objetivo: '2026-11-17'
   Fecha de completado: '2026-11-13'
+  Bloqueado por: "Nadie"
 planning:
   area: Multitenancy
   assignee: jeffersonmejia

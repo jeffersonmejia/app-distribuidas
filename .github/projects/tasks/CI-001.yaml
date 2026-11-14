@@ -54,6 +54,7 @@ project:
   Identificador de tarea: CI-001
   Fecha de completado: '2026-11-12'
   Fecha objetivo: '2026-11-22'
+  Bloqueado por: "Nadie"
 planning:
   acceptanceCriteria:
   - El workflow valida el rango completo de commits del Pull Request.

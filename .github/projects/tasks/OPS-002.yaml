@@ -4,10 +4,10 @@ github:
   issue_number: 39
 issue:
   title: '[OPS-002] Preparar ejecución reproducible y seguridad del entorno'
-  body: "<!-- managed-task-id: OPS-002 -->\n\n**Feature:** Calidad  \n**Responsable:** @jeffersonmejia  \n**Rutas:** docker/, backend/, frontend/, .github/workflows/, docs/  \n**Dependencias:** INT-001  \n**Fecha objetivo:** 2026-11-23\n\n## Alcance\nDejar el MVP reproducible desde copia limpia y documentar el despliegue Azure existente definido en Terraform; no agregar un proveedor alternativo.\n\n## Criterios de aceptación\n- [ ] PostgreSQL y servicios existentes arrancan y reportan healthcheck.\n- [ ] Build y verificaciones se documentan con comandos PowerShell.\n- [ ] Variables de ejemplo no contienen credenciales reales.\n- [ ] Documentar recuperación local y límites del entorno de desarrollo.\n\n## Bloqueo actual\nBloqueada por: INT-001 (@jeffersonmejia).\n\n## Especificación de lógica\n[Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/OPS-002.md)."
+  body: "<!-- managed-task-id: OPS-002 -->\n\n**Feature:** Calidad  \n**Responsable:** @BruceRodri  \n**Rutas:** docker/, backend/, frontend/, .github/workflows/, docs/  \n**Dependencias:** INT-001  \n**Fecha objetivo:** 2026-11-23\n\n## Alcance\nDejar el MVP reproducible desde copia limpia y documentar el despliegue Azure existente definido en Terraform; no agregar un proveedor alternativo.\n\n## Criterios de aceptación\n- [ ] PostgreSQL y servicios existentes arrancan y reportan healthcheck.\n- [ ] Build y verificaciones se documentan con comandos PowerShell.\n- [ ] Variables de ejemplo no contienen credenciales reales.\n- [ ] Documentar recuperación local y límites del entorno de desarrollo.\n\n## Bloqueo actual\nBloqueada por: INT-001 (@EMLarco).\n\n## Especificación de lógica\n[Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/OPS-002.md)."
   state: open
   assignees:
-  - jeffersonmejia
+  - BruceRodri
   labels:
   - devops
   - documentation
@@ -20,9 +20,10 @@ project:
   Área: Calidad
   Identificador de tarea: OPS-002
   Fecha objetivo: '2026-11-16'
+  Bloqueado por: "@EMLarco (INT-001)"
 planning:
   area: Calidad
-  assignee: jeffersonmejia
+  assignee: BruceRodri
   paths:
   - docker/
   - backend/

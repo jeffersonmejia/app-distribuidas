@@ -52,6 +52,7 @@ project:
   Área: Marketing
   Identificador de tarea: MKT-001
   Fecha objetivo: '2026-11-22'
+  Bloqueado por: "Nadie"
 planning:
   acceptanceCriteria:
   - Los contratos iniciales de campañas y contactos están definidos.

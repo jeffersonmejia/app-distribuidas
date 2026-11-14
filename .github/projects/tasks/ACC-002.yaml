@@ -22,6 +22,7 @@ project:
   Área: Contabilidad
   Identificador de tarea: ACC-002
   Fecha objetivo: '2026-11-20'
+  Bloqueado por: "@BruceRodri (POS-002)"
 planning:
   area: Contabilidad
   assignee: EMLarco

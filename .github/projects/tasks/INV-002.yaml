@@ -58,6 +58,7 @@ project:
   Área: Inventario
   Identificador de tarea: INV-002
   Fecha objetivo: '2026-11-13'
+  Bloqueado por: "Nadie"
 planning:
   paths:
   - docs/tasks/INV-002.md

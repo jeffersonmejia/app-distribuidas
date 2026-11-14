@@ -28,6 +28,8 @@ python .github/projects/sync/cli.py sync
 
 Editar `issue` para título, Markdown, responsables y etiquetas; editar `project` usando los nombres de campo exactos presentes en `schema.yaml`. Los IDs se descubren al actualizar el esquema. Los campos u opciones incompatibles se conservan y no se escriben. Una tarea individual se puede cargar en Python sin leer los demás YAML.
 
+El campo de texto `Bloqueado por` muestra las personas responsables de las dependencias que mantienen una tarea en estado `Blocked`, junto con los identificadores de esas tareas. Para bloqueos de definición de alcance, muestra a la persona responsable de la decisión. Las tareas que no están bloqueadas muestran `Nadie`. Mantén este valor en el bloque `project` del YAML y sincronízalo con el flujo CLI.
+
 Cada tarea abierta debe enlazar una especificación Markdown de lógica y criterios, basada en el código y la infraestructura como código vigentes. La ruta de esa especificación se incluye en el cuerpo de la Issue y en `planning.paths` del YAML. Al editar issues existentes que todavía no estén vinculadas al Project, añadirlas con `gh project item-add`; el sincronizador actualiza contenido/campos, pero no crea un vínculo para una Issue existente que falta en el Project. Las tareas completadas pueden conservar la documentación que ya tengan, sin exigir una especificación nueva.
 
 ## Conflictos y colaboración
