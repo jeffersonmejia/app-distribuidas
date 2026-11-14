@@ -6,6 +6,8 @@ El alcance de la entrega es preparar el MVP, no completar todo el ERP y CRM. Inc
 
 Applicación de multitenant
 
+Varios usuarios, una empresa.
+
 ## Responsabilidades
 
 | Desarrollador | Usuario de GitHub | Responsabilidad |
