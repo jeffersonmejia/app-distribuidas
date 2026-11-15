@@ -39,7 +39,7 @@ issue:
 
     - Dependencias: FRONT-001
 
-    - Bloqueo actual: FRONT-001 sigue pendiente; este layout no está implementado.
+    - Bloqueo actual: FRONT-001 está en progreso; su adaptación responsiva sigue pendiente y este layout aún no inicia.
 
 
     ## Especificación de lógica
@@ -59,8 +59,8 @@ project:
   Prioridad: Alta
   Área: Frontend
   Identificador de tarea: FRONT-002
-  Fecha objetivo: '2026-11-14'
-  Bloqueado por: "@Dayanarablb (FRONT-001)"
+  Fecha objetivo: '2026-11-16'
+  Bloqueado por: '@Dayanarablb (FRONT-001)'
 planning:
   acceptanceCriteria:
   - El layout general está definido.

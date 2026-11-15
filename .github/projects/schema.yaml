@@ -1,5 +1,5 @@
 version: 1
-refreshed_at: '2026-11-14T15:51:59+00:00'
+refreshed_at: '2026-11-15T17:30:14+00:00'
 project:
   id: PVT_kwHOBAk3Fs4BrVCX
   number: 5
@@ -205,7 +205,7 @@ items:
   - fieldName: Identificador de tarea
     value: ARC-001
   - fieldName: Fecha objetivo
-    value: '2026-11-11'
+    value: '2026-11-22'
   - fieldName: Fecha de completado
     value: '2026-11-12'
   - fieldName: Bloqueado por
@@ -280,7 +280,7 @@ items:
   - fieldName: Identificador de tarea
     value: ARC-002
   - fieldName: Fecha objetivo
-    value: '2026-11-11'
+    value: '2026-11-22'
   - fieldName: Fecha de completado
     value: '2026-11-12'
   - fieldName: Bloqueado por
@@ -316,7 +316,7 @@ items:
 
       - Prioridad: Alta
 
-      - Estado: Pendiente
+      - Estado: En progreso
 
       - Responsable: @Dayanarablb
 
@@ -325,6 +325,13 @@ items:
       - Rutas: frontend/src/theme/, frontend/src/components/
 
       - Dependencias: Ninguna
+
+
+      ## Avance verificado
+
+      - Los tokens y componentes reutilizables con pruebas se integraron a develop mediante el PR #97.
+
+      - Falta completar o evidenciar estilos responsivos para distintos tamaños de pantalla.
 
 
       ## Especificación de lógica
@@ -349,9 +356,9 @@ items:
   - fieldName: Title
     value: '[FRONT-001] Implementar sistema de diseño global'
   - fieldName: Status
-    value: Todo
+    value: In Progress
   - fieldName: Estado
-    value: Todo
+    value: In Progress
   - fieldName: Prioridad
     value: Alta
   - fieldName: Área
@@ -445,7 +452,7 @@ items:
   - fieldName: Identificador de tarea
     value: CRM-001
   - fieldName: Fecha objetivo
-    value: '2026-11-13'
+    value: '2026-11-18'
   - fieldName: Bloqueado por
     value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIMHjE
@@ -496,7 +503,7 @@ items:
       ## Especificación de lógica
 
       [Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/INV-001.md).'
-    state: OPEN
+    state: CLOSED
     url: https://github.com/jeffersonmejia/app-distribuidas/issues/5
     repository:
       nameWithOwner: jeffersonmejia/app-distribuidas
@@ -521,9 +528,9 @@ items:
   - fieldName: Title
     value: '[INV-001] Implementar catálogo y existencias'
   - fieldName: Status
-    value: Todo
+    value: Done
   - fieldName: Estado
-    value: Todo
+    value: Done
   - fieldName: Prioridad
     value: Alta
   - fieldName: Área
@@ -531,7 +538,7 @@ items:
   - fieldName: Identificador de tarea
     value: INV-001
   - fieldName: Fecha objetivo
-    value: '2026-11-14'
+    value: '2026-11-18'
   - fieldName: Bloqueado por
     value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIMIVs
@@ -656,7 +663,7 @@ items:
 
       - Dependencias: FRONT-001
 
-      - Bloqueo actual: FRONT-001 sigue pendiente; este layout no está implementado.
+      - Bloqueo actual: FRONT-001 está en progreso; su adaptación responsiva sigue pendiente y este layout aún no inicia.
 
 
       ## Especificación de lógica
@@ -691,7 +698,7 @@ items:
   - fieldName: Identificador de tarea
     value: FRONT-002
   - fieldName: Fecha objetivo
-    value: '2026-11-14'
+    value: '2026-11-16'
   - fieldName: Bloqueado por
     value: '@Dayanarablb (FRONT-001)'
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIMKTA
@@ -772,7 +779,7 @@ items:
   - fieldName: Identificador de tarea
     value: ACC-001
   - fieldName: Fecha objetivo
-    value: '2026-11-13'
+    value: '2026-11-14'
   - fieldName: Bloqueado por
     value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIMLNc
@@ -783,7 +790,7 @@ items:
     title: '[PROJ-001] Implementar gestión básica de proyectos'
     body: '<!-- managed-task-id: PROJ-001 --> ## Descripción Implementar gestión tenant-scoped de proyectos y tareas con las reglas aprobadas. ## Criterios de aceptación - El nombre del proyecto y el título de cada tarea son obligatorios; demás campos aprobados son opcionales. - Cada tarea pertenece a un solo proyecto; prioridad opcional Alta/Media/Baja. - Estados Pendiente, En progreso, Bloqueada y Completada cumplen las transiciones aprobadas; Completada puede reabrirse como En progreso. - CRUD requiere permiso explícito por tenant y operación; no hay permisos por defecto ni roles implícitos. - Borrado lógico restaurable, sin purga automática; purga permanente manual con permiso explícito. - Persistencia y consultas respetan tenant_id, RLS, restricciones y paginación máxima 5. ## Gestión - Área: Proyectos - Prioridad: Media - Estado: Todo - Responsable: @EMLarco - Rama: Esteban - Rutas: backend/src/main/java/com/erp/features/projects/, backend/src/main/resources/db/migration/, backend/src/test/java/com/erp/features/projects/
       - Dependencias: Ninguna ## Especificación de lógica [Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/PROJ-001.md). ## Bloqueo actual Ninguno. Las decisiones de alcance están aprobadas.'
-    state: OPEN
+    state: CLOSED
     url: https://github.com/jeffersonmejia/app-distribuidas/issues/9
     repository:
       nameWithOwner: jeffersonmejia/app-distribuidas
@@ -808,9 +815,9 @@ items:
   - fieldName: Title
     value: '[PROJ-001] Implementar gestión básica de proyectos'
   - fieldName: Status
-    value: Todo
+    value: Done
   - fieldName: Estado
-    value: Todo
+    value: Done
   - fieldName: Prioridad
     value: Media
   - fieldName: Área
@@ -897,7 +904,7 @@ items:
   - fieldName: Identificador de tarea
     value: QUALITY-001
   - fieldName: Fecha objetivo
-    value: '2026-11-12'
+    value: '2026-11-22'
   - fieldName: Fecha de completado
     value: '2026-11-12'
   - fieldName: Bloqueado por
@@ -972,7 +979,7 @@ items:
   - fieldName: Identificador de tarea
     value: MKT-001
   - fieldName: Fecha objetivo
-    value: '2026-11-12'
+    value: '2026-11-22'
   - fieldName: Fecha de completado
     value: '2026-11-13'
   - fieldName: Bloqueado por
@@ -1050,7 +1057,7 @@ items:
   - fieldName: Identificador de tarea
     value: POS-001
   - fieldName: Fecha objetivo
-    value: '2026-11-13'
+    value: '2026-11-22'
   - fieldName: Fecha de completado
     value: '2026-11-13'
   - fieldName: Bloqueado por
@@ -1132,7 +1139,7 @@ items:
   - fieldName: Identificador de tarea
     value: QA-001
   - fieldName: Fecha objetivo
-    value: '2026-11-12'
+    value: '2026-11-22'
   - fieldName: Fecha de completado
     value: '2026-11-12'
   - fieldName: Bloqueado por
@@ -1208,7 +1215,7 @@ items:
   - fieldName: Fecha de completado
     value: '2026-11-12'
   - fieldName: Fecha objetivo
-    value: '2026-11-13'
+    value: '2026-11-22'
   - fieldName: Bloqueado por
     value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIMgbo
@@ -1282,7 +1289,7 @@ items:
   - fieldName: Prioridad
     value: Media
   - fieldName: Fecha objetivo
-    value: '2026-11-12'
+    value: '2026-11-22'
   - fieldName: Bloqueado por
     value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIMgp4
@@ -1356,7 +1363,7 @@ items:
   - fieldName: Prioridad
     value: Media
   - fieldName: Fecha objetivo
-    value: '2026-11-13'
+    value: '2026-11-22'
   - fieldName: Bloqueado por
     value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIMg2M
@@ -1430,7 +1437,7 @@ items:
   - fieldName: Prioridad
     value: Alta
   - fieldName: Fecha objetivo
-    value: '2026-11-12'
+    value: '2026-11-22'
   - fieldName: Bloqueado por
     value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIMhGU
@@ -1501,7 +1508,7 @@ items:
   - fieldName: Prioridad
     value: Media
   - fieldName: Fecha objetivo
-    value: '2026-11-13'
+    value: '2026-11-22'
   - fieldName: Bloqueado por
     value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhINwQw
@@ -1578,7 +1585,7 @@ items:
   - fieldName: Fecha de completado
     value: '2026-11-12'
   - fieldName: Fecha objetivo
-    value: '2026-11-13'
+    value: '2026-11-22'
   - fieldName: Bloqueado por
     value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIOYZU
@@ -1647,7 +1654,7 @@ items:
   - fieldName: Fecha de completado
     value: '2026-11-12'
   - fieldName: Fecha objetivo
-    value: '2026-11-12'
+    value: '2026-11-22'
   - fieldName: Bloqueado por
     value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIOgt4
@@ -1740,7 +1747,7 @@ items:
   - fieldName: Identificador de tarea
     value: AUTH-001
   - fieldName: Fecha objetivo
-    value: '2026-11-11'
+    value: '2026-11-13'
   - fieldName: Fecha de completado
     value: '2026-11-13'
   - fieldName: Bloqueado por
@@ -1781,9 +1788,11 @@ items:
   - fieldName: Identificador de tarea
     value: AUTH-002
   - fieldName: Fecha objetivo
-    value: '2026-11-11'
+    value: '2026-11-16'
   - fieldName: Bloqueado por
     value: Nadie
+  - fieldName: Fecha de completado
+    value: '2026-11-13'
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIVS_M
   content:
     __typename: Issue
@@ -1824,7 +1833,7 @@ items:
   - fieldName: Identificador de tarea
     value: TEN-001
   - fieldName: Fecha objetivo
-    value: '2026-11-11'
+    value: '2026-11-17'
   - fieldName: Fecha de completado
     value: '2026-11-13'
   - fieldName: Bloqueado por
@@ -1835,7 +1844,8 @@ items:
     id: I_kwDOVrRmwc8AAAABe0dVoQ
     number: 29
     title: '[INV-003] Implementar movimientos y disponibilidad de inventario'
-    body: "<!-- managed-task-id: INV-003 -->\n\n**Feature:** Inventario  \n**Responsable:** @Sahid-B  \n**Rutas:** backend/src/main/java/com/erp/features/inventory/, backend/src/main/resources/db/migration/, backend/src/test/java/com/erp/features/inventory/  \n**Dependencias:** TEN-001, INV-001, INV-002  \n**Fecha objetivo:** 2026-11-18\n\n## Alcance\nImplementar entradas, salidas, reservas y consulta de disponibilidad usando el contrato acordado y límites transaccionales explícitos.\n\n## Criterios de aceptación\n- [ ] Cada movimiento pertenece al tenant validado y conserva trazabilidad.\n- [ ] La actualización de existencias es transaccional y evita stock inconsistente.\n- [ ] POS consume API pública sin acceder a repositorios internos.\n- [ ] Migraciones y pruebas cubren disponibilidad, rollback y errores.\n\n## Bloqueo actual\nBloqueada por: INV-001 (@Sahid-B), INV-002 (@Sahid-B).\n\n## Especificación de lógica\n[Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/INV-003.md)."
+    body: "<!-- managed-task-id: INV-003 -->\n\n**Feature:** Inventario  \n**Responsable:** @Sahid-B  \n**Rutas:** backend/src/main/java/com/erp/features/inventory/, backend/src/main/resources/db/migration/, backend/src/test/java/com/erp/features/inventory/  \n**Dependencias:** TEN-001, INV-001, INV-002  \n**Fecha objetivo:** 2026-11-18\n\n## Alcance\nImplementar entradas, salidas, reservas y consulta de disponibilidad usando el contrato acordado y límites transaccionales explícitos.\n\n## Criterios de aceptación\n- [ ] Cada movimiento pertenece al tenant validado y conserva trazabilidad.\n- [ ] La actualización de existencias es transaccional y evita stock inconsistente.\n- [ ] POS consume API pública sin acceder a repositorios internos.\n- [ ] Migraciones y pruebas cubren disponibilidad, rollback y errores.\n\n## Estado de bloqueo\nDependencias completadas: TEN-001, INV-001 e INV-002. La tarea queda lista para ejecución.\n\n## Especificación de lógica\n[Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/INV-003.md).\r\
+      \n"
     state: OPEN
     url: https://github.com/jeffersonmejia/app-distribuidas/issues/29
     repository:
@@ -1858,9 +1868,9 @@ items:
   - fieldName: Title
     value: '[INV-003] Implementar movimientos y disponibilidad de inventario'
   - fieldName: Status
-    value: Blocked
+    value: Todo
   - fieldName: Estado
-    value: Blocked
+    value: Todo
   - fieldName: Prioridad
     value: Alta
   - fieldName: Área
@@ -1868,9 +1878,9 @@ items:
   - fieldName: Identificador de tarea
     value: INV-003
   - fieldName: Fecha objetivo
-    value: '2026-11-14'
+    value: '2026-11-18'
   - fieldName: Bloqueado por
-    value: '@Sahid-B (INV-001, INV-002)'
+    value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIVS_0
   content:
     __typename: Issue
@@ -1910,7 +1920,7 @@ items:
   - fieldName: Identificador de tarea
     value: POS-002
   - fieldName: Fecha objetivo
-    value: '2026-11-15'
+    value: '2026-11-19'
   - fieldName: Bloqueado por
     value: '@Sahid-B (INV-003)'
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIVTAE
@@ -2036,7 +2046,7 @@ items:
   - fieldName: Identificador de tarea
     value: FRONT-003
   - fieldName: Fecha objetivo
-    value: '2026-11-15'
+    value: '2026-11-19'
   - fieldName: Bloqueado por
     value: '@Dayanarablb (FRONT-001, FRONT-002)'
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIVTBU
@@ -2116,7 +2126,7 @@ items:
   - fieldName: Identificador de tarea
     value: FRONT-005
   - fieldName: Fecha objetivo
-    value: '2026-11-15'
+    value: '2026-11-21'
   - fieldName: Bloqueado por
     value: '@Dayanarablb (FRONT-001, FRONT-002), @EMLarco (PROJ-001, MKT-002, ACC-002)'
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIVTCI

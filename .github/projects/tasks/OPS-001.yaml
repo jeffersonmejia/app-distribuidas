@@ -37,7 +37,13 @@ issue:
 
     - Dependencias: Ninguna
 
-    - Fecha de completado: 2026-11-12'
+    - Fecha de completado: 2026-11-12
+
+
+    ## Instructivo de tarea
+
+
+    Consulta [`docs/tasks/OPS-001.md`](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/OPS-001.md) para objetivo, alcance y criterios de aceptación.'
   state: closed
   assignees:
   - jeffersonmejia
@@ -54,7 +60,7 @@ project:
   Identificador de tarea: OPS-001
   Prioridad: Media
   Fecha objetivo: '2026-11-22'
-  Bloqueado por: "Nadie"
+  Bloqueado por: Nadie
 planning:
   acceptanceCriteria:
   - PostgreSQL del ERP se configura con persistencia y healthcheck.
@@ -64,6 +70,7 @@ planning:
   - docker/compose.yml
   - docker/compose.sonarqube.yml
   - docker/.env.example
+  - docs/tasks/OPS-001.md
   priority: Media
   assignmentNote: null
   assignee: jeffersonmejia

@@ -35,7 +35,13 @@ issue:
 
     - Rutas: backend/.../features/marketing/
 
-    - Dependencias: CRM-001'
+    - Dependencias: CRM-001
+
+
+    ## Instructivo de tarea
+
+
+    Consulta [`docs/tasks/MKT-001.md`](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/MKT-001.md) para objetivo, alcance y criterios de aceptación.'
   state: closed
   assignees:
   - EMLarco
@@ -52,7 +58,8 @@ project:
   Área: Marketing
   Identificador de tarea: MKT-001
   Fecha objetivo: '2026-11-22'
-  Bloqueado por: "Nadie"
+  Fecha de completado: '2026-11-13'
+  Bloqueado por: Nadie
 planning:
   acceptanceCriteria:
   - Los contratos iniciales de campañas y contactos están definidos.
@@ -60,6 +67,7 @@ planning:
   - La tarea no modifica directamente archivos de CRM.
   paths:
   - backend/.../features/marketing/
+  - docs/tasks/MKT-001.md
   priority: Media
   assignmentNote: null
   assignee: EMLarco
