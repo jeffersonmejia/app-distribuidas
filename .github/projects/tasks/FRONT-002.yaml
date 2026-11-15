@@ -29,7 +29,7 @@ issue:
 
     - Prioridad: Alta
 
-    - Estado: Bloqueado
+    - Estado: Todo
 
     - Responsable: @Dayanarablb
 
@@ -39,7 +39,7 @@ issue:
 
     - Dependencias: FRONT-001
 
-    - Bloqueo actual: FRONT-001 está en progreso; su adaptación responsiva sigue pendiente y este layout aún no inicia.
+    - Preparación: tokens y componentes base de FRONT-001 ya se integraron en el PR #97. Puede iniciar layout, navegación y rutas en frontend/src/app/ mientras FRONT-001 completa sus estilos responsivos; el layout debe validar sus propios tamaños de pantalla.
 
 
     ## Especificación de lógica
@@ -54,13 +54,13 @@ issue:
 project:
   Repository: jeffersonmejia/app-distribuidas
   Title: '[FRONT-002] Implementar layout y navegación principal'
-  Status: Blocked
-  Estado: Blocked
+  Status: Todo
+  Estado: Todo
   Prioridad: Alta
   Área: Frontend
   Identificador de tarea: FRONT-002
   Fecha objetivo: '2026-11-16'
-  Bloqueado por: '@Dayanarablb (FRONT-001)'
+  Bloqueado por: Nadie
 planning:
   acceptanceCriteria:
   - El layout general está definido.
@@ -73,13 +73,12 @@ planning:
   priority: Alta
   assignmentNote: null
   assignee: Dayanarablb
-  state: Blocked
+  state: Todo
   area: Frontend
   dependencies:
   - FRONT-001
   targetDate: '2026-11-16'
-  blocked_by:
-  - FRONT-001
+  blocked_by: []
   description: Crear el layout general, organizar la navegación por módulos y preparar las rutas sin implementar pantallas de negocio.
   requestedAssignee: null
   branch: Dayanara
