@@ -37,7 +37,13 @@ issue:
 
     - Dependencias: Ninguna
 
-    - Fecha de completado: 2026-11-12'
+    - Fecha de completado: 2026-11-12
+
+
+    ## Instructivo de tarea
+
+
+    Consulta [`docs/tasks/GOV-001.md`](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/GOV-001.md) para objetivo, alcance y criterios de aceptación.'
   state: closed
   assignees:
   - jeffersonmejia
@@ -53,7 +59,7 @@ project:
   Identificador de tarea: GOV-001
   Prioridad: Media
   Fecha objetivo: '2026-11-22'
-  Bloqueado por: "Nadie"
+  Bloqueado por: Nadie
 planning:
   acceptanceCriteria:
   - Los lineamientos de desarrollo están documentados.
@@ -64,6 +70,7 @@ planning:
   - .editorconfig
   - .gitignore
   - README.md
+  - docs/tasks/GOV-001.md
   priority: Media
   assignmentNote: null
   assignee: jeffersonmejia

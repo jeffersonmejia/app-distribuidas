@@ -321,7 +321,11 @@ class SyncEngine:
                 continue
             if action == "pull":
                 if mode in {"pull", "sync"}:
-                    task = plan.get("remote")
+                    task = deepcopy(plan.get("remote") or {})
+                    local_task = plan.get("local") or {}
+                    for key, value in local_task.items():
+                        if key not in {"id", "github", "issue", "project"}:
+                            task.setdefault(key, deepcopy(value))
                     write_yaml_atomic(Path(plan["path"]), self._yaml_task(task))
                     self.storage.save_identity(task)
                     self.storage.save_bases(task_id, task_properties(task))

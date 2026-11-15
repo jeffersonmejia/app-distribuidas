@@ -221,6 +221,33 @@ jobs:
 
               if (pr.draft) continue;
 
+              if (pr.mergeable_state === 'behind') {
+                await github.rest.pulls.updateBranch({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  pull_number: pr.number,
+                  expected_head_sha: pr.head.sha,
+                });
+                const body = `${marker}\n@${responsible} La rama ${pr.head.ref} estaba atrasada respecto a develop. Se solicitó su actualización automática; GitHub volverá a ejecutar los checks con la rama actualizada antes de integrarla.`;
+                if (automationComment) {
+                  await github.rest.issues.updateComment({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    comment_id: automationComment.id,
+                    body,
+                  });
+                } else {
+                  await github.rest.issues.createComment({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: pr.number,
+                    body,
+                  });
+                }
+                core.info(`Solicitada la actualización automática de la rama del PR #${pr.number}; se esperarán los checks del nuevo commit.`);
+                continue;
+              }
+
               const checkRuns = await github.rest.checks.listForRef({
                 owner: context.repo.owner,
                 repo: context.repo.repo,

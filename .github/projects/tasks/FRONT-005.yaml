@@ -20,8 +20,8 @@ project:
   Prioridad: Media
   Área: Frontend
   Identificador de tarea: FRONT-005
-  Fecha objetivo: '2026-11-15'
-  Bloqueado por: "@Dayanarablb (FRONT-001, FRONT-002), @EMLarco (PROJ-001, MKT-002, ACC-002)"
+  Fecha objetivo: '2026-11-21'
+  Bloqueado por: '@Dayanarablb (FRONT-001, FRONT-002), @EMLarco (PROJ-001, MKT-002, ACC-002)'
 planning:
   area: Frontend
   assignee: Dayanarablb
