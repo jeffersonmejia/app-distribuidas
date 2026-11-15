@@ -1,0 +1,66 @@
+.alert {
+  display: flex;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-sm);
+  line-height: 1.5;
+}
+
+/* Variants — colors from semantic state tokens only, no brand */
+.alert--info {
+  background: var(--surface-info);
+  border-color: var(--info-soft);
+  color: var(--text-info);
+}
+
+.alert--success {
+  background: var(--surface-success);
+  border-color: var(--success-soft);
+  color: var(--text-success);
+}
+
+.alert--warning {
+  background: var(--surface-warning);
+  border-color: var(--warning-soft);
+  color: var(--text-warning);
+}
+
+.alert--error {
+  background: var(--surface-error);
+  border-color: var(--error-soft);
+  color: var(--text-error);
+}
+
+/* Icon slot */
+.alert__icon {
+  display: flex;
+  align-items: flex-start;
+  flex-shrink: 0;
+  padding-top: 0.1em;
+}
+
+.alert__icon svg {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+/* Content */
+.alert__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.alert__title {
+  margin: 0;
+  font-weight: var(--font-weight-semibold);
+  color: inherit;
+}
+
+.alert__body {
+  color: inherit;
+}
