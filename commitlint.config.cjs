@@ -5,7 +5,9 @@ module.exports = {
     (message) => {
       const title = message.split(/\r?\n/, 1)[0].trim();
 
-      return /^Merge pull request #\d+ from [^\s]+$/.test(title);
+      const mergeTitle = /^(?:[a-z]+(?:\([^)]+\))?: )?Merge (?:pull request #[0-9]+ from \S+|branch .+|remote-tracking branch .+|tag .+)$/i;
+
+      return mergeTitle.test(title);
     },
   ],
 

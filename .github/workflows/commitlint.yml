@@ -36,7 +36,10 @@ jobs:
       - name: Instalar dependencias locales
         run: npm ci
 
-      - name: Validar todos los commits del Pull Request
+      - name: Probar reglas de Conventional Commits
+        run: npm run test:commitlint
+
+      - name: Validar commits introducidos por el Pull Request
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
