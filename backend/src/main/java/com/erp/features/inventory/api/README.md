@@ -4,6 +4,10 @@
 
 Responsable: Sahid (`Sahid-B`). Tarea: [INV-001, issue #5](https://github.com/jeffersonmejia/app-distribuidas/issues/5).
 
+Este documento conserva el diseño de INV-001. El núcleo ejecutable de movimientos,
+su contrato `InventoryMovements`, decisiones concretadas, permisos y pruebas se
+documentan en [INV-003](../../../../../../../../../docs/tasks/INV-003.md).
+
 Este documento desarrolla el diseño exigido por [la especificación de INV-001](../../../../../../../../../docs/tasks/INV-001.md). La especificación dispone que, hasta acordar campos de producto, identificador comercial, unidades, reglas de alta/edición, existencia inicial y propiedad de precio/costo, la entrega sea el diseño con esas decisiones explícitas, sin codificarlas como defaults.
 
 Por tanto, esta entrega no fija un esquema, tipos de cantidad, validaciones comerciales ni contratos Java que dependan de esas decisiones. No implementa controladores, persistencia o movimientos y no afirma que existan casos de uso ejecutables ni pruebas unitarias aprobadas.

@@ -37,7 +37,13 @@ issue:
 
     - Dependencias: Ninguna
 
-    - Fecha de completado: 2026-11-12'
+    - Fecha de completado: 2026-11-12
+
+
+    ## Instructivo de tarea
+
+
+    Consulta [`docs/tasks/CI-001.md`](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/CI-001.md) para objetivo, alcance y criterios de aceptación.'
   state: closed
   assignees:
   - jeffersonmejia
@@ -54,7 +60,7 @@ project:
   Identificador de tarea: CI-001
   Fecha de completado: '2026-11-12'
   Fecha objetivo: '2026-11-22'
-  Bloqueado por: "Nadie"
+  Bloqueado por: Nadie
 planning:
   acceptanceCriteria:
   - El workflow valida el rango completo de commits del Pull Request.
@@ -64,6 +70,7 @@ planning:
   - .github/workflows/commitlint.yml
   - commitlint.config.cjs
   - package.json
+  - docs/tasks/CI-001.md
   priority: Alta
   assignmentNote: null
   assignee: jeffersonmejia

@@ -46,7 +46,7 @@ issue:
     ## Especificación de lógica
 
     [Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/INV-001.md).'
-  state: open
+  state: closed
   assignees:
   - Sahid-B
   labels:
@@ -57,16 +57,16 @@ issue:
 project:
   Repository: jeffersonmejia/app-distribuidas
   Title: '[INV-001] Implementar catálogo y existencias'
-  Status: Todo
-  Estado: Todo
+  Status: Done
+  Estado: Done
   Prioridad: Alta
   Área: Inventario
   Identificador de tarea: INV-001
-  Fecha objetivo: '2026-11-14'
-  Bloqueado por: "Nadie"
+  Fecha objetivo: '2026-11-18'
+  Bloqueado por: Nadie
 planning:
   targetDate: '2026-11-18'
-  state: Todo
+  state: Done
   priority: Alta
   blocked_by: []
   paths:
