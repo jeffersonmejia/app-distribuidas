@@ -4,7 +4,8 @@ github:
   issue_number: 30
 issue:
   title: '[POS-002] Implementar registro transaccional de ventas'
-  body: "<!-- managed-task-id: POS-002 -->\n\n**Feature:** POS  \n**Responsable:** @BruceRodri  \n**Rutas:** backend/src/main/java/com/erp/features/pos/, backend/src/test/java/com/erp/features/pos/  \n**Dependencias:** TEN-001, INV-003, POS-001  \n**Fecha objetivo:** 2026-11-19\n\n## Alcance\nImplementar flujo de venta del MVP y consumir el contrato de Inventory para validar y descontar existencias.\n\n## Criterios de aceptación\n- [ ] Validar tenant, datos y disponibilidad antes de confirmar.\n- [ ] Venta y movimiento de inventario respetan atomicidad.\n- [ ] No consultar tablas, entidades ni repositorios de Inventory.\n- [ ] Probar éxito, stock insuficiente, duplicidad y rollback.\n\n## Estado de dependencias\nTEN-001 y POS-001 ya estaban completadas; INV-003 se completó con el PR #108. No quedan bloqueos pendientes; lista para ejecución.\n\n## Especificación de lógica\n[Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/POS-002.md)."
+  body: "<!-- managed-task-id: POS-002 -->\n\n**Feature:** POS  \n**Responsable:** @BruceRodri  \n**Rutas:** backend/src/main/java/com/erp/features/pos/, backend/src/test/java/com/erp/features/pos/  \n**Dependencias:** TEN-001, INV-003, POS-001  \n**Fecha objetivo:** 2026-11-19\n\n## Alcance\nImplementar flujo de venta del MVP y consumir el contrato de Inventory para validar y descontar existencias.\n\n## Criterios de aceptación\n- [ ] Validar tenant, datos y disponibilidad antes de confirmar.\n- [ ] Venta y movimiento de inventario respetan atomicidad.\n- [ ] No consultar tablas, entidades ni repositorios de Inventory.\n- [ ] Probar éxito, stock insuficiente, duplicidad y rollback.\n\n## Decisiones aprobadas\n- `saleId` es un UUID del cliente, único por tenant; reintento con mismo payload devuelve la venta y payload distinto con la misma clave se rechaza.\n- Cada línea incluye `productId`, `unit`, `quantity`, `unitPrice` e `taxAmount`; moneda USD y escala 2 para importes. POS entrega el\
+    \ impuesto por línea a Accounting.\n- POS guarda la venta dentro del callback `InventoryMovements.issueAndExecute`, con PostgreSQL y `PlatformTransactionManager` compartidos.\n\n## Estado\nINV-003 está completada en el PR #108. POS-002 queda lista para ejecución.\n\n## Especificación de lógica\n[Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/POS-002.md)."
   state: open
   assignees:
   - BruceRodri
@@ -37,9 +38,11 @@ planning:
   state: Todo
   priority: Alta
   blocked_by: []
-  description: Implementar flujo de venta del MVP y consumir el contrato de Inventory para validar y descontar existencias.
+  description: Implementar ventas tenant-scoped e idempotentes, entregando a Accounting el saleId y el impuesto por línea; compartir transacción con Inventory mediante issueAndExecute.
   acceptanceCriteria:
-  - Validar tenant, datos y disponibilidad antes de confirmar.
-  - Venta y movimiento de inventario respetan atomicidad.
-  - No consultar tablas, entidades ni repositorios de Inventory.
-  - Probar éxito, stock insuficiente, duplicidad y rollback.
+  - Venta usa UUID saleId del cliente, único por tenant; reintentos idénticos devuelven la venta y payload distinto con la misma clave se rechaza.
+  - Cada línea registra productId, unit, quantity, unitPrice y taxAmount; precios e impuestos usan USD BigDecimal/NUMERIC de escala 2.
+  - POS persiste la venta dentro del callback de InventoryMovements.issueAndExecute con el mismo PostgreSQL y transaction manager; fallo revierte venta y movimiento.
+  - Se valida actor, membresía, permiso y tenant; no se consultan tablas, entidades ni repositorios internos de Inventory.
+  - Migraciones y pruebas cubren éxito, stock insuficiente, reintento/idempotencia, rollback y aislamiento tenant.
+  - Errores conservan códigos estables de Inventory y no exponen mensajes internos ni datos cross-tenant.
