@@ -4,9 +4,9 @@ github:
   issue_number: 29
 issue:
   title: '[INV-003] Implementar movimientos y disponibilidad de inventario'
-  body: "<!-- managed-task-id: INV-003 -->\n\n**Feature:** Inventario  \n**Responsable:** @Sahid-B  \n**Rutas:** backend/src/main/java/com/erp/features/inventory/, backend/src/main/resources/db/migration/, backend/src/test/java/com/erp/features/inventory/  \n**Dependencias:** TEN-001, INV-001, INV-002  \n**Fecha objetivo:** 2026-11-18\n\n## Alcance\nImplementar entradas, salidas, reservas y consulta de disponibilidad usando el contrato acordado y límites transaccionales explícitos.\n\n## Criterios de aceptación\n- [ ] Cada movimiento pertenece al tenant validado y conserva trazabilidad.\n- [ ] La actualización de existencias es transaccional y evita stock inconsistente.\n- [ ] POS consume API pública sin acceder a repositorios internos.\n- [ ] Migraciones y pruebas cubren disponibilidad, rollback y errores.\n\n## Estado de bloqueo\nDependencias completadas: TEN-001, INV-001 e INV-002. La tarea queda lista para ejecución.\n\n## Especificación de lógica\n[Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/INV-003.md).\r\
-    \n"
-  state: open
+  body: "<!-- managed-task-id: INV-003 -->\n\n**Feature:** Inventario  \n**Responsable:** @Sahid-B  \n**Rutas:** backend/src/main/java/com/erp/features/inventory/, backend/src/main/resources/db/migration/, backend/src/test/java/com/erp/features/inventory/  \n**Dependencias:** TEN-001, INV-001, INV-002  \n**Fecha objetivo:** 2026-11-18\n\n## Alcance\nImplementar entradas, salidas, reservas y consulta de disponibilidad usando el contrato acordado y límites transaccionales explícitos.\n\n## Criterios de aceptación\n- [x] Cada movimiento pertenece al tenant validado y conserva trazabilidad.\n- [x] La actualización de existencias es transaccional y evita stock inconsistente.\n- [x] POS consume API pública sin acceder a repositorios internos.\n- [x] Migraciones y pruebas cubren disponibilidad, rollback y errores.\n\n## Estado\nCompletada mediante el PR #108, integrado en `develop`. El workflow de calidad pasó; el PR reporta 87 pruebas backend aprobadas, incluidas 27 de Inventory, y 98,68 % de\
+    \ cobertura del módulo.\n\n## Especificación de lógica\n[Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/INV-003.md).\r\n"
+  state: closed
   assignees:
   - Sahid-B
   labels:
@@ -16,13 +16,14 @@ issue:
 project:
   Repository: jeffersonmejia/app-distribuidas
   Title: '[INV-003] Implementar movimientos y disponibilidad de inventario'
-  Status: Todo
-  Estado: Todo
+  Status: Done
+  Estado: Done
   Prioridad: Alta
   Área: Inventario
   Identificador de tarea: INV-003
   Fecha objetivo: '2026-11-18'
   Bloqueado por: Nadie
+  Fecha de completado: '2026-11-15'
 planning:
   area: Inventario
   assignee: Sahid-B
@@ -36,7 +37,7 @@ planning:
   - INV-001
   - INV-002
   targetDate: '2026-11-18'
-  state: Todo
+  state: Done
   priority: Alta
   blocked_by: []
   description: Implementar entradas, salidas, reservas y consulta de disponibilidad usando el contrato acordado y límites transaccionales explícitos.
@@ -45,3 +46,4 @@ planning:
   - La actualización de existencias es transaccional y evita stock inconsistente.
   - POS consume API pública sin acceder a repositorios internos.
   - Migraciones y pruebas cubren disponibilidad, rollback y errores.
+  completedAt: '2026-11-15'
