@@ -63,6 +63,47 @@
   --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
   --shadow-raised: 0 10px 24px color-mix(in oklch, var(--neutral) 18%, transparent);
+
+  /* Elevation shadows (beyond the existing --shadow-raised). */
+  --shadow-sm: 0 1px 2px color-mix(in oklch, var(--neutral) 12%, transparent);
+  --shadow-md: 0 4px 12px color-mix(in oklch, var(--neutral) 14%, transparent);
+  --shadow-lg: 0 12px 28px color-mix(in oklch, var(--neutral) 20%, transparent);
+
+  /* Spacing scale — every step is a multiple of the 4 px base. */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+
+  /* Z-index stacking layers. */
+  --z-base: 0;
+  --z-sticky: 10;
+  --z-dropdown: 20;
+  --z-overlay: 30;
+  --z-modal: 40;
+
+  /* Transition durations — overridden to near-zero by prefers-reduced-motion. */
+  --transition-fast: 120ms ease;
+  --transition-normal: 200ms ease;
+
+  /* Semantic font sizes for UI components. */
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+
+  /* Semantic font weights. */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -100,5 +141,13 @@
     --warning-soft: color-mix(in oklch, var(--warning) 23%, var(--surface-canvas));
     --error-soft: color-mix(in oklch, var(--error) 22%, var(--surface-canvas));
     --info-soft: color-mix(in oklch, var(--info) 22%, var(--surface-canvas));
+  }
+}
+
+/* Honor the user's motion preference: collapse transition durations to near-zero. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --transition-fast: 0.01ms;
+    --transition-normal: 0.01ms;
   }
 }
