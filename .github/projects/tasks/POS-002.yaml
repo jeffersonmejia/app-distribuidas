@@ -20,8 +20,8 @@ project:
   Prioridad: Alta
   Área: POS
   Identificador de tarea: POS-002
-  Fecha objetivo: '2026-11-15'
-  Bloqueado por: "@Sahid-B (INV-003)"
+  Fecha objetivo: '2026-11-19'
+  Bloqueado por: '@Sahid-B (INV-003)'
 planning:
   area: POS
   assignee: BruceRodri

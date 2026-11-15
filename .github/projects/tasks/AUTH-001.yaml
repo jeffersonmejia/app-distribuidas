@@ -4,7 +4,7 @@ github:
   issue_number: 26
 issue:
   title: '[AUTH-001] Acordar autenticación y permisos del MVP'
-  body: "<!-- managed-task-id: AUTH-001 -->\n\n**Feature:** Multitenancy  \n**Responsable:** @jeffersonmejia  \n**Rutas:** docs/multitenancy.md, docs/autenticacion.md  \n**Dependencias:** ARC-002  \n**Fecha objetivo:** 2026-11-13\n\n## Alcance\nAcordar el contrato de autenticación y permisos aprobado para el MVP: JWT bearer, actor UUID, selector de tenant no confiable y permisos explícitos por membresía.\n\n## Criterios de aceptación\n- [x] Documentar mecanismo y ciclo de credenciales.\n- [x] Definir que no hay roles implícitos, permisos explícitos y selector tenant como dato no confiable.\n- [x] Especificar rechazos sin actor, membresía o permiso.\n- [x] No aceptar actor_id ni permisos del cliente como autorización."
+  body: "<!-- managed-task-id: AUTH-001 -->\n\n**Feature:** Multitenancy  \n**Responsable:** @jeffersonmejia  \n**Rutas:** docs/multitenancy.md, docs/autenticacion.md  \n**Dependencias:** ARC-002  \n**Fecha objetivo:** 2026-11-13\n\n## Alcance\nAcordar el contrato de autenticación y permisos aprobado para el MVP: JWT bearer, actor UUID, selector de tenant no confiable y permisos explícitos por membresía.\n\n## Criterios de aceptación\n- [x] Documentar mecanismo y ciclo de credenciales.\n- [x] Definir que no hay roles implícitos, permisos explícitos y selector tenant como dato no confiable.\n- [x] Especificar rechazos sin actor, membresía o permiso.\n- [x] No aceptar actor_id ni permisos del cliente como autorización.\n\n## Instructivo de tarea\n\nConsulta [`docs/tasks/AUTH-001.md`](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/AUTH-001.md) para objetivo, alcance y criterios de aceptación."
   state: closed
   assignees:
   - jeffersonmejia
@@ -21,18 +21,22 @@ project:
   Identificador de tarea: AUTH-001
   Fecha objetivo: '2026-11-13'
   Fecha de completado: '2026-11-13'
-  Bloqueado por: "Nadie"
+  Bloqueado por: Nadie
 planning:
   area: Multitenancy
   assignee: jeffersonmejia
-  paths: [docs/multitenancy.md, docs/autenticacion.md]
-  dependencies: [ARC-002]
+  paths:
+  - docs/multitenancy.md
+  - docs/autenticacion.md
+  - docs/tasks/AUTH-001.md
+  dependencies:
+  - ARC-002
   targetDate: '2026-11-13'
   state: Done
   priority: Alta
   description: Contrato JWT bearer con actor UUID, selector tenant no confiable y permisos explícitos por membresía.
   acceptanceCriteria:
   - Documentar mecanismo y ciclo de credenciales.
-  - Definir permisos explícitos y selector tenant no confiable.
+  - Definir que no hay roles implícitos, permisos explícitos y selector tenant como dato no confiable.
   - Especificar rechazos sin actor, membresía o permiso.
   - No aceptar actor_id ni permisos del cliente como autorización.
