@@ -4,8 +4,8 @@ github:
   issue_number: 35
 issue:
   title: '[FRONT-005] Completar interfaces de proyectos, marketing y contabilidad'
-  body: "<!-- managed-task-id: FRONT-005 -->\n\n**Feature:** Frontend  \n**Responsable:** @Dayanarablb  \n**Rutas:** frontend/src/features/projects/, frontend/src/features/marketing/, frontend/src/features/accounting/  \n**Dependencias:** FRONT-001, FRONT-002, PROJ-001, MKT-002, ACC-002  \n**Fecha objetivo:** 2026-11-21\n\n## Alcance\nImplementar las pantallas acordadas para proyectos/tareas, campañas y consulta contable usando APIs aprobadas. El backend autoriza el acceso a los datos tenant-scoped.\n\n## Criterios de aceptación\n- [ ] Cada pantalla consume su API; el cliente no autoriza con tenant_id, actor_id ni permisos enviados por el usuario.\n- [ ] Listas paginan en servidor y respetan máximo 5.\n- [ ] Formularios muestran carga, error y confirmación.\n- [ ] No se inventan reglas contables no aprobadas.\n- [ ] Pruebas de componentes cubren estados de lista y formularios.\n\n## Bloqueo actual\nBloqueada por: FRONT-001 (@Dayanarablb), FRONT-002 (@Dayanarablb), PROJ-001 (@EMLarco), MKT-002\
-    \ (@EMLarco), ACC-002 (@EMLarco).\n\n## Especificación de lógica\n[Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/FRONT-005.md)."
+  body: "<!-- managed-task-id: FRONT-005 -->\n\n**Feature:** Frontend  \n**Responsable:** @Dayanarablb  \n**Rutas:** frontend/src/features/projects/, frontend/src/features/marketing/, frontend/src/features/accounting/  \n**Dependencias:** FRONT-001, FRONT-002, PROJ-001, MKT-002, ACC-002  \n**Fecha objetivo:** 2026-11-21\n\n## Alcance\nImplementar las pantallas acordadas para proyectos/tareas, campañas y consulta contable usando APIs aprobadas. El backend autoriza el acceso a los datos tenant-scoped.\n\n## Criterios de aceptación\n- [ ] Cada pantalla consume su API; el cliente no autoriza con tenant_id, actor_id ni permisos enviados por el usuario.\n- [ ] Listas paginan en servidor y respetan máximo 5.\n- [ ] Formularios muestran carga, error y confirmación.\n- [ ] No se inventan reglas contables no aprobadas.\n- [ ] Pruebas de componentes cubren estados de lista y formularios.\n\n## Bloqueo actual\nDependencias completadas: PROJ-001. Bloqueada por: @Dayanarablb (FRONT-001, FRONT-002), @EMLarco\
+    \ (MKT-002, ACC-002).\n\n## Especificación de lógica\n[Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/FRONT-005.md)."
   state: open
   assignees:
   - Dayanarablb
@@ -21,7 +21,7 @@ project:
   Área: Frontend
   Identificador de tarea: FRONT-005
   Fecha objetivo: '2026-11-21'
-  Bloqueado por: '@Dayanarablb (FRONT-001, FRONT-002), @EMLarco (PROJ-001, MKT-002, ACC-002)'
+  Bloqueado por: '@Dayanarablb (FRONT-001, FRONT-002), @EMLarco (MKT-002, ACC-002)'
 planning:
   area: Frontend
   assignee: Dayanarablb
@@ -42,7 +42,6 @@ planning:
   blocked_by:
   - FRONT-001
   - FRONT-002
-  - PROJ-001
   - MKT-002
   - ACC-002
   description: Implementar las pantallas acordadas para proyectos/tareas, campañas y consulta contable usando APIs autorizadas.

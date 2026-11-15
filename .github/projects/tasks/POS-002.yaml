@@ -4,7 +4,7 @@ github:
   issue_number: 30
 issue:
   title: '[POS-002] Implementar registro transaccional de ventas'
-  body: "<!-- managed-task-id: POS-002 -->\n\n**Feature:** POS  \n**Responsable:** @BruceRodri  \n**Rutas:** backend/src/main/java/com/erp/features/pos/, backend/src/test/java/com/erp/features/pos/  \n**Dependencias:** TEN-001, INV-003, POS-001  \n**Fecha objetivo:** 2026-11-19\n\n## Alcance\nImplementar flujo de venta del MVP y consumir el contrato de Inventory para validar y descontar existencias.\n\n## Criterios de aceptación\n- [ ] Validar tenant, datos y disponibilidad antes de confirmar.\n- [ ] Venta y movimiento de inventario respetan atomicidad.\n- [ ] No consultar tablas, entidades ni repositorios de Inventory.\n- [ ] Probar éxito, stock insuficiente, duplicidad y rollback.\n\n## Bloqueo actual\nBloqueada por: INV-003 (@Sahid-B).\n\n## Especificación de lógica\n[Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/POS-002.md)."
+  body: "<!-- managed-task-id: POS-002 -->\n\n**Feature:** POS  \n**Responsable:** @BruceRodri  \n**Rutas:** backend/src/main/java/com/erp/features/pos/, backend/src/test/java/com/erp/features/pos/  \n**Dependencias:** TEN-001, INV-003, POS-001  \n**Fecha objetivo:** 2026-11-19\n\n## Alcance\nImplementar flujo de venta del MVP y consumir el contrato de Inventory para validar y descontar existencias.\n\n## Criterios de aceptación\n- [ ] Validar tenant, datos y disponibilidad antes de confirmar.\n- [ ] Venta y movimiento de inventario respetan atomicidad.\n- [ ] No consultar tablas, entidades ni repositorios de Inventory.\n- [ ] Probar éxito, stock insuficiente, duplicidad y rollback.\n\n## Estado de dependencias\nTEN-001 y POS-001 ya estaban completadas; INV-003 se completó con el PR #108. No quedan bloqueos pendientes; lista para ejecución.\n\n## Especificación de lógica\n[Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/POS-002.md)."
   state: open
   assignees:
   - BruceRodri
@@ -15,13 +15,13 @@ issue:
 project:
   Repository: jeffersonmejia/app-distribuidas
   Title: '[POS-002] Implementar registro transaccional de ventas'
-  Status: Blocked
-  Estado: Blocked
+  Status: Todo
+  Estado: Todo
   Prioridad: Alta
   Área: POS
   Identificador de tarea: POS-002
   Fecha objetivo: '2026-11-19'
-  Bloqueado por: '@Sahid-B (INV-003)'
+  Bloqueado por: Nadie
 planning:
   area: POS
   assignee: BruceRodri
@@ -34,10 +34,9 @@ planning:
   - INV-003
   - POS-001
   targetDate: '2026-11-19'
-  state: Blocked
+  state: Todo
   priority: Alta
-  blocked_by:
-  - INV-003
+  blocked_by: []
   description: Implementar flujo de venta del MVP y consumir el contrato de Inventory para validar y descontar existencias.
   acceptanceCriteria:
   - Validar tenant, datos y disponibilidad antes de confirmar.
