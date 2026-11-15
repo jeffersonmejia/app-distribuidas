@@ -1,0 +1,105 @@
+.input-field {
+  display: grid;
+  gap: var(--space-2);
+}
+
+/* Label */
+.input-field__label {
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.4;
+}
+
+/* Wrapper holds the input and optional end adornment */
+.input-field__wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* Native input */
+.input-field__control {
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0 var(--space-4);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  background: var(--surface-raised);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-regular);
+  outline: none;
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast),
+    background var(--transition-fast);
+}
+
+.input-field__control::placeholder {
+  color: var(--text-muted);
+  opacity: 0.78;
+}
+
+/* Focus — keyboard-only via :focus-visible; fallback for inputs */
+.input-field__control:focus,
+.input-field__control:focus-visible {
+  border-color: var(--border-brand);
+  background: var(--surface-canvas);
+  box-shadow: 0 0 0 3px color-mix(in oklch, var(--focus-ring) 15%, transparent);
+  outline: none;
+}
+
+/* Error state */
+.input-field__control--error {
+  border-color: var(--error);
+  background: var(--surface-error);
+}
+
+.input-field__control--error:focus,
+.input-field__control--error:focus-visible {
+  border-color: var(--error);
+  box-shadow: 0 0 0 3px color-mix(in oklch, var(--error) 15%, transparent);
+}
+
+/* Disabled state */
+.input-field__control:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  background: var(--surface-sunken);
+  border-color: var(--border-subtle);
+}
+
+/* End adornment slot (e.g. show/hide password button) */
+.input-field__adornment {
+  position: absolute;
+  right: var(--space-3);
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  color: var(--text-secondary);
+}
+
+/* When adornment is present, leave room inside the input */
+.input-field__wrapper:has(.input-field__adornment) .input-field__control {
+  padding-right: 3rem;
+}
+
+/* Error message */
+.input-field__error {
+  color: var(--text-error);
+  font-family: var(--font-sans);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.4;
+}
+
+/* Hint text */
+.input-field__hint {
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: var(--font-size-xs);
+  line-height: 1.4;
+}
