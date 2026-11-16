@@ -19,7 +19,7 @@ export function PlaceholderPage({ title, description }: PlaceholderPageProps) {
       <Card>
         <EmptyState
           title="Módulo en desarrollo"
-          description="Este módulo está planificado conforme a docs/arquitectura.md y estará disponible en una próxima entrega."
+          description="Este módulo estará disponible próximamente."
         />
       </Card>
     </>
