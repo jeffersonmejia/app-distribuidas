@@ -11,6 +11,7 @@ import java.util.UUID;
 import java.util.function.Function;
 import com.erp.features.inventory.api.InventoryMovements;
 import com.erp.features.inventory.api.InventoryFailure;
+import com.erp.features.accounting.api.AccountingEntries;
 import com.erp.features.pos.api.SaleException;
 import com.erp.features.pos.api.Sales;
 import com.erp.features.pos.application.SaleService;
@@ -22,7 +23,8 @@ import org.junit.jupiter.api.Test;
 class SaleServiceTest {
     private final InventoryMovements inventory = mock(InventoryMovements.class);
     private final SaleStore store = mock(SaleStore.class);
-    private final SaleService service = new SaleService(inventory, store);
+    private final AccountingEntries accounting = mock(AccountingEntries.class);
+    private final SaleService service = new SaleService(inventory, store, accounting);
     private final TenantId tenant = new TenantId(UUID.randomUUID());
     private final UUID actor = UUID.randomUUID();
     private final UUID product = UUID.randomUUID();
