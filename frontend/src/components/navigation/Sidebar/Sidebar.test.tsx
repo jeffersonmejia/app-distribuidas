@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { RouterProvider } from '../../../app/router/router'
-import { Sidebar, SIDEBAR_NAV_ITEMS } from './Sidebar'
+import { Sidebar, SIDEBAR_NAV_ITEMS, isSidebarItemActive } from './Sidebar'
 
 function renderSidebar(currentPath = '/') {
   return render(
@@ -31,10 +31,23 @@ describe('Sidebar Component', () => {
     }
   })
 
-  // --- Ítem activo y aria-current ---
+  // --- Regla de estado activo ---
 
-  it('aplica aria-current="page" y clase activa únicamente al enlace de la ruta activa', () => {
-    renderSidebar('/crm')
+  it('aplica aria-current="page" únicamente a la ruta exacta para "/"', () => {
+    expect(isSidebarItemActive('/', '/')).toBe(true)
+    expect(isSidebarItemActive('/', '/crm')).toBe(false)
+    expect(isSidebarItemActive('/', '/inventory/items')).toBe(false)
+  })
+
+  it('aplica aria-current="page" en subrutas de módulos (ej. /crm/123)', () => {
+    expect(isSidebarItemActive('/crm', '/crm')).toBe(true)
+    expect(isSidebarItemActive('/crm', '/crm/123')).toBe(true)
+    expect(isSidebarItemActive('/crm', '/crm/nuevo')).toBe(true)
+    expect(isSidebarItemActive('/crm', '/inventory')).toBe(false)
+  })
+
+  it('refleja en el DOM el estado activo para subrutas sin activar la raíz "/"', () => {
+    renderSidebar('/crm/123')
     const crmLink = screen.getByRole('link', { name: 'Clientes' })
     expect(crmLink).toHaveAttribute('aria-current', 'page')
     expect(crmLink).toHaveClass('app-sidebar__item--active')

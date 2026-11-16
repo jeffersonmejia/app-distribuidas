@@ -34,7 +34,7 @@ function AccountingIcon() {
 function CustomersIcon() {
   return (
     <svg aria-hidden="true" fill="currentColor" viewBox="0 0 24 24">
-      <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 3s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" />
+      <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" />
     </svg>
   )
 }
@@ -47,10 +47,10 @@ function InventoryIcon() {
   )
 }
 
-function SalesIcon() {
+function ReceiptLongIcon() {
   return (
     <svg aria-hidden="true" fill="currentColor" viewBox="0 0 24 24">
-      <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z" />
+      <path d="M19.5 3.5 18 2l-1.5 1.5L15 2l-1.5 1.5L12 2l-1.5 1.5L9 2 7.5 3.5 6 2v20l1.5-1.5L9 22l1.5-1.5L12 22l1.5-1.5L15 22l1.5-1.5L18 22l1.5-1.5L21 22V2l-1.5 1.5zM19 19.09H5V4.91h14v14.18zM7 7h10v2H7V7zm0 4h10v2H7v-2zm0 4h7v2H7v-2z" />
     </svg>
   )
 }
@@ -84,11 +84,18 @@ export const SIDEBAR_NAV_ITEMS: NavItemConfig[] = [
   { path: '/accounting', label: 'Contabilidad', icon: AccountingIcon },
   { path: '/crm', label: 'Clientes', icon: CustomersIcon },
   { path: '/inventory', label: 'Inventario', icon: InventoryIcon },
-  { path: '/pos', label: 'Ventas', icon: SalesIcon },
+  { path: '/pos', label: 'Ventas', icon: ReceiptLongIcon },
   { path: '/projects', label: 'Proyectos', icon: ProjectsIcon },
   { path: '/marketing', label: 'Marketing', icon: MarketingIcon },
   { path: '/settings', label: 'Configuración', icon: SettingsIcon },
 ]
+
+export function isSidebarItemActive(itemPath: string, currentPath: string): boolean {
+  if (itemPath === '/') {
+    return currentPath === '/'
+  }
+  return currentPath === itemPath || currentPath.startsWith(itemPath + '/')
+}
 
 export function Sidebar({ currentPath, footer }: SidebarProps) {
   return (
@@ -106,10 +113,10 @@ export function Sidebar({ currentPath, footer }: SidebarProps) {
             fill="none"
             aria-hidden="true"
           >
-            <rect width="20" height="20" x="2" y="2" rx="6" fill="currentColor" />
+            <rect width="20" height="20" x="2" y="2" rx="6" fill="var(--brand)" />
             <path
               d="M7 12h10M12 7v10"
-              stroke="white"
+              stroke="var(--text-on-brand)"
               strokeWidth="2.2"
               strokeLinecap="round"
             />
@@ -118,7 +125,7 @@ export function Sidebar({ currentPath, footer }: SidebarProps) {
 
         <nav className="app-sidebar__nav" aria-label="Módulos del sistema">
           {SIDEBAR_NAV_ITEMS.map((item) => {
-            const isActive = currentPath === item.path
+            const isActive = isSidebarItemActive(item.path, currentPath)
             return (
               <Link
                 key={item.path}
