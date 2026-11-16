@@ -8,7 +8,7 @@ issue:
 **Feature:** Contabilidad **Responsable:** @EMLarco **Rutas:** backend/src/main/java/com/erp/features/accounting/, backend/src/main/resources/db/migration/, backend/src/test/java/com/erp/features/accounting/ **Dependencias:** ACC-001, TEN-001, POS-002 **Fecha objetivo:** 2026-11-20
 ## Alcance Registrar los asientos de venta según las reglas aprobadas en `docs/tasks/ACC-002.md`.
 ## Criterios de aceptación - [ ] Usar USD y dos decimales; mostrar miles con coma y decimales con punto. - [ ] Usar Caja/Bancos, Ventas e Impuestos por pagar sin códigos contables. - [ ] Debitar el total cobrado, acreditar ventas netas e impuesto por línea recibido de POS. - [ ] Una venta genera un asiento por `(tenant_id, sale_id)`; devoluciones/cancelaciones generan reverso sin borrar el original. - [ ] Operaciones tenant-scoped son idempotentes y transaccionales; migraciones y verificaciones cubren rollback y aislamiento.
-## Bloqueo actual Bloqueada por POS-002 (@BruceRodri), pendiente del contrato de venta con identificador estable e impuesto por línea. Las decisiones contables ya están aprobadas.
+## Estado Sin bloqueos: POS-002 completada por Bruce. ACC-002 queda lista para ejecución; las decisiones contables están aprobadas.
 ## Especificación de lógica [Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/ACC-002.md)."
   state: open
   assignees:
@@ -20,13 +20,13 @@ issue:
 project:
   Repository: jeffersonmejia/app-distribuidas
   Title: "[ACC-002] Implementar registro contable"
-  Status: Blocked
-  Estado: Blocked
+  Status: Todo
+  Estado: Todo
   Prioridad: Media
   Área: Contabilidad
   Identificador de tarea: ACC-002
   Fecha objetivo: '2026-11-20'
-  Bloqueado por: "@BruceRodri (POS-002)"
+  Bloqueado por: Nadie
 planning:
   area: Contabilidad
   assignee: EMLarco
@@ -40,11 +40,10 @@ planning:
   - TEN-001
   - POS-002
   targetDate: '2026-11-20'
-  state: Blocked
+  state: Todo
   priority: Media
-  blocked_by:
-  - POS-002
-  description: "Implementar el asiento de venta con reglas contables aprobadas; depende del contrato POS con sale_id e impuesto por línea."
+  blocked_by: []
+  description: "Implementar el asiento de venta con reglas contables aprobadas y el contrato POS-002 disponible."
   acceptanceCriteria:
   - Reglas y precisión monetaria coinciden con la decisión aprobada.
   - Registros tienen tenant_id y constraints tenant-scoped.
