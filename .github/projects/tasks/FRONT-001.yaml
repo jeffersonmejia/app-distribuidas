@@ -50,7 +50,7 @@ issue:
     ## Especificación de lógica
 
     [Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/FRONT-001.md).'
-  state: open
+  state: closed
   assignees:
   - Dayanarablb
   labels:
@@ -59,7 +59,7 @@ issue:
 project:
   Repository: jeffersonmejia/app-distribuidas
   Title: '[FRONT-001] Implementar sistema de diseño global'
-  Status: In Progress
+  Status: Done
   Estado: In Progress
   Prioridad: Alta
   Área: Frontend
