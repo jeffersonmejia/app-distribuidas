@@ -1,0 +1,13 @@
+.git
+.github
+.idea
+.vscode
+**/node_modules
+**/target
+**/dist
+**/coverage
+**/.env
+**/*.tfstate*
+**/.terraform
+**/*.tfvars
+**/*.plan

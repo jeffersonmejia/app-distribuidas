@@ -4,6 +4,7 @@ on:
   pull_request_target:
     branches:
       - develop
+      - main
     types:
       - opened
       - reopened
@@ -73,7 +74,7 @@ jobs:
               if (context.eventName === 'push') {
                 const pusher = context.payload.sender.login;
                 if (pusher.toLowerCase() !== responsible.toLowerCase()) {
-                  core.setFailed(`@${pusher}: mi push no se procesó porque la rama ${branch} corresponde a @${responsible}.`);
+                  core.info(`Omito abrir un PR desde @${pusher}: la rama ${branch} pertenece a @${responsible}. Los PR existentes siguen su curso.`);
                   continue;
                 }
               } else {
@@ -108,8 +109,8 @@ jobs:
                 repo: context.repo.repo,
                 head: `${context.repo.owner}:${branch}`,
                 base: 'develop',
-                title: `Integrar ${branch} en develop`,
-                body: `@${responsible} Subí mi cambio desde mi rama y solicito integrarlo en develop. Se integrará automáticamente cuando pasen los checks requeridos y no haya conflictos. Si algo falla, corregiré el problema y actualizaré el PR.`,
+                title: `chore: integra ${branch} en develop`,
+                body: `chore: integra ${branch} en develop\n\n@${responsible} Se subieron cambios desde la rama ${branch} y se solicita integrarlos en develop. La integración será automática cuando pasen los checks requeridos y no haya conflictos. Si algún check falla o hay conflictos, el responsable deberá corregirlos y actualizar el PR.`,
                 maintainer_can_modify: true,
               });
               await github.rest.issues.addAssignees({
@@ -123,7 +124,7 @@ jobs:
 
   integrate:
     name: Queue eligible pull request
-    if: github.event_name != 'push' || github.ref_name == 'develop'
+    if: (github.event_name != 'push' || github.ref_name == 'develop') && (github.event_name != 'pull_request_target' || github.event.pull_request.base.ref == 'develop')
     runs-on: ubuntu-latest
     steps:
       - name: Create GitHub App token
@@ -135,10 +136,11 @@ jobs:
           owner: ${{ github.repository_owner }}
           repositories: app-distribuidas
           permission-checks: read
-          permission-contents: read
+          permission-contents: write
           permission-issues: write
           permission-pull-requests: write
           permission-statuses: read
+          permission-workflows: write
       - name: Enable automatic merge or report blockers
         uses: actions/github-script@v7
         with:
@@ -209,7 +211,7 @@ jobs:
                     owner: context.repo.owner,
                     repo: context.repo.repo,
                     comment_id: automationComment.id,
-                    body: `${marker}\n@${responsible} Mi cambio se integró automáticamente en develop.`,
+                    body: `${marker}\n@${responsible} Los cambios de la rama ${pr.head.ref} se integraron automáticamente en develop.`,
                   });
                 }
                 continue;
@@ -218,6 +220,33 @@ jobs:
               if (pr.state !== 'open') continue;
 
               if (pr.draft) continue;
+
+              if (pr.mergeable_state === 'behind') {
+                await github.rest.pulls.updateBranch({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  pull_number: pr.number,
+                  expected_head_sha: pr.head.sha,
+                });
+                const body = `${marker}\n@${responsible} La rama ${pr.head.ref} estaba atrasada respecto a develop. Se solicitó su actualización automática; GitHub volverá a ejecutar los checks con la rama actualizada antes de integrarla.`;
+                if (automationComment) {
+                  await github.rest.issues.updateComment({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    comment_id: automationComment.id,
+                    body,
+                  });
+                } else {
+                  await github.rest.issues.createComment({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: pr.number,
+                    body,
+                  });
+                }
+                core.info(`Solicitada la actualización automática de la rama del PR #${pr.number}; se esperarán los checks del nuevo commit.`);
+                continue;
+              }
 
               const checkRuns = await github.rest.checks.listForRef({
                 owner: context.repo.owner,
@@ -252,7 +281,7 @@ jobs:
               }
 
               if (blockers.length > 0) {
-                const body = `${marker}\n@${responsible} No pude integrar mi cambio: fallaron ${[...new Set(blockers)].map((name) => `\`${name}\``).join(', ')}. Voy a corregir el problema y actualizar el PR; la integración se reintentará automáticamente.`;
+                const body = `${marker}\n@${responsible} No se pudo integrar el cambio: fallaron ${[...new Set(blockers)].map((name) => `\`${name}\``).join(', ')}. El responsable debe corregir los problemas y actualizar el PR; la integración se reintentará automáticamente.`;
                 if (automationComment) {
                   await github.rest.issues.updateComment({
                     owner: context.repo.owner,
@@ -272,16 +301,17 @@ jobs:
               }
 
               const nodeId = pr.node_id;
+              const mergeMethod = 'SQUASH';
               await github.graphql(
-                `mutation($pullRequestId: ID!) {
+                `mutation($pullRequestId: ID!, $mergeMethod: PullRequestMergeMethod!) {
                   enablePullRequestAutoMerge(input: {
                     pullRequestId: $pullRequestId,
-                    mergeMethod: SQUASH
+                    mergeMethod: $mergeMethod
                   }) {
                     pullRequest { id }
                   }
                 }`,
-                { pullRequestId: nodeId },
+                { pullRequestId: nodeId, mergeMethod },
               );
 
               if (automationComment) {
@@ -289,7 +319,119 @@ jobs:
                   owner: context.repo.owner,
                   repo: context.repo.repo,
                   comment_id: automationComment.id,
-                  body: `${marker}\n@${responsible} Ya corregí los bloqueos de mi PR. GitHub lo dejó en cola para integrarse automáticamente cuando pasen todos los checks requeridos y no haya conflictos.`,
+                  body: `${marker}\n@${responsible} Se corrigieron los bloqueos del PR. El PR quedó en cola para integrarse automáticamente cuando pasen todos los checks requeridos y no haya conflictos.`,
                 });
               }
             }
+
+  open-main-review-pr:
+    name: Open manual review pull request to main
+    if: github.event_name == 'push' && github.ref_name == 'develop'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@v3
+        with:
+          client-id: ${{ vars.AUTO_DEVELOP_APP_CLIENT_ID }}
+          private-key: ${{ secrets.AUTO_DEVELOP_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: app-distribuidas
+          permission-contents: read
+          permission-pull-requests: write
+      - name: Open pull request for manual review
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ steps.app-token.outputs.token }}
+          script: |
+            const open = await github.rest.pulls.list({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              base: 'main',
+              head: `${context.repo.owner}:develop`,
+              per_page: 1,
+            });
+
+            if (open.data.length > 0) {
+              core.info(`El PR #${open.data[0].number} ya reúne los cambios de develop para revisión manual.`);
+              return;
+            }
+
+            const comparison = await github.rest.repos.compareCommits({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              base: 'main',
+              head: 'develop',
+            });
+            if (comparison.data.ahead_by === 0 || comparison.data.files?.length === 0) {
+              core.info('No hay cambios de archivos para promover de develop a main; no se abrirá un PR vacío.');
+              return;
+            }
+
+            const pullRequest = await github.rest.pulls.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              head: 'develop',
+              base: 'main',
+              title: 'chore: promueve cambios de develop a main',
+              body: 'chore: promueve cambios de develop a main\n\nSe promueven a main los cambios integrados en develop. Se solicita una revisión manual antes de completar la promoción; este PR no se fusiona automáticamente.',
+              maintainer_can_modify: true,
+            });
+            core.info(`PR #${pullRequest.data.number} abierto para revisión manual; no se activará auto-merge.`);
+
+  open-develop-reconciliation-pr:
+    name: Open automatic history sync pull request to develop
+    if: github.event_name == 'pull_request_target' && github.event.action == 'closed' && github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@v3
+        with:
+          client-id: ${{ vars.AUTO_DEVELOP_APP_CLIENT_ID }}
+          private-key: ${{ secrets.AUTO_DEVELOP_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: app-distribuidas
+          permission-contents: read
+          permission-pull-requests: write
+      - name: Open synchronization pull request
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ steps.app-token.outputs.token }}
+          script: |
+            const open = await github.rest.pulls.list({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              base: 'develop',
+              head: `${context.repo.owner}:main`,
+              per_page: 1,
+            });
+
+            if (open.data.length > 0) {
+              core.info(`El PR #${open.data[0].number} ya sincroniza main con develop.`);
+              return;
+            }
+
+            const comparison = await github.rest.repos.compareCommits({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              base: 'develop',
+              head: 'main',
+            });
+            if (comparison.data.ahead_by === 0 || comparison.data.files?.length === 0) {
+              core.info('main no tiene cambios de archivos o commits que sincronizar en develop.');
+              return;
+            }
+
+            const pullRequest = await github.rest.pulls.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              head: 'main',
+              base: 'develop',
+              title: 'chore: sincroniza develop con main',
+              body: 'chore: sincroniza develop con main\n\nSe sincroniza el historial de main en develop después de una promoción aprobada. El PR se integrará automáticamente cuando pasen los checks requeridos y no existan conflictos.',
+              maintainer_can_modify: true,
+            });
+            core.info(`PR #${pullRequest.data.number} abierto para sincronizar main con develop; los checks decidirán su integración automática.`);

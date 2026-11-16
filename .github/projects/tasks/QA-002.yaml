@@ -37,7 +37,13 @@ issue:
 
     - Dependencias: Ninguna
 
-    - Fecha de completado: 2026-11-12'
+    - Fecha de completado: 2026-11-12
+
+
+    ## Instructivo de tarea
+
+
+    Consulta [`docs/tasks/QA-002.md`](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/QA-002.md) para objetivo, alcance y criterios de aceptación.'
   state: closed
   assignees:
   - jeffersonmejia
@@ -55,6 +61,7 @@ project:
   Identificador de tarea: QA-002
   Fecha de completado: '2026-11-12'
   Fecha objetivo: '2026-11-22'
+  Bloqueado por: Nadie
 planning:
   acceptanceCriteria:
   - Springdoc y Swagger UI están declarados como dependencias del backend.
@@ -65,6 +72,7 @@ planning:
   - backend/src/main/resources/application.properties
   - backend/src/main/resources/application-dev.properties
   - docs/prueba-apis.md
+  - docs/tasks/QA-002.md
   priority: Media
   assignmentNote: null
   assignee: jeffersonmejia

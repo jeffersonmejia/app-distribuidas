@@ -1,5 +1,7 @@
+import LoginPage from './features/identity/pages/LoginPage'
+
 function App() {
-  return <main id="app-shell" />
+  return <LoginPage />
 }
 
 export default App

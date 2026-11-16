@@ -2,6 +2,9 @@
   "name": "erp-crm-tooling",
   "private": true,
   "description": "Herramientas compartidas de desarrollo del repositorio ERP-CRM",
+  "scripts": {
+    "test:commitlint": "node --test commitlint.config.test.cjs"
+  },
   "devDependencies": {
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1"

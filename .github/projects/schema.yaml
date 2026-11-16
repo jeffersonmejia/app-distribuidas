@@ -1,5 +1,5 @@
 version: 1
-refreshed_at: '2026-11-13T21:22:45+00:00'
+refreshed_at: '2026-11-15T20:24:03+00:00'
 project:
   id: PVT_kwHOBAk3Fs4BrVCX
   number: 5
@@ -133,6 +133,10 @@ fields:
   id: PVTF_lAHOBAk3Fs4BrVCXzhpoev8
   name: Fecha de completado
   dataType: DATE
+- __typename: ProjectV2Field
+  id: PVTF_lAHOBAk3Fs4BrVCXzhp4JGQ
+  name: Bloqueado por
+  dataType: TEXT
 items:
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIMDTE
   content:
@@ -171,7 +175,13 @@ items:
 
       - Rutas: backend/, docs/arquitectura.md
 
-      - Dependencias: Ninguna'
+      - Dependencias: Ninguna
+
+
+      ## Instructivo de tarea
+
+
+      Consulta [`docs/tasks/ARC-001.md`](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/ARC-001.md) para objetivo, alcance y criterios de aceptación.'
     state: CLOSED
     url: https://github.com/jeffersonmejia/app-distribuidas/issues/1
     repository:
@@ -204,6 +214,8 @@ items:
     value: '2026-11-22'
   - fieldName: Fecha de completado
     value: '2026-11-12'
+  - fieldName: Bloqueado por
+    value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIMDy8
   content:
     __typename: Issue
@@ -241,7 +253,13 @@ items:
 
       - Rutas: docs/multitenancy.md
 
-      - Dependencias: Ninguna'
+      - Dependencias: Ninguna
+
+
+      ## Instructivo de tarea
+
+
+      Consulta [`docs/tasks/ARC-002.md`](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/ARC-002.md) para objetivo, alcance y criterios de aceptación.'
     state: CLOSED
     url: https://github.com/jeffersonmejia/app-distribuidas/issues/2
     repository:
@@ -277,6 +295,8 @@ items:
     value: '2026-11-22'
   - fieldName: Fecha de completado
     value: '2026-11-12'
+  - fieldName: Bloqueado por
+    value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIMEbc
   content:
     __typename: Issue
@@ -308,7 +328,7 @@ items:
 
       - Prioridad: Alta
 
-      - Estado: Pendiente
+      - Estado: En progreso
 
       - Responsable: @Dayanarablb
 
@@ -316,7 +336,19 @@ items:
 
       - Rutas: frontend/src/theme/, frontend/src/components/
 
-      - Dependencias: Ninguna'
+      - Dependencias: Ninguna
+
+
+      ## Avance verificado
+
+      - Los tokens y componentes reutilizables con pruebas se integraron a develop mediante el PR #97.
+
+      - Falta completar o evidenciar estilos responsivos para distintos tamaños de pantalla.
+
+
+      ## Especificación de lógica
+
+      [Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/FRONT-001.md).'
     state: OPEN
     url: https://github.com/jeffersonmejia/app-distribuidas/issues/3
     repository:
@@ -336,9 +368,9 @@ items:
   - fieldName: Title
     value: '[FRONT-001] Implementar sistema de diseño global'
   - fieldName: Status
-    value: Todo
+    value: In Progress
   - fieldName: Estado
-    value: Todo
+    value: In Progress
   - fieldName: Prioridad
     value: Alta
   - fieldName: Área
@@ -347,6 +379,8 @@ items:
     value: FRONT-001
   - fieldName: Fecha objetivo
     value: '2026-11-14'
+  - fieldName: Bloqueado por
+    value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIMGp8
   content:
     __typename: Issue
@@ -389,8 +423,19 @@ items:
 
       ## Estado
 
-      Lista para ejecución; sus dependencias están resueltas.'
-    state: OPEN
+      Lista para ejecución; sus dependencias están resueltas.
+
+
+      ## Especificación de lógica
+
+      [Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/crm/requerimientos.md).
+
+
+      ## Instructivo de tarea
+
+
+      Consulta [`docs/tasks/CRM-001.md`](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/CRM-001.md) para objetivo, alcance y criterios de aceptación.'
+    state: CLOSED
     url: https://github.com/jeffersonmejia/app-distribuidas/issues/4
     repository:
       nameWithOwner: jeffersonmejia/app-distribuidas
@@ -415,9 +460,9 @@ items:
   - fieldName: Title
     value: '[CRM-001] Implementar gestión inicial de clientes'
   - fieldName: Status
-    value: Todo
+    value: Done
   - fieldName: Estado
-    value: Todo
+    value: Done
   - fieldName: Prioridad
     value: Alta
   - fieldName: Área
@@ -426,6 +471,8 @@ items:
     value: CRM-001
   - fieldName: Fecha objetivo
     value: '2026-11-18'
+  - fieldName: Bloqueado por
+    value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIMHjE
   content:
     __typename: Issue
@@ -468,8 +515,13 @@ items:
 
       ## Estado
 
-      Lista para ejecución; sus dependencias están resueltas.'
-    state: OPEN
+      Lista para ejecución; sus dependencias están resueltas.
+
+
+      ## Especificación de lógica
+
+      [Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/INV-001.md).'
+    state: CLOSED
     url: https://github.com/jeffersonmejia/app-distribuidas/issues/5
     repository:
       nameWithOwner: jeffersonmejia/app-distribuidas
@@ -494,9 +546,9 @@ items:
   - fieldName: Title
     value: '[INV-001] Implementar catálogo y existencias'
   - fieldName: Status
-    value: Todo
+    value: Done
   - fieldName: Estado
-    value: Todo
+    value: Done
   - fieldName: Prioridad
     value: Alta
   - fieldName: Área
@@ -505,6 +557,8 @@ items:
     value: INV-001
   - fieldName: Fecha objetivo
     value: '2026-11-18'
+  - fieldName: Bloqueado por
+    value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIMIVs
   content:
     __typename: Issue
@@ -534,7 +588,7 @@ items:
 
       - Prioridad: Alta
 
-      - Estado: Pendiente
+      - Estado: Completada
 
       - Responsable: @Sahid-B
 
@@ -542,8 +596,13 @@ items:
 
       - Rutas: backend/.../features/inventory/, backend/.../features/pos/ (coordinación)
 
-      - Dependencias: Ninguna'
-    state: OPEN
+      - Dependencias: Ninguna
+
+
+      ## Especificación de lógica
+
+      [Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/INV-002.md).'
+    state: CLOSED
     url: https://github.com/jeffersonmejia/app-distribuidas/issues/6
     repository:
       nameWithOwner: jeffersonmejia/app-distribuidas
@@ -568,9 +627,9 @@ items:
   - fieldName: Title
     value: '[INV-002] Definir contrato de movimientos de inventario'
   - fieldName: Status
-    value: In Progress
+    value: Done
   - fieldName: Estado
-    value: Todo
+    value: Done
   - fieldName: Prioridad
     value: Alta
   - fieldName: Área
@@ -578,7 +637,9 @@ items:
   - fieldName: Identificador de tarea
     value: INV-002
   - fieldName: Fecha objetivo
-    value: '2026-11-14'
+    value: '2026-11-13'
+  - fieldName: Bloqueado por
+    value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIMJeY
   content:
     __typename: Issue
@@ -610,7 +671,7 @@ items:
 
       - Prioridad: Alta
 
-      - Estado: Bloqueado
+      - Estado: Todo
 
       - Responsable: @Dayanarablb
 
@@ -620,7 +681,12 @@ items:
 
       - Dependencias: FRONT-001
 
-      - Bloqueo actual: FRONT-001 sigue pendiente; este layout no está implementado.'
+      - Preparación: tokens y componentes base de FRONT-001 ya se integraron en el PR #97. Puede iniciar layout, navegación y rutas en frontend/src/app/ mientras FRONT-001 completa sus estilos responsivos; el layout debe validar sus propios tamaños de pantalla.
+
+
+      ## Especificación de lógica
+
+      [Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/FRONT-002.md).'
     state: OPEN
     url: https://github.com/jeffersonmejia/app-distribuidas/issues/7
     repository:
@@ -642,7 +708,7 @@ items:
   - fieldName: Status
     value: Blocked
   - fieldName: Estado
-    value: Blocked
+    value: Todo
   - fieldName: Prioridad
     value: Alta
   - fieldName: Área
@@ -651,6 +717,8 @@ items:
     value: FRONT-002
   - fieldName: Fecha objetivo
     value: '2026-11-16'
+  - fieldName: Bloqueado por
+    value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIMKTA
   content:
     __typename: Issue
@@ -680,7 +748,7 @@ items:
 
       - Prioridad: Alta
 
-      - Estado: Pendiente
+      - Estado: Completado
 
       - Responsable: @EMLarco
 
@@ -688,8 +756,19 @@ items:
 
       - Rutas: backend/.../features/accounting/
 
-      - Dependencias: Ninguna'
-    state: OPEN
+      - Dependencias: Ninguna
+
+
+      ## Estado
+
+      Completada; el Issue está cerrado y el Project registra Done. Los detalles de reglas y precisión monetaria deben localizarse/aprobarse antes de implementar ACC-002.
+
+
+      ## Instructivo de tarea
+
+
+      Consulta [`docs/tasks/ACC-001.md`](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/ACC-001.md) para objetivo, alcance y criterios de aceptación.'
+    state: CLOSED
     url: https://github.com/jeffersonmejia/app-distribuidas/issues/8
     repository:
       nameWithOwner: jeffersonmejia/app-distribuidas
@@ -714,9 +793,9 @@ items:
   - fieldName: Title
     value: '[ACC-001] Diseñar módulo contable inicial'
   - fieldName: Status
-    value: Todo
+    value: Done
   - fieldName: Estado
-    value: Todo
+    value: Done
   - fieldName: Prioridad
     value: Alta
   - fieldName: Área
@@ -725,50 +804,17 @@ items:
     value: ACC-001
   - fieldName: Fecha objetivo
     value: '2026-11-14'
+  - fieldName: Bloqueado por
+    value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIMLNc
   content:
     __typename: Issue
     id: I_kwDOVrRmwc8AAAABeq7qzA
     number: 9
     title: '[PROJ-001] Implementar gestión básica de proyectos'
-    body: '<!-- managed-task-id: PROJ-001 -->
-
-
-      ## Descripción
-
-      Diseñar proyectos, tareas y estados, preparar los casos de uso e incorporar pruebas unitarias.
-
-
-      ## Criterios de aceptación
-
-      - Proyectos, tareas y estados tienen un diseño inicial.
-
-      - Los casos de uso acordados están preparados.
-
-      - Hay pruebas unitarias para los casos implementados.
-
-
-      ## Gestión
-
-      - Área: Proyectos
-
-      - Prioridad: Media
-
-      - Estado: Pendiente
-
-      - Responsable: @EMLarco
-
-      - Rama: Esteban
-
-      - Rutas: backend/.../features/projects/
-
-      - Dependencias: Ninguna
-
-
-      ## Estado
-
-      Lista para ejecución; sus dependencias están resueltas.'
-    state: OPEN
+    body: '<!-- managed-task-id: PROJ-001 --> ## Descripción Implementar gestión tenant-scoped de proyectos y tareas con las reglas aprobadas. ## Criterios de aceptación - El nombre del proyecto y el título de cada tarea son obligatorios; demás campos aprobados son opcionales. - Cada tarea pertenece a un solo proyecto; prioridad opcional Alta/Media/Baja. - Estados Pendiente, En progreso, Bloqueada y Completada cumplen las transiciones aprobadas; Completada puede reabrirse como En progreso. - CRUD requiere permiso explícito por tenant y operación; no hay permisos por defecto ni roles implícitos. - Borrado lógico restaurable, sin purga automática; purga permanente manual con permiso explícito. - Persistencia y consultas respetan tenant_id, RLS, restricciones y paginación máxima 5. ## Gestión - Área: Proyectos - Prioridad: Media - Estado: Todo - Responsable: @EMLarco - Rama: Esteban - Rutas: backend/src/main/java/com/erp/features/projects/, backend/src/main/resources/db/migration/, backend/src/test/java/com/erp/features/projects/
+      - Dependencias: Ninguna ## Especificación de lógica [Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/PROJ-001.md). ## Bloqueo actual Ninguno. Las decisiones de alcance están aprobadas.'
+    state: CLOSED
     url: https://github.com/jeffersonmejia/app-distribuidas/issues/9
     repository:
       nameWithOwner: jeffersonmejia/app-distribuidas
@@ -793,9 +839,9 @@ items:
   - fieldName: Title
     value: '[PROJ-001] Implementar gestión básica de proyectos'
   - fieldName: Status
-    value: Todo
+    value: Done
   - fieldName: Estado
-    value: Todo
+    value: Done
   - fieldName: Prioridad
     value: Media
   - fieldName: Área
@@ -804,6 +850,8 @@ items:
     value: PROJ-001
   - fieldName: Fecha objetivo
     value: '2026-11-19'
+  - fieldName: Bloqueado por
+    value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIML7M
   content:
     __typename: Issue
@@ -847,7 +895,13 @@ items:
 
       - Dependencias: ARC-001, ARC-002
 
-      - Fecha de completado: 2026-11-12'
+      - Fecha de completado: 2026-11-12
+
+
+      ## Instructivo de tarea
+
+
+      Consulta [`docs/tasks/QUALITY-001.md`](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/QUALITY-001.md) para objetivo, alcance y criterios de aceptación.'
     state: CLOSED
     url: https://github.com/jeffersonmejia/app-distribuidas/issues/10
     repository:
@@ -883,6 +937,8 @@ items:
     value: '2026-11-22'
   - fieldName: Fecha de completado
     value: '2026-11-12'
+  - fieldName: Bloqueado por
+    value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIMMbQ
   content:
     __typename: Issue
@@ -920,7 +976,13 @@ items:
 
       - Rutas: backend/.../features/marketing/
 
-      - Dependencias: CRM-001'
+      - Dependencias: CRM-001
+
+
+      ## Instructivo de tarea
+
+
+      Consulta [`docs/tasks/MKT-001.md`](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/MKT-001.md) para objetivo, alcance y criterios de aceptación.'
     state: CLOSED
     url: https://github.com/jeffersonmejia/app-distribuidas/issues/11
     repository:
@@ -956,6 +1018,8 @@ items:
     value: '2026-11-22'
   - fieldName: Fecha de completado
     value: '2026-11-13'
+  - fieldName: Bloqueado por
+    value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIMM-s
   content:
     __typename: Issue
@@ -993,7 +1057,13 @@ items:
 
       - Rutas: backend/.../features/pos/
 
-      - Dependencias: INV-002'
+      - Dependencias: INV-002
+
+
+      ## Instructivo de tarea
+
+
+      Consulta [`docs/tasks/POS-001.md`](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/POS-001.md) para objetivo, alcance y criterios de aceptación.'
     state: CLOSED
     url: https://github.com/jeffersonmejia/app-distribuidas/issues/12
     repository:
@@ -1032,6 +1102,8 @@ items:
     value: '2026-11-22'
   - fieldName: Fecha de completado
     value: '2026-11-13'
+  - fieldName: Bloqueado por
+    value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIMNrY
   content:
     __typename: Issue
@@ -1079,7 +1151,13 @@ items:
 
       - Rutas: docs/testing.md
 
-      - Dependencias: Funcionalidades implementadas por feature'
+      - Dependencias: Funcionalidades implementadas por feature
+
+
+      ## Instructivo de tarea
+
+
+      Consulta [`docs/tasks/QA-001.md`](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/QA-001.md) para objetivo, alcance y criterios de aceptación.'
     state: CLOSED
     url: https://github.com/jeffersonmejia/app-distribuidas/issues/13
     repository:
@@ -1112,6 +1190,8 @@ items:
     value: '2026-11-22'
   - fieldName: Fecha de completado
     value: '2026-11-12'
+  - fieldName: Bloqueado por
+    value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIMftA
   content:
     __typename: Issue
@@ -1151,7 +1231,13 @@ items:
 
       - Dependencias: Ninguna
 
-      - Fecha de completado: 2026-11-12'
+      - Fecha de completado: 2026-11-12
+
+
+      ## Instructivo de tarea
+
+
+      Consulta [`docs/tasks/CI-001.md`](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/CI-001.md) para objetivo, alcance y criterios de aceptación.'
     state: CLOSED
     url: https://github.com/jeffersonmejia/app-distribuidas/issues/14
     repository:
@@ -1184,6 +1270,8 @@ items:
     value: '2026-11-12'
   - fieldName: Fecha objetivo
     value: '2026-11-22'
+  - fieldName: Bloqueado por
+    value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIMgbo
   content:
     __typename: Issue
@@ -1223,7 +1311,13 @@ items:
 
       - Dependencias: Ninguna
 
-      - Fecha de completado: 2026-11-12'
+      - Fecha de completado: 2026-11-12
+
+
+      ## Instructivo de tarea
+
+
+      Consulta [`docs/tasks/APP-001.md`](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/APP-001.md) para objetivo, alcance y criterios de aceptación.'
     state: CLOSED
     url: https://github.com/jeffersonmejia/app-distribuidas/issues/15
     repository:
@@ -1256,6 +1350,8 @@ items:
     value: Media
   - fieldName: Fecha objetivo
     value: '2026-11-22'
+  - fieldName: Bloqueado por
+    value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIMgp4
   content:
     __typename: Issue
@@ -1295,7 +1391,13 @@ items:
 
       - Dependencias: Ninguna
 
-      - Fecha de completado: 2026-11-12'
+      - Fecha de completado: 2026-11-12
+
+
+      ## Instructivo de tarea
+
+
+      Consulta [`docs/tasks/OPS-001.md`](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/OPS-001.md) para objetivo, alcance y criterios de aceptación.'
     state: CLOSED
     url: https://github.com/jeffersonmejia/app-distribuidas/issues/16
     repository:
@@ -1328,6 +1430,8 @@ items:
     value: Media
   - fieldName: Fecha objetivo
     value: '2026-11-22'
+  - fieldName: Bloqueado por
+    value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIMg2M
   content:
     __typename: Issue
@@ -1367,7 +1471,13 @@ items:
 
       - Dependencias: Ninguna
 
-      - Fecha de completado: 2026-11-12'
+      - Fecha de completado: 2026-11-12
+
+
+      ## Instructivo de tarea
+
+
+      Consulta [`docs/tasks/PM-001.md`](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/PM-001.md) para objetivo, alcance y criterios de aceptación.'
     state: CLOSED
     url: https://github.com/jeffersonmejia/app-distribuidas/issues/17
     repository:
@@ -1400,6 +1510,8 @@ items:
     value: Alta
   - fieldName: Fecha objetivo
     value: '2026-11-22'
+  - fieldName: Bloqueado por
+    value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIMhGU
   content:
     __typename: Issue
@@ -1439,7 +1551,13 @@ items:
 
       - Dependencias: Ninguna
 
-      - Fecha de completado: 2026-11-12'
+      - Fecha de completado: 2026-11-12
+
+
+      ## Instructivo de tarea
+
+
+      Consulta [`docs/tasks/GOV-001.md`](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/GOV-001.md) para objetivo, alcance y criterios de aceptación.'
     state: CLOSED
     url: https://github.com/jeffersonmejia/app-distribuidas/issues/18
     repository:
@@ -1469,6 +1587,8 @@ items:
     value: Media
   - fieldName: Fecha objetivo
     value: '2026-11-22'
+  - fieldName: Bloqueado por
+    value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhINwQw
   content:
     __typename: Issue
@@ -1508,7 +1628,13 @@ items:
 
       - Dependencias: Ninguna
 
-      - Fecha de completado: 2026-11-12'
+      - Fecha de completado: 2026-11-12
+
+
+      ## Instructivo de tarea
+
+
+      Consulta [`docs/tasks/QA-002.md`](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/QA-002.md) para objetivo, alcance y criterios de aceptación.'
     state: CLOSED
     url: https://github.com/jeffersonmejia/app-distribuidas/issues/19
     repository:
@@ -1544,6 +1670,8 @@ items:
     value: '2026-11-12'
   - fieldName: Fecha objetivo
     value: '2026-11-22'
+  - fieldName: Bloqueado por
+    value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIOYZU
   content:
     __typename: Issue
@@ -1581,7 +1709,13 @@ items:
 
       - Dependencias: Ninguna
 
-      - Fecha de completado: 2026-11-12'
+      - Fecha de completado: 2026-11-12
+
+
+      ## Instructivo de tarea
+
+
+      Consulta [`docs/tasks/WIKI-001.md`](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/WIKI-001.md) para objetivo, alcance y criterios de aceptación.'
     state: CLOSED
     url: https://github.com/jeffersonmejia/app-distribuidas/issues/21
     repository:
@@ -1611,6 +1745,8 @@ items:
     value: '2026-11-12'
   - fieldName: Fecha objetivo
     value: '2026-11-22'
+  - fieldName: Bloqueado por
+    value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIOgt4
   content:
     __typename: PullRequest
@@ -1625,6 +1761,10 @@ items:
     value: Done
   - fieldName: Prioridad
     value: Media
+  - fieldName: Fecha objetivo
+    value: '2026-11-12'
+  - fieldName: Bloqueado por
+    value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIOg6M
   content:
     __typename: PullRequest
@@ -1639,6 +1779,10 @@ items:
     value: Done
   - fieldName: Prioridad
     value: Media
+  - fieldName: Fecha objetivo
+    value: '2026-11-12'
+  - fieldName: Bloqueado por
+    value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIOkxQ
   content:
     __typename: PullRequest
@@ -1653,13 +1797,17 @@ items:
     value: Done
   - fieldName: Prioridad
     value: Media
+  - fieldName: Fecha objetivo
+    value: '2026-11-11'
+  - fieldName: Bloqueado por
+    value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIVS-c
   content:
     __typename: Issue
     id: I_kwDOVrRmwc8AAAABe0dRQQ
     number: 26
     title: '[AUTH-001] Acordar autenticación y permisos del MVP'
-    body: "<!-- managed-task-id: AUTH-001 -->\n\n**Feature:** Multitenancy  \n**Responsable:** @jeffersonmejia  \n**Rutas:** docs/multitenancy.md, docs/autenticacion.md  \n**Dependencias:** ARC-002  \n**Fecha objetivo:** 2026-11-13\n\n## Alcance\nAcordar el contrato de autenticación y permisos aprobado para el MVP: JWT bearer, actor UUID, selector de tenant no confiable y permisos explícitos por membresía.\n\n## Criterios de aceptación\n- [x] Documentar mecanismo y ciclo de credenciales.\n- [x] Definir que no hay roles implícitos, permisos explícitos y selector tenant como dato no confiable.\n- [x] Especificar rechazos sin actor, membresía o permiso.\n- [x] No aceptar actor_id ni permisos del cliente como autorización."
+    body: "<!-- managed-task-id: AUTH-001 -->\n\n**Feature:** Multitenancy  \n**Responsable:** @jeffersonmejia  \n**Rutas:** docs/multitenancy.md, docs/autenticacion.md  \n**Dependencias:** ARC-002  \n**Fecha objetivo:** 2026-11-13\n\n## Alcance\nAcordar el contrato de autenticación y permisos aprobado para el MVP: JWT bearer, actor UUID, selector de tenant no confiable y permisos explícitos por membresía.\n\n## Criterios de aceptación\n- [x] Documentar mecanismo y ciclo de credenciales.\n- [x] Definir que no hay roles implícitos, permisos explícitos y selector tenant como dato no confiable.\n- [x] Especificar rechazos sin actor, membresía o permiso.\n- [x] No aceptar actor_id ni permisos del cliente como autorización.\n\n## Instructivo de tarea\n\nConsulta [`docs/tasks/AUTH-001.md`](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/AUTH-001.md) para objetivo, alcance y criterios de aceptación."
     state: CLOSED
     url: https://github.com/jeffersonmejia/app-distribuidas/issues/26
     repository:
@@ -1692,13 +1840,16 @@ items:
     value: '2026-11-13'
   - fieldName: Fecha de completado
     value: '2026-11-13'
+  - fieldName: Bloqueado por
+    value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIVS-4
   content:
     __typename: Issue
     id: I_kwDOVrRmwc8AAAABe0dSiw
     number: 27
     title: '[AUTH-002] Implementar identidad y autorización del backend'
-    body: "<!-- managed-task-id: AUTH-002 -->\n\n**Feature:** Multitenancy  \n**Responsable:** @jeffersonmejia  \n**Rutas:** backend/pom.xml, backend/src/main/java/com/erp/features/identity/, backend/src/test/java/com/erp/features/identity/  \n**Dependencias:** AUTH-001  \n**Fecha objetivo:** 2026-11-16\n\n## Alcance\nImplementar identidad autenticada y protección stateless del backend según el contrato JWT de AUTH-001.\n\n## Criterios de aceptación\n- [x] El actor proviene de credenciales validadas y de `sub` UUID.\n- [x] Las rutas privadas rechazan solicitudes no autenticadas; tenancy valida membresía/permisos antes de datos tenant-scoped.\n- [x] Credenciales y errores no aparecen en logs ni respuestas.\n- [x] Pruebas cubren acceso permitido, token ausente/inválido y validación de audiencia/actor."
+    body: "<!-- managed-task-id: AUTH-002 -->\n\n**Feature:** Multitenancy  \n**Responsable:** @jeffersonmejia  \n**Rutas:** backend/pom.xml, backend/src/main/java/com/erp/features/identity/, backend/src/test/java/com/erp/features/identity/  \n**Dependencias:** AUTH-001  \n**Fecha objetivo:** 2026-11-16\n\n## Alcance\nImplementar identidad autenticada y protección stateless del backend según el contrato JWT de AUTH-001.\n\n## Criterios de aceptación\n- [x] El actor proviene de credenciales validadas y de `sub` UUID.\n- [x] Las rutas privadas rechazan solicitudes no autenticadas; tenancy valida membresía/permisos antes de datos tenant-scoped.\n- [x] Credenciales y errores no aparecen en logs ni respuestas.\n- [x] Pruebas cubren acceso permitido, token ausente/inválido y validación de audiencia/actor.\n\n## Instructivo de tarea\n\nConsulta [`docs/tasks/AUTH-002.md`](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/AUTH-002.md) para objetivo, alcance y criterios\
+      \ de aceptación."
     state: CLOSED
     url: https://github.com/jeffersonmejia/app-distribuidas/issues/27
     repository:
@@ -1729,6 +1880,10 @@ items:
     value: AUTH-002
   - fieldName: Fecha objetivo
     value: '2026-11-16'
+  - fieldName: Bloqueado por
+    value: Nadie
+  - fieldName: Fecha de completado
+    value: '2026-11-13'
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIVS_M
   content:
     __typename: Issue
@@ -1736,7 +1891,7 @@ items:
     number: 28
     title: '[TEN-001] Implementar tenants, membresías y contexto por solicitud'
     body: "<!-- managed-task-id: TEN-001 -->\n\n**Feature:** Multitenancy  \n**Responsable:** @jeffersonmejia  \n**Rutas:** backend/src/main/java/com/erp/features/tenancy/, backend/src/main/resources/db/migration/, backend/src/test/java/com/erp/features/tenancy/, docs/multitenancy.md, docs/tenancy-operacion.md  \n**Dependencias:** AUTH-002  \n**Fecha objetivo:** 2026-11-17\n\n## Alcance\nImplementar ciclo tenant/membresía y contexto tenant/actor validado con persistencia Code First, RLS y migraciones. El tenant inicial y su primera membresía se provisionan operacionalmente; no hay alta pública.\n\n## Criterios de aceptación\n- [x] Validar membresía activa y permisos antes del acceso a datos.\n- [x] Propagar contexto explícito sin reutilizarlo entre solicitudes.\n- [x] Tablas tenant-scoped usan tenant_id NOT NULL y constraints tenant-scoped; tenant es una excepción global documentada.\n- [x] RLS falla cerrada; runtime no es superusuario, propietario de tablas ni BYPASSRLS.\n- [x] Pruebas\
-      \ PostgreSQL cubren acceso cruzado, falta de contexto, rollback y limpieza del contexto.\n\n## Verificación\n11 pruebas backend pasaron. PostgreSQL 16 aplicó la migración desde una base vacía; Hibernate validó el esquema."
+      \ PostgreSQL cubren acceso cruzado, falta de contexto, rollback y limpieza del contexto.\n\n## Verificación\n11 pruebas backend pasaron. PostgreSQL 16 aplicó la migración desde una base vacía; Hibernate validó el esquema.\n\n## Instructivo de tarea\n\nConsulta [`docs/tasks/TEN-001.md`](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/TEN-001.md) para objetivo, alcance y criterios de aceptación."
     state: CLOSED
     url: https://github.com/jeffersonmejia/app-distribuidas/issues/28
     repository:
@@ -1772,14 +1927,17 @@ items:
     value: '2026-11-17'
   - fieldName: Fecha de completado
     value: '2026-11-13'
+  - fieldName: Bloqueado por
+    value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIVS_k
   content:
     __typename: Issue
     id: I_kwDOVrRmwc8AAAABe0dVoQ
     number: 29
     title: '[INV-003] Implementar movimientos y disponibilidad de inventario'
-    body: "<!-- managed-task-id: INV-003 -->\n\n**Feature:** Inventario  \n**Responsable:** @Sahid-B  \n**Rutas:** backend/src/main/java/com/erp/features/inventory/, backend/src/main/resources/db/migration/, backend/src/test/java/com/erp/features/inventory/  \n**Dependencias:** TEN-001, INV-001, INV-002  \n**Fecha objetivo:** 2026-11-18\n\n## Alcance\nImplementar entradas, salidas, reservas y consulta de disponibilidad usando el contrato acordado y límites transaccionales explícitos.\n\n## Criterios de aceptación\n- [ ] Cada movimiento pertenece al tenant validado y conserva trazabilidad.\n- [ ] La actualización de existencias es transaccional y evita stock inconsistente.\n- [ ] POS consume API pública sin acceder a repositorios internos.\n- [ ] Migraciones y pruebas cubren disponibilidad, rollback y errores.\n\n## Bloqueo actual\nBloqueada por: INV-001 (@Sahid-B), INV-002 (@Sahid-B)."
-    state: OPEN
+    body: "<!-- managed-task-id: INV-003 -->\n\n**Feature:** Inventario  \n**Responsable:** @Sahid-B  \n**Rutas:** backend/src/main/java/com/erp/features/inventory/, backend/src/main/resources/db/migration/, backend/src/test/java/com/erp/features/inventory/  \n**Dependencias:** TEN-001, INV-001, INV-002  \n**Fecha objetivo:** 2026-11-18\n\n## Alcance\nImplementar entradas, salidas, reservas y consulta de disponibilidad usando el contrato acordado y límites transaccionales explícitos.\n\n## Criterios de aceptación\n- [x] Cada movimiento pertenece al tenant validado y conserva trazabilidad.\n- [x] La actualización de existencias es transaccional y evita stock inconsistente.\n- [x] POS consume API pública sin acceder a repositorios internos.\n- [x] Migraciones y pruebas cubren disponibilidad, rollback y errores.\n\n## Estado\nCompletada mediante el PR #108, integrado en `develop`. El workflow de calidad pasó; el PR reporta 87 pruebas backend aprobadas, incluidas 27 de Inventory, y 98,68 % de\
+      \ cobertura del módulo.\n\n## Especificación de lógica\n[Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/INV-003.md).\r\n"
+    state: CLOSED
     url: https://github.com/jeffersonmejia/app-distribuidas/issues/29
     repository:
       nameWithOwner: jeffersonmejia/app-distribuidas
@@ -1801,9 +1959,9 @@ items:
   - fieldName: Title
     value: '[INV-003] Implementar movimientos y disponibilidad de inventario'
   - fieldName: Status
-    value: Blocked
+    value: Done
   - fieldName: Estado
-    value: Blocked
+    value: Done
   - fieldName: Prioridad
     value: Alta
   - fieldName: Área
@@ -1812,13 +1970,18 @@ items:
     value: INV-003
   - fieldName: Fecha objetivo
     value: '2026-11-18'
+  - fieldName: Bloqueado por
+    value: Nadie
+  - fieldName: Fecha de completado
+    value: '2026-11-15'
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIVS_0
   content:
     __typename: Issue
     id: I_kwDOVrRmwc8AAAABe0dXIg
     number: 30
     title: '[POS-002] Implementar registro transaccional de ventas'
-    body: "<!-- managed-task-id: POS-002 -->\n\n**Feature:** POS  \n**Responsable:** @BruceRodri  \n**Rutas:** backend/src/main/java/com/erp/features/pos/, backend/src/test/java/com/erp/features/pos/  \n**Dependencias:** TEN-001, INV-003, POS-001  \n**Fecha objetivo:** 2026-11-19\n\n## Alcance\nImplementar flujo de venta del MVP y consumir el contrato de Inventory para validar y descontar existencias.\n\n## Criterios de aceptación\n- [ ] Validar tenant, datos y disponibilidad antes de confirmar.\n- [ ] Venta y movimiento de inventario respetan atomicidad.\n- [ ] No consultar tablas, entidades ni repositorios de Inventory.\n- [ ] Probar éxito, stock insuficiente, duplicidad y rollback.\n\n## Bloqueo actual\nBloqueada por: INV-003 (@Sahid-B)."
+    body: "<!-- managed-task-id: POS-002 -->\n\n**Feature:** POS  \n**Responsable:** @BruceRodri  \n**Rutas:** backend/src/main/java/com/erp/features/pos/, backend/src/test/java/com/erp/features/pos/  \n**Dependencias:** TEN-001, INV-003, POS-001  \n**Fecha objetivo:** 2026-11-19\n\n## Alcance\nImplementar flujo de venta del MVP y consumir el contrato de Inventory para validar y descontar existencias.\n\n## Criterios de aceptación\n- [ ] Validar tenant, datos y disponibilidad antes de confirmar.\n- [ ] Venta y movimiento de inventario respetan atomicidad.\n- [ ] No consultar tablas, entidades ni repositorios de Inventory.\n- [ ] Probar éxito, stock insuficiente, duplicidad y rollback.\n\n## Decisiones aprobadas\n- `saleId` es un UUID del cliente, único por tenant; reintento con mismo payload devuelve la venta y payload distinto con la misma clave se rechaza.\n- Cada línea incluye `productId`, `unit`, `quantity`, `unitPrice` e `taxAmount`; precio e impuesto son snapshots del request en USD\
+      \ y escala 2. El neto se redondea HALF_UP; POS entrega impuesto por línea a Accounting sin calcular tasas.\n- POS guarda la venta dentro del callback `InventoryMovements.issueAndExecute`, con PostgreSQL y `PlatformTransactionManager` compartidos.\n\n## Estado\nINV-003 está completada en el PR #108. POS-002 queda lista para ejecución.\n\n## Especificación de lógica\n[Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/POS-002.md)."
     state: OPEN
     url: https://github.com/jeffersonmejia/app-distribuidas/issues/30
     repository:
@@ -1841,9 +2004,9 @@ items:
   - fieldName: Title
     value: '[POS-002] Implementar registro transaccional de ventas'
   - fieldName: Status
-    value: Blocked
+    value: Todo
   - fieldName: Estado
-    value: Blocked
+    value: Todo
   - fieldName: Prioridad
     value: Alta
   - fieldName: Área
@@ -1852,13 +2015,16 @@ items:
     value: POS-002
   - fieldName: Fecha objetivo
     value: '2026-11-19'
+  - fieldName: Bloqueado por
+    value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIVTAE
   content:
     __typename: Issue
     id: I_kwDOVrRmwc8AAAABe0dYuw
     number: 31
-    title: '[ACC-002] Implementar registro contable del MVP'
-    body: "<!-- managed-task-id: ACC-002 -->\n\n**Feature:** Contabilidad  \n**Responsable:** @EMLarco  \n**Rutas:** backend/src/main/java/com/erp/features/accounting/, backend/src/main/resources/db/migration/, backend/src/test/java/com/erp/features/accounting/  \n**Dependencias:** ACC-001, TEN-001, POS-002  \n**Fecha objetivo:** 2026-11-20\n\n## Alcance\nImplementar únicamente las reglas aprobadas en ACC-001; no inventar precisión monetaria ni reglas de contabilización.\n\n## Criterios de aceptación\n- [ ] Reglas y precisión monetaria coinciden con la decisión aprobada.\n- [ ] Registros tienen tenant_id y constraints tenant-scoped.\n- [ ] Registro derivado de venta es idempotente y transaccional según contrato.\n- [ ] Migraciones y pruebas cubren balance, rollback y aislamiento.\n\n## Bloqueo actual\nBloqueada por: ACC-001 (@EMLarco), POS-002 (@BruceRodri)."
+    title: '[ACC-002] Implementar registro contable'
+    body: '<!-- managed-task-id: ACC-002 --> **Feature:** Contabilidad **Responsable:** @EMLarco **Rutas:** backend/src/main/java/com/erp/features/accounting/, backend/src/main/resources/db/migration/, backend/src/test/java/com/erp/features/accounting/ **Dependencias:** ACC-001, TEN-001, POS-002 **Fecha objetivo:** 2026-11-20 ## Alcance Registrar los asientos de venta según las reglas aprobadas en `docs/tasks/ACC-002.md`. ## Criterios de aceptación - [ ] Usar USD y dos decimales; mostrar miles con coma y decimales con punto. - [ ] Usar Caja/Bancos, Ventas e Impuestos por pagar sin códigos contables. - [ ] Debitar el total cobrado, acreditar ventas netas e impuesto por línea recibido de POS. - [ ] Una venta genera un asiento por `(tenant_id, sale_id)`; devoluciones/cancelaciones generan reverso sin borrar el original. - [ ] Operaciones tenant-scoped son idempotentes y transaccionales; migraciones y verificaciones cubren rollback y aislamiento. ## Bloqueo actual Bloqueada por POS-002 (@BruceRodri),
+      pendiente del contrato de venta con identificador estable e impuesto por línea. Las decisiones contables ya están aprobadas. ## Especificación de lógica [Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/ACC-002.md).'
     state: OPEN
     url: https://github.com/jeffersonmejia/app-distribuidas/issues/31
     repository:
@@ -1879,7 +2045,7 @@ items:
   - fieldName: Repository
     value: jeffersonmejia/app-distribuidas
   - fieldName: Title
-    value: '[ACC-002] Implementar registro contable del MVP'
+    value: '[ACC-002] Implementar registro contable'
   - fieldName: Status
     value: Blocked
   - fieldName: Estado
@@ -1892,13 +2058,16 @@ items:
     value: ACC-002
   - fieldName: Fecha objetivo
     value: '2026-11-20'
+  - fieldName: Bloqueado por
+    value: '@BruceRodri (POS-002)'
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIVTAU
   content:
     __typename: Issue
     id: I_kwDOVrRmwc8AAAABe0dZ7A
     number: 32
     title: '[MKT-002] Implementar campañas y contactos de Marketing'
-    body: "<!-- managed-task-id: MKT-002 -->\n\n**Feature:** Marketing  \n**Responsable:** @EMLarco  \n**Rutas:** backend/src/main/java/com/erp/features/marketing/, backend/src/main/resources/db/migration/, backend/src/test/java/com/erp/features/marketing/  \n**Dependencias:** TEN-001, MKT-001, CRM-001  \n**Fecha objetivo:** 2026-11-19\n\n## Alcance\nImplementar alcance de Marketing definido, consumiendo el contrato público de CRM y respetando tenancy.\n\n## Criterios de aceptación\n- [ ] Campañas y contactos se limitan al tenant autorizado.\n- [ ] Marketing consume CRM por API pública.\n- [ ] Validar entradas y paginar en backend con máximo 5.\n- [ ] Probar membresía, aislamiento y contrato CRM.\n\n## Bloqueo actual\nBloqueada por: CRM-001 (@BruceRodri)."
+    body: '<!-- managed-task-id: MKT-002 --> **Feature:** Marketing **Responsable:** @EMLarco **Rutas:** backend/src/main/java/com/erp/features/marketing/, backend/src/main/resources/db/migration/, backend/src/test/java/com/erp/features/marketing/ **Dependencias:** TEN-001, MKT-001, CRM-001 **Fecha objetivo:** 2026-11-19 ## Alcance Implementar campañas del sistema completo con contactos de CRM, consentimiento administrado por Marketing y envío manual de correo por Gmail SMTP. ## Criterios de aceptación - [ ] Nombre, descripción, fecha de inicio y fecha de fin son obligatorios. - [ ] Estados manuales: Borrador → Programada → Activa → Finalizada; Cancelada desde cualquier estado no terminal. - [ ] Consentimiento y bajas se guardan tenant-scoped en Marketing, vinculados al UUID del cliente CRM; excluir bajas y contactos sin consentimiento. - [ ] Plantillas reutilizables con asunto, cuerpo HTML enriquecido con estilo/iconografía de la app y versión texto. - [ ] Envío manual por Gmail SMTP; fechas
+      no disparan envíos automáticos. - [ ] Límite de pruebas: 20 destinatarios por día; secretos SMTP no se guardan en Git ni aparecen en logs. - [ ] Consumir CRM solo por API pública; validar tenant, permisos, aislamiento y paginación máxima de 5. ## Bloqueo actual Ninguno. Las decisiones de alcance están aprobadas. ## Especificación de lógica [Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/MKT-002.md).'
     state: OPEN
     url: https://github.com/jeffersonmejia/app-distribuidas/issues/32
     repository:
@@ -1921,9 +2090,9 @@ items:
   - fieldName: Title
     value: '[MKT-002] Implementar campañas y contactos de Marketing'
   - fieldName: Status
-    value: Blocked
+    value: Todo
   - fieldName: Estado
-    value: Blocked
+    value: Todo
   - fieldName: Prioridad
     value: Media
   - fieldName: Área
@@ -1932,6 +2101,8 @@ items:
     value: MKT-002
   - fieldName: Fecha objetivo
     value: '2026-11-19'
+  - fieldName: Bloqueado por
+    value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIVTAw
   content:
     __typename: Issue
@@ -1939,7 +2110,7 @@ items:
     number: 33
     title: '[FRONT-003] Completar interfaz de clientes y sesión'
     body: "<!-- managed-task-id: FRONT-003 -->\n\n**Feature:** Frontend  \n**Responsable:** @Dayanarablb  \n**Rutas:** frontend/src/features/identity/, frontend/src/features/tenancy/, frontend/src/features/crm/, frontend/src/app/  \n**Dependencias:** FRONT-001, FRONT-002, AUTH-002, TEN-001, CRM-001  \n**Fecha objetivo:** 2026-11-19\n\n## Alcance\nImplementar acceso, selección de tenant y gestión de clientes sobre contratos backend aprobados. El backend valida identidad, membresía activa y permisos; el tenant elegido por el usuario es solo un selector y nunca una prueba de autorización.\n\n## Criterios de aceptación\n- [ ] Sesión, selección de tenant y CRUD consumen APIs reales.\n- [ ] La interfaz no usa actor_id, tenant_id ni permisos del cliente como autorización.\n- [ ] Errores no filtran detalles sensibles.\n- [ ] Listas usan máximo 5 y muestran estados de carga, vacío y error.\n- [ ] Navegación se adapta a tamaños de pantalla acordados.\n- [ ] Pruebas de componentes cubren los flujos\
-      \ y estados implementados.\n\n## Bloqueo actual\nBloqueada por: FRONT-001 (@Dayanarablb), FRONT-002 (@Dayanarablb), CRM-001 (@BruceRodri)."
+      \ y estados implementados.\n\n## Bloqueo actual\nBloqueada por: FRONT-001 y FRONT-002 (@Dayanarablb). CRM-001 está completada.\n\n## Especificación de lógica\n[Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/FRONT-003.md)."
     state: OPEN
     url: https://github.com/jeffersonmejia/app-distribuidas/issues/33
     repository:
@@ -1970,14 +2141,16 @@ items:
     value: FRONT-003
   - fieldName: Fecha objetivo
     value: '2026-11-19'
+  - fieldName: Bloqueado por
+    value: '@Dayanarablb (FRONT-001, FRONT-002)'
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIVTBU
   content:
     __typename: Issue
     id: I_kwDOVrRmwc8AAAABe0deNQ
     number: 34
     title: '[FRONT-004] Completar interfaz de inventario y ventas'
-    body: "<!-- managed-task-id: FRONT-004 -->\n\n**Feature:** Frontend  \n**Responsable:** @Dayanarablb  \n**Rutas:** frontend/src/features/inventory/, frontend/src/features/pos/  \n**Dependencias:** FRONT-001, FRONT-002, INV-003, POS-002  \n**Fecha objetivo:** 2026-11-20\n\n## Alcance\nImplementar consulta de disponibilidad y registro de venta usando APIs aprobadas de Inventory y POS. El backend autoriza cada operación para el tenant activo.\n\n## Criterios de aceptación\n- [ ] Consultar disponibilidad y registrar ventas mediante APIs tenant-scoped autorizadas por el backend.\n- [ ] La interfaz no usa tenant_id ni permisos del cliente como autorización.\n- [ ] Stock insuficiente y errores se muestran claramente.\n- [ ] No mostrar venta confirmada antes de responder el backend.\n- [ ] Incluye estados de carga, error y éxito.\n- [ ] Pruebas de componentes cubren validación, éxito y errores de API.\n\n## Bloqueo actual\nBloqueada por: FRONT-001 (@Dayanarablb), FRONT-002 (@Dayanarablb), INV-003\
-      \ (@Sahid-B), POS-002 (@BruceRodri)."
+    body: "<!-- managed-task-id: FRONT-004 -->\n\n**Feature:** Frontend  \n**Responsable:** @Dayanarablb  \n**Rutas:** frontend/src/features/inventory/, frontend/src/features/pos/  \n**Dependencias:** FRONT-001, FRONT-002, INV-003, POS-002  \n**Fecha objetivo:** 2026-11-20\n\n## Alcance\nImplementar consulta de disponibilidad y registro de venta usando APIs aprobadas de Inventory y POS. El backend autoriza cada operación para el tenant activo.\n\n## Criterios de aceptación\n- [ ] Consultar disponibilidad y registrar ventas mediante APIs tenant-scoped autorizadas por el backend.\n- [ ] La interfaz no usa tenant_id ni permisos del cliente como autorización.\n- [ ] Stock insuficiente y errores se muestran claramente.\n- [ ] No mostrar venta confirmada antes de responder el backend.\n- [ ] Incluye estados de carga, error y éxito.\n- [ ] Pruebas de componentes cubren validación, éxito y errores de API.\n\n## Bloqueo actual\nDependencias completadas: INV-003. Bloqueada por: @Dayanarablb (FRONT-001,\
+      \ FRONT-002), @BruceRodri (POS-002).\n\n## Especificación de lógica\n[Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/FRONT-004.md)."
     state: OPEN
     url: https://github.com/jeffersonmejia/app-distribuidas/issues/34
     repository:
@@ -2008,14 +2181,16 @@ items:
     value: FRONT-004
   - fieldName: Fecha objetivo
     value: '2026-11-20'
+  - fieldName: Bloqueado por
+    value: '@Dayanarablb (FRONT-001, FRONT-002), @BruceRodri (POS-002)'
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIVTBw
   content:
     __typename: Issue
     id: I_kwDOVrRmwc8AAAABe0dgTw
     number: 35
     title: '[FRONT-005] Completar interfaces de proyectos, marketing y contabilidad'
-    body: "<!-- managed-task-id: FRONT-005 -->\n\n**Feature:** Frontend  \n**Responsable:** @Dayanarablb  \n**Rutas:** frontend/src/features/projects/, frontend/src/features/marketing/, frontend/src/features/accounting/  \n**Dependencias:** FRONT-001, FRONT-002, PROJ-001, MKT-002, ACC-002  \n**Fecha objetivo:** 2026-11-21\n\n## Alcance\nImplementar las pantallas acordadas para proyectos/tareas, campañas y consulta contable usando APIs aprobadas. El backend autoriza el acceso a los datos tenant-scoped.\n\n## Criterios de aceptación\n- [ ] Cada pantalla consume su API; el cliente no autoriza con tenant_id, actor_id ni permisos enviados por el usuario.\n- [ ] Listas paginan en servidor y respetan máximo 5.\n- [ ] Formularios muestran carga, error y confirmación.\n- [ ] No se inventan reglas contables no aprobadas.\n- [ ] Pruebas de componentes cubren estados de lista y formularios.\n\n## Bloqueo actual\nBloqueada por: FRONT-001 (@Dayanarablb), FRONT-002 (@Dayanarablb), PROJ-001 (@EMLarco),\
-      \ MKT-002 (@EMLarco), ACC-002 (@EMLarco)."
+    body: "<!-- managed-task-id: FRONT-005 -->\n\n**Feature:** Frontend  \n**Responsable:** @Dayanarablb  \n**Rutas:** frontend/src/features/projects/, frontend/src/features/marketing/, frontend/src/features/accounting/  \n**Dependencias:** FRONT-001, FRONT-002, PROJ-001, MKT-002, ACC-002  \n**Fecha objetivo:** 2026-11-21\n\n## Alcance\nImplementar las pantallas acordadas para proyectos/tareas, campañas y consulta contable usando APIs aprobadas. El backend autoriza el acceso a los datos tenant-scoped.\n\n## Criterios de aceptación\n- [ ] Cada pantalla consume su API; el cliente no autoriza con tenant_id, actor_id ni permisos enviados por el usuario.\n- [ ] Listas paginan en servidor y respetan máximo 5.\n- [ ] Formularios muestran carga, error y confirmación.\n- [ ] No se inventan reglas contables no aprobadas.\n- [ ] Pruebas de componentes cubren estados de lista y formularios.\n\n## Bloqueo actual\nDependencias completadas: PROJ-001. Bloqueada por: @Dayanarablb (FRONT-001, FRONT-002),\
+      \ @EMLarco (MKT-002, ACC-002).\n\n## Especificación de lógica\n[Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/FRONT-005.md)."
     state: OPEN
     url: https://github.com/jeffersonmejia/app-distribuidas/issues/35
     repository:
@@ -2046,20 +2221,58 @@ items:
     value: FRONT-005
   - fieldName: Fecha objetivo
     value: '2026-11-21'
+  - fieldName: Bloqueado por
+    value: '@Dayanarablb (FRONT-001, FRONT-002), @EMLarco (MKT-002, ACC-002)'
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIVTCI
   content:
     __typename: Issue
     id: I_kwDOVrRmwc8AAAABe0dh_Q
     number: 36
     title: '[INT-001] Integrar features y validar construcción completa'
-    body: "<!-- managed-task-id: INT-001 -->\n\n**Feature:** Arquitectura  \n**Responsable:** @jeffersonmejia  \n**Rutas:** backend/, frontend/, docs/arquitectura.md  \n**Dependencias:** AUTH-002, TEN-001, CRM-001, INV-003, POS-002, ACC-002, PROJ-001, MKT-002, FRONT-001, FRONT-002, FRONT-003, FRONT-004, FRONT-005  \n**Fecha objetivo:** 2026-11-22\n\n## Alcance\nIntegrar Pull Requests en develop y resolver incompatibilidades entre límites de módulo, contratos, migraciones y frontend.\n\n## Criterios de aceptación\n- [ ] Build y checks backend/frontend pasan desde develop.\n- [ ] No se agregan dependencias internas ni ciclos entre features.\n- [ ] Migraciones aplican desde una base limpia y Hibernate valida esquema.\n- [ ] Rutas, DTOs, errores y permisos coinciden en frontend/backend.\n\n## Bloqueo actual\nBloqueada por: CRM-001 (@BruceRodri), INV-003 (@Sahid-B), POS-002 (@BruceRodri), ACC-002 (@EMLarco), PROJ-001 (@EMLarco), MKT-002 (@EMLarco), FRONT-001 (@Dayanarablb), FRONT-002 (@Dayanarablb),\
-      \ FRONT-003 (@Dayanarablb), FRONT-004 (@Dayanarablb), FRONT-005 (@Dayanarablb)."
+    body: '<!-- managed-task-id: INT-001 -->
+
+
+      - **Feature:** Arquitectura
+
+      - **Responsable:** @EMLarco
+
+      - **Rutas:** backend/, frontend/, docs/arquitectura.md
+
+      - **Dependencias:** AUTH-002, TEN-001, CRM-001, INV-003, POS-002, ACC-002, PROJ-001, MKT-002, FRONT-001, FRONT-002, FRONT-003, FRONT-004, FRONT-005
+
+      - **Fecha objetivo:** 2026-11-20
+
+
+      ## Alcance
+
+      Integrar Pull Requests en develop y resolver incompatibilidades entre límites de módulo, contratos, migraciones y frontend.
+
+
+      ## Criterios de aceptación
+
+      - [ ] Build y checks backend/frontend pasan desde develop.
+
+      - [ ] No se agregan dependencias internas ni ciclos entre features.
+
+      - [ ] Migraciones aplican desde una base limpia y Hibernate valida esquema.
+
+      - [ ] Rutas, DTOs, errores y permisos coinciden en frontend/backend.
+
+
+      ## Bloqueo actual
+
+      Dependencias completadas: AUTH-002, TEN-001, CRM-001, INV-003, PROJ-001. Bloqueada por: @BruceRodri (POS-002), @EMLarco (ACC-002, MKT-002), @Dayanarablb (FRONT-001, FRONT-002, FRONT-003, FRONT-004, FRONT-005).
+
+
+      ## Especificación de lógica
+
+      [Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/INT-001.md).'
     state: OPEN
     url: https://github.com/jeffersonmejia/app-distribuidas/issues/36
     repository:
       nameWithOwner: jeffersonmejia/app-distribuidas
     assignees:
-    - login: jeffersonmejia
+    - login: EMLarco
     labels:
     - id: LA_kwDOVrRmwc8AAAADCkyT8A
       name: backend
@@ -2086,14 +2299,53 @@ items:
   - fieldName: Identificador de tarea
     value: INT-001
   - fieldName: Fecha objetivo
-    value: '2026-11-22'
+    value: '2026-11-20'
+  - fieldName: Bloqueado por
+    value: '@BruceRodri (POS-002), @EMLarco (ACC-002, MKT-002), @Dayanarablb (FRONT-001, FRONT-002, FRONT-003, FRONT-004, FRONT-005)'
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIVTCo
   content:
     __typename: Issue
     id: I_kwDOVrRmwc8AAAABe0driw
     number: 37
     title: '[QA-003] Verificar integración y aislamiento multitenant'
-    body: "<!-- managed-task-id: QA-003 -->\n\n**Feature:** Testing  \n**Responsable:** @Jntorres2001  \n**Rutas:** backend/src/test/, docs/multitenancy.md  \n**Dependencias:** TEN-001, INT-001  \n**Fecha objetivo:** 2026-11-23\n\n## Alcance\nEjecutar pruebas unitarias y de integración de los flujos implementados, con foco en autorización, RLS y contratos.\n\n## Criterios de aceptación\n- [ ] Tenant A no lee ni modifica datos de tenant B.\n- [ ] Sin actor/membresía/contexto no se accede a datos tenant-scoped.\n- [ ] Probar con rol runtime no privilegiado y referencias cruzadas.\n- [ ] Reportar resultados y asignar defectos al owner del feature.\n\n## Bloqueo actual\nBloqueada por: INT-001 (@jeffersonmejia)."
+    body: '<!-- managed-task-id: QA-003 -->
+
+
+      - **Feature:** Testing
+
+      - **Responsable:** @Jntorres2001
+
+      - **Rutas:** backend/src/test/, docs/multitenancy.md
+
+      - **Dependencias:** TEN-001, INT-001
+
+      - **Fecha objetivo:** 2026-11-21
+
+
+      ## Alcance
+
+      Ejecutar pruebas unitarias y de integración de los flujos implementados, con foco en autorización, RLS y contratos.
+
+
+      ## Criterios de aceptación
+
+      - [ ] Tenant A no lee ni modifica datos de tenant B.
+
+      - [ ] Sin actor/membresía/contexto no se accede a datos tenant-scoped.
+
+      - [ ] Probar con rol runtime no privilegiado y referencias cruzadas.
+
+      - [ ] Reportar resultados y asignar defectos al owner del feature.
+
+
+      ## Bloqueo actual
+
+      Bloqueada por: INT-001 (@EMLarco).
+
+
+      ## Especificación de lógica
+
+      [Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/QA-003.md).'
     state: OPEN
     url: https://github.com/jeffersonmejia/app-distribuidas/issues/37
     repository:
@@ -2126,14 +2378,53 @@ items:
   - fieldName: Identificador de tarea
     value: QA-003
   - fieldName: Fecha objetivo
-    value: '2026-11-23'
+    value: '2026-11-21'
+  - fieldName: Bloqueado por
+    value: '@EMLarco (INT-001)'
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIVTDE
   content:
     __typename: Issue
     id: I_kwDOVrRmwc8AAAABe0dwrw
     number: 38
     title: '[QA-004] Medir rendimiento de flujos críticos con k6'
-    body: "<!-- managed-task-id: QA-004 -->\n\n**Feature:** Testing  \n**Responsable:** @Jntorres2001  \n**Rutas:** tests/performance/, docs/testing.md  \n**Dependencias:** QA-003, POS-002, INV-003, CRM-001  \n**Fecha objetivo:** 2026-11-24\n\n## Alcance\nEjecutar pruebas k6 de venta POS, disponibilidad de inventario y búsqueda de clientes en entorno de pruebas.\n\n## Criterios de aceptación\n- [ ] Usar ramp-up 1→10 VUs y 10 VUs durante 5 minutos; nunca producción.\n- [ ] Errores HTTP <1%, lecturas p95 <500 ms y escrituras p95 <1 s.\n- [ ] Reportar entorno, datos, duración, error rate y p95 por operación.\n- [ ] Fallas generan corrección asignada al owner antes de liberar.\n\n## Bloqueo actual\nBloqueada por: QA-003 (@Jntorres2001), POS-002 (@BruceRodri), INV-003 (@Sahid-B), CRM-001 (@BruceRodri)."
+    body: '<!-- managed-task-id: QA-004 -->
+
+
+      - **Feature:** Testing
+
+      - **Responsable:** @Jntorres2001
+
+      - **Rutas:** tests/performance/, docs/testing.md
+
+      - **Dependencias:** QA-003, POS-002, INV-003, CRM-001
+
+      - **Fecha objetivo:** 2026-11-21
+
+
+      ## Alcance
+
+      Ejecutar pruebas k6 de venta POS, disponibilidad de inventario y búsqueda de clientes en entorno de pruebas.
+
+
+      ## Criterios de aceptación
+
+      - [ ] Usar ramp-up 1→10 VUs y 10 VUs durante 5 minutos; nunca producción.
+
+      - [ ] Errores HTTP <1%, lecturas p95 <500 ms y escrituras p95 <1 s.
+
+      - [ ] Reportar entorno, datos, duración, error rate y p95 por operación.
+
+      - [ ] Fallas generan corrección asignada al owner antes de liberar.
+
+
+      ## Bloqueo actual
+
+      Dependencias completadas: INV-003, CRM-001. Bloqueada por: @Jntorres2001 (QA-003), @BruceRodri (POS-002).
+
+
+      ## Especificación de lógica
+
+      [Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/QA-004.md).'
     state: OPEN
     url: https://github.com/jeffersonmejia/app-distribuidas/issues/38
     repository:
@@ -2160,20 +2451,59 @@ items:
   - fieldName: Identificador de tarea
     value: QA-004
   - fieldName: Fecha objetivo
-    value: '2026-11-24'
+    value: '2026-11-21'
+  - fieldName: Bloqueado por
+    value: '@Jntorres2001 (QA-003), @BruceRodri (POS-002)'
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIVTDY
   content:
     __typename: Issue
     id: I_kwDOVrRmwc8AAAABe0dyFA
     number: 39
     title: '[OPS-002] Preparar ejecución reproducible y seguridad del entorno'
-    body: "<!-- managed-task-id: OPS-002 -->\n\n**Feature:** Calidad  \n**Responsable:** @jeffersonmejia  \n**Rutas:** docker/, backend/, frontend/, .github/workflows/, docs/  \n**Dependencias:** INT-001  \n**Fecha objetivo:** 2026-11-23\n\n## Alcance\nDejar el MVP ejecutable desde copia limpia con variables separadas y sin secretos versionados; no asumir proveedor de despliegue.\n\n## Criterios de aceptación\n- [ ] PostgreSQL y servicios existentes arrancan y reportan healthcheck.\n- [ ] Build y verificaciones se documentan con comandos PowerShell.\n- [ ] Variables de ejemplo no contienen credenciales reales.\n- [ ] Documentar recuperación local y límites del entorno de desarrollo.\n\n## Bloqueo actual\nBloqueada por: INT-001 (@jeffersonmejia)."
+    body: '<!-- managed-task-id: OPS-002 -->
+
+
+      - **Feature:** Calidad
+
+      - **Responsable:** @BruceRodri
+
+      - **Rutas:** docker/, backend/, frontend/, .github/workflows/, docs/
+
+      - **Dependencias:** INT-001
+
+      - **Fecha objetivo:** 2026-11-21
+
+
+      ## Alcance
+
+      Dejar el MVP reproducible desde copia limpia y documentar el despliegue Azure existente definido en Terraform; no agregar un proveedor alternativo.
+
+
+      ## Criterios de aceptación
+
+      - [ ] PostgreSQL y servicios existentes arrancan y reportan healthcheck.
+
+      - [ ] Build y verificaciones se documentan con comandos PowerShell.
+
+      - [ ] Variables de ejemplo no contienen credenciales reales.
+
+      - [ ] Documentar recuperación local y límites del entorno de desarrollo.
+
+
+      ## Bloqueo actual
+
+      Bloqueada por: INT-001 (@EMLarco).
+
+
+      ## Especificación de lógica
+
+      [Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/OPS-002.md).'
     state: OPEN
     url: https://github.com/jeffersonmejia/app-distribuidas/issues/39
     repository:
       nameWithOwner: jeffersonmejia/app-distribuidas
     assignees:
-    - login: jeffersonmejia
+    - login: BruceRodri
     labels:
     - id: LA_kwDOVrRmwc8AAAADCbVYYw
       name: documentation
@@ -2197,20 +2527,59 @@ items:
   - fieldName: Identificador de tarea
     value: OPS-002
   - fieldName: Fecha objetivo
-    value: '2026-11-23'
+    value: '2026-11-21'
+  - fieldName: Bloqueado por
+    value: '@EMLarco (INT-001)'
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIVTD4
   content:
     __typename: Issue
     id: I_kwDOVrRmwc8AAAABe0dzuA
     number: 40
     title: '[SEC-001] Revisar seguridad y cerrar hallazgos del MVP'
-    body: "<!-- managed-task-id: SEC-001 -->\n\n**Feature:** Calidad  \n**Responsable:** @jeffersonmejia  \n**Rutas:** backend/, frontend/, .github/workflows/, docs/  \n**Dependencias:** AUTH-002, TEN-001, INT-001  \n**Fecha objetivo:** 2026-11-23\n\n## Alcance\nRevisar flujos implementados frente a OWASP Top 10:2025, autorización tenant, validación, secretos, dependencias y errores.\n\n## Criterios de aceptación\n- [ ] No quedan alertas High/Critical ni errores sin triage.\n- [ ] Cada hallazgo de seguridad se revisa manualmente.\n- [ ] Logs y respuestas no exponen secretos ni datos de otros tenants.\n- [ ] Hallazgos bloqueantes se corrigen y verifican antes de aceptar.\n\n## Bloqueo actual\nBloqueada por: INT-001 (@jeffersonmejia)."
+    body: '<!-- managed-task-id: SEC-001 -->
+
+
+      - **Feature:** Calidad
+
+      - **Responsable:** @EMLarco
+
+      - **Rutas:** backend/, frontend/, .github/workflows/, docs/
+
+      - **Dependencias:** AUTH-002, TEN-001, INT-001
+
+      - **Fecha objetivo:** 2026-11-21
+
+
+      ## Alcance
+
+      Revisar flujos implementados frente a OWASP Top 10:2025, autorización tenant, validación, secretos, dependencias y errores.
+
+
+      ## Criterios de aceptación
+
+      - [ ] No quedan alertas High/Critical ni errores sin triage.
+
+      - [ ] Cada hallazgo de seguridad se revisa manualmente.
+
+      - [ ] Logs y respuestas no exponen secretos ni datos de otros tenants.
+
+      - [ ] Hallazgos bloqueantes se corrigen y verifican antes de aceptar.
+
+
+      ## Bloqueo actual
+
+      Bloqueada por: INT-001 (@EMLarco).
+
+
+      ## Especificación de lógica
+
+      [Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/SEC-001.md).'
     state: OPEN
     url: https://github.com/jeffersonmejia/app-distribuidas/issues/40
     repository:
       nameWithOwner: jeffersonmejia/app-distribuidas
     assignees:
-    - login: jeffersonmejia
+    - login: EMLarco
     labels:
     - id: LA_kwDOVrRmwc8AAAADCkyT8A
       name: backend
@@ -2237,20 +2606,22 @@ items:
   - fieldName: Identificador de tarea
     value: SEC-001
   - fieldName: Fecha objetivo
-    value: '2026-11-23'
+    value: '2026-11-21'
+  - fieldName: Bloqueado por
+    value: '@EMLarco (INT-001)'
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIVTEM
   content:
     __typename: Issue
     id: I_kwDOVrRmwc8AAAABe0d1AQ
     number: 41
-    title: '[REL-001] Ejecutar aceptación final y preparar entrega del MVP'
-    body: "<!-- managed-task-id: REL-001 -->\n\n**Feature:** Arquitectura  \n**Responsable:** @jeffersonmejia  \n**Rutas:** README.md, docs/, frontend/, backend/  \n**Dependencias:** QA-003, QA-004, OPS-002, SEC-001  \n**Fecha objetivo:** 2026-11-25\n\n## Alcance\nEjecutar aceptación del MVP integrado y preparar entrega para revisión del equipo el 25 de noviembre.\n\n## Criterios de aceptación\n- [ ] Verificar acceso/tenant, clientes, inventario/venta y módulos entregados de extremo a extremo.\n- [ ] No quedan defectos bloqueantes ni conflictos de sincronización pendientes.\n- [ ] Instrucciones permiten arrancar, probar y recuperar el entorno local.\n- [ ] Declarar funcionalidades completas y todo alcance que quede pendiente.\n\n## Bloqueo actual\nBloqueada por: QA-003 (@Jntorres2001), QA-004 (@Jntorres2001), OPS-002 (@jeffersonmejia), SEC-001 (@jeffersonmejia)."
+    title: '[REL-001] Ejecutar aceptación final del sistema'
+    body: '<!-- managed-task-id: REL-001 --> **Feature:** Arquitectura **Responsable:** @EMLarco **Rutas:** README.md, docs/, frontend/, backend/ **Dependencias:** QA-003, QA-004, OPS-002, SEC-001 **Fecha objetivo:** 2026-11-22 ## Alcance Ejecutar aceptación final del sistema completo y preparar entrega para el 22 de noviembre de 2026. El hito del MVP es el 15 de noviembre. ## Criterios de aceptación - [ ] Verificar acceso/tenant, clientes, inventario/venta, Marketing, Projects y Accounting de extremo a extremo según las decisiones aprobadas. - [ ] No quedan defectos bloqueantes ni conflictos de sincronización pendientes. - [ ] Instrucciones permiten arrancar, probar y recuperar el entorno local. - [ ] Declarar funcionalidades completas, límites y alcance pendiente. ## Bloqueo actual Bloqueada por: QA-003 (@Jntorres2001), QA-004 (@Jntorres2001), OPS-002 (@BruceRodri), SEC-001 (@EMLarco). ## Especificación de lógica [Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/REL-001.md).'
     state: OPEN
     url: https://github.com/jeffersonmejia/app-distribuidas/issues/41
     repository:
       nameWithOwner: jeffersonmejia/app-distribuidas
     assignees:
-    - login: jeffersonmejia
+    - login: EMLarco
     labels:
     - id: LA_kwDOVrRmwc8AAAADCbVYYw
       name: documentation
@@ -2262,7 +2633,7 @@ items:
   - fieldName: Repository
     value: jeffersonmejia/app-distribuidas
   - fieldName: Title
-    value: '[REL-001] Ejecutar aceptación final y preparar entrega del MVP'
+    value: '[REL-001] Ejecutar aceptación final del sistema'
   - fieldName: Status
     value: Blocked
   - fieldName: Estado
@@ -2274,15 +2645,63 @@ items:
   - fieldName: Identificador de tarea
     value: REL-001
   - fieldName: Fecha objetivo
-    value: '2026-11-25'
+    value: '2026-11-22'
+  - fieldName: Bloqueado por
+    value: '@Jntorres2001 (QA-003, QA-004), @BruceRodri (OPS-002), @EMLarco (SEC-001)'
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIk65M
   content:
     __typename: Issue
     id: I_kwDOVrRmwc8AAAABfEmLaA
     number: 44
     title: '[QA-005] Revisar calidad continua con SonarQube local'
-    body: "<!-- managed-task-id: QA-005 -->\r\n## Descripción\r\nRevisar preventivamente la calidad del código ya implementado en backend y frontend, incluyendo análisis estático con SonarQube Community local cuando resulte útil. Esta tarea puede avanzar en paralelo aunque QA-003, QA-004 o INT-001 esperen la integración de otras features.\r\n\r\n## Criterios de aceptación\r\n- Leer y aplicar `docs/quality.md` antes del análisis.\r\n- Revisar una versión identificada de `develop` y las features disponibles; registrar commit, alcance y herramientas usadas.\r\n- Reportar hallazgos reproducibles con severidad, ruta/línea, evidencia y recomendación al responsable de la feature mediante el Issue o Pull Request correspondiente.\r\n- Distinguir defectos confirmados de falsos positivos y justificar cualquier descarte.\r\n- SonarQube Community es local y opcional; no se requieren servicios de pago ni se usa como bloqueo de Pull Requests.\r\n- No modificar código de otra feature ni cambiar umbrales\
-      \ o criterios de aceptación; dejar que su responsable corrija los hallazgos.\r\n\r\n## Gestión\r\n- Clasificación: Calidad\r\n- Prioridad: Media\r\n- Estado: Pendiente\r\n- Responsable: @Jntorres2001\r\n- Rutas revisadas: `backend/`, `frontend/`, `docs/quality.md`, `docker/compose.sonarqube.yml`\r\n- Dependencias: Ninguna"
+    body: '<!-- managed-task-id: QA-005 -->
+
+
+      ## Objetivo
+
+      Revisar continuamente con SonarQube Community local el código disponible y ayudar a corregir hallazgos durante el desarrollo, sin esperar a INT-001.
+
+
+      ## Flujo de trabajo
+
+      - Completar el Word docs/quality-templates/formato_sonar_qube.docx con la evidencia.
+
+      - Exportar un PDF breve con captura, descripción del problema, prioridad y responsable.
+
+      - Compartir el PDF en el grupo de WhatsApp del proyecto, mencionar al responsable y pedir que lo atienda pronto según su prioridad.
+
+      - Volver a analizar los cambios disponibles para confirmar la corrección.
+
+      - Prioridad: P0 seguridad/datos/aislamiento tenant; P1 defectos críticos o altos en flujos principales; P2 defectos relevantes; P3 hallazgos menores.
+
+      - No incluir secretos ni datos reales de clientes/tenants.
+
+
+      ## Criterios de aceptación
+
+      - Revisiones frecuentes sobre features implementadas, con hallazgos confirmados y prioridad asignada.
+
+      - Evidencia breve en el Word, PDF compartido y seguimiento de correcciones.
+
+      - SonarQube es apoyo local opcional y no bloquea Pull Requests.
+
+
+      ## Gestión
+
+      - Categoría: Calidad
+
+      - Prioridad: Media
+
+      - Responsable: @Jntorres2001
+
+      - Rutas revisadas: backend/, frontend/, docs/quality.md, docs/quality-templates/formato_sonar_qube.docx, docker/compose.sonarqube.yml
+
+      - Dependencias: Ninguna
+
+
+      ## Especificación de lógica
+
+      [Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/QA-005.md).'
     state: OPEN
     url: https://github.com/jeffersonmejia/app-distribuidas/issues/44
     repository:
@@ -2303,6 +2722,18 @@ items:
     value: '[QA-005] Revisar calidad continua con SonarQube local'
   - fieldName: Status
     value: Todo
+  - fieldName: Estado
+    value: Todo
+  - fieldName: Identificador de tarea
+    value: QA-005
+  - fieldName: Prioridad
+    value: Media
+  - fieldName: Área
+    value: Calidad
+  - fieldName: Fecha objetivo
+    value: '2026-11-22'
+  - fieldName: Bloqueado por
+    value: Nadie
 labels:
 - id: LA_kwDOVrRmwc8AAAADCbVYVQ
   name: accessibility

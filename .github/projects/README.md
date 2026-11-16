@@ -28,6 +28,8 @@ python .github/projects/sync/cli.py sync
 
 Editar `issue` para título, Markdown, responsables y etiquetas; editar `project` usando los nombres de campo exactos presentes en `schema.yaml`. Los IDs se descubren al actualizar el esquema. Los campos u opciones incompatibles se conservan y no se escriben. Una tarea individual se puede cargar en Python sin leer los demás YAML.
 
+Cada tarea, abierta o completada, debe tener un instructivo Markdown propio en `docs/tasks/<ID>.md`, con objetivo, alcance, criterios de aceptación, dependencias y rutas previstas. El cuerpo de la Issue y `planning.paths` del YAML deben enlazar ese instructivo. Basa el contenido en el alcance aprobado de la Issue y el repositorio; no inventes evidencia de ejecución. Al editar issues existentes que todavía no estén vinculadas al Project, añadirlas con `gh project item-add`; el sincronizador actualiza contenido/campos, pero no crea un vínculo para una Issue existente que falta en el Project.
+
 ## Conflictos y colaboración
 
 Los cambios se comparan propiedad por propiedad con la última base correcta de `.github/projects/.cache/sync.sqlite3`. Si SQLite falta, las diferencias simultáneas se registran como conflicto; no se elige automáticamente el último cambio. Revisar `conflicts` y resolver cada propiedad explícitamente:

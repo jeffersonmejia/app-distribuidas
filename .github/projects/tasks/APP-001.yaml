@@ -37,7 +37,13 @@ issue:
 
     - Dependencias: Ninguna
 
-    - Fecha de completado: 2026-11-12'
+    - Fecha de completado: 2026-11-12
+
+
+    ## Instructivo de tarea
+
+
+    Consulta [`docs/tasks/APP-001.md`](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/APP-001.md) para objetivo, alcance y criterios de aceptación.'
   state: closed
   assignees:
   - jeffersonmejia
@@ -54,6 +60,7 @@ project:
   Identificador de tarea: APP-001
   Prioridad: Media
   Fecha objetivo: '2026-11-22'
+  Bloqueado por: Nadie
 planning:
   acceptanceCriteria:
   - La aplicación React y TypeScript tiene una estructura inicial ejecutable.
@@ -61,6 +68,7 @@ planning:
   - La base incluye estilos globales y soporte de tema oscuro.
   paths:
   - frontend/
+  - docs/tasks/APP-001.md
   priority: Media
   assignmentNote: null
   assignee: jeffersonmejia

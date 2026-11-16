@@ -4,10 +4,47 @@ github:
   issue_number: 36
 issue:
   title: '[INT-001] Integrar features y validar construcción completa'
-  body: "<!-- managed-task-id: INT-001 -->\n\n**Feature:** Arquitectura  \n**Responsable:** @jeffersonmejia  \n**Rutas:** backend/, frontend/, docs/arquitectura.md  \n**Dependencias:** AUTH-002, TEN-001, CRM-001, INV-003, POS-002, ACC-002, PROJ-001, MKT-002, FRONT-001, FRONT-002, FRONT-003, FRONT-004, FRONT-005  \n**Fecha objetivo:** 2026-11-22\n\n## Alcance\nIntegrar Pull Requests en develop y resolver incompatibilidades entre límites de módulo, contratos, migraciones y frontend.\n\n## Criterios de aceptación\n- [ ] Build y checks backend/frontend pasan desde develop.\n- [ ] No se agregan dependencias internas ni ciclos entre features.\n- [ ] Migraciones aplican desde una base limpia y Hibernate valida esquema.\n- [ ] Rutas, DTOs, errores y permisos coinciden en frontend/backend.\n\n## Bloqueo actual\nBloqueada por: CRM-001 (@BruceRodri), INV-003 (@Sahid-B), POS-002 (@BruceRodri), ACC-002 (@EMLarco), PROJ-001 (@EMLarco), MKT-002 (@EMLarco), FRONT-001 (@Dayanarablb), FRONT-002 (@Dayanarablb), FRONT-003 (@Dayanarablb), FRONT-004 (@Dayanarablb), FRONT-005 (@Dayanarablb)."
+  body: '<!-- managed-task-id: INT-001 -->
+
+
+    - **Feature:** Arquitectura
+
+    - **Responsable:** @EMLarco
+
+    - **Rutas:** backend/, frontend/, docs/arquitectura.md
+
+    - **Dependencias:** AUTH-002, TEN-001, CRM-001, INV-003, POS-002, ACC-002, PROJ-001, MKT-002, FRONT-001, FRONT-002, FRONT-003, FRONT-004, FRONT-005
+
+    - **Fecha objetivo:** 2026-11-20
+
+
+    ## Alcance
+
+    Integrar Pull Requests en develop y resolver incompatibilidades entre límites de módulo, contratos, migraciones y frontend.
+
+
+    ## Criterios de aceptación
+
+    - [ ] Build y checks backend/frontend pasan desde develop.
+
+    - [ ] No se agregan dependencias internas ni ciclos entre features.
+
+    - [ ] Migraciones aplican desde una base limpia y Hibernate valida esquema.
+
+    - [ ] Rutas, DTOs, errores y permisos coinciden en frontend/backend.
+
+
+    ## Bloqueo actual
+
+    Dependencias completadas: AUTH-002, TEN-001, CRM-001, INV-003, PROJ-001. Bloqueada por: @BruceRodri (POS-002), @EMLarco (ACC-002, MKT-002), @Dayanarablb (FRONT-001, FRONT-002, FRONT-003, FRONT-004, FRONT-005).
+
+
+    ## Especificación de lógica
+
+    [Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/INT-001.md).'
   state: open
   assignees:
-  - jeffersonmejia
+  - EMLarco
   labels:
   - backend
   - frontend
@@ -20,14 +57,16 @@ project:
   Prioridad: Alta
   Área: Arquitectura
   Identificador de tarea: INT-001
-  Fecha objetivo: '2026-11-22'
+  Fecha objetivo: '2026-11-20'
+  Bloqueado por: '@BruceRodri (POS-002), @EMLarco (ACC-002, MKT-002), @Dayanarablb (FRONT-001, FRONT-002, FRONT-003, FRONT-004, FRONT-005)'
 planning:
   area: Arquitectura
-  assignee: jeffersonmejia
+  assignee: EMLarco
   paths:
   - backend/
   - frontend/
   - docs/arquitectura.md
+  - docs/tasks/INT-001.md
   dependencies:
   - AUTH-002
   - TEN-001
@@ -42,15 +81,12 @@ planning:
   - FRONT-003
   - FRONT-004
   - FRONT-005
-  targetDate: '2026-11-22'
+  targetDate: '2026-11-20'
   state: Blocked
   priority: Alta
   blocked_by:
-  - CRM-001
-  - INV-003
   - POS-002
   - ACC-002
-  - PROJ-001
   - MKT-002
   - FRONT-001
   - FRONT-002

@@ -1,0 +1,10 @@
+environment                = "develop"
+resource_group_name        = "rg-app-distribuidas-develop"
+postgres_region            = "Brazil South"
+postgres_sku               = "B_Standard_B1ms"
+postgres_storage_mb        = 32768
+postgres_backup_days       = 7
+postgres_database_name     = "erp_crm"
+postgres_admin_username    = "pgadmin"
+enable_backend             = false
+allow_azure_services_postgres = false

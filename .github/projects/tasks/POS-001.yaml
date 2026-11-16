@@ -35,7 +35,13 @@ issue:
 
     - Rutas: backend/.../features/pos/
 
-    - Dependencias: INV-002'
+    - Dependencias: INV-002
+
+
+    ## Instructivo de tarea
+
+
+    Consulta [`docs/tasks/POS-001.md`](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/POS-001.md) para objetivo, alcance y criterios de aceptación.'
   state: closed
   assignees:
   - BruceRodri
@@ -53,6 +59,8 @@ project:
   Área: POS
   Identificador de tarea: POS-001
   Fecha objetivo: '2026-11-22'
+  Fecha de completado: '2026-11-13'
+  Bloqueado por: Nadie
 planning:
   acceptanceCriteria:
   - El flujo inicial de ventas y sus contratos están descritos.
@@ -60,6 +68,7 @@ planning:
   - POS no depende directamente de repositorios de otros módulos.
   paths:
   - backend/.../features/pos/
+  - docs/tasks/POS-001.md
   priority: Media
   assignmentNote: null
   assignee: BruceRodri

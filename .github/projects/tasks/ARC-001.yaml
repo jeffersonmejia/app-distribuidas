@@ -35,7 +35,13 @@ issue:
 
     - Rutas: backend/, docs/arquitectura.md
 
-    - Dependencias: Ninguna'
+    - Dependencias: Ninguna
+
+
+    ## Instructivo de tarea
+
+
+    Consulta [`docs/tasks/ARC-001.md`](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/ARC-001.md) para objetivo, alcance y criterios de aceptación.'
   state: closed
   assignees:
   - jeffersonmejia
@@ -51,6 +57,8 @@ project:
   Área: Arquitectura
   Identificador de tarea: ARC-001
   Fecha objetivo: '2026-11-22'
+  Fecha de completado: '2026-11-12'
+  Bloqueado por: Nadie
 planning:
   acceptanceCriteria:
   - Los límites y contratos entre features están documentados.
@@ -59,6 +67,7 @@ planning:
   paths:
   - backend/
   - docs/arquitectura.md
+  - docs/tasks/ARC-001.md
   priority: Alta
   assignmentNote: null
   assignee: jeffersonmejia
