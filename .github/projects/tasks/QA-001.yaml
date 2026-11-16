@@ -45,7 +45,13 @@ issue:
 
     - Rutas: docs/testing.md
 
-    - Dependencias: Funcionalidades implementadas por feature'
+    - Dependencias: Funcionalidades implementadas por feature
+
+
+    ## Instructivo de tarea
+
+
+    Consulta [`docs/tasks/QA-001.md`](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/QA-001.md) para objetivo, alcance y criterios de aceptación.'
   state: closed
   assignees:
   - jeffersonmejia
@@ -61,15 +67,21 @@ project:
   Área: Testing
   Identificador de tarea: QA-001
   Fecha objetivo: '2026-11-22'
-  Bloqueado por: "Nadie"
+  Fecha de completado: '2026-11-12'
+  Bloqueado por: Nadie
 planning:
   acceptanceCriteria:
-  - La estrategia cubre pruebas unitarias, integración y contrato.
-  - Los criterios de aceptación están documentados.
-  - Las responsabilidades de prueba por módulo están claras.
+  - La estrategia está documentada en `docs/testing.md`.
+  - Incluye pruebas unitarias, de integración y de rendimiento con k6.
+  - Define como flujos críticos POS/registro de venta, consulta de inventario y búsqueda/listado de clientes CRM.
+  - Define el perfil inicial de 1 a 10 VUs y 5 minutos a carga estable.
+  - 'Define umbrales: errores HTTP <1%, p95 de lecturas <500 ms y p95 de escrituras <1 s.'
+  - Separa la verificación de aislamiento tenant de los umbrales de rendimiento.
+  - No crea scripts k6 ni pruebas de aplicación durante el scaffolding inicial.
   paths:
   - docs/testing.md
   - configuraciones de pruebas acordadas
+  - docs/tasks/QA-001.md
   priority: Alta
   assignmentNote: Esteban prepara la estrategia y las pruebas; Jennifer (Jntorres2001), con invitación pendiente, verifica resultados y solicita correcciones a quien corresponda.
   assignee: EMLarco
@@ -84,6 +96,6 @@ planning:
   - INV-001
   - ACC-001
   targetDate: '2026-11-22'
-  description: Definir pruebas unitarias, de integración y de contrato, establecer criterios de aceptación y documentar responsabilidades de prueba por módulo.
+  description: Definir y documentar la estrategia inicial de pruebas unitarias, de integración y de rendimiento con k6. Jefferson (jeffersonmejia) es responsable de la definición. Jennifer (Jntorres2001) ejecutará las pruebas cuando existan funcionalidades y criterios definidos. Esta tarea no implementa pruebas ni código durante el scaffolding inicial.
   requestedAssignee: null
   branch: Esteban

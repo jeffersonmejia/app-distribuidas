@@ -124,7 +124,7 @@ jobs:
 
   integrate:
     name: Queue eligible pull request
-    if: github.event_name != 'push' || github.ref_name == 'develop'
+    if: (github.event_name != 'push' || github.ref_name == 'develop') && (github.event_name != 'pull_request_target' || github.event.pull_request.base.ref == 'develop')
     runs-on: ubuntu-latest
     steps:
       - name: Create GitHub App token
@@ -221,6 +221,33 @@ jobs:
 
               if (pr.draft) continue;
 
+              if (pr.mergeable_state === 'behind') {
+                await github.rest.pulls.updateBranch({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  pull_number: pr.number,
+                  expected_head_sha: pr.head.sha,
+                });
+                const body = `${marker}\n@${responsible} La rama ${pr.head.ref} estaba atrasada respecto a develop. Se solicitó su actualización automática; GitHub volverá a ejecutar los checks con la rama actualizada antes de integrarla.`;
+                if (automationComment) {
+                  await github.rest.issues.updateComment({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    comment_id: automationComment.id,
+                    body,
+                  });
+                } else {
+                  await github.rest.issues.createComment({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: pr.number,
+                    body,
+                  });
+                }
+                core.info(`Solicitada la actualización automática de la rama del PR #${pr.number}; se esperarán los checks del nuevo commit.`);
+                continue;
+              }
+
               const checkRuns = await github.rest.checks.listForRef({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
@@ -274,18 +301,7 @@ jobs:
               }
 
               const nodeId = pr.node_id;
-              const commits = await github.rest.pulls.listCommits({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                pull_number: pr.number,
-                per_page: 100,
-              });
-              const isMainReconciliation = pr.head.ref === 'main' || commits.data.some((commit) =>
-                commit.commit.message.split(/\r?\n/, 1)[0] === 'chore: reconcilia develop con main'
-              );
-              const mergeMethod = isMainReconciliation
-                ? 'MERGE'
-                : 'SQUASH';
+              const mergeMethod = 'SQUASH';
               await github.graphql(
                 `mutation($pullRequestId: ID!, $mergeMethod: PullRequestMergeMethod!) {
                   enablePullRequestAutoMerge(input: {

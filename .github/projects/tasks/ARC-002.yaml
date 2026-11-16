@@ -35,7 +35,13 @@ issue:
 
     - Rutas: docs/multitenancy.md
 
-    - Dependencias: Ninguna'
+    - Dependencias: Ninguna
+
+
+    ## Instructivo de tarea
+
+
+    Consulta [`docs/tasks/ARC-002.md`](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/ARC-002.md) para objetivo, alcance y criterios de aceptación.'
   state: closed
   assignees:
   - jeffersonmejia
@@ -52,7 +58,8 @@ project:
   Área: Multitenancy
   Identificador de tarea: ARC-002
   Fecha objetivo: '2026-11-22'
-  Bloqueado por: "Nadie"
+  Fecha de completado: '2026-11-12'
+  Bloqueado por: Nadie
 planning:
   acceptanceCriteria:
   - El modelo de tenants y usuarios está descrito.
@@ -60,6 +67,7 @@ planning:
   - Los criterios de seguridad pueden revisarse antes de implementar.
   paths:
   - docs/multitenancy.md
+  - docs/tasks/ARC-002.md
   priority: Alta
   assignmentNote: null
   assignee: jeffersonmejia

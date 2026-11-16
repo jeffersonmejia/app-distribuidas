@@ -45,7 +45,13 @@ issue:
 
     ## Especificación de lógica
 
-    [Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/crm/requerimientos.md).'
+    [Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/crm/requerimientos.md).
+
+
+    ## Instructivo de tarea
+
+
+    Consulta [`docs/tasks/CRM-001.md`](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/CRM-001.md) para objetivo, alcance y criterios de aceptación.'
   state: closed
   assignees:
   - BruceRodri
@@ -62,12 +68,19 @@ project:
   Prioridad: Alta
   Área: CRM
   Identificador de tarea: CRM-001
-  Fecha objetivo: '2026-11-13'
-  Bloqueado por: "Nadie"
+  Fecha objetivo: '2026-11-18'
+  Bloqueado por: Nadie
 planning:
   targetDate: '2026-11-18'
-  state: Todo
+  state: Done
   priority: Alta
   blocked_by: []
   paths:
   - docs/crm/requerimientos.md
+  - docs/tasks/CRM-001.md
+  - backend/.../features/crm/
+  description: Diseñar entidades y casos de uso para la gestión inicial de clientes, implementar las operaciones básicas acordadas y preparar pruebas unitarias.
+  acceptanceCriteria:
+  - El diseño inicial de clientes y sus casos de uso está definido.
+  - Las operaciones básicas de clientes cumplen los contratos acordados.
+  - Hay pruebas unitarias para los casos implementados.

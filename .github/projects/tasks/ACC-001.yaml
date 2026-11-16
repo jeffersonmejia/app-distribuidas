@@ -40,7 +40,13 @@ issue:
 
     ## Estado
 
-    Completada; el Issue está cerrado y el Project registra Done. Los detalles de reglas y precisión monetaria deben localizarse/aprobarse antes de implementar ACC-002.'
+    Completada; el Issue está cerrado y el Project registra Done. Los detalles de reglas y precisión monetaria deben localizarse/aprobarse antes de implementar ACC-002.
+
+
+    ## Instructivo de tarea
+
+
+    Consulta [`docs/tasks/ACC-001.md`](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/ACC-001.md) para objetivo, alcance y criterios de aceptación.'
   state: closed
   assignees:
   - EMLarco
@@ -57,9 +63,17 @@ project:
   Prioridad: Alta
   Área: Contabilidad
   Identificador de tarea: ACC-001
-  Fecha objetivo: '2026-11-13'
-  Bloqueado por: "Nadie"
+  Fecha objetivo: '2026-11-14'
+  Bloqueado por: Nadie
 planning:
   targetDate: '2026-11-14'
-  state: Todo
+  state: Done
   priority: Alta
+  paths:
+  - docs/tasks/ACC-001.md
+  - backend/.../features/accounting/
+  description: Definir cuentas, asientos y movimientos, diseñar los contratos del módulo y preparar reglas y pruebas unitarias.
+  acceptanceCriteria:
+  - El diseño de cuentas, asientos y movimientos está documentado.
+  - Los contratos del módulo están definidos.
+  - Las reglas iniciales y pruebas unitarias están acordadas.

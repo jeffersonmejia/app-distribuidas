@@ -41,7 +41,13 @@ issue:
 
     - Dependencias: ARC-001, ARC-002
 
-    - Fecha de completado: 2026-11-12'
+    - Fecha de completado: 2026-11-12
+
+
+    ## Instructivo de tarea
+
+
+    Consulta [`docs/tasks/QUALITY-001.md`](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/QUALITY-001.md) para objetivo, alcance y criterios de aceptación.'
   state: closed
   assignees:
   - jeffersonmejia
@@ -59,15 +65,16 @@ project:
   Identificador de tarea: QUALITY-001
   Fecha objetivo: '2026-11-22'
   Fecha de completado: '2026-11-12'
-  Bloqueado por: "Nadie"
+  Bloqueado por: Nadie
 planning:
   acceptanceCriteria:
   - El documento distingue la infraestructura SonarQube existente de la configuración de análisis pendiente.
-  - 'El documento define el Quality Gate inicial: 80% de cobertura en código nuevo, cero bugs y vulnerabilidades nuevos de severidad crítica, y 100% de Security Hotspots revisados.'
+  - 'El documento define el Quality Gate inicial: 80% de cobertura en código nuevo, cero bugs nuevos de severidad crítica, cero vulnerabilidades nuevas de severidad crítica y 100% de Security Hotspots revisados.'
   - El documento limita el bloqueo deseado del Quality Gate al código nuevo de Pull Requests hacia develop e identifica la limitación de Community Build y la verificación pendiente de su rama principal.
   - No se configuran scanners, Quality Gates, cobertura ni workflows de análisis en esta tarea.
   paths:
   - docs/quality.md
+  - docs/tasks/QUALITY-001.md
   priority: Alta
   assignmentNote: null
   assignee: jeffersonmejia
