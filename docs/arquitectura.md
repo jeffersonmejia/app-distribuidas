@@ -44,6 +44,7 @@ Las únicas dependencias entre features son a través del contrato público de l
 | Cualquier feature | `tenancy.api` | Recibir el contexto del tenant requerido por la operación. |
 | Cualquier feature que necesite identificar al actor | `identity.api` | Consumir el identificador y contexto público del actor; no consultar su almacenamiento. |
 | `pos` | `inventory.api` | Solicitar las operaciones de inventario que requiera el flujo de ventas, según el contrato POS-001. |
+| `pos` | `accounting.api` | Registrar el asiento de la venta en la misma transacción autorizada, según ACC-002. |
 | `marketing` | `crm.api` | Consumir los contratos de clientes previstos para Marketing. |
 | `accounting` y otras features | Ninguno predefinido | Las integraciones se acuerdan en sus tareas; hasta entonces permanecen aisladas. |
 
