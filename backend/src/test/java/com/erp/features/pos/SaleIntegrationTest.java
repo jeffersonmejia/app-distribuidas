@@ -73,6 +73,10 @@ class SaleIntegrationTest {
                         execute(db, "insert into tenant_membership_permission(tenant_id,membership_id,permission_code) values (?,?,?) on conflict do nothing",
                                 tenant.value(), member, "inventory:stock:" + permission);
                     }
+                    if (user.equals(ACTOR)) {
+                        execute(db, "insert into tenant_membership_permission(tenant_id,membership_id,permission_code) values (?,?,?) on conflict do nothing",
+                                tenant.value(), member, "accounting:entry:create");
+                    }
                 }
             }
         }

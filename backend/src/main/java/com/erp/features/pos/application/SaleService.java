@@ -13,6 +13,7 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.HexFormat;
 import java.util.List;
+import com.erp.features.accounting.api.AccountingEntries;
 import com.erp.features.inventory.api.InventoryMovements;
 import com.erp.features.inventory.api.InventoryFailure;
 import com.erp.features.pos.api.SaleException;
@@ -26,8 +27,9 @@ import static com.erp.features.pos.api.SaleException.Code.*;
 public class SaleService implements Sales {
     private final InventoryMovements inventory;
     private final SaleStore store;
-    public SaleService(InventoryMovements inventory, SaleStore store) {
-        this.inventory = inventory; this.store = store;
+    private final AccountingEntries accounting;
+    public SaleService(InventoryMovements inventory, SaleStore store, AccountingEntries accounting) {
+        this.inventory = inventory; this.store = store; this.accounting = accounting;
     }
 
     @Override public Sale register(TenantId tenant, Command command) {
@@ -47,13 +49,16 @@ public class SaleService implements Sales {
                     if (!existing.get().fingerprint().equals(fingerprint)) {
                         throw new SaleException(IDEMPOTENCY_CONFLICT);
                     }
-                    return existing.get().sale();
+                    Sale previous = existing.get().sale();
+                    recordAccounting(tenant, previous);
+                    return previous;
                 }
                 List<SoldLine> sold = lines.stream().map(line -> new SoldLine(line.productId(), line.unit(),
                         line.quantity(), line.unitPrice(), line.taxAmount(),
                         line.unitPrice().multiply(line.quantity()).setScale(2, RoundingMode.HALF_UP))).toList();
                 Sale sale = new Sale(command.saleId(), movement.id(), movement.occurredAt(), sold);
                 store.save(movement.tenantId(), movement.actorId(), fingerprint, sale);
+                recordAccounting(tenant, sale);
                 return sale;
             });
         } catch (RuntimeException failure) {
@@ -65,6 +70,14 @@ public class SaleService implements Sales {
             }
             throw failure;
         }
+    }
+
+    private void recordAccounting(TenantId tenant, Sale sale) {
+        BigDecimal total = sale.lines().stream()
+                .map(line -> line.netAmount().add(line.taxAmount()))
+                .reduce(BigDecimal.ZERO.setScale(2), BigDecimal::add);
+        accounting.recordSale(tenant, new AccountingEntries.SaleCommand(sale.saleId(), total,
+                sale.lines().stream().map(SoldLine::taxAmount).toList()));
     }
 
     private static List<Line> normalize(List<Line> input) {
