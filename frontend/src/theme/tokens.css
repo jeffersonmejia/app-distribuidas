@@ -36,7 +36,8 @@
   /* Semantic text and borders. Stitch palette values with contrast AA >= 4.5:1 */
   --text-primary: #111827;
   --text-secondary: #6B7280;
-  --text-muted: #9CA3AF;
+  --text-muted: #6B7280;
+  --text-placeholder: #9CA3AF;
   --text-on-brand: white;
   --text-brand: color-mix(in oklch, var(--brand) 86%, black);
   --focus-ring: var(--brand);
