@@ -25,7 +25,7 @@ describe('App Routing Integration', () => {
     )
 
     // LoginPage está presente
-    expect(screen.getByRole('heading', { level: 2, name: 'Bienvenido' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 2, name: 'Iniciar sesión' })).toBeInTheDocument()
     // Sidebar NO está presente
     expect(screen.queryByRole('navigation', { name: 'Módulos del sistema' })).not.toBeInTheDocument()
     expect(screen.queryByRole('link', { name: 'Saltar al contenido principal' })).not.toBeInTheDocument()
