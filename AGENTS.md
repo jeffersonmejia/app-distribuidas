@@ -109,9 +109,9 @@ Antes de diseñar o modificar entidades, repositorios, relaciones o esquema de b
 ## Flujo de integración
 
 - Al inicio de una nueva sesión de trabajo en el repositorio, revisa `git status` y la rama activa para detectar cambios preparados, no preparados, archivos nuevos y commits locales pendientes. Preserva el trabajo existente; no lo descartes ni lo sobrescribas.
-- Al inicio de esa sesión, sincroniza una sola vez la rama personal existente de la persona responsable con lo último de `origin/develop` mediante `git fetch origin` y `git pull --no-rebase origin develop`. Si la sincronización trae commits o cambios, publícalos en esa misma rama personal antes de empezar el trabajo.
-- Antes de otra tarea dentro de la misma sesión, revisa el estado y la rama, pero no repitas el pull automáticamente. Vuelve a sincronizar antes de editar solo si `develop` avanzó desde la última sincronización o si se reanuda el trabajo en una nueva sesión.
-- Si el pull presenta conflictos, detén la tarea antes de editar sus archivos y comunica qué archivos entraron en conflicto. No resuelvas esos conflictos sin instrucción del solicitante.
+- En una nueva sesión, ejecuta una sola vez `./git.ps1` desde la raíz del repositorio. El script valida que estés en una rama personal limpia y sin commits locales pendientes de publicar, obtiene las referencias de `origin`, integra `origin/develop` con un merge y publica el resultado en esa misma rama personal. No combines `fetch`, `merge` y `pull`: `pull` ya hace fetch y merge, por lo que repetirlos sincronizaría dos veces.
+- Antes de otra tarea dentro de la misma sesión, revisa el estado y la rama, pero no repitas la sincronización automáticamente. Vuelve a sincronizar antes de editar solo si `develop` avanzó desde la última sincronización o si se reanuda el trabajo en una nueva sesión.
+- Si la sincronización presenta conflictos, detén la tarea antes de editar sus archivos y comunica qué archivos entraron en conflicto. No resuelvas esos conflictos sin instrucción del solicitante.
 - Si la sincronización inicial o requerida termina sin conflictos y el solicitante ya dio una tarea, continúa con ella sin pedir confirmación ni enviar un aviso intermedio. Si todavía no dio una tarea, infórmale que la rama quedó lista para trabajar.
 - Mantén los cambios de cada tema en commits separados y con Conventional Commits cuando se autoricen commits.
 - La integración de cambios a `develop` debe seguir el workflow autorizado y sus checks; no hagas push directo a `develop`.
