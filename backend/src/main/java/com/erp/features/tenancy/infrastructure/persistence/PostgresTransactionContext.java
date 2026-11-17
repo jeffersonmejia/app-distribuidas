@@ -27,4 +27,8 @@ public class PostgresTransactionContext {
     public void setPermission(String permission) {
         jdbcTemplate.queryForObject("select set_config('app.permission', ?, true)", String.class, permission);
     }
+
+    public String get(String setting) {
+        return jdbcTemplate.queryForObject("select current_setting(?, true)", String.class, setting);
+    }
 }
