@@ -1,0 +1,11 @@
+.customer-drawer-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5, 1.25rem);
+}
+
+.customer-drawer-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3, 0.75rem);
+}

@@ -1,0 +1,152 @@
+import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { CustomerDrawer } from './CustomerDrawer'
+import { CustomerApiError, type CustomerRepository } from '../services/customerRepository'
+import type { CustomerView } from '../types/customer'
+
+// Doble de repositorio para pruebas
+function makeRepo(overrides: Partial<CustomerRepository> = {}): CustomerRepository {
+  return {
+    list: vi.fn().mockResolvedValue({ items: [], page: 0, size: 0, hasNext: false }),
+    create: vi.fn().mockResolvedValue({
+      id: 'test-001',
+      fullName: 'Nombre Prueba',
+      cedula: null,
+      email: null,
+      phone: null,
+      status: 'ACTIVE',
+      createdAt: '2026-01-01T00:00:00Z',
+      updatedAt: '2026-01-01T00:00:00Z',
+    } as CustomerView),
+    setStatus: vi.fn(),
+    ...overrides,
+  }
+}
+
+describe('CustomerDrawer', () => {
+  let onClose: ReturnType<typeof vi.fn>
+  let onCreated: ReturnType<typeof vi.fn>
+
+  beforeEach(() => {
+    onClose = vi.fn()
+    onCreated = vi.fn()
+  })
+
+  it('renderiza el formulario con los 4 campos cuando isOpen es true', () => {
+    render(
+      <CustomerDrawer
+        isOpen
+        onClose={onClose}
+        repository={makeRepo()}
+        onCreated={onCreated}
+      />,
+    )
+    expect(screen.getByLabelText(/nombre completo/i)).toBeInTheDocument()
+    expect(screen.getByLabelText('Cédula', { selector: 'input' })).toBeInTheDocument()
+    expect(screen.getByLabelText(/correo electrónico/i)).toBeInTheDocument()
+    expect(screen.getByLabelText(/teléfono/i)).toBeInTheDocument()
+  })
+
+  it('no muestra el panel cuando isOpen es false', () => {
+    render(
+      <CustomerDrawer
+        isOpen={false}
+        onClose={onClose}
+        repository={makeRepo()}
+        onCreated={onCreated}
+      />,
+    )
+    expect(screen.getByRole('dialog', { hidden: true })).not.toHaveClass('drawer-panel--open')
+  })
+
+  it('muestra error de validación si se envía sin nombre', async () => {
+    render(
+      <CustomerDrawer
+        isOpen
+        onClose={onClose}
+        repository={makeRepo()}
+        onCreated={onCreated}
+      />,
+    )
+    fireEvent.click(screen.getByRole('button', { name: /guardar/i }))
+    expect(await screen.findByText(/nombre completo es obligatorio/i)).toBeInTheDocument()
+  })
+
+  it('muestra error si la cédula no tiene 10 dígitos', async () => {
+    render(
+      <CustomerDrawer
+        isOpen
+        onClose={onClose}
+        repository={makeRepo()}
+        onCreated={onCreated}
+      />,
+    )
+    await userEvent.type(screen.getByLabelText(/nombre completo/i), 'Test')
+    await userEvent.type(screen.getByLabelText('Cédula', { selector: 'input' }), '12345')
+    fireEvent.click(screen.getByRole('button', { name: /guardar/i }))
+    expect(await screen.findByText(/exactamente 10 dígitos/i)).toBeInTheDocument()
+  })
+
+  it('llama a repository.create y onCreated al guardar datos válidos', async () => {
+    const repo = makeRepo()
+    render(
+      <CustomerDrawer
+        isOpen
+        onClose={onClose}
+        repository={repo}
+        onCreated={onCreated}
+      />,
+    )
+    await userEvent.type(screen.getByLabelText(/nombre completo/i), 'Nombre Prueba')
+    fireEvent.click(screen.getByRole('button', { name: /guardar/i }))
+    await waitFor(() => expect(repo.create).toHaveBeenCalledOnce())
+    expect(onCreated).toHaveBeenCalledOnce()
+    expect(onClose).toHaveBeenCalledOnce()
+  })
+
+  it('muestra mensaje de duplicado cuando el repositorio lanza CustomerApiError kind=duplicate', async () => {
+    const repo = makeRepo({
+      create: vi.fn().mockRejectedValue(
+        new CustomerApiError('dup', 'duplicate', 409),
+      ),
+    })
+    render(
+      <CustomerDrawer
+        isOpen
+        onClose={onClose}
+        repository={repo}
+        onCreated={onCreated}
+      />,
+    )
+    await userEvent.type(screen.getByLabelText(/nombre completo/i), 'Test Dup')
+    fireEvent.click(screen.getByRole('button', { name: /guardar/i }))
+    expect(await screen.findByText(/cédula o correo/i)).toBeInTheDocument()
+    expect(onCreated).not.toHaveBeenCalled()
+  })
+
+  it('el botón Guardar está deshabilitado mientras envía', async () => {
+    let resolveCreate!: () => void
+    const repo = makeRepo({
+      create: vi.fn().mockReturnValue(new Promise<CustomerView>((res) => {
+        resolveCreate = () => res({
+          id: 't1', fullName: 'T', cedula: null, email: null, phone: null,
+          status: 'ACTIVE', createdAt: '', updatedAt: '',
+        })
+      })),
+    })
+    render(
+      <CustomerDrawer
+        isOpen
+        onClose={onClose}
+        repository={repo}
+        onCreated={onCreated}
+      />,
+    )
+    await userEvent.type(screen.getByLabelText(/nombre completo/i), 'Test')
+    fireEvent.click(screen.getByRole('button', { name: /guardar/i }))
+    expect(screen.getByRole('button', { name: /guardar/i })).toBeDisabled()
+    resolveCreate()
+    await waitFor(() => expect(onClose).toHaveBeenCalled())
+  })
+})
