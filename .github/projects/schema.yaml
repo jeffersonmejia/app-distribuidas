@@ -1,5 +1,5 @@
 version: 1
-refreshed_at: '2026-11-15T20:24:03+00:00'
+refreshed_at: '2026-11-16T19:45:30+00:00'
 project:
   id: PVT_kwHOBAk3Fs4BrVCX
   number: 5
@@ -328,7 +328,7 @@ items:
 
       - Prioridad: Alta
 
-      - Estado: En progreso
+      - Estado: Completado
 
       - Responsable: @Dayanarablb
 
@@ -343,13 +343,13 @@ items:
 
       - Los tokens y componentes reutilizables con pruebas se integraron a develop mediante el PR #97.
 
-      - Falta completar o evidenciar estilos responsivos para distintos tamaños de pantalla.
+      - FRONT-001 completada por Dayanara, según confirmación del responsable.
 
 
       ## Especificación de lógica
 
       [Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/FRONT-001.md).'
-    state: OPEN
+    state: CLOSED
     url: https://github.com/jeffersonmejia/app-distribuidas/issues/3
     repository:
       nameWithOwner: jeffersonmejia/app-distribuidas
@@ -368,9 +368,9 @@ items:
   - fieldName: Title
     value: '[FRONT-001] Implementar sistema de diseño global'
   - fieldName: Status
-    value: In Progress
+    value: Done
   - fieldName: Estado
-    value: In Progress
+    value: Done
   - fieldName: Prioridad
     value: Alta
   - fieldName: Área
@@ -681,7 +681,7 @@ items:
 
       - Dependencias: FRONT-001
 
-      - Preparación: tokens y componentes base de FRONT-001 ya se integraron en el PR #97. Puede iniciar layout, navegación y rutas en frontend/src/app/ mientras FRONT-001 completa sus estilos responsivos; el layout debe validar sus propios tamaños de pantalla.
+      - Preparación: FRONT-001 completada; tokens y componentes base integrados mediante el PR #97. Puede iniciar layout, navegación y rutas en frontend/src/app/; el layout debe validar sus propios tamaños de pantalla.
 
 
       ## Especificación de lógica
@@ -706,7 +706,7 @@ items:
   - fieldName: Title
     value: '[FRONT-002] Implementar layout y navegación principal'
   - fieldName: Status
-    value: Blocked
+    value: Todo
   - fieldName: Estado
     value: Todo
   - fieldName: Prioridad
@@ -1981,8 +1981,8 @@ items:
     number: 30
     title: '[POS-002] Implementar registro transaccional de ventas'
     body: "<!-- managed-task-id: POS-002 -->\n\n**Feature:** POS  \n**Responsable:** @BruceRodri  \n**Rutas:** backend/src/main/java/com/erp/features/pos/, backend/src/test/java/com/erp/features/pos/  \n**Dependencias:** TEN-001, INV-003, POS-001  \n**Fecha objetivo:** 2026-11-19\n\n## Alcance\nImplementar flujo de venta del MVP y consumir el contrato de Inventory para validar y descontar existencias.\n\n## Criterios de aceptación\n- [ ] Validar tenant, datos y disponibilidad antes de confirmar.\n- [ ] Venta y movimiento de inventario respetan atomicidad.\n- [ ] No consultar tablas, entidades ni repositorios de Inventory.\n- [ ] Probar éxito, stock insuficiente, duplicidad y rollback.\n\n## Decisiones aprobadas\n- `saleId` es un UUID del cliente, único por tenant; reintento con mismo payload devuelve la venta y payload distinto con la misma clave se rechaza.\n- Cada línea incluye `productId`, `unit`, `quantity`, `unitPrice` e `taxAmount`; precio e impuesto son snapshots del request en USD\
-      \ y escala 2. El neto se redondea HALF_UP; POS entrega impuesto por línea a Accounting sin calcular tasas.\n- POS guarda la venta dentro del callback `InventoryMovements.issueAndExecute`, con PostgreSQL y `PlatformTransactionManager` compartidos.\n\n## Estado\nINV-003 está completada en el PR #108. POS-002 queda lista para ejecución.\n\n## Especificación de lógica\n[Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/POS-002.md)."
-    state: OPEN
+      \ y escala 2. El neto se redondea HALF_UP; POS entrega impuesto por línea a Accounting sin calcular tasas.\n- POS guarda la venta dentro del callback `InventoryMovements.issueAndExecute`, con PostgreSQL y `PlatformTransactionManager` compartidos.\n\n## Estado\nINV-003 está completada en el PR #108. POS-002 completada por Bruce; su contrato está disponible para las tareas dependientes.\n\n## Especificación de lógica\n[Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/POS-002.md)."
+    state: CLOSED
     url: https://github.com/jeffersonmejia/app-distribuidas/issues/30
     repository:
       nameWithOwner: jeffersonmejia/app-distribuidas
@@ -2004,9 +2004,9 @@ items:
   - fieldName: Title
     value: '[POS-002] Implementar registro transaccional de ventas'
   - fieldName: Status
-    value: Todo
+    value: Done
   - fieldName: Estado
-    value: Todo
+    value: Done
   - fieldName: Prioridad
     value: Alta
   - fieldName: Área
@@ -2023,8 +2023,8 @@ items:
     id: I_kwDOVrRmwc8AAAABe0dYuw
     number: 31
     title: '[ACC-002] Implementar registro contable'
-    body: '<!-- managed-task-id: ACC-002 --> **Feature:** Contabilidad **Responsable:** @EMLarco **Rutas:** backend/src/main/java/com/erp/features/accounting/, backend/src/main/resources/db/migration/, backend/src/test/java/com/erp/features/accounting/ **Dependencias:** ACC-001, TEN-001, POS-002 **Fecha objetivo:** 2026-11-20 ## Alcance Registrar los asientos de venta según las reglas aprobadas en `docs/tasks/ACC-002.md`. ## Criterios de aceptación - [ ] Usar USD y dos decimales; mostrar miles con coma y decimales con punto. - [ ] Usar Caja/Bancos, Ventas e Impuestos por pagar sin códigos contables. - [ ] Debitar el total cobrado, acreditar ventas netas e impuesto por línea recibido de POS. - [ ] Una venta genera un asiento por `(tenant_id, sale_id)`; devoluciones/cancelaciones generan reverso sin borrar el original. - [ ] Operaciones tenant-scoped son idempotentes y transaccionales; migraciones y verificaciones cubren rollback y aislamiento. ## Bloqueo actual Bloqueada por POS-002 (@BruceRodri),
-      pendiente del contrato de venta con identificador estable e impuesto por línea. Las decisiones contables ya están aprobadas. ## Especificación de lógica [Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/ACC-002.md).'
+    body: '<!-- managed-task-id: ACC-002 --> **Feature:** Contabilidad **Responsable:** @EMLarco **Rutas:** backend/src/main/java/com/erp/features/accounting/, backend/src/main/resources/db/migration/, backend/src/test/java/com/erp/features/accounting/ **Dependencias:** ACC-001, TEN-001, POS-002 **Fecha objetivo:** 2026-11-20 ## Alcance Registrar los asientos de venta según las reglas aprobadas en `docs/tasks/ACC-002.md`. ## Criterios de aceptación - [ ] Usar USD y dos decimales; mostrar miles con coma y decimales con punto. - [ ] Usar Caja/Bancos, Ventas e Impuestos por pagar sin códigos contables. - [ ] Debitar el total cobrado, acreditar ventas netas e impuesto por línea recibido de POS. - [ ] Una venta genera un asiento por `(tenant_id, sale_id)`; devoluciones/cancelaciones generan reverso sin borrar el original. - [ ] Operaciones tenant-scoped son idempotentes y transaccionales; migraciones y verificaciones cubren rollback y aislamiento. ## Estado Sin bloqueos: POS-002 completada por
+      Bruce. ACC-002 queda lista para ejecución; las decisiones contables están aprobadas. ## Especificación de lógica [Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/ACC-002.md).'
     state: OPEN
     url: https://github.com/jeffersonmejia/app-distribuidas/issues/31
     repository:
@@ -2047,9 +2047,9 @@ items:
   - fieldName: Title
     value: '[ACC-002] Implementar registro contable'
   - fieldName: Status
-    value: Blocked
+    value: Todo
   - fieldName: Estado
-    value: Blocked
+    value: Todo
   - fieldName: Prioridad
     value: Media
   - fieldName: Área
@@ -2059,7 +2059,7 @@ items:
   - fieldName: Fecha objetivo
     value: '2026-11-20'
   - fieldName: Bloqueado por
-    value: '@BruceRodri (POS-002)'
+    value: Nadie
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIVTAU
   content:
     __typename: Issue
@@ -2110,7 +2110,7 @@ items:
     number: 33
     title: '[FRONT-003] Completar interfaz de clientes y sesión'
     body: "<!-- managed-task-id: FRONT-003 -->\n\n**Feature:** Frontend  \n**Responsable:** @Dayanarablb  \n**Rutas:** frontend/src/features/identity/, frontend/src/features/tenancy/, frontend/src/features/crm/, frontend/src/app/  \n**Dependencias:** FRONT-001, FRONT-002, AUTH-002, TEN-001, CRM-001  \n**Fecha objetivo:** 2026-11-19\n\n## Alcance\nImplementar acceso, selección de tenant y gestión de clientes sobre contratos backend aprobados. El backend valida identidad, membresía activa y permisos; el tenant elegido por el usuario es solo un selector y nunca una prueba de autorización.\n\n## Criterios de aceptación\n- [ ] Sesión, selección de tenant y CRUD consumen APIs reales.\n- [ ] La interfaz no usa actor_id, tenant_id ni permisos del cliente como autorización.\n- [ ] Errores no filtran detalles sensibles.\n- [ ] Listas usan máximo 5 y muestran estados de carga, vacío y error.\n- [ ] Navegación se adapta a tamaños de pantalla acordados.\n- [ ] Pruebas de componentes cubren los flujos\
-      \ y estados implementados.\n\n## Bloqueo actual\nBloqueada por: FRONT-001 y FRONT-002 (@Dayanarablb). CRM-001 está completada.\n\n## Especificación de lógica\n[Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/FRONT-003.md)."
+      \ y estados implementados.\n\n## Bloqueo actual\nBloqueada por FRONT-002 (@Dayanarablb). FRONT-001 y CRM-001 están completadas.\n\n## Especificación de lógica\n[Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/FRONT-003.md)."
     state: OPEN
     url: https://github.com/jeffersonmejia/app-distribuidas/issues/33
     repository:
@@ -2142,15 +2142,15 @@ items:
   - fieldName: Fecha objetivo
     value: '2026-11-19'
   - fieldName: Bloqueado por
-    value: '@Dayanarablb (FRONT-001, FRONT-002)'
+    value: '@Dayanarablb (FRONT-002)'
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIVTBU
   content:
     __typename: Issue
     id: I_kwDOVrRmwc8AAAABe0deNQ
     number: 34
     title: '[FRONT-004] Completar interfaz de inventario y ventas'
-    body: "<!-- managed-task-id: FRONT-004 -->\n\n**Feature:** Frontend  \n**Responsable:** @Dayanarablb  \n**Rutas:** frontend/src/features/inventory/, frontend/src/features/pos/  \n**Dependencias:** FRONT-001, FRONT-002, INV-003, POS-002  \n**Fecha objetivo:** 2026-11-20\n\n## Alcance\nImplementar consulta de disponibilidad y registro de venta usando APIs aprobadas de Inventory y POS. El backend autoriza cada operación para el tenant activo.\n\n## Criterios de aceptación\n- [ ] Consultar disponibilidad y registrar ventas mediante APIs tenant-scoped autorizadas por el backend.\n- [ ] La interfaz no usa tenant_id ni permisos del cliente como autorización.\n- [ ] Stock insuficiente y errores se muestran claramente.\n- [ ] No mostrar venta confirmada antes de responder el backend.\n- [ ] Incluye estados de carga, error y éxito.\n- [ ] Pruebas de componentes cubren validación, éxito y errores de API.\n\n## Bloqueo actual\nDependencias completadas: INV-003. Bloqueada por: @Dayanarablb (FRONT-001,\
-      \ FRONT-002), @BruceRodri (POS-002).\n\n## Especificación de lógica\n[Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/FRONT-004.md)."
+    body: "<!-- managed-task-id: FRONT-004 -->\n\n**Feature:** Frontend  \n**Responsable:** @Dayanarablb  \n**Rutas:** frontend/src/features/inventory/, frontend/src/features/pos/  \n**Dependencias:** FRONT-001, FRONT-002, INV-003, POS-002  \n**Fecha objetivo:** 2026-11-20\n\n## Alcance\nImplementar consulta de disponibilidad y registro de venta usando APIs aprobadas de Inventory y POS. El backend autoriza cada operación para el tenant activo.\n\n## Criterios de aceptación\n- [ ] Consultar disponibilidad y registrar ventas mediante APIs tenant-scoped autorizadas por el backend.\n- [ ] La interfaz no usa tenant_id ni permisos del cliente como autorización.\n- [ ] Stock insuficiente y errores se muestran claramente.\n- [ ] No mostrar venta confirmada antes de responder el backend.\n- [ ] Incluye estados de carga, error y éxito.\n- [ ] Pruebas de componentes cubren validación, éxito y errores de API.\n\n## Bloqueo actual\nDependencias completadas: INV-003, FRONT-001 y POS-002. Bloqueada por:\
+      \ @Dayanarablb (FRONT-002).\n\n## Especificación de lógica\n[Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/FRONT-004.md)."
     state: OPEN
     url: https://github.com/jeffersonmejia/app-distribuidas/issues/34
     repository:
@@ -2182,14 +2182,14 @@ items:
   - fieldName: Fecha objetivo
     value: '2026-11-20'
   - fieldName: Bloqueado por
-    value: '@Dayanarablb (FRONT-001, FRONT-002), @BruceRodri (POS-002)'
+    value: '@Dayanarablb (FRONT-002)'
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIVTBw
   content:
     __typename: Issue
     id: I_kwDOVrRmwc8AAAABe0dgTw
     number: 35
     title: '[FRONT-005] Completar interfaces de proyectos, marketing y contabilidad'
-    body: "<!-- managed-task-id: FRONT-005 -->\n\n**Feature:** Frontend  \n**Responsable:** @Dayanarablb  \n**Rutas:** frontend/src/features/projects/, frontend/src/features/marketing/, frontend/src/features/accounting/  \n**Dependencias:** FRONT-001, FRONT-002, PROJ-001, MKT-002, ACC-002  \n**Fecha objetivo:** 2026-11-21\n\n## Alcance\nImplementar las pantallas acordadas para proyectos/tareas, campañas y consulta contable usando APIs aprobadas. El backend autoriza el acceso a los datos tenant-scoped.\n\n## Criterios de aceptación\n- [ ] Cada pantalla consume su API; el cliente no autoriza con tenant_id, actor_id ni permisos enviados por el usuario.\n- [ ] Listas paginan en servidor y respetan máximo 5.\n- [ ] Formularios muestran carga, error y confirmación.\n- [ ] No se inventan reglas contables no aprobadas.\n- [ ] Pruebas de componentes cubren estados de lista y formularios.\n\n## Bloqueo actual\nDependencias completadas: PROJ-001. Bloqueada por: @Dayanarablb (FRONT-001, FRONT-002),\
+    body: "<!-- managed-task-id: FRONT-005 -->\n\n**Feature:** Frontend  \n**Responsable:** @Dayanarablb  \n**Rutas:** frontend/src/features/projects/, frontend/src/features/marketing/, frontend/src/features/accounting/  \n**Dependencias:** FRONT-001, FRONT-002, PROJ-001, MKT-002, ACC-002  \n**Fecha objetivo:** 2026-11-21\n\n## Alcance\nImplementar las pantallas acordadas para proyectos/tareas, campañas y consulta contable usando APIs aprobadas. El backend autoriza el acceso a los datos tenant-scoped.\n\n## Criterios de aceptación\n- [ ] Cada pantalla consume su API; el cliente no autoriza con tenant_id, actor_id ni permisos enviados por el usuario.\n- [ ] Listas paginan en servidor y respetan máximo 5.\n- [ ] Formularios muestran carga, error y confirmación.\n- [ ] No se inventan reglas contables no aprobadas.\n- [ ] Pruebas de componentes cubren estados de lista y formularios.\n\n## Bloqueo actual\nDependencias completadas: PROJ-001 y FRONT-001. Bloqueada por: @Dayanarablb (FRONT-002),\
       \ @EMLarco (MKT-002, ACC-002).\n\n## Especificación de lógica\n[Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/FRONT-005.md)."
     state: OPEN
     url: https://github.com/jeffersonmejia/app-distribuidas/issues/35
@@ -2222,7 +2222,7 @@ items:
   - fieldName: Fecha objetivo
     value: '2026-11-21'
   - fieldName: Bloqueado por
-    value: '@Dayanarablb (FRONT-001, FRONT-002), @EMLarco (MKT-002, ACC-002)'
+    value: '@Dayanarablb (FRONT-002), @EMLarco (MKT-002, ACC-002)'
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIVTCI
   content:
     __typename: Issue
@@ -2261,7 +2261,7 @@ items:
 
       ## Bloqueo actual
 
-      Dependencias completadas: AUTH-002, TEN-001, CRM-001, INV-003, PROJ-001. Bloqueada por: @BruceRodri (POS-002), @EMLarco (ACC-002, MKT-002), @Dayanarablb (FRONT-001, FRONT-002, FRONT-003, FRONT-004, FRONT-005).
+      Dependencias completadas: AUTH-002, TEN-001, CRM-001, INV-003, PROJ-001, FRONT-001, POS-002. Bloqueada por: @EMLarco (ACC-002, MKT-002), @Dayanarablb (FRONT-002, FRONT-003, FRONT-004, FRONT-005).
 
 
       ## Especificación de lógica
@@ -2301,7 +2301,7 @@ items:
   - fieldName: Fecha objetivo
     value: '2026-11-20'
   - fieldName: Bloqueado por
-    value: '@BruceRodri (POS-002), @EMLarco (ACC-002, MKT-002), @Dayanarablb (FRONT-001, FRONT-002, FRONT-003, FRONT-004, FRONT-005)'
+    value: '@EMLarco (ACC-002, MKT-002), @Dayanarablb (FRONT-002, FRONT-003, FRONT-004, FRONT-005)'
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIVTCo
   content:
     __typename: Issue
@@ -2419,7 +2419,7 @@ items:
 
       ## Bloqueo actual
 
-      Dependencias completadas: INV-003, CRM-001. Bloqueada por: @Jntorres2001 (QA-003), @BruceRodri (POS-002).
+      Dependencias completadas: INV-003, CRM-001, POS-002. Bloqueada por: @Jntorres2001 (QA-003).
 
 
       ## Especificación de lógica
@@ -2453,7 +2453,7 @@ items:
   - fieldName: Fecha objetivo
     value: '2026-11-21'
   - fieldName: Bloqueado por
-    value: '@Jntorres2001 (QA-003), @BruceRodri (POS-002)'
+    value: '@Jntorres2001 (QA-003)'
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIVTDY
   content:
     __typename: Issue
@@ -2747,6 +2747,9 @@ labels:
 - id: LA_kwDOVrRmwc8AAAADCkyVBQ
   name: database
   color: 006B75
+- id: LA_kwDOVrRmwc8AAAADDHgRoA
+  name: dependencies
+  color: 0366d6
 - id: LA_kwDOVrRmwc8AAAADCkyVlA
   name: devops
   color: 5319E7
@@ -2771,6 +2774,9 @@ labels:
 - id: LA_kwDOVrRmwc8AAAADCbVYww
   name: invalid
   color: e4e669
+- id: LA_kwDOVrRmwc8AAAADDHgRvA
+  name: python
+  color: 2b67c6
 - id: LA_kwDOVrRmwc8AAAADCbVY2A
   name: question
   color: d876e3
