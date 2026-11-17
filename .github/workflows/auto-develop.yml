@@ -77,18 +77,25 @@ jobs:
                   core.info(`Omito abrir un PR desde @${pusher}: la rama ${branch} pertenece a @${responsible}. Los PR existentes siguen su curso.`);
                   continue;
                 }
-              } else {
-                const comparison = await github.rest.repos.compareCommits({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  base: 'develop',
-                  head: branch,
-                });
+              }
+
+              const comparison = await github.rest.repos.compareCommits({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                base: 'develop',
+                head: branch,
+              });
+              if (context.eventName === 'schedule') {
                 const latestCommitAuthor = comparison.data.commits.at(-1)?.author?.login;
                 if (comparison.data.ahead_by === 0 ||
                     latestCommitAuthor?.toLowerCase() !== responsible.toLowerCase()) {
                   continue;
                 }
+              }
+
+              if ((comparison.data.files ?? []).length === 0) {
+                core.info(`La rama ${branch} no tiene cambios de archivos frente a develop; no se abrirá un PR.`);
+                continue;
               }
 
               const existing = await github.rest.pulls.list({
