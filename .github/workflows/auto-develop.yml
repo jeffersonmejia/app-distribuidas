@@ -302,16 +302,71 @@ jobs:
 
               const nodeId = pr.node_id;
               const mergeMethod = 'SQUASH';
+
+              const mergedBranchPullRequests = await github.paginate(github.rest.pulls.list, {
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                state: 'closed',
+                base: 'develop',
+                head: `${context.repo.owner}:${pr.head.ref}`,
+                per_page: 100,
+              });
+              const previousMergedPullRequest = mergedBranchPullRequests
+                .filter((previous) => previous.number !== pr.number && previous.merged_at)
+                .sort((left, right) => Date.parse(right.merged_at) - Date.parse(left.merged_at))[0];
+              const commits = await github.paginate(github.rest.pulls.listCommits, {
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: pr.number,
+                per_page: 100,
+              });
+
+              let contributionCommits = commits;
+              if (previousMergedPullRequest) {
+                const previousHeadIndex = commits.findIndex((commit) =>
+                  commit.sha === previousMergedPullRequest.head.sha
+                );
+                if (previousHeadIndex < 0) {
+                  core.warning(`No se pudo acotar la autoría del PR #${pr.number} al trabajo posterior al PR #${previousMergedPullRequest.number}; no se añadirán coautores para evitar atribuir cambios antiguos.`);
+                  contributionCommits = [];
+                } else {
+                  contributionCommits = commits.slice(previousHeadIndex + 1);
+                }
+              }
+
+              const coauthors = new Map();
+              for (const commit of contributionCommits) {
+                if (commit.parents.length > 1) continue;
+
+                const author = commit.author;
+                if (author?.login && author.type !== 'Bot' && !author.login.endsWith('[bot]') && author.id) {
+                  const name = (commit.commit.author?.name || author.login).replace(/[\r\n<>]/g, ' ').trim();
+                  const email = `${author.id}+${author.login}@users.noreply.github.com`;
+                  coauthors.set(email.toLowerCase(), `Co-authored-by: ${name} <${email}>`);
+                }
+
+                const existingCoauthors = commit.commit.message.matchAll(/^Co-authored-by:\s*(.+?)\s*<([^<>]+)>\s*$/gim);
+                for (const [, name, email] of existingCoauthors) {
+                  coauthors.set(email.toLowerCase(), `Co-authored-by: ${name.trim()} <${email.trim()}>`);
+                }
+              }
+
+              const commitBody = [...coauthors.values()].join('\n');
+              if (commitBody) {
+                core.info(`El commit squash del PR #${pr.number} acreditará ${coauthors.size} coautor(es) del trabajo nuevo.`);
+              }
+
               await github.graphql(
-                `mutation($pullRequestId: ID!, $mergeMethod: PullRequestMergeMethod!) {
+                `mutation($pullRequestId: ID!, $mergeMethod: PullRequestMergeMethod!, $commitBody: String) {
                   enablePullRequestAutoMerge(input: {
                     pullRequestId: $pullRequestId,
-                    mergeMethod: $mergeMethod
+                    mergeMethod: $mergeMethod,
+                    commitBody: $commitBody
                   }) {
                     pullRequest { id }
                   }
                 }`,
-                { pullRequestId: nodeId, mergeMethod },
+                { pullRequestId: nodeId, mergeMethod, commitBody: commitBody || null },
               );
 
               if (automationComment) {
