@@ -1,4 +1,5 @@
 $ErrorActionPreference = 'Stop'
+Clear-Host
 
 $PersonalBranches = @('Bruce', 'Dayanara', 'Esteban', 'Jefferson', 'Jennifer', 'Sahid')
 
@@ -90,9 +91,9 @@ function Sync-Branch {
 
     $remoteBranch = "origin/$Branch"
     Write-Status "[3/4] Integrando cambios de origin/develop en '$Branch'…"
-    Invoke-Git -Arguments @('merge', '--ff-only', $remoteBranch) | Out-Null
+    Invoke-Git -Arguments @('merge', '--ff-only', $remoteBranch) -Quiet | Out-Null
 
-    Invoke-Git -Arguments @('merge', '--no-edit', 'origin/develop') | Out-Null
+    Invoke-Git -Arguments @('merge', '--no-edit', 'origin/develop') -Quiet | Out-Null
 
     $behind = Get-CommitCount -Range "HEAD..$remoteBranch"
     if ($behind -gt 0) {
