@@ -39,8 +39,8 @@
 }
 
 .input-field__control::placeholder {
-  color: var(--text-muted);
-  opacity: 0.78;
+  color: var(--text-placeholder);
+  opacity: 1;
 }
 
 /* Focus — keyboard-only via :focus-visible; fallback for inputs */
