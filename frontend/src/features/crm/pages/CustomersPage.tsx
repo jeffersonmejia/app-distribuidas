@@ -11,6 +11,10 @@ import { CustomerDrawer } from '../components/CustomerDrawer'
 import { CustomerApiError, getCustomerRepository, type CustomerRepository } from '../services'
 import type { CustomerFilters, CustomerStatus, CustomerView } from '../types/customer'
 
+// Contador global de peticiones para identificar cuál es la vigente y descartar
+// únicamente las anteriores (evita la condición de carrera sin cancelar la petición activa).
+let requestCounter = 0
+
 const STATUS_OPTIONS = [
   { value: '', label: 'Todos los estados' },
   { value: 'ACTIVE', label: 'Activo' },
@@ -50,13 +54,17 @@ export function CustomersPage({ repository }: CustomersPageProps) {
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [actionError, setActionError] = useState<string | null>(null)
 
-  // Ref de cancelación para evitar condiciones de carrera
-  const cancelRef = useRef(false)
+  // ID incremental por petición: la respuesta solo se aplica si su ID coincide
+  // con el último emitido, descartando únicamente peticiones ANTERIORES.
+  const currentRequestId = useRef(0)
 
   //SOLID: SRP — CARGA LA PÁGINA DE CLIENTES APLICANDO LOS FILTROS ACTIVOS.
   const loadPage = useCallback(
     async (p: number, currentSearch: string, currentStatus: CustomerStatus | '') => {
-      cancelRef.current = false
+      requestCounter += 1
+      const thisRequest = requestCounter
+      currentRequestId.current = thisRequest
+
       setLoadState('loading')
       setErrorMessage(null)
       setActionError(null)
@@ -67,13 +75,14 @@ export function CustomersPage({ repository }: CustomersPageProps) {
 
       try {
         const result = await repo.list(filters, p)
-        if (cancelRef.current) return
+        // Descarta únicamente respuestas de peticiones anteriores, nunca la vigente.
+        if (currentRequestId.current !== thisRequest) return
         setCustomers(result.items)
         setHasNext(result.hasNext)
         setPage(p)
         setLoadState('success')
       } catch (err) {
-        if (cancelRef.current) return
+        if (currentRequestId.current !== thisRequest) return
         if (err instanceof CustomerApiError && err.kind === 'forbidden') {
           setLoadState('forbidden')
         } else {
@@ -86,12 +95,11 @@ export function CustomersPage({ repository }: CustomersPageProps) {
     [repo],
   )
 
-  // Carga inicial y cada vez que cambian filtros o página
+  // Carga inicial y cada vez que cambian filtros o página.
+  // El cleanup NO marca la petición como cancelada: solo invalida peticiones
+  // anteriores a través del ID incremental en loadPage.
   useEffect(() => {
     void loadPage(page, search, statusFilter)
-    return () => {
-      cancelRef.current = true
-    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, search, statusFilter])
 

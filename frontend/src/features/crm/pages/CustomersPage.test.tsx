@@ -1,6 +1,6 @@
 import { render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { act } from 'react'
 import { CustomersPage } from './CustomersPage'
 import { CustomerApiError, type CustomerRepository } from '../services/customerRepository'
@@ -38,9 +38,8 @@ function makeRepo(overrides: Partial<CustomerRepository> = {}): CustomerReposito
 
 // ── Tests ─────────────────────────────────────────────────────────────────
 describe('CustomersPage', () => {
-  beforeEach(() => {
-    vi.useFakeTimers()
-  })
+  // Sin vi.useFakeTimers() global: las pruebas usan timers reales por defecto.
+  // Solo la prueba de debounce activa timers falsos y los restaura en su propio afterEach.
 
   it('muestra spinner mientras carga', async () => {
     // list nunca resuelve durante esta prueba
@@ -96,6 +95,8 @@ describe('CustomersPage', () => {
   it('la búsqueda con debounce 300 ms llama a list con el término', async () => {
     const list = vi.fn().mockResolvedValue(makePage([makeView({}, 1)]))
     const repo = makeRepo({ list })
+    // Activa timers falsos solo para esta prueba; se restauran al terminar.
+    vi.useFakeTimers()
     render(<CustomersPage repository={repo} />)
     await screen.findAllByRole('row')
 
@@ -111,6 +112,7 @@ describe('CustomersPage', () => {
       expect.objectContaining({ search: 'Ejemplo' }),
       0,
     ))
+    vi.useRealTimers()
   })
 
   it('el filtro de estado llama a list con el status seleccionado', async () => {
