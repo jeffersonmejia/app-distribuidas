@@ -7,10 +7,12 @@ import './LoginPage.css'
 
 function LoginPage() {
   const [passwordVisible, setPasswordVisible] = useState(false)
+  const [notice, setNotice] = useState('')
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
     // El proveedor de identidad aún no está configurado; no se envían credenciales.
+    setNotice('El proveedor de identidad aún no está configurado. No se enviaron credenciales.')
   }
 
   const EyeIcon = ({ open }: { open: boolean }) =>
@@ -174,21 +176,21 @@ function LoginPage() {
 
           <form className="login-form" onSubmit={handleSubmit} noValidate>
             <Input
+              id="email"
               label="Correo electrónico"
               name="email"
               type="email"
               autoComplete="username"
               placeholder="nombre@empresa.com"
-              disabled
             />
 
             <Input
+              id="password"
               label="Contraseña"
               name="password"
               type={passwordVisible ? 'text' : 'password'}
               autoComplete="current-password"
               placeholder="Ingresa tu contraseña"
-              disabled
               endAdornment={
                 <button
                   type="button"
@@ -226,7 +228,7 @@ function LoginPage() {
                 ¿Olvidaste tu contraseña?
               </a>            </div>
 
-            <Button type="submit" variant="primary" style={{ width: '100%' }} disabled>
+            <Button type="submit" variant="primary" style={{ width: '100%' }}>
               Iniciar sesión →
             </Button>
 
@@ -277,7 +279,7 @@ function LoginPage() {
 
           {/* Aviso de estado */}
           <p role="status" aria-live="polite" className="login-notice">
-            El proveedor de identidad aún no está configurado. No se enviaron credenciales.
+            {notice || 'El proveedor de identidad aún no está configurado. No se enviaron credenciales.'}
           </p>
         </div>
 
