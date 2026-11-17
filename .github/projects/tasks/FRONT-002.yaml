@@ -39,13 +39,13 @@ issue:
 
     - Dependencias: FRONT-001
 
-    - Preparación: tokens y componentes base de FRONT-001 ya se integraron en el PR #97. Puede iniciar layout, navegación y rutas en frontend/src/app/ mientras FRONT-001 completa sus estilos responsivos; el layout debe validar sus propios tamaños de pantalla.
+    - Preparación: FRONT-001 completada; tokens y componentes base integrados mediante el PR #97. Puede iniciar layout, navegación y rutas en frontend/src/app/; el layout debe validar sus propios tamaños de pantalla.
 
 
     ## Especificación de lógica
 
     [Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/FRONT-002.md).'
-  state: open
+  state: closed
   assignees:
   - Dayanarablb
   labels:
@@ -54,13 +54,13 @@ issue:
 project:
   Repository: jeffersonmejia/app-distribuidas
   Title: '[FRONT-002] Implementar layout y navegación principal'
-  Status: Todo
-  Estado: Todo
+  Status: Done
+  Estado: Done
   Prioridad: Alta
   Área: Frontend
   Identificador de tarea: FRONT-002
   Fecha objetivo: '2026-11-16'
-  Bloqueado por: '@Dayanarablb (FRONT-001)'
+  Bloqueado por: Nadie
 planning:
   acceptanceCriteria:
   - El layout general está definido.
@@ -73,7 +73,7 @@ planning:
   priority: Alta
   assignmentNote: null
   assignee: Dayanarablb
-  state: Todo
+  state: Done
   area: Frontend
   dependencies:
   - FRONT-001
