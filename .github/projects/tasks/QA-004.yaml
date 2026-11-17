@@ -36,7 +36,7 @@ issue:
 
     ## Bloqueo actual
 
-    Dependencias completadas: INV-003, CRM-001. Bloqueada por: @Jntorres2001 (QA-003), @BruceRodri (POS-002).
+    Dependencias completadas: INV-003, CRM-001, POS-002. Bloqueada por: @Jntorres2001 (QA-003).
 
 
     ## Especificación de lógica
@@ -56,7 +56,7 @@ project:
   Área: Testing
   Identificador de tarea: QA-004
   Fecha objetivo: '2026-11-21'
-  Bloqueado por: '@Jntorres2001 (QA-003), @BruceRodri (POS-002)'
+  Bloqueado por: '@Jntorres2001 (QA-003)'
 planning:
   area: Testing
   assignee: Jntorres2001
@@ -74,7 +74,6 @@ planning:
   priority: Media
   blocked_by:
   - QA-003
-  - POS-002
   description: Ejecutar pruebas k6 de venta POS, disponibilidad de inventario y búsqueda de clientes en entorno de pruebas.
   acceptanceCriteria:
   - Usar ramp-up 1→10 VUs y 10 VUs durante 5 minutos; nunca producción.
