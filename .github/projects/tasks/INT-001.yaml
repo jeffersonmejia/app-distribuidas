@@ -36,7 +36,7 @@ issue:
 
     ## Bloqueo actual
 
-    Dependencias completadas: AUTH-002, TEN-001, CRM-001, INV-003, PROJ-001, FRONT-001, POS-002. Bloqueada por: @EMLarco (ACC-002, MKT-002), @Dayanarablb (FRONT-002, FRONT-003, FRONT-004, FRONT-005).
+    Dependencias completadas: AUTH-002, TEN-001, CRM-001, INV-003, PROJ-001, FRONT-001, POS-002, ACC-002, MKT-002, FRONT-002. Bloqueada por: @Dayanarablb (FRONT-003, FRONT-004, FRONT-005).
 
 
     ## Especificación de lógica
@@ -58,7 +58,7 @@ project:
   Área: Arquitectura
   Identificador de tarea: INT-001
   Fecha objetivo: '2026-11-20'
-  Bloqueado por: '@EMLarco (ACC-002, MKT-002), @Dayanarablb (FRONT-002, FRONT-003, FRONT-004, FRONT-005)'
+  Bloqueado por: '@Dayanarablb (FRONT-003, FRONT-004, FRONT-005)'
 planning:
   area: Arquitectura
   assignee: EMLarco
@@ -85,9 +85,6 @@ planning:
   state: Blocked
   priority: Alta
   blocked_by:
-  - ACC-002
-  - MKT-002
-  - FRONT-002
   - FRONT-003
   - FRONT-004
   - FRONT-005
