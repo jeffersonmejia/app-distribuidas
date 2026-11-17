@@ -1,71 +1,132 @@
 $ErrorActionPreference = 'Stop'
 
-function Stop-WithMessage([string]$Message) {
-    Write-Error $Message
-    exit 1
-}
+$PersonalBranches = @('Bruce', 'Dayanara', 'Esteban', 'Jefferson', 'Jennifer', 'Sahid')
 
-$branch = (git branch --show-current).Trim()
-if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace($branch)) {
-    Stop-WithMessage 'No se pudo determinar la rama activa.'
-}
+function Write-Status {
+    param(
+        [Parameter(Mandatory)]
+        [string]$Message,
 
-$personalBranches = @('Bruce', 'Dayanara', 'Esteban', 'Jefferson', 'Jennifer', 'Sahid')
-if ($branch -notin $personalBranches) {
-    Stop-WithMessage "La sincronización requiere una rama personal; rama activa: '$branch'."
-}
+        [ValidateSet('Info', 'Success', 'Warning', 'Error')]
+        [string]$Level = 'Info'
+    )
 
-if (git status --porcelain) {
-    Stop-WithMessage 'El árbol de trabajo tiene cambios. Consérvalos y deja la rama limpia antes de sincronizar.'
-}
-
-git fetch origin
-if ($LASTEXITCODE -ne 0) {
-    Stop-WithMessage 'Falló git fetch origin; no se modificó la rama local.'
-}
-
-$remoteBranch = "origin/$branch"
-git show-ref --verify --quiet "refs/remotes/$remoteBranch"
-if ($LASTEXITCODE -ne 0) {
-    Stop-WithMessage "No existe la rama remota '$remoteBranch'; no se publicará una rama nueva."
-}
-
-$ahead = [int](git rev-list --count "$remoteBranch..HEAD")
-if ($LASTEXITCODE -ne 0) {
-    Stop-WithMessage "No se pudo comparar la rama local con '$remoteBranch'."
-}
-if ($ahead -gt 0) {
-    Stop-WithMessage "La rama local tiene $ahead commit(s) no publicados frente a '$remoteBranch'. Publícalos o resuelve la diferencia antes de sincronizar."
-}
-
-git merge --ff-only $remoteBranch
-if ($LASTEXITCODE -ne 0) {
-    Stop-WithMessage "No se pudo avanzar de forma segura hasta '$remoteBranch'. No se modificó ningún historial remoto."
-}
-
-git merge --no-edit origin/develop
-if ($LASTEXITCODE -ne 0) {
-    Stop-WithMessage 'Falló el merge de origin/develop. Revisa los conflictos antes de continuar; el script no los resolverá.'
-}
-
-$behind = [int](git rev-list --count "HEAD..$remoteBranch")
-if ($LASTEXITCODE -ne 0) {
-    Stop-WithMessage "No se pudo comparar la rama local con '$remoteBranch' después del merge."
-}
-if ($behind -gt 0) {
-    Stop-WithMessage "'$remoteBranch' avanzó durante la sincronización. No se hizo push; vuelve a revisar el estado y sincroniza manualmente."
-}
-
-$aheadAfterMerge = [int](git rev-list --count "$remoteBranch..HEAD")
-if ($LASTEXITCODE -ne 0) {
-    Stop-WithMessage "No se pudo verificar el resultado frente a '$remoteBranch'."
-}
-if ($aheadAfterMerge -gt 0) {
-    git push origin $branch
-    if ($LASTEXITCODE -ne 0) {
-        Stop-WithMessage "Falló el push a '$remoteBranch'; revisa el estado antes de reintentar."
+    $color = switch ($Level) {
+        'Success' { 'Green' }
+        'Warning' { 'Yellow' }
+        'Error' { 'Red' }
+        default { 'Cyan' }
     }
-    Write-Host "Sincronización completada y publicada en '$remoteBranch'."
-} else {
-    Write-Host "'$branch' ya estaba sincronizada con origin/develop. No se creó ni publicó ningún commit."
+
+    Write-Host $Message -ForegroundColor $color
 }
+
+function Invoke-Git {
+    param(
+        [Parameter(Mandatory)]
+        [string[]]$Arguments,
+
+        [switch]$Quiet
+    )
+
+    $output = & git @Arguments 2>&1
+    $exitCode = $LASTEXITCODE
+
+    if ($exitCode -ne 0) {
+        $details = ($output | Out-String).Trim()
+        $command = $Arguments -join ' '
+        throw "git $command falló (código $exitCode). $details"
+    }
+
+    if (-not $Quiet -and $output) {
+        $output | ForEach-Object { Write-Host $_ }
+    }
+
+    return ($output -join [Environment]::NewLine).Trim()
+}
+
+function Get-CurrentBranch {
+    return Invoke-Git -Arguments @('branch', '--show-current') -Quiet
+}
+
+function Assert-SyncPreconditions {
+    param([Parameter(Mandatory)][string]$Branch)
+
+    if ($Branch -notin $PersonalBranches) {
+        throw "La sincronización requiere una rama personal existente. Rama activa: '$Branch'."
+    }
+
+    $changes = Invoke-Git -Arguments @('status', '--porcelain') -Quiet
+    if (-not [string]::IsNullOrWhiteSpace($changes)) {
+        throw 'El árbol de trabajo tiene cambios. Consérvalos y deja la rama limpia antes de sincronizar.'
+    }
+
+}
+
+function Assert-RemoteBranch {
+    param([Parameter(Mandatory)][string]$Branch)
+
+    $remoteBranch = "origin/$Branch"
+    Invoke-Git -Arguments @('show-ref', '--verify', '--quiet', "refs/remotes/$remoteBranch") -Quiet | Out-Null
+    $ahead = [int](Invoke-Git -Arguments @('rev-list', '--count', "$remoteBranch..HEAD") -Quiet)
+    if ($ahead -gt 0) {
+        throw "La rama local tiene $ahead commit(s) no publicados frente a '$remoteBranch'. Publícalos o resuelve la diferencia antes de sincronizar."
+    }
+}
+
+function Update-RemoteReferences {
+    Write-Status 'Actualizando referencias de origin…'
+    Invoke-Git -Arguments @('fetch', 'origin') | Out-Null
+}
+
+function Get-CommitCount {
+    param([Parameter(Mandatory)][string]$Range)
+
+    return [int](Invoke-Git -Arguments @('rev-list', '--count', $Range) -Quiet)
+}
+
+function Sync-Branch {
+    param([Parameter(Mandatory)][string]$Branch)
+
+    $remoteBranch = "origin/$Branch"
+    Write-Status "Actualizando la rama local '$Branch'…"
+    Invoke-Git -Arguments @('merge', '--ff-only', $remoteBranch) | Out-Null
+
+    Write-Status "Integrando 'origin/develop'…"
+    Invoke-Git -Arguments @('merge', '--no-edit', 'origin/develop') | Out-Null
+
+    $behind = Get-CommitCount -Range "HEAD..$remoteBranch"
+    if ($behind -gt 0) {
+        throw "'$remoteBranch' avanzó durante la sincronización. No se hizo push; revisa el estado y vuelve a intentarlo."
+    }
+
+    $ahead = Get-CommitCount -Range "$remoteBranch..HEAD"
+    if ($ahead -eq 0) {
+        Write-Status "'$Branch' ya estaba sincronizada con origin/develop." 'Success'
+        return
+    }
+
+    Write-Status "Publicando la sincronización en '$remoteBranch'…"
+    Invoke-Git -Arguments @('push', 'origin', $Branch) | Out-Null
+    Write-Status "Sincronización completada en '$remoteBranch'." 'Success'
+}
+
+function Main {
+    try {
+        $branch = Get-CurrentBranch
+        if ([string]::IsNullOrWhiteSpace($branch)) {
+            throw 'No se pudo determinar la rama activa. Asegúrate de estar dentro del repositorio.'
+        }
+
+        Assert-SyncPreconditions -Branch $branch
+        Update-RemoteReferences
+        Assert-RemoteBranch -Branch $branch
+        Sync-Branch -Branch $branch
+    }
+    catch {
+        Write-Status $_.Exception.Message 'Error'
+        exit 1
+    }
+}
+
+Main
