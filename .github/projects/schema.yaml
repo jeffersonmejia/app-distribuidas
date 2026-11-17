@@ -2228,7 +2228,7 @@ items:
     __typename: Issue
     id: I_kwDOVrRmwc8AAAABe0dh_Q
     number: 36
-    title: '[INT-001] Integrar features y validar construcción completa'
+    title: '[INT-001] Integrar features y validar compatibilidad'
     body: '<!-- managed-task-id: INT-001 -->
 
 
@@ -2236,7 +2236,7 @@ items:
 
       - **Responsable:** @EMLarco
 
-      - **Rutas:** backend/, frontend/, docs/arquitectura.md
+      - **Rutas:** backend/, frontend/, docs/arquitectura.md, docs/tasks/INT-001.md
 
       - **Dependencias:** AUTH-002, TEN-001, CRM-001, INV-003, POS-002, ACC-002, PROJ-001, MKT-002, FRONT-001, FRONT-002, FRONT-003, FRONT-004, FRONT-005
 
@@ -2245,23 +2245,25 @@ items:
 
       ## Alcance
 
-      Integrar Pull Requests en develop y resolver incompatibilidades entre límites de módulo, contratos, migraciones y frontend.
+      Validar la compatibilidad de las features en develop una vez completadas sus dependencias. La integración por PR, los builds, las pruebas, cobertura y CodeQL corresponden a los workflows existentes; esta tarea revisa su resultado y no duplica esas ejecuciones.
 
 
       ## Criterios de aceptación
 
-      - [ ] Build y checks backend/frontend pasan desde develop.
+      - [ ] El Quality Gate requerido pasó para el estado integrado en develop.
 
-      - [ ] No se agregan dependencias internas ni ciclos entre features.
+      - [ ] Las features respetan límites Feature-First: usan APIs públicas y no crean dependencias internas ni ciclos.
 
-      - [ ] Migraciones aplican desde una base limpia y Hibernate valida esquema.
+      - [ ] Las migraciones aplican desde una base vacía y Hibernate valida el esquema conforme a docs/orm-code-first.md.
 
-      - [ ] Rutas, DTOs, errores y permisos coinciden en frontend/backend.
+      - [ ] Rutas, DTOs, errores y permisos de UI/API son compatibles y respetan el contexto tenant de docs/multitenancy.md.
+
+      - [ ] Las incompatibilidades encontradas tienen corrección asignada al feature responsable; no quedan conflictos de integración pendientes.
 
 
       ## Bloqueo actual
 
-      Dependencias completadas: AUTH-002, TEN-001, CRM-001, INV-003, PROJ-001, FRONT-001, POS-002. Bloqueada por: @EMLarco (ACC-002, MKT-002), @Dayanarablb (FRONT-002, FRONT-003, FRONT-004, FRONT-005).
+      Dependencias completadas: AUTH-002, TEN-001, CRM-001, INV-003, PROJ-001, FRONT-001, POS-002, ACC-002, MKT-002, FRONT-002. Bloqueada por: @Dayanarablb (FRONT-003, FRONT-004, FRONT-005).
 
 
       ## Especificación de lógica
@@ -2287,7 +2289,7 @@ items:
   - fieldName: Repository
     value: jeffersonmejia/app-distribuidas
   - fieldName: Title
-    value: '[INT-001] Integrar features y validar construcción completa'
+    value: '[INT-001] Integrar features y validar compatibilidad'
   - fieldName: Status
     value: Blocked
   - fieldName: Estado
@@ -2301,7 +2303,7 @@ items:
   - fieldName: Fecha objetivo
     value: '2026-11-20'
   - fieldName: Bloqueado por
-    value: '@EMLarco (ACC-002, MKT-002), @Dayanarablb (FRONT-002, FRONT-003, FRONT-004, FRONT-005)'
+    value: '@Dayanarablb (FRONT-003, FRONT-004, FRONT-005)'
 - id: PVTI_lAHOBAk3Fs4BrVCXzhIVTCo
   content:
     __typename: Issue
