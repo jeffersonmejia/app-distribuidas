@@ -29,7 +29,7 @@ issue:
 
     - Prioridad: Alta
 
-    - Estado: En progreso
+    - Estado: Completado
 
     - Responsable: @Dayanarablb
 
@@ -44,7 +44,7 @@ issue:
 
     - Los tokens y componentes reutilizables con pruebas se integraron a develop mediante el PR #97.
 
-    - Falta completar o evidenciar estilos responsivos para distintos tamaños de pantalla.
+    - FRONT-001 completada por Dayanara, según confirmación del responsable.
 
 
     ## Especificación de lógica
@@ -60,7 +60,7 @@ project:
   Repository: jeffersonmejia/app-distribuidas
   Title: '[FRONT-001] Implementar sistema de diseño global'
   Status: Done
-  Estado: In Progress
+  Estado: Done
   Prioridad: Alta
   Área: Frontend
   Identificador de tarea: FRONT-001
@@ -68,7 +68,7 @@ project:
   Bloqueado por: Nadie
 planning:
   targetDate: '2026-11-14'
-  state: In Progress
+  state: Done
   priority: Alta
   acceptanceCriteria:
   - Los tokens globales están definidos.

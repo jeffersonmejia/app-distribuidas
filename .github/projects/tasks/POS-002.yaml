@@ -5,7 +5,7 @@ github:
 issue:
   title: '[POS-002] Implementar registro transaccional de ventas'
   body: "<!-- managed-task-id: POS-002 -->\n\n**Feature:** POS  \n**Responsable:** @BruceRodri  \n**Rutas:** backend/src/main/java/com/erp/features/pos/, backend/src/test/java/com/erp/features/pos/  \n**Dependencias:** TEN-001, INV-003, POS-001  \n**Fecha objetivo:** 2026-11-19\n\n## Alcance\nImplementar flujo de venta del MVP y consumir el contrato de Inventory para validar y descontar existencias.\n\n## Criterios de aceptación\n- [ ] Validar tenant, datos y disponibilidad antes de confirmar.\n- [ ] Venta y movimiento de inventario respetan atomicidad.\n- [ ] No consultar tablas, entidades ni repositorios de Inventory.\n- [ ] Probar éxito, stock insuficiente, duplicidad y rollback.\n\n## Decisiones aprobadas\n- `saleId` es un UUID del cliente, único por tenant; reintento con mismo payload devuelve la venta y payload distinto con la misma clave se rechaza.\n- Cada línea incluye `productId`, `unit`, `quantity`, `unitPrice` e `taxAmount`; precio e impuesto son snapshots del request en USD\
-    \ y escala 2. El neto se redondea HALF_UP; POS entrega impuesto por línea a Accounting sin calcular tasas.\n- POS guarda la venta dentro del callback `InventoryMovements.issueAndExecute`, con PostgreSQL y `PlatformTransactionManager` compartidos.\n\n## Estado\nINV-003 está completada en el PR #108. POS-002 queda lista para ejecución.\n\n## Especificación de lógica\n[Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/POS-002.md)."
+    \ y escala 2. El neto se redondea HALF_UP; POS entrega impuesto por línea a Accounting sin calcular tasas.\n- POS guarda la venta dentro del callback `InventoryMovements.issueAndExecute`, con PostgreSQL y `PlatformTransactionManager` compartidos.\n\n## Estado\nINV-003 está completada en el PR #108. POS-002 completada por Bruce; su contrato está disponible para las tareas dependientes.\n\n## Especificación de lógica\n[Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/POS-002.md)."
   state: closed
   assignees:
   - BruceRodri
@@ -17,7 +17,7 @@ project:
   Repository: jeffersonmejia/app-distribuidas
   Title: '[POS-002] Implementar registro transaccional de ventas'
   Status: Done
-  Estado: Todo
+  Estado: Done
   Prioridad: Alta
   Área: POS
   Identificador de tarea: POS-002
@@ -35,7 +35,7 @@ planning:
   - INV-003
   - POS-001
   targetDate: '2026-11-19'
-  state: Todo
+  state: Done
   priority: Alta
   blocked_by: []
   description: Implementar ventas tenant-scoped e idempotentes con snapshot de precios/impuestos aprobado y movimiento de Inventory dentro de una transacción compartida.
