@@ -75,7 +75,7 @@ function Assert-RemoteBranch {
 }
 
 function Update-RemoteReferences {
-    Write-Status 'Actualizando referencias de origin…'
+    Write-Status '[2/4] Actualizando referencias de origin…'
     Invoke-Git -Arguments @('fetch', 'origin') | Out-Null
 }
 
@@ -89,10 +89,9 @@ function Sync-Branch {
     param([Parameter(Mandatory)][string]$Branch)
 
     $remoteBranch = "origin/$Branch"
-    Write-Status "Actualizando la rama local '$Branch'…"
+    Write-Status "[3/4] Integrando cambios de origin/develop en '$Branch'…"
     Invoke-Git -Arguments @('merge', '--ff-only', $remoteBranch) | Out-Null
 
-    Write-Status "Integrando 'origin/develop'…"
     Invoke-Git -Arguments @('merge', '--no-edit', 'origin/develop') | Out-Null
 
     $behind = Get-CommitCount -Range "HEAD..$remoteBranch"
@@ -102,17 +101,18 @@ function Sync-Branch {
 
     $ahead = Get-CommitCount -Range "$remoteBranch..HEAD"
     if ($ahead -eq 0) {
-        Write-Status "'$Branch' ya estaba sincronizada con origin/develop." 'Success'
+        Write-Status "[4/4] '$Branch' ya estaba sincronizada; no hace falta publicar cambios." 'Success'
         return
     }
 
-    Write-Status "Publicando la sincronización en '$remoteBranch'…"
+    Write-Status "[4/4] Publicando la sincronización en '$remoteBranch'…"
     Invoke-Git -Arguments @('push', 'origin', $Branch) | Out-Null
     Write-Status "Sincronización completada en '$remoteBranch'." 'Success'
 }
 
 function Main {
     try {
+        Write-Status '[1/4] Validando rama y estado del árbol de trabajo…'
         $branch = Get-CurrentBranch
         if ([string]::IsNullOrWhiteSpace($branch)) {
             throw 'No se pudo determinar la rama activa. Asegúrate de estar dentro del repositorio.'
