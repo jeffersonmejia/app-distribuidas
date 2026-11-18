@@ -4,7 +4,7 @@ Aplicación desarrollada con Spring Boot organizado, se emplea arquitectura basa
 
 El alcance de la entrega es preparar el MVP, no completar todo el ERP y CRM. Incluye la base técnica multitenant y modular, la estructura de los módulos, el frontend inicial y los servicios locales de desarrollo. La fecha máxima objetivo para esta etapa es el domingo 15 de noviembre de 2026.
 
-Applicación de multitenant
+Applicación de multitenant contabilidad
 
 ## Responsabilidades
 
