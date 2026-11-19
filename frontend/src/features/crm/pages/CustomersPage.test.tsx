@@ -173,73 +173,99 @@ describe('CustomersPage', () => {
     expect(screen.getByRole('dialog')).toHaveClass('drawer-panel--open')
   })
 
-  it('activar cliente llama a setStatus con ACTIVE', async () => {
+  it('activar cliente llama a setStatus con ACTIVE tras confirmar en el diálogo', async () => {
     const inactive = makeView({ status: 'INACTIVE' }, 1)
     const list = vi.fn().mockResolvedValue(makePage([inactive]))
     const setStatus = vi.fn().mockResolvedValue({ ...inactive, status: 'ACTIVE' })
     const repo = makeRepo({ list, setStatus })
 
-    // Reemplazamos window.confirm para aceptar
-    vi.spyOn(window, 'confirm').mockReturnValue(true)
-
     render(<CustomersPage repository={repo} />)
     await screen.findByText('Cliente de Ejemplo 01')
 
     await userEvent.click(screen.getByRole('button', { name: /activar cliente de ejemplo 01/i }))
-    await waitFor(() => expect(setStatus).toHaveBeenCalledWith(inactive.id, 'ACTIVE'))
+    
+    // Se abre el alertdialog de confirmación accesible
+    const dialog = screen.getByRole('alertdialog')
+    expect(dialog).toBeInTheDocument()
+    expect(dialog).toHaveTextContent(/deseas activar a "Cliente de Ejemplo 01"/i)
 
-    vi.restoreAllMocks()
+    // Confirmar en el diálogo
+    await userEvent.click(within(dialog).getByRole('button', { name: 'Activar' }))
+    await waitFor(() => expect(setStatus).toHaveBeenCalledWith(inactive.id, 'ACTIVE'))
   })
 
-  it('desactivar cliente llama a setStatus con INACTIVE', async () => {
+  it('desactivar cliente llama a setStatus con INACTIVE tras confirmar en el diálogo', async () => {
     const active = makeView({ status: 'ACTIVE' }, 2)
     const list = vi.fn().mockResolvedValue(makePage([active]))
     const setStatus = vi.fn().mockResolvedValue({ ...active, status: 'INACTIVE' })
     const repo = makeRepo({ list, setStatus })
 
-    vi.spyOn(window, 'confirm').mockReturnValue(true)
-
     render(<CustomersPage repository={repo} />)
     await screen.findByText('Cliente de Ejemplo 02')
 
     await userEvent.click(screen.getByRole('button', { name: /desactivar cliente de ejemplo 02/i }))
-    await waitFor(() => expect(setStatus).toHaveBeenCalledWith(active.id, 'INACTIVE'))
+    
+    // Se abre el alertdialog de confirmación accesible
+    const dialog = screen.getByRole('alertdialog')
+    expect(dialog).toBeInTheDocument()
+    expect(dialog).toHaveTextContent(/deseas desactivar a "Cliente de Ejemplo 02"/i)
 
-    vi.restoreAllMocks()
+    // Confirmar en el diálogo
+    await userEvent.click(within(dialog).getByRole('button', { name: 'Desactivar' }))
+    await waitFor(() => expect(setStatus).toHaveBeenCalledWith(active.id, 'INACTIVE'))
   })
 
-  it('no llama a setStatus si el usuario cancela la confirmación', async () => {
+  it('no llama a setStatus si el usuario cancela en el diálogo de confirmación', async () => {
     const active = makeView({ status: 'ACTIVE' }, 3)
     const list = vi.fn().mockResolvedValue(makePage([active]))
     const setStatus = vi.fn()
     const repo = makeRepo({ list, setStatus })
 
-    vi.spyOn(window, 'confirm').mockReturnValue(false)
+    render(<CustomersPage repository={repo} />)
+    await screen.findByText('Cliente de Ejemplo 03')
+
+    await userEvent.click(screen.getByRole('button', { name: /desactivar/i }))
+    
+    const dialog = screen.getByRole('alertdialog')
+    expect(dialog).toBeInTheDocument()
+
+    // Clic en Cancelar
+    await userEvent.click(within(dialog).getByRole('button', { name: 'Cancelar' }))
+    expect(setStatus).not.toHaveBeenCalled()
+    expect(screen.queryByRole('alertdialog')).not.toBeInTheDocument()
+  })
+
+  it('cierra el diálogo de confirmación y no llama a setStatus con tecla Escape', async () => {
+    const active = makeView({ status: 'ACTIVE' }, 3)
+    const list = vi.fn().mockResolvedValue(makePage([active]))
+    const setStatus = vi.fn()
+    const repo = makeRepo({ list, setStatus })
 
     render(<CustomersPage repository={repo} />)
     await screen.findByText('Cliente de Ejemplo 03')
 
     await userEvent.click(screen.getByRole('button', { name: /desactivar/i }))
-    expect(setStatus).not.toHaveBeenCalled()
+    expect(screen.getByRole('alertdialog')).toBeInTheDocument()
 
-    vi.restoreAllMocks()
+    await userEvent.keyboard('{Escape}')
+    expect(setStatus).not.toHaveBeenCalled()
+    expect(screen.queryByRole('alertdialog')).not.toBeInTheDocument()
   })
 
-  it('muestra mensaje de error de acción si setStatus falla', async () => {
+  it('muestra mensaje de error de acción si setStatus falla tras confirmar', async () => {
     const active = makeView({ status: 'ACTIVE' }, 4)
     const list = vi.fn().mockResolvedValue(makePage([active]))
     const setStatus = vi.fn().mockRejectedValue(new CustomerApiError('err', 'unknown'))
     const repo = makeRepo({ list, setStatus })
 
-    vi.spyOn(window, 'confirm').mockReturnValue(true)
-
     render(<CustomersPage repository={repo} />)
     await screen.findByText('Cliente de Ejemplo 04')
     await userEvent.click(screen.getByRole('button', { name: /desactivar/i }))
 
-    expect(await screen.findByText(/no se pudo cambiar el estado/i)).toBeInTheDocument()
+    const dialog = screen.getByRole('alertdialog')
+    await userEvent.click(within(dialog).getByRole('button', { name: 'Desactivar' }))
 
-    vi.restoreAllMocks()
+    expect(await screen.findByText(/no se pudo cambiar el estado/i)).toBeInTheDocument()
   })
 
   it('la fila del cliente muestra el badge de estado correcto', async () => {

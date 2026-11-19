@@ -8,6 +8,7 @@ import { Button, Badge } from '../../../components/ui'
 import { Spinner, Alert, EmptyState } from '../../../components/feedback'
 import { Select } from '../../../components/forms'
 import { CustomerDrawer } from '../components/CustomerDrawer'
+import { ConfirmDialog } from '../components/ConfirmDialog'
 import { CustomerApiError, getCustomerRepository, type CustomerRepository } from '../services'
 import type { CustomerFilters, CustomerStatus, CustomerView } from '../types/customer'
 
@@ -53,6 +54,10 @@ export function CustomersPage({ repository }: CustomersPageProps) {
 
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [actionError, setActionError] = useState<string | null>(null)
+
+  // Estado para la confirmación accesible de activación/desactivación
+  const [customerToToggle, setCustomerToToggle] = useState<CustomerView | null>(null)
+  const toggleTriggerRef = useRef<HTMLElement | null>(null)
 
   // ID incremental por petición: la respuesta solo se aplica si su ID coincide
   // con el último emitido, descartando únicamente peticiones ANTERIORES.
@@ -122,15 +127,19 @@ export function CustomersPage({ repository }: CustomersPageProps) {
     setPage(newPage)
   }
 
-  //SOLID: SRP — CAMBIA EL ESTADO DE UN CLIENTE MOSTRANDO CONFIRMACIÓN ACCESIBLE.
-  async function handleToggleStatus(customer: CustomerView) {
-    const nextStatus: CustomerStatus = customer.status === 'ACTIVE' ? 'INACTIVE' : 'ACTIVE'
-    const label = nextStatus === 'INACTIVE' ? 'desactivar' : 'activar'
-    const confirmed = window.confirm(
-      `¿Deseas ${label} a "${customer.fullName}"?`,
-    )
-    if (!confirmed) return
+  // Abre el diálogo de confirmación accesible guardando el cliente y la referencia al elemento disparador.
+  function handleRequestToggle(customer: CustomerView, e: React.MouseEvent<HTMLElement>) {
+    toggleTriggerRef.current = e.currentTarget
+    setCustomerToToggle(customer)
+  }
 
+  //SOLID: SRP — CAMBIA EL ESTADO DE UN CLIENTE TRAS LA CONFIRMACIÓN ACCESIBLE.
+  async function handleConfirmToggle() {
+    if (!customerToToggle) return
+    const customer = customerToToggle
+    setCustomerToToggle(null)
+
+    const nextStatus: CustomerStatus = customer.status === 'ACTIVE' ? 'INACTIVE' : 'ACTIVE'
     setActionError(null)
     try {
       const updated = await repo.setStatus(customer.id, nextStatus)
@@ -142,6 +151,10 @@ export function CustomersPage({ repository }: CustomersPageProps) {
         setActionError('No se pudo cambiar el estado. Inténtalo de nuevo.')
       }
     }
+  }
+
+  function handleCancelToggle() {
+    setCustomerToToggle(null)
   }
 
   function handleCreated() {
@@ -210,7 +223,7 @@ export function CustomersPage({ repository }: CustomersPageProps) {
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={() => void handleToggleStatus(c)}
+                  onClick={(e) => handleRequestToggle(c, e)}
                   aria-label={
                     c.status === 'ACTIVE'
                       ? `Desactivar ${c.fullName}`
@@ -270,6 +283,29 @@ export function CustomersPage({ repository }: CustomersPageProps) {
         onClose={() => setDrawerOpen(false)}
         repository={repo}
         onCreated={handleCreated}
+      />
+
+      <ConfirmDialog
+        isOpen={customerToToggle !== null}
+        title={
+          customerToToggle?.status === 'ACTIVE'
+            ? 'Desactivar cliente'
+            : 'Activar cliente'
+        }
+        description={
+          customerToToggle
+            ? `¿Deseas ${
+                customerToToggle.status === 'ACTIVE' ? 'desactivar' : 'activar'
+              } a "${customerToToggle.fullName}"?`
+            : ''
+        }
+        confirmLabel={
+          customerToToggle?.status === 'ACTIVE' ? 'Desactivar' : 'Activar'
+        }
+        cancelLabel="Cancelar"
+        onConfirm={handleConfirmToggle}
+        onCancel={handleCancelToggle}
+        triggerRef={toggleTriggerRef}
       />
     </div>
   )
