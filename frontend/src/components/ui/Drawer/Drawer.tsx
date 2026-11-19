@@ -106,6 +106,8 @@ export function Drawer({ isOpen, onClose, title, children, footer }: DrawerProps
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
+        aria-hidden={!isOpen}
+        inert={!isOpen ? true : undefined}
         className={`drawer-panel${isOpen ? ' drawer-panel--open' : ''}`}
         onKeyDown={handleKeyDown}
       >
