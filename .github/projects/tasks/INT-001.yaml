@@ -3,7 +3,7 @@ github:
   repository: jeffersonmejia/app-distribuidas
   issue_number: 36
 issue:
-  title: '[INT-001] Integrar features y validar construcción completa'
+  title: '[INT-001] Integrar features y validar compatibilidad'
   body: '<!-- managed-task-id: INT-001 -->
 
 
@@ -11,7 +11,7 @@ issue:
 
     - **Responsable:** @EMLarco
 
-    - **Rutas:** backend/, frontend/, docs/arquitectura.md
+    - **Rutas:** backend/, frontend/, docs/arquitectura.md, docs/tasks/INT-001.md
 
     - **Dependencias:** AUTH-002, TEN-001, CRM-001, INV-003, POS-002, ACC-002, PROJ-001, MKT-002, FRONT-001, FRONT-002, FRONT-003, FRONT-004, FRONT-005
 
@@ -20,18 +20,20 @@ issue:
 
     ## Alcance
 
-    Integrar Pull Requests en develop y resolver incompatibilidades entre límites de módulo, contratos, migraciones y frontend.
+    Validar la compatibilidad de las features en develop una vez completadas sus dependencias. La integración por PR, los builds, las pruebas, cobertura y CodeQL corresponden a los workflows existentes; esta tarea revisa su resultado y no duplica esas ejecuciones.
 
 
     ## Criterios de aceptación
 
-    - [ ] Build y checks backend/frontend pasan desde develop.
+    - [ ] El Quality Gate requerido pasó para el estado integrado en develop.
 
-    - [ ] No se agregan dependencias internas ni ciclos entre features.
+    - [ ] Las features respetan límites Feature-First: usan APIs públicas y no crean dependencias internas ni ciclos.
 
-    - [ ] Migraciones aplican desde una base limpia y Hibernate valida esquema.
+    - [ ] Las migraciones aplican desde una base vacía y Hibernate valida el esquema conforme a docs/orm-code-first.md.
 
-    - [ ] Rutas, DTOs, errores y permisos coinciden en frontend/backend.
+    - [ ] Rutas, DTOs, errores y permisos de UI/API son compatibles y respetan el contexto tenant de docs/multitenancy.md.
+
+    - [ ] Las incompatibilidades encontradas tienen corrección asignada al feature responsable; no quedan conflictos de integración pendientes.
 
 
     ## Bloqueo actual
@@ -44,14 +46,14 @@ issue:
     [Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/INT-001.md).'
   state: open
   assignees:
-  - EMLarco
+  - jeffersonmejia
   labels:
   - backend
   - frontend
   - testing
 project:
   Repository: jeffersonmejia/app-distribuidas
-  Title: '[INT-001] Integrar features y validar construcción completa'
+  Title: '[INT-001] Integrar features y validar compatibilidad'
   Status: Blocked
   Estado: Blocked
   Prioridad: Alta
@@ -88,9 +90,10 @@ planning:
   - FRONT-003
   - FRONT-004
   - FRONT-005
-  description: Integrar Pull Requests en develop y resolver incompatibilidades entre límites de módulo, contratos, migraciones y frontend.
+  description: Validar compatibilidad de las features integradas en develop. Los workflows cubren PR, builds, pruebas, cobertura y CodeQL; INT-001 revisa compatibilidad de módulos, migraciones y contratos UI/API.
   acceptanceCriteria:
-  - Build y checks backend/frontend pasan desde develop.
-  - No se agregan dependencias internas ni ciclos entre features.
-  - Migraciones aplican desde una base limpia y Hibernate valida esquema.
-  - Rutas, DTOs, errores y permisos coinciden en frontend/backend.
+  - El Quality Gate requerido pasó para el estado integrado en develop.
+  - Las features respetan límites Feature-First: usan APIs públicas y no crean dependencias internas ni ciclos.
+  - Las migraciones aplican desde una base vacía y Hibernate valida el esquema conforme a docs/orm-code-first.md.
+  - Rutas, DTOs, errores y permisos de UI/API son compatibles y respetan el contexto tenant de docs/multitenancy.md.
+  - Las incompatibilidades encontradas tienen corrección asignada al feature responsable; no quedan conflictos de integración pendientes.

@@ -16,3 +16,5 @@ Applicación de multitenant
 | Jennifer | `Jntorres2001` | Testing, pruebas unitarias, de integración y de rendimiento con k6, cuando el alcance esté definido y exista funcionalidad que probar y supervisa constantemente la calidad con sonarqube. |
 | Dayanara | `Dayanarablb` | Frontend |
 | Bruce | `BruceRodri` | Backend, ejecuta las tareas backend.
+
+El proyecto se desarrolla de forma incremental por funcionalidades, con responsabilidades acordadas para cada integrante. Esta etapa establece la base técnica del MVP; las capacidades completas de ERP y CRM se incorporarán gradualmente conforme se definan e implementen sus funcionalidades.
