@@ -8,6 +8,7 @@ import { Button, Badge } from '../../../components/ui'
 import { Spinner, Alert, EmptyState } from '../../../components/feedback'
 import { CustomerDrawer } from '../components/CustomerDrawer'
 import { ConfirmDialog } from '../components/ConfirmDialog'
+import { CustomerActionsMenu } from '../components/CustomerActionsMenu'
 import { CustomerApiError, getCustomerRepository, type CustomerRepository } from '../services'
 import type { CustomerFilters, CustomerMetrics, CustomerStatus, CustomerView } from '../types/customer'
 import './CustomersPage.css'
@@ -145,8 +146,8 @@ export function CustomersPage({ repository }: CustomersPageProps) {
   }
 
   // Abre el diálogo de confirmación accesible guardando el cliente y la referencia al elemento disparador.
-  function handleRequestToggle(customer: CustomerView, e: React.MouseEvent<HTMLElement>) {
-    toggleTriggerRef.current = e.currentTarget
+  function handleRequestToggle(customer: CustomerView, triggerEl?: HTMLElement | null) {
+    if (triggerEl) toggleTriggerRef.current = triggerEl
     setCustomerToToggle(customer)
   }
 
@@ -257,18 +258,10 @@ export function CustomersPage({ repository }: CustomersPageProps) {
                 </Badge>
               </td>
               <td className="customers-page__cell customers-page__cell--right">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={(e) => handleRequestToggle(c, e)}
-                  aria-label={
-                    c.status === 'ACTIVE'
-                      ? `Desactivar ${c.fullName}`
-                      : `Activar ${c.fullName}`
-                  }
-                >
-                  {c.status === 'ACTIVE' ? 'Desactivar' : 'Activar'}
-                </Button>
+                <CustomerActionsMenu
+                  customer={c}
+                  onToggleStatus={(customer) => handleRequestToggle(customer)}
+                />
               </td>
             </tr>
           ))}

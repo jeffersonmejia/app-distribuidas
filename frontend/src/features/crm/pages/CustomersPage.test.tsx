@@ -192,7 +192,9 @@ describe('CustomersPage', () => {
     render(<CustomersPage repository={repo} />)
     await screen.findByText('Cliente de Ejemplo 01')
 
-    await userEvent.click(screen.getByRole('button', { name: /activar cliente de ejemplo 01/i }))
+    // Abre el menú de acciones y hace clic en Activar
+    await userEvent.click(screen.getByRole('button', { name: /acciones de cliente de ejemplo 01/i }))
+    await userEvent.click(screen.getByRole('menuitem', { name: /activar/i }))
     
     // Se abre el alertdialog de confirmación accesible
     const dialog = screen.getByRole('alertdialog')
@@ -218,7 +220,9 @@ describe('CustomersPage', () => {
     render(<CustomersPage repository={repo} />)
     await screen.findByText('Cliente de Ejemplo 02')
 
-    await userEvent.click(screen.getByRole('button', { name: /desactivar cliente de ejemplo 02/i }))
+    // Abre el menú de acciones y hace clic en Desactivar
+    await userEvent.click(screen.getByRole('button', { name: /acciones de cliente de ejemplo 02/i }))
+    await userEvent.click(screen.getByRole('menuitem', { name: /desactivar/i }))
     
     // Se abre el alertdialog de confirmación accesible
     const dialog = screen.getByRole('alertdialog')
@@ -244,7 +248,8 @@ describe('CustomersPage', () => {
     render(<CustomersPage repository={repo} />)
     await screen.findByText('Cliente de Ejemplo 03')
 
-    await userEvent.click(screen.getByRole('button', { name: /desactivar/i }))
+    await userEvent.click(screen.getByRole('button', { name: /acciones de cliente de ejemplo 03/i }))
+    await userEvent.click(screen.getByRole('menuitem', { name: /desactivar/i }))
     
     const dialog = screen.getByRole('alertdialog')
     expect(dialog).toBeInTheDocument()
@@ -266,7 +271,8 @@ describe('CustomersPage', () => {
     render(<CustomersPage repository={repo} />)
     await screen.findByText('Cliente de Ejemplo 03')
 
-    await userEvent.click(screen.getByRole('button', { name: /desactivar/i }))
+    await userEvent.click(screen.getByRole('button', { name: /acciones de cliente de ejemplo 03/i }))
+    await userEvent.click(screen.getByRole('menuitem', { name: /desactivar/i }))
     expect(screen.getByRole('alertdialog')).toBeInTheDocument()
     expect(document.body.style.overflow).toBe('hidden')
 
@@ -284,7 +290,8 @@ describe('CustomersPage', () => {
 
     render(<CustomersPage repository={repo} />)
     await screen.findByText('Cliente de Ejemplo 04')
-    await userEvent.click(screen.getByRole('button', { name: /desactivar/i }))
+    await userEvent.click(screen.getByRole('button', { name: /acciones de cliente de ejemplo 04/i }))
+    await userEvent.click(screen.getByRole('menuitem', { name: /desactivar/i }))
 
     const dialog = screen.getByRole('alertdialog')
     await userEvent.click(within(dialog).getByRole('button', { name: 'Desactivar' }))
