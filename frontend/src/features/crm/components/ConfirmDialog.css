@@ -5,11 +5,18 @@
   inset: 0;
   background-color: var(--color-black-alpha-50, rgba(0, 0, 0, 0.5));
   backdrop-filter: blur(2px);
+  z-index: var(--z-modal, 1050);
+}
+
+.confirm-dialog-container {
+  position: fixed;
+  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: var(--z-modal, 1050);
+  z-index: calc(var(--z-modal, 1050) + 1);
   padding: var(--space-4, 1rem);
+  pointer-events: none;
 }
 
 .confirm-dialog {
@@ -23,6 +30,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-4, 1rem);
+  pointer-events: auto;
 }
 
 .confirm-dialog__title {

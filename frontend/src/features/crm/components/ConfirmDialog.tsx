@@ -90,48 +90,56 @@ export function ConfirmDialog({
 
   // Bloqueo del scroll del fondo mientras el diálogo está abierto.
   useEffect(() => {
-    document.body.style.overflow = isOpen ? 'hidden' : ''
-    return () => { document.body.style.overflow = '' }
+    if (!isOpen) return
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = ''
+    }
   }, [isOpen])
 
   if (!isOpen) return null
 
   return (
-    // El overlay escucha clic para cancelar; aria-hidden porque el contenido
-    // semántico está en el div interno con role="alertdialog".
-    // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
-    <div className="confirm-dialog-overlay" onClick={onCancel} aria-hidden="true">
-      {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
+    <>
+      {/* Overlay decorativo como hermano con aria-hidden */}
       <div
-        ref={dialogRef}
-        role="alertdialog"
-        aria-modal="true"
-        aria-labelledby={titleId}
-        aria-describedby={descId}
-        className="confirm-dialog"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <h2 id={titleId} className="confirm-dialog__title">{title}</h2>
-        <p id={descId} className="confirm-dialog__description">{description}</p>
-        <div className="confirm-dialog__actions">
-          {/* Foco inicial en Cancelar — botón nativo con ref para focus programático */}
-          <button
-            ref={cancelBtnRef}
-            type="button"
-            className="btn btn--ghost btn--md"
-            onClick={onCancel}
-          >
-            {cancelLabel}
-          </button>
-          <button
-            type="button"
-            className="btn btn--primary btn--md"
-            onClick={onConfirm}
-          >
-            {confirmLabel}
-          </button>
+        className="confirm-dialog-overlay"
+        onClick={onCancel}
+        aria-hidden="true"
+      />
+
+      {/* Contenedor accesible del alertdialog centrado */}
+      <div className="confirm-dialog-container">
+        <div
+          ref={dialogRef}
+          role="alertdialog"
+          aria-modal="true"
+          aria-labelledby={titleId}
+          aria-describedby={descId}
+          className="confirm-dialog"
+        >
+          <h2 id={titleId} className="confirm-dialog__title">{title}</h2>
+          <p id={descId} className="confirm-dialog__description">{description}</p>
+          <div className="confirm-dialog__actions">
+            {/* Foco inicial en Cancelar — botón nativo con ref para focus programático */}
+            <button
+              ref={cancelBtnRef}
+              type="button"
+              className="btn btn--ghost btn--md"
+              onClick={onCancel}
+            >
+              {cancelLabel}
+            </button>
+            <button
+              type="button"
+              className="btn btn--primary btn--md"
+              onClick={onConfirm}
+            >
+              {confirmLabel}
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }

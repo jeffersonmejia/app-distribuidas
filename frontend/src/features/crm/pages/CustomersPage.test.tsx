@@ -199,9 +199,14 @@ describe('CustomersPage', () => {
     expect(dialog).toBeInTheDocument()
     expect(dialog).toHaveTextContent(/deseas activar a "Cliente de Ejemplo 01"/i)
 
+    // Verifica que el Drawer de alta NO está abierto (no tiene clase abierta) y body tiene overflow hidden
+    expect(document.querySelector('.drawer-panel')).not.toHaveClass('drawer-panel--open')
+    expect(document.body.style.overflow).toBe('hidden')
+
     // Confirmar en el diálogo
     await userEvent.click(within(dialog).getByRole('button', { name: 'Activar' }))
     await waitFor(() => expect(setStatus).toHaveBeenCalledWith(inactive.id, 'ACTIVE'))
+    expect(document.body.style.overflow).toBe('')
   })
 
   it('desactivar cliente llama a setStatus con INACTIVE tras confirmar en el diálogo', async () => {
@@ -220,9 +225,14 @@ describe('CustomersPage', () => {
     expect(dialog).toBeInTheDocument()
     expect(dialog).toHaveTextContent(/deseas desactivar a "Cliente de Ejemplo 02"/i)
 
+    // Verifica que el Drawer de alta NO está abierto
+    expect(document.querySelector('.drawer-panel')).not.toHaveClass('drawer-panel--open')
+    expect(document.body.style.overflow).toBe('hidden')
+
     // Confirmar en el diálogo
     await userEvent.click(within(dialog).getByRole('button', { name: 'Desactivar' }))
     await waitFor(() => expect(setStatus).toHaveBeenCalledWith(active.id, 'INACTIVE'))
+    expect(document.body.style.overflow).toBe('')
   })
 
   it('no llama a setStatus si el usuario cancela en el diálogo de confirmación', async () => {
@@ -238,11 +248,13 @@ describe('CustomersPage', () => {
     
     const dialog = screen.getByRole('alertdialog')
     expect(dialog).toBeInTheDocument()
+    expect(document.body.style.overflow).toBe('hidden')
 
     // Clic en Cancelar
     await userEvent.click(within(dialog).getByRole('button', { name: 'Cancelar' }))
     expect(setStatus).not.toHaveBeenCalled()
     expect(screen.queryByRole('alertdialog')).not.toBeInTheDocument()
+    expect(document.body.style.overflow).toBe('')
   })
 
   it('cierra el diálogo de confirmación y no llama a setStatus con tecla Escape', async () => {
@@ -256,10 +268,12 @@ describe('CustomersPage', () => {
 
     await userEvent.click(screen.getByRole('button', { name: /desactivar/i }))
     expect(screen.getByRole('alertdialog')).toBeInTheDocument()
+    expect(document.body.style.overflow).toBe('hidden')
 
     await userEvent.keyboard('{Escape}')
     expect(setStatus).not.toHaveBeenCalled()
     expect(screen.queryByRole('alertdialog')).not.toBeInTheDocument()
+    expect(document.body.style.overflow).toBe('')
   })
 
   it('muestra mensaje de error de acción si setStatus falla tras confirmar', async () => {
@@ -276,6 +290,7 @@ describe('CustomersPage', () => {
     await userEvent.click(within(dialog).getByRole('button', { name: 'Desactivar' }))
 
     expect(await screen.findByText(/no se pudo cambiar el estado/i)).toBeInTheDocument()
+    expect(document.body.style.overflow).toBe('')
   })
 
   it('la fila del cliente muestra el badge de estado correcto', async () => {
