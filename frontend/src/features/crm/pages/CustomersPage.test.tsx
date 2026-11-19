@@ -1,7 +1,6 @@
-import { render, screen, waitFor, within, fireEvent } from '@testing-library/react'
+import { render, screen, waitFor, within, fireEvent, act } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, it, expect, vi, afterEach } from 'vitest'
-import { act } from 'react'
 import { CustomersPage } from './CustomersPage'
 import { CustomerApiError, type CustomerRepository } from '../services/customerRepository'
 import type { CustomerPage, CustomerView } from '../types/customer'
@@ -158,8 +157,8 @@ describe('CustomersPage', () => {
     render(<CustomersPage repository={repo} />)
     await screen.findByText(/sin clientes/i)
 
-    // Abre drawer desde el EmptyState
-    await userEvent.click(screen.getByRole('button', { name: /nuevo cliente/i }))
+    // Abre drawer desde el botón del encabezado
+    await userEvent.click(screen.getAllByRole('button', { name: /nuevo cliente/i })[0])
     // Rellena nombre y guarda
     await userEvent.type(screen.getByLabelText(/nombre completo/i), 'Cliente 99')
     await userEvent.click(screen.getByRole('button', { name: /guardar/i }))
@@ -175,7 +174,7 @@ describe('CustomersPage', () => {
     render(<CustomersPage repository={repo} />)
     await screen.findByText(/sin clientes/i)
 
-    await userEvent.click(screen.getByRole('button', { name: /nuevo cliente/i }))
+    await userEvent.click(screen.getAllByRole('button', { name: /nuevo cliente/i })[0])
     await userEvent.type(screen.getByLabelText(/nombre completo/i), 'Dup')
     await userEvent.click(screen.getByRole('button', { name: /guardar/i }))
 
