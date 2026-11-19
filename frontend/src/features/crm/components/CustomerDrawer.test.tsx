@@ -1,6 +1,6 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest'
 import { CustomerDrawer } from './CustomerDrawer'
 import { CustomerApiError, type CustomerRepository } from '../services/customerRepository'
 import type { CustomerView } from '../types/customer'
@@ -8,8 +8,8 @@ import type { CustomerView } from '../types/customer'
 // Doble de repositorio para pruebas
 function makeRepo(overrides: Partial<CustomerRepository> = {}): CustomerRepository {
   return {
-    list: vi.fn().mockResolvedValue({ items: [], page: 0, size: 0, hasNext: false }),
-    create: vi.fn().mockResolvedValue({
+    list: vi.fn<() => Promise<{ items: CustomerView[]; page: number; size: number; hasNext: boolean }>>().mockResolvedValue({ items: [], page: 0, size: 0, hasNext: false }),
+    create: vi.fn<() => Promise<CustomerView>>().mockResolvedValue({
       id: 'test-001',
       fullName: 'Nombre Prueba',
       cedula: null,
@@ -25,12 +25,12 @@ function makeRepo(overrides: Partial<CustomerRepository> = {}): CustomerReposito
 }
 
 describe('CustomerDrawer', () => {
-  let onClose: ReturnType<typeof vi.fn>
-  let onCreated: ReturnType<typeof vi.fn>
+  let onClose: Mock<() => void>
+  let onCreated: Mock<(customer: CustomerView) => void>
 
   beforeEach(() => {
-    onClose = vi.fn()
-    onCreated = vi.fn()
+    onClose = vi.fn<() => void>()
+    onCreated = vi.fn<(customer: CustomerView) => void>()
   })
 
   it('renderiza el formulario con los 4 campos cuando isOpen es true', () => {

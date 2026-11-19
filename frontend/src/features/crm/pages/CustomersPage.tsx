@@ -238,7 +238,6 @@ export function CustomersPage({ repository }: CustomersPageProps) {
           currentPage={page}
           hasNext={hasNext}
           onPageChange={handlePageChange}
-          isLoading={loadState === 'loading'}
         />
       </>
     )
