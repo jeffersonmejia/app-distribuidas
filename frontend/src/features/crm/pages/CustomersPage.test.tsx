@@ -1,6 +1,6 @@
-import { render, screen, waitFor, within } from '@testing-library/react'
+import { render, screen, waitFor, within, fireEvent } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
+import { describe, it, expect, vi, afterEach } from 'vitest'
 import { act } from 'react'
 import { CustomersPage } from './CustomersPage'
 import { CustomerApiError, type CustomerRepository } from '../services/customerRepository'
@@ -38,8 +38,10 @@ function makeRepo(overrides: Partial<CustomerRepository> = {}): CustomerReposito
 
 // ── Tests ─────────────────────────────────────────────────────────────────
 describe('CustomersPage', () => {
-  // Sin vi.useFakeTimers() global: las pruebas usan timers reales por defecto.
-  // Solo la prueba de debounce activa timers falsos y los restaura en su propio afterEach.
+  afterEach(() => {
+    vi.useRealTimers()
+    vi.clearAllMocks()
+  })
 
   it('muestra spinner mientras carga', async () => {
     // list nunca resuelve durante esta prueba
@@ -95,24 +97,32 @@ describe('CustomersPage', () => {
   it('la búsqueda con debounce 300 ms llama a list con el término', async () => {
     const list = vi.fn().mockResolvedValue(makePage([makeView({}, 1)]))
     const repo = makeRepo({ list })
-    // Activa timers falsos solo para esta prueba; se restauran al terminar.
-    vi.useFakeTimers()
+
     render(<CustomersPage repository={repo} />)
     await screen.findAllByRole('row')
+    expect(list).toHaveBeenCalledTimes(1)
+
+    // Activa timers falsos solo para controlar el debounce de 300 ms
+    vi.useFakeTimers()
 
     const searchInput = screen.getByPlaceholderText(/buscar/i)
+    fireEvent.change(searchInput, { target: { value: 'ana' } })
+
+    // Antes de 300 ms no se debe llamar a list con el nuevo término
     await act(async () => {
-      await userEvent.type(searchInput, 'Ejemplo')
+      await vi.advanceTimersByTimeAsync(299)
     })
-    // Avanzamos el debounce
+    expect(list).toHaveBeenCalledTimes(1)
+
+    // Tras 300 ms se debe llamar a list con search: 'ana' y página 0
     await act(async () => {
-      vi.advanceTimersByTime(300)
+      await vi.advanceTimersByTimeAsync(1)
     })
-    await waitFor(() => expect(list).toHaveBeenCalledWith(
-      expect.objectContaining({ search: 'Ejemplo' }),
+    expect(list).toHaveBeenCalledTimes(2)
+    expect(list).toHaveBeenLastCalledWith(
+      expect.objectContaining({ search: 'ana' }),
       0,
-    ))
-    vi.useRealTimers()
+    )
   })
 
   it('el filtro de estado llama a list con el status seleccionado', async () => {

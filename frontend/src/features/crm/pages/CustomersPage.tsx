@@ -12,10 +12,6 @@ import { ConfirmDialog } from '../components/ConfirmDialog'
 import { CustomerApiError, getCustomerRepository, type CustomerRepository } from '../services'
 import type { CustomerFilters, CustomerStatus, CustomerView } from '../types/customer'
 
-// Contador global de peticiones para identificar cuál es la vigente y descartar
-// únicamente las anteriores (evita la condición de carrera sin cancelar la petición activa).
-let requestCounter = 0
-
 const STATUS_OPTIONS = [
   { value: '', label: 'Todos los estados' },
   { value: 'ACTIVE', label: 'Activo' },
@@ -66,9 +62,8 @@ export function CustomersPage({ repository }: CustomersPageProps) {
   //SOLID: SRP — CARGA LA PÁGINA DE CLIENTES APLICANDO LOS FILTROS ACTIVOS.
   const loadPage = useCallback(
     async (p: number, currentSearch: string, currentStatus: CustomerStatus | '') => {
-      requestCounter += 1
-      const thisRequest = requestCounter
-      currentRequestId.current = thisRequest
+      currentRequestId.current += 1
+      const thisRequest = currentRequestId.current
 
       setLoadState('loading')
       setErrorMessage(null)
@@ -96,6 +91,7 @@ export function CustomersPage({ repository }: CustomersPageProps) {
         }
       }
     },
+    // repo es estable en el ciclo de vida del componente
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [repo],
   )
@@ -105,7 +101,8 @@ export function CustomersPage({ repository }: CustomersPageProps) {
   // anteriores a través del ID incremental en loadPage.
   useEffect(() => {
     void loadPage(page, search, statusFilter)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // loadPage se recrea solo si repo cambia; su inclusión dispararía cargas redundantes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, search, statusFilter])
 
   // Debounce de búsqueda (300 ms)
