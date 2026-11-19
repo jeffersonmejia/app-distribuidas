@@ -3,6 +3,7 @@
 import type {
   CustomerFilters,
   CustomerInput,
+  CustomerMetrics,
   CustomerPage,
   CustomerStatus,
   CustomerView,
@@ -31,4 +32,6 @@ export interface CustomerRepository {
   list(filters?: CustomerFilters, page?: number): Promise<CustomerPage>
   create(input: CustomerInput): Promise<CustomerView>
   setStatus(id: string, status: CustomerStatus): Promise<CustomerView>
+  /** Opcional: Métricas de clientes calculadas en memoria para modo simulado. No presente en API real. */
+  getMetrics?(): Promise<CustomerMetrics>
 }

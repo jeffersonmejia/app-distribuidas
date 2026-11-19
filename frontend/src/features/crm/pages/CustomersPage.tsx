@@ -6,23 +6,16 @@ import { Table } from '../../../components/ui/Table'
 import { Pagination } from '../../../components/navigation/Pagination'
 import { Button, Badge } from '../../../components/ui'
 import { Spinner, Alert, EmptyState } from '../../../components/feedback'
-import { Select } from '../../../components/forms'
 import { CustomerDrawer } from '../components/CustomerDrawer'
 import { ConfirmDialog } from '../components/ConfirmDialog'
 import { CustomerApiError, getCustomerRepository, type CustomerRepository } from '../services'
-import type { CustomerFilters, CustomerStatus, CustomerView } from '../types/customer'
-
-const STATUS_OPTIONS = [
-  { value: '', label: 'Todos los estados' },
-  { value: 'ACTIVE', label: 'Activo' },
-  { value: 'INACTIVE', label: 'Inactivo' },
-]
+import type { CustomerFilters, CustomerMetrics, CustomerStatus, CustomerView } from '../types/customer'
+import './CustomersPage.css'
 
 const COLUMNS = [
-  { key: 'fullName', label: 'Nombre' },
-  { key: 'cedula', label: 'Cédula' },
-  { key: 'email', label: 'Correo' },
-  { key: 'phone', label: 'Teléfono' },
+  { key: 'customer', label: 'Cliente' },
+  { key: 'cedula', label: 'Identificación' },
+  { key: 'contact', label: 'Contacto' },
   { key: 'status', label: 'Estado' },
   { key: 'actions', label: 'Acciones', align: 'right' as const },
 ]
@@ -32,6 +25,14 @@ type LoadState = 'idle' | 'loading' | 'success' | 'error' | 'forbidden'
 export interface CustomersPageProps {
   /** Permite inyectar un repositorio en las pruebas. */
   repository?: CustomerRepository
+}
+
+// Helper para extraer iniciales de persona natural
+function getInitials(name: string): string {
+  const parts = name.trim().split(/\s+/).filter(Boolean)
+  if (parts.length === 0) return 'CL'
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase()
+  return (parts[0][0] + parts[1][0]).toUpperCase()
 }
 
 export function CustomersPage({ repository }: CustomersPageProps) {
@@ -50,6 +51,9 @@ export function CustomersPage({ repository }: CustomersPageProps) {
 
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [actionError, setActionError] = useState<string | null>(null)
+
+  // Métricas opcionales: solo se cargan si repo.getMetrics existe (modo simulado)
+  const [metrics, setMetrics] = useState<CustomerMetrics | null>(null)
 
   // Estado para la confirmación accesible de activación/desactivación
   const [customerToToggle, setCustomerToToggle] = useState<CustomerView | null>(null)
@@ -97,13 +101,29 @@ export function CustomersPage({ repository }: CustomersPageProps) {
   )
 
   // Carga inicial y cada vez que cambian filtros o página.
-  // El cleanup NO marca la petición como cancelada: solo invalida peticiones
-  // anteriores a través del ID incremental en loadPage.
   useEffect(() => {
     void loadPage(page, search, statusFilter)
-    // loadPage se recrea solo si repo cambia; su inclusión dispararía cargas redundantes
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, search, statusFilter])
+
+  // Carga métricas únicamente si el método getMetrics existe en el repositorio (simulado)
+  const loadMetrics = useCallback(async () => {
+    if (typeof repo.getMetrics === 'function') {
+      try {
+        const m = await repo.getMetrics()
+        setMetrics(m)
+      } catch {
+        // En caso de fallo en métricas simuladas, se omiten las tarjetas sin bloquear la lista
+        setMetrics(null)
+      }
+    } else {
+      setMetrics(null)
+    }
+  }, [repo])
+
+  useEffect(() => {
+    void loadMetrics()
+  }, [loadMetrics])
 
   // Debounce de búsqueda (300 ms)
   function handleSearchInput(value: string) {
@@ -115,8 +135,8 @@ export function CustomersPage({ repository }: CustomersPageProps) {
     }, 300)
   }
 
-  function handleStatusFilter(value: string) {
-    setStatusFilter(value as CustomerStatus | '')
+  function handleStatusTab(value: CustomerStatus | '') {
+    setStatusFilter(value)
     setPage(0)
   }
 
@@ -141,6 +161,7 @@ export function CustomersPage({ repository }: CustomersPageProps) {
     try {
       const updated = await repo.setStatus(customer.id, nextStatus)
       setCustomers((prev) => prev.map((c) => (c.id === updated.id ? updated : c)))
+      void loadMetrics()
     } catch (err) {
       if (err instanceof CustomerApiError && err.kind === 'forbidden') {
         setActionError('No tienes permiso para cambiar el estado del cliente.')
@@ -158,6 +179,7 @@ export function CustomersPage({ repository }: CustomersPageProps) {
     // Recarga desde la primera página para mostrar el nuevo cliente
     setPage(0)
     void loadPage(0, search, statusFilter)
+    void loadMetrics()
   }
 
   // ── Renderizado según estado ──
@@ -207,10 +229,28 @@ export function CustomersPage({ repository }: CustomersPageProps) {
         <Table columns={COLUMNS} ariaLabel="Lista de clientes">
           {customers.map((c) => (
             <tr key={c.id} className="customers-page__row">
-              <td className="customers-page__cell">{c.fullName}</td>
-              <td className="customers-page__cell">{c.cedula ?? '—'}</td>
-              <td className="customers-page__cell">{c.email ?? '—'}</td>
-              <td className="customers-page__cell">{c.phone ?? '—'}</td>
+              <td className="customers-page__cell">
+                <div className="customers-page__customer-cell">
+                  <div className="customers-page__avatar" aria-hidden="true">
+                    {getInitials(c.fullName)}
+                  </div>
+                  <div className="customers-page__name-wrapper">
+                    <span className="customers-page__name">{c.fullName}</span>
+                  </div>
+                </div>
+              </td>
+              <td className="customers-page__cell">
+                <div className="customers-page__id-cell">
+                  <span className="customers-page__id-number">{c.cedula ?? '—'}</span>
+                  {c.cedula && <span className="customers-page__id-label">Cédula</span>}
+                </div>
+              </td>
+              <td className="customers-page__cell">
+                <div className="customers-page__contact-cell">
+                  <span className="customers-page__contact-primary">{c.email ?? '—'}</span>
+                  <span className="customers-page__contact-secondary">{c.phone ?? '—'}</span>
+                </div>
+              </td>
               <td className="customers-page__cell">
                 <Badge variant={c.status === 'ACTIVE' ? 'success' : 'neutral'}>
                   {c.status === 'ACTIVE' ? 'Activo' : 'Inactivo'}
@@ -238,35 +278,134 @@ export function CustomersPage({ repository }: CustomersPageProps) {
           currentPage={page}
           hasNext={hasNext}
           onPageChange={handlePageChange}
+          itemsCount={customers.length}
         />
       </>
     )
   }
 
+  // Footer con pestañas tipo píldora (Stitch)
+  const headerFooter = (
+    <div className="customers-page__tabs" role="tablist" aria-label="Filtro de clientes por estado">
+      <button
+        type="button"
+        role="tab"
+        aria-selected={statusFilter === ''}
+        className={`customers-page__tab-pill${statusFilter === '' ? ' customers-page__tab-pill--active' : ''}`}
+        onClick={() => handleStatusTab('')}
+      >
+        <span>Todos</span>
+        {metrics && <span className="customers-page__tab-badge">{metrics.totalClientes}</span>}
+      </button>
+
+      <button
+        type="button"
+        role="tab"
+        aria-selected={statusFilter === 'ACTIVE'}
+        className={`customers-page__tab-pill${statusFilter === 'ACTIVE' ? ' customers-page__tab-pill--active' : ''}`}
+        onClick={() => handleStatusTab('ACTIVE')}
+      >
+        <span>Activos</span>
+        {metrics && <span className="customers-page__tab-badge">{metrics.activos}</span>}
+      </button>
+
+      <button
+        type="button"
+        role="tab"
+        aria-selected={statusFilter === 'INACTIVE'}
+        className={`customers-page__tab-pill${statusFilter === 'INACTIVE' ? ' customers-page__tab-pill--active' : ''}`}
+        onClick={() => handleStatusTab('INACTIVE')}
+      >
+        <span>Inactivos</span>
+        {metrics && <span className="customers-page__tab-badge">{metrics.inactivos}</span>}
+      </button>
+    </div>
+  )
+
   return (
     <div className="customers-page">
       <PageHeader
         title="Clientes"
-        description="Cartera comercial activa y seguimiento de cuentas."
+        description="Administración centralizada de cuentas de personas naturales y estados de cartera comercial."
         searchPlaceholder="Buscar por nombre, cédula o correo..."
         searchValue={searchInput}
         onSearchChange={handleSearchInput}
+        badgeText="Módulo Comercial • Directorio General"
         actions={
-          <Button variant="primary" onClick={() => setDrawerOpen(true)}>
-            + Nuevo cliente
-          </Button>
+          <>
+            <button
+              type="button"
+              className="btn customers-page__header-btn--export"
+              disabled
+              aria-disabled="true"
+              title="Exportación próximamente disponible"
+            >
+              Exportar
+            </button>
+            <Button
+              variant="primary"
+              onClick={() => setDrawerOpen(true)}
+              className="customers-page__header-btn--primary"
+            >
+              + Nuevo cliente
+            </Button>
+          </>
         }
+        footer={headerFooter}
       />
 
-      <div className="customers-page__toolbar">
-        <Select
-          id="customers-status-filter"
-          label="Estado"
-          options={STATUS_OPTIONS}
-          value={statusFilter}
-          onChange={(e) => handleStatusFilter(e.target.value)}
-        />
-      </div>
+      {/* Resumen métrico rápido Stitch — SOLO visible con datos simulados (si metrics !== null) */}
+      {metrics && (
+        <section className="customers-page__metrics" aria-label="Resumen de cartera">
+          <div className="customers-page__metric-card">
+            <div>
+              <p className="customers-page__metric-label">Total Clientes</p>
+              <p className="customers-page__metric-value">{metrics.totalClientes}</p>
+            </div>
+            <div className="customers-page__metric-icon customers-page__metric-icon--primary" aria-hidden="true">
+              <svg fill="currentColor" viewBox="0 0 24 24">
+                <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" />
+              </svg>
+            </div>
+          </div>
+
+          <div className="customers-page__metric-card">
+            <div>
+              <p className="customers-page__metric-label">Clientes Activos</p>
+              <p className="customers-page__metric-value">{metrics.activos}</p>
+            </div>
+            <div className="customers-page__metric-icon customers-page__metric-icon--success" aria-hidden="true">
+              <svg fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+              </svg>
+            </div>
+          </div>
+
+          <div className="customers-page__metric-card">
+            <div>
+              <p className="customers-page__metric-label">Clientes Inactivos</p>
+              <p className="customers-page__metric-value">{metrics.inactivos}</p>
+            </div>
+            <div className="customers-page__metric-icon customers-page__metric-icon--neutral" aria-hidden="true">
+              <svg fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
+              </svg>
+            </div>
+          </div>
+
+          <div className="customers-page__metric-card">
+            <div>
+              <p className="customers-page__metric-label">Nuevos este mes</p>
+              <p className="customers-page__metric-value">{metrics.nuevosEsteMes}</p>
+            </div>
+            <div className="customers-page__metric-icon customers-page__metric-icon--info" aria-hidden="true">
+              <svg fill="currentColor" viewBox="0 0 24 24">
+                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+              </svg>
+            </div>
+          </div>
+        </section>
+      )}
 
       {actionError && (
         <Alert variant="error">{actionError}</Alert>

@@ -67,4 +67,14 @@ describe('PageHeader Component', () => {
     )
     expect(screen.getByRole('button', { name: 'Nuevo cliente' })).toBeInTheDocument()
   })
+
+  it('renderiza el footer cuando se proporciona', () => {
+    render(
+      <PageHeader
+        title="Clientes"
+        footer={<div data-testid="test-footer">Pestañas</div>}
+      />
+    )
+    expect(screen.getByTestId('test-footer')).toBeInTheDocument()
+  })
 })

@@ -124,13 +124,14 @@ describe('CustomersPage', () => {
     )
   })
 
-  it('el filtro de estado llama a list con el status seleccionado', async () => {
+  it('el filtro de pestañas de estado llama a list con el status seleccionado', async () => {
     const list = vi.fn().mockResolvedValue(makePage([]))
     const repo = makeRepo({ list })
     render(<CustomersPage repository={repo} />)
     await waitFor(() => expect(list).toHaveBeenCalledOnce())
 
-    await userEvent.selectOptions(screen.getByLabelText(/estado/i), 'ACTIVE')
+    // En lugar de select nativo, ahora se usan las pestañas de estado tipo píldora
+    await userEvent.click(screen.getByRole('tab', { name: /activos/i }))
     await waitFor(() => expect(list).toHaveBeenCalledWith(
       expect.objectContaining({ status: 'ACTIVE' }),
       0,
@@ -304,5 +305,40 @@ describe('CustomersPage', () => {
     // fila 1 (índice 1 porque índice 0 es header)
     expect(within(rows[1]).getByText('Activo')).toBeInTheDocument()
     expect(within(rows[2]).getByText('Inactivo')).toBeInTheDocument()
+  })
+
+  it('muestra las tarjetas de métricas cuando el repositorio implementa getMetrics', async () => {
+    const repo = makeRepo({
+      list: vi.fn().mockResolvedValue(makePage([])),
+      getMetrics: vi.fn().mockResolvedValue({
+        totalClientes: 42,
+        activos: 35,
+        inactivos: 7,
+        nuevosEsteMes: 3,
+      }),
+    })
+    render(<CustomersPage repository={repo} />)
+    expect(await screen.findByText('42')).toBeInTheDocument()
+    expect(screen.getByText('35')).toBeInTheDocument()
+    expect(screen.getByText('7')).toBeInTheDocument()
+  })
+
+  it('no muestra las tarjetas de métricas cuando repo no tiene getMetrics', async () => {
+    const repo = makeRepo({ list: vi.fn().mockResolvedValue(makePage([])) })
+    render(<CustomersPage repository={repo} />)
+    await screen.findByText(/sin clientes/i)
+    expect(screen.queryByRole('region', { name: /resumen de cartera/i })).toBeNull()
+  })
+
+  it('renderiza iniciales y detalles en la fila del cliente', async () => {
+    const item = makeView({ fullName: 'Diana Gómez', cedula: '1723456789', email: 'diana@ficcion.test' })
+    const repo = makeRepo({ list: vi.fn().mockResolvedValue(makePage([item])) })
+    render(<CustomersPage repository={repo} />)
+
+    expect(await screen.findByText('DG')).toBeInTheDocument()
+    expect(screen.getByText('Diana Gómez')).toBeInTheDocument()
+    expect(screen.getByText('1723456789')).toBeInTheDocument()
+    expect(screen.getByText('Cédula')).toBeInTheDocument()
+    expect(screen.getByText('diana@ficcion.test')).toBeInTheDocument()
   })
 })

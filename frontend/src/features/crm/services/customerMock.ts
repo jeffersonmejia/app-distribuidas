@@ -3,6 +3,7 @@
 import type {
   CustomerFilters,
   CustomerInput,
+  CustomerMetrics,
   CustomerPage,
   CustomerStatus,
   CustomerView,
@@ -203,6 +204,22 @@ export class CustomerMockRepository implements CustomerRepository {
     const updated: CustomerView = { ...store[idx], status, updatedAt: now() }
     store = store.map((c) => (c.id === id ? updated : c))
     return updated
+  }
+
+  //SOLID: SRP — CALCULA MÉTRICAS DE CLIENTES EN MEMORIA PARA MODO SIMULADO.
+  async getMetrics(): Promise<CustomerMetrics> {
+    await delay(100)
+    const totalClientes = store.length
+    const activos = store.filter((c) => c.status === 'ACTIVE').length
+    const inactivos = store.filter((c) => c.status === 'INACTIVE').length
+    // Métrica simulada de nuevos este mes
+    const nuevosEsteMes = Math.min(totalClientes, 3)
+    return {
+      totalClientes,
+      activos,
+      inactivos,
+      nuevosEsteMes,
+    }
   }
 }
 

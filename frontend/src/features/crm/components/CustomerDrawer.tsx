@@ -7,6 +7,7 @@ import { Button } from '../../../components/ui'
 import { Alert } from '../../../components/feedback'
 import { CustomerApiError, type CustomerRepository } from '../services/customerRepository'
 import type { CustomerInput, CustomerView } from '../types/customer'
+import './CustomerDrawer.css'
 
 export interface CustomerDrawerProps {
   isOpen: boolean
