@@ -153,9 +153,15 @@ describe('NewSalePage', () => {
     // Subtotal gravado: formatMoney(850)
     // IVA 15%: round(850 * 0.15) = 128 centavos -> formatMoney(128)
     // Total: 850 + 128 = 978 -> formatMoney(978)
-    expect(screen.getAllByText(new RegExp(formatMoney(850).replace('$', '\\$'))).length).toBeGreaterThanOrEqual(1)
-    expect(screen.getByText(new RegExp(formatMoney(128).replace('$', '\\$')))).toBeInTheDocument()
-    expect(screen.getByText(new RegExp(formatMoney(978).replace('$', '\\$')))).toBeInTheDocument()
+    expect(
+      screen.getAllByText((content) => content.includes(formatMoney(850))).length
+    ).toBeGreaterThanOrEqual(1)
+    expect(
+      screen.getByText((content) => content.includes(formatMoney(128)))
+    ).toBeInTheDocument()
+    expect(
+      screen.getByText((content) => content.includes(formatMoney(978)))
+    ).toBeInTheDocument()
 
     // Cambiar cantidad a 2:
     // Subtotal = 2 * 8.50 = 1700 -> formatMoney(1700)
@@ -166,9 +172,15 @@ describe('NewSalePage', () => {
     await user.type(qtyInput, '2')
 
     await waitFor(() => {
-      expect(screen.getAllByText(new RegExp(formatMoney(1700).replace('$', '\\$'))).length).toBeGreaterThanOrEqual(1)
-      expect(screen.getByText(new RegExp(formatMoney(255).replace('$', '\\$')))).toBeInTheDocument()
-      expect(screen.getByText(new RegExp(formatMoney(1955).replace('$', '\\$')))).toBeInTheDocument()
+      expect(
+        screen.getAllByText((content) => content.includes(formatMoney(1700))).length
+      ).toBeGreaterThanOrEqual(1)
+      expect(
+        screen.getByText((content) => content.includes(formatMoney(255)))
+      ).toBeInTheDocument()
+      expect(
+        screen.getByText((content) => content.includes(formatMoney(1955)))
+      ).toBeInTheDocument()
     })
   })
 
