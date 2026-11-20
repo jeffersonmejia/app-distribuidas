@@ -25,7 +25,7 @@
 }
 
 .customer-actions-menu__trigger:hover {
-  background-color: var(--surface-on-brand-soft, #e2e8f0);
+  background-color: var(--surface-on-brand-soft);
   color: var(--text-primary);
 }
 
