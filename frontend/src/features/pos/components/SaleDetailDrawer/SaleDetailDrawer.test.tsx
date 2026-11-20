@@ -51,6 +51,7 @@ describe('SaleDetailDrawer', () => {
     const failingRepo: PosRepository = {
       list: vi.fn(),
       getById: vi.fn().mockRejectedValue(new PosApiError('Comprobante inexistente', 'not_found')),
+      createSale: vi.fn(),
     }
 
     render(

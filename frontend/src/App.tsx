@@ -5,6 +5,7 @@ import LoginPage from './features/identity/pages/LoginPage'
 import { CustomersPage } from './features/crm/pages/CustomersPage'
 import { InventoryPage } from './features/inventory/pages/InventoryPage'
 import { PosPage } from './features/pos/pages/PosPage'
+import { NewSalePage } from './features/pos/pages/NewSalePage'
 import { Card } from './components/ui/Card'
 import { EmptyState } from './components/feedback/EmptyState'
 import { SessionProvider } from './features/identity/context'
@@ -32,6 +33,10 @@ export const MODULE_DESCRIPTIONS: Record<string, { title: string; description: s
   '/pos': {
     title: 'Ventas',
     description: 'Flujo de ventas y emisión de comprobantes comerciales.',
+  },
+  '/pos/new': {
+    title: 'Nueva venta',
+    description: 'Emisión de comprobante comercial y registro contable en tiempo real.',
   },
   '/projects': {
     title: 'Proyectos',
@@ -98,6 +103,8 @@ export function AppContent() {
         <InventoryPage />
       ) : route.path === '/pos' ? (
         <PosPage />
+      ) : route.path === '/pos/new' ? (
+        <NewSalePage />
       ) : (
         <PlaceholderPage
           title={moduleInfo.title}

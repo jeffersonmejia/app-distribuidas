@@ -114,6 +114,7 @@ describe('PosPage', () => {
       list: vi.fn().mockRejectedValue(new PosApiError('Error de conexión con el servicio', 'unknown')),
       getById: vi.fn(),
       getMetrics: vi.fn().mockRejectedValue(new Error('Métricas no disponibles')),
+      createSale: vi.fn(),
     }
 
     render(<PosPage repository={failingRepo} />)

@@ -9,7 +9,7 @@ export interface RouterContextValue {
   navigate: (to: string, options?: { replace?: boolean }) => void
 }
 
-const RouterContext = createContext<RouterContextValue | null>(null)
+export const RouterContext = createContext<RouterContextValue | null>(null)
 
 export interface RouterProviderProps {
   children: ReactNode

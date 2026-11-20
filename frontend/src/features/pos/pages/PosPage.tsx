@@ -1,6 +1,7 @@
 // SOLID: SRP — ESTA PÁGINA SE ENCARGA EXCLUSIVAMENTE DE LA VISUALIZACIÓN Y GESTIÓN DEL FLUJO DE VENTAS.
 
-import { useState, useEffect, useRef, type ReactNode } from 'react'
+import { useState, useEffect, useRef, useContext, type ReactNode } from 'react'
+import { RouterContext } from '../../../app/router'
 import { PageHeader } from '../../../components/navigation'
 import { Table, type TableColumn } from '../../../components/ui/Table'
 import { Pagination } from '../../../components/navigation/Pagination'
@@ -40,6 +41,7 @@ function getStatusBadgeConfig(status: SaleStatus): { label: string; variant: Bad
 }
 
 export function PosPage({ repository }: PosPageProps) {
+  const router = useContext(RouterContext)
   const repo = repository ?? getPosRepository()
 
   const [sales, setSales] = useState<Sale[]>([])
@@ -275,8 +277,7 @@ export function PosPage({ repository }: PosPageProps) {
             </Button>
             <Button
               variant="primary"
-              disabled
-              title="La creación de ventas por POS requiere contratos y backend aprobados"
+              onClick={() => router?.navigate('/pos/new')}
             >
               + Nueva venta
             </Button>
