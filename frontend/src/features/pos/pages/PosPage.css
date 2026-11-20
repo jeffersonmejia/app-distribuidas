@@ -49,20 +49,16 @@
   margin-top: var(--space-2);
 }
 
-.pos-page__list {
-  background-color: var(--surface-canvas);
-  border-radius: var(--radius-xl);
-  border: 1px solid var(--border-subtle);
-  overflow: hidden;
-  box-shadow: var(--shadow-sm);
-}
-
 .pos-page__table-row {
   transition: background-color var(--transition-fast);
 }
 
 .pos-page__table-row:hover {
   background-color: var(--surface-sunken);
+}
+
+.pos-page__table-row td {
+  vertical-align: middle;
 }
 
 .pos-page__receipt-cell {

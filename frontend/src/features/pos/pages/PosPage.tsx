@@ -343,10 +343,8 @@ export function PosPage({ repository }: PosPageProps) {
         />
       </section>
 
-      {/* Contenedor del Listado */}
-      <section className="pos-page__list" aria-label="Comprobantes">
-        {content}
-      </section>
+      {/* Listado de comprobantes */}
+      {content}
 
       {/* Paginación */}
       <Pagination
