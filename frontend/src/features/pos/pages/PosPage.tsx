@@ -10,6 +10,7 @@ import { SaleDetailDrawer } from '../components/SaleDetailDrawer'
 import { getPosRepository, type PosRepository } from '../services'
 import type { Sale, SaleStatus, SaleMetrics } from '../types/sale'
 import { formatMoney } from '../../../utils/formatMoney'
+import { formatCalendarDate } from '../../../utils/formatDate'
 import './PosPage.css'
 
 const COLUMNS: TableColumn[] = [
@@ -25,21 +26,6 @@ type LoadState = 'idle' | 'loading' | 'success' | 'error'
 
 export interface PosPageProps {
   repository?: PosRepository
-}
-
-function formatDate(isoDate: string): string {
-  try {
-    const d = new Date(isoDate)
-    return isNaN(d.getTime())
-      ? isoDate
-      : d.toLocaleDateString('es-EC', {
-          year: 'numeric',
-          month: 'short',
-          day: 'numeric',
-        })
-  } catch {
-    return isoDate
-  }
 }
 
 function getStatusBadgeConfig(status: SaleStatus): { label: string; variant: BadgeVariant } {
@@ -245,7 +231,7 @@ export function PosPage({ repository }: PosPageProps) {
                   <span className="pos-page__customer-id">{sale.customerIdentification}</span>
                 </div>
               </td>
-              <td className="pos-page__date-cell">{formatDate(sale.issuedAt)}</td>
+              <td className="pos-page__date-cell">{formatCalendarDate(sale.issuedAt)}</td>
               <td className="pos-page__total-cell pos-page__cell--right">
                 <span className="pos-page__total-amount">{formatMoney(sale.totalCents)}</span>
               </td>

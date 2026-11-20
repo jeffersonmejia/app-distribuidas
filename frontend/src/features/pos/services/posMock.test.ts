@@ -4,10 +4,11 @@ import { PosApiError } from './posRepository'
 
 describe('PosMockRepository', () => {
   let repo: PosMockRepository
+  const fixedNow = () => new Date(2026, 10, 15) // 15 de noviembre de 2026
 
   beforeEach(() => {
-    resetPosMockStore()
-    repo = new PosMockRepository()
+    resetPosMockStore(fixedNow)
+    repo = new PosMockRepository(undefined, fixedNow)
   })
 
   it('lista ventas paginadas con tamaño máximo de 5', async () => {
@@ -19,6 +20,21 @@ describe('PosMockRepository', () => {
     const page1 = await repo.list({}, 1)
     expect(page1.items.length).toBe(3) // 8 en total para andina
     expect(page1.hasNext).toBe(false)
+  })
+
+  it('genera fechas de emisión relativas al mes actual y anterior de forma determinista', async () => {
+    const allSales = await repo.list({}, 0)
+    const page1 = await repo.list({}, 1)
+    const items = [...allSales.items, ...page1.items]
+
+    // Comprobantes del mes en curso (noviembre 2026)
+    const currentMonthSales = items.filter((s) => s.issuedAt.startsWith('2026-11'))
+    expect(currentMonthSales.length).toBe(6)
+
+    // Comprobantes del mes anterior (octubre 2026) con estado overdue
+    const prevMonthSales = items.filter((s) => s.issuedAt.startsWith('2026-10'))
+    expect(prevMonthSales.length).toBe(2)
+    expect(prevMonthSales.every((s) => s.status === 'overdue')).toBe(true)
   })
 
   it('filtra por término de búsqueda en número de comprobante, cliente o RUC', async () => {
@@ -61,18 +77,40 @@ describe('PosMockRepository', () => {
     }
   })
 
-  it('calcula métricas de ventas agregadas para el tenant', async () => {
+  it('aplica las fórmulas exactas de métricas: Ventas del mes solo mes actual, Por cobrar pendientes y Vencidas estado overdue', async () => {
     const metrics = await repo.getMetrics()
-    expect(metrics.totalSalesThisMonthCents).toBeGreaterThan(0)
-    expect(metrics.pendingCents).toBeGreaterThan(0)
-    expect(metrics.overdueCents).toBeGreaterThan(0)
+    const allSales0 = await repo.list({}, 0)
+    const allSales1 = await repo.list({}, 1)
+    const allSales = [...allSales0.items, ...allSales1.items]
+
+    // 1. Ventas del mes = suma exclusiva de comprobantes emitidos en el mes en curso (2026-11)
+    const expectedCurrentMonthCents = allSales
+      .filter((s) => s.issuedAt.startsWith('2026-11'))
+      .reduce((sum, s) => sum + s.totalCents, 0)
+    expect(metrics.totalSalesThisMonthCents).toBe(expectedCurrentMonthCents)
+
+    // Las facturas vencidas de octubre NO deben estar en Ventas del mes
+    const overdueSales = allSales.filter((s) => s.status === 'overdue')
+    const overdueTotal = overdueSales.reduce((sum, s) => sum + s.totalCents, 0)
+    expect(metrics.totalSalesThisMonthCents).not.toContain(overdueTotal)
+
+    // 2. Por cobrar = suma de todas las facturas pendientes
+    const expectedPendingCents = allSales
+      .filter((s) => s.status === 'pending')
+      .reduce((sum, s) => sum + s.totalCents, 0)
+    expect(metrics.pendingCents).toBe(expectedPendingCents)
+
+    // 3. Vencidas = suma de todas las facturas con estado overdue
+    expect(metrics.overdueCents).toBe(overdueTotal)
+
+    // 4. Conteo por estado
     expect(metrics.countByStatus.paid).toBe(4)
     expect(metrics.countByStatus.pending).toBe(2)
     expect(metrics.countByStatus.overdue).toBe(2)
   })
 
   it('respeta el aislamiento estricto por tenant', async () => {
-    const repoPacifico = new PosMockRepository('tnt-pacifico-002')
+    const repoPacifico = new PosMockRepository('tnt-pacifico-002', fixedNow)
     const pacificoSales = await repoPacifico.list()
     expect(pacificoSales.items.length).toBe(1)
     expect(pacificoSales.items[0].receiptNumber).toBe('002-001-000000001')

@@ -88,4 +88,24 @@ describe('SaleDetailDrawer', () => {
     await user.click(closeBtn)
     expect(handleClose).toHaveBeenCalledTimes(1)
   })
+
+  it('muestra la fecha de emisión como fecha de calendario sin hora ni a. m. / p. m.', async () => {
+    render(
+      <SaleDetailDrawer
+        isOpen={true}
+        onClose={vi.fn()}
+        saleId="sal-andina-001"
+        repository={mockRepo}
+      />
+    )
+
+    await waitFor(() => {
+      expect(screen.getByText('001-001-000000101')).toBeInTheDocument()
+    })
+
+    const dateField = screen.getByText('Fecha de emisión:').nextElementSibling
+    expect(dateField).not.toBeNull()
+    expect(dateField?.textContent).toMatch(/\d{1,2}\s+de\s+[a-zñ]+\s+de\s+\d{4}/i)
+    expect(dateField?.textContent).not.toMatch(/a\.\s*m\.|p\.\s*m\.|05:30/i)
+  })
 })

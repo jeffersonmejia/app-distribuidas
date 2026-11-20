@@ -7,6 +7,7 @@ import { Spinner, Alert } from '../../../../components/feedback'
 import { getPosRepository, type PosRepository } from '../../services'
 import type { Sale, SaleStatus } from '../../types/sale'
 import { formatMoney } from '../../../../utils/formatMoney'
+import { formatCalendarDate } from '../../../../utils/formatDate'
 import './SaleDetailDrawer.css'
 
 export interface SaleDetailDrawerProps {
@@ -14,23 +15,6 @@ export interface SaleDetailDrawerProps {
   onClose: () => void
   saleId: string | null
   repository?: PosRepository
-}
-
-function formatDate(isoDate: string): string {
-  try {
-    const d = new Date(isoDate)
-    return isNaN(d.getTime())
-      ? isoDate
-      : d.toLocaleDateString('es-EC', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-          hour: '2-digit',
-          minute: '2-digit',
-        })
-  } catch {
-    return isoDate
-  }
 }
 
 function getStatusBadgeConfig(status: SaleStatus): { label: string; variant: BadgeVariant } {
@@ -145,7 +129,7 @@ export function SaleDetailDrawer({
               </div>
               <div className="sale-detail-drawer__field">
                 <dt className="sale-detail-drawer__label">Fecha de emisión:</dt>
-                <dd className="sale-detail-drawer__value">{formatDate(sale.issuedAt)}</dd>
+                <dd className="sale-detail-drawer__value">{formatCalendarDate(sale.issuedAt)}</dd>
               </div>
               <div className="sale-detail-drawer__field">
                 <dt className="sale-detail-drawer__label">Forma de pago:</dt>
