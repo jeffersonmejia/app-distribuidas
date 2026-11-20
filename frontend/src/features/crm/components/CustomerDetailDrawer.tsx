@@ -3,6 +3,7 @@
 import { Drawer } from '../../../components/ui/Drawer'
 import { Button, Badge } from '../../../components/ui'
 import type { CustomerView } from '../types/customer'
+import { getCustomerInitials } from '../utils/initials'
 import './CustomerDetailDrawer.css'
 
 export interface CustomerDetailDrawerProps {
@@ -10,13 +11,6 @@ export interface CustomerDetailDrawerProps {
   onClose: () => void
   customer: CustomerView | null
   onEdit?: (customer: CustomerView) => void
-}
-
-function getInitials(name: string): string {
-  const parts = name.trim().split(/\s+/).filter(Boolean)
-  if (parts.length === 0) return 'CL'
-  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase()
-  return (parts[0][0] + parts[1][0]).toUpperCase()
 }
 
 function formatDate(isoDate: string): string {
@@ -74,7 +68,7 @@ export function CustomerDetailDrawer({
         {/* Cabecera del detalle */}
         <div className="customer-detail__header">
           <div className="customer-detail__avatar" aria-hidden="true">
-            {getInitials(customer.fullName)}
+            {getCustomerInitials(customer.fullName)}
           </div>
           <div className="customer-detail__header-info">
             <h3 className="customer-detail__name">{customer.fullName}</h3>

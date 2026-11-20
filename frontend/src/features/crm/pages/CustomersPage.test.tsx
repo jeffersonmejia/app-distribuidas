@@ -135,7 +135,7 @@ describe('CustomersPage', () => {
     await waitFor(() => expect(list).toHaveBeenCalledOnce())
 
     // En lugar de select nativo, ahora se usan las pestañas de estado tipo píldora
-    await userEvent.click(screen.getByRole('tab', { name: /activos/i }))
+    await userEvent.click(screen.getByRole('tab', { name: /^activos/i }))
     await waitFor(() => expect(list).toHaveBeenCalledWith(
       expect.objectContaining({ status: 'ACTIVE' }),
       0,
@@ -329,9 +329,10 @@ describe('CustomersPage', () => {
       }),
     })
     render(<CustomersPage repository={repo} />)
-    expect(await screen.findByText('42')).toBeInTheDocument()
-    expect(screen.getByText('35')).toBeInTheDocument()
-    expect(screen.getByText('7')).toBeInTheDocument()
+    const metricsRegion = await screen.findByRole('region', { name: /resumen de cartera/i })
+    expect(within(metricsRegion).getByText('42')).toBeInTheDocument()
+    expect(within(metricsRegion).getByText('35')).toBeInTheDocument()
+    expect(within(metricsRegion).getByText('7')).toBeInTheDocument()
   })
 
   it('no muestra las tarjetas de métricas cuando repo no tiene getMetrics', async () => {
@@ -346,11 +347,14 @@ describe('CustomersPage', () => {
     const repo = makeRepo({ list: vi.fn().mockResolvedValue(makePage([item])) })
     render(<CustomersPage repository={repo} />)
 
-    expect(await screen.findByText('DG')).toBeInTheDocument()
-    expect(screen.getByText('Diana Gómez')).toBeInTheDocument()
-    expect(screen.getByText('1723456789')).toBeInTheDocument()
-    expect(screen.getByText('Cédula')).toBeInTheDocument()
-    expect(screen.getByText('diana@ficcion.test')).toBeInTheDocument()
+    const rows = await screen.findAllByRole('row')
+    const dataRow = rows[1]
+
+    expect(within(dataRow).getByText('DG')).toBeInTheDocument()
+    expect(within(dataRow).getByText('Diana Gómez')).toBeInTheDocument()
+    expect(within(dataRow).getByText('1723456789')).toBeInTheDocument()
+    expect(within(dataRow).getByText('Cédula')).toBeInTheDocument()
+    expect(within(dataRow).getByText('diana@ficcion.test')).toBeInTheDocument()
   })
 
   it('permite archivar un cliente desde el menú de acciones con confirmación accesible', async () => {
@@ -431,9 +435,10 @@ describe('CustomersPage', () => {
     const viewItem = screen.getByRole('menuitem', { name: /ver detalle/i })
     fireEvent.click(viewItem)
 
-    expect(screen.getByRole('heading', { name: /detalle de cliente/i })).toBeInTheDocument()
-    expect(screen.getByText('Detalle Ejemplo Persona')).toBeInTheDocument()
-    expect(screen.getByText('1799887766')).toBeInTheDocument()
-    expect(screen.getByText('detalle@ficcion.test')).toBeInTheDocument()
+    const dialog = screen.getByRole('dialog')
+    expect(within(dialog).getByRole('heading', { name: /detalle de cliente/i })).toBeInTheDocument()
+    expect(within(dialog).getByText('Detalle Ejemplo Persona')).toBeInTheDocument()
+    expect(within(dialog).getByText('1799887766')).toBeInTheDocument()
+    expect(within(dialog).getByText('detalle@ficcion.test')).toBeInTheDocument()
   })
 })

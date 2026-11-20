@@ -44,7 +44,7 @@ describe('CustomerDetailDrawer', () => {
       />,
     )
 
-    fireEvent.click(screen.getByRole('button', { name: /cerrar/i }))
+    fireEvent.click(screen.getByRole('button', { name: 'Cerrar' }))
     expect(onClose).toHaveBeenCalledOnce()
   })
 

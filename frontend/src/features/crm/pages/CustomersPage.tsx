@@ -12,6 +12,7 @@ import { ConfirmDialog } from '../components/ConfirmDialog'
 import { CustomerActionsMenu } from '../components/CustomerActionsMenu'
 import { CustomerApiError, getCustomerRepository, type CustomerRepository } from '../services'
 import type { CustomerFilters, CustomerMetrics, CustomerStatus, CustomerView } from '../types/customer'
+import { getCustomerInitials } from '../utils/initials'
 import './CustomersPage.css'
 
 const COLUMNS = [
@@ -27,14 +28,6 @@ type LoadState = 'idle' | 'loading' | 'success' | 'error' | 'forbidden'
 export interface CustomersPageProps {
   /** Permite inyectar un repositorio en las pruebas. */
   repository?: CustomerRepository
-}
-
-// Helper para extraer iniciales de persona natural
-function getInitials(name: string): string {
-  const parts = name.trim().split(/\s+/).filter(Boolean)
-  if (parts.length === 0) return 'CL'
-  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase()
-  return (parts[0][0] + parts[1][0]).toUpperCase()
 }
 
 export function CustomersPage({ repository }: CustomersPageProps) {
@@ -298,7 +291,7 @@ export function CustomersPage({ repository }: CustomersPageProps) {
               <td className="customers-page__cell">
                 <div className="customers-page__customer-cell">
                   <div className="customers-page__avatar" aria-hidden="true">
-                    {getInitials(c.fullName)}
+                    {getCustomerInitials(c.fullName)}
                   </div>
                   <div className="customers-page__name-wrapper">
                     <span className="customers-page__name">{c.fullName}</span>
