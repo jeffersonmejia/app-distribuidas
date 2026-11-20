@@ -474,6 +474,7 @@ export function CustomersPage({ repository }: CustomersPageProps) {
       <div className="customers-page__content">{content}</div>
 
       <CustomerDrawer
+        key={customerToEdit?.id ?? 'nuevo'}
         isOpen={drawerOpen}
         onClose={handleCloseDrawer}
         repository={repo}

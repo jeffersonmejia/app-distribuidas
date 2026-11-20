@@ -1,6 +1,6 @@
 // SOLID: SRP — ESTE COMPONENTE SE ENCARGA DEL FORMULARIO DE ALTA Y EDICIÓN DE UN CLIENTE.
 
-import { useState, useId, useEffect, type FormEvent } from 'react'
+import { useState, useId, type FormEvent } from 'react'
 import { Drawer } from '../../../components/ui/Drawer'
 import { Input } from '../../../components/forms'
 import { Button } from '../../../components/ui'
@@ -65,6 +65,18 @@ function validate(values: FormState): FormErrors {
 
 const EMPTY_FORM: FormState = { fullName: '', cedula: '', email: '', phone: '' }
 
+function getInitialFormState(customerToEdit?: CustomerView | null): FormState {
+  if (customerToEdit) {
+    return {
+      fullName: customerToEdit.fullName,
+      cedula: customerToEdit.cedula ?? '',
+      email: customerToEdit.email ?? '',
+      phone: customerToEdit.phone ?? '',
+    }
+  }
+  return EMPTY_FORM
+}
+
 export function CustomerDrawer({
   isOpen,
   onClose,
@@ -74,28 +86,10 @@ export function CustomerDrawer({
   onUpdated,
 }: CustomerDrawerProps) {
   const formId = useId()
-  const [values, setValues] = useState<FormState>(EMPTY_FORM)
+  const [values, setValues] = useState<FormState>(() => getInitialFormState(customerToEdit))
   const [errors, setErrors] = useState<FormErrors>({})
   const [submitting, setSubmitting] = useState(false)
   const [serverError, setServerError] = useState<string | null>(null)
-
-  // Pre-llena el formulario si está en modo edición
-  useEffect(() => {
-    if (isOpen && customerToEdit) {
-      setValues({
-        fullName: customerToEdit.fullName,
-        cedula: customerToEdit.cedula ?? '',
-        email: customerToEdit.email ?? '',
-        phone: customerToEdit.phone ?? '',
-      })
-      setErrors({})
-      setServerError(null)
-    } else if (isOpen && !customerToEdit) {
-      setValues(EMPTY_FORM)
-      setErrors({})
-      setServerError(null)
-    }
-  }, [isOpen, customerToEdit])
 
   function field(name: keyof FormState) {
     return `${formId}-${name}`
@@ -112,7 +106,7 @@ export function CustomerDrawer({
 
   function handleClose() {
     if (submitting) return
-    setValues(EMPTY_FORM)
+    setValues(getInitialFormState(customerToEdit))
     setErrors({})
     setServerError(null)
     onClose()
