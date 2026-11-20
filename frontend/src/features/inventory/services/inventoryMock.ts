@@ -369,6 +369,16 @@ export class InventoryMockRepository implements InventoryRepository {
     return product.stock
   }
 
+  async getById(productId: string): Promise<Product> {
+    await delay(100)
+    const items = this.getStore()
+    const product = items.find((p) => p.id === productId)
+    if (!product) {
+      throw new InventoryApiError(`Producto con ID ${productId} no encontrado.`, 'not_found')
+    }
+    return { ...product }
+  }
+
   async consumeStock(lines: StockLineCommand[]): Promise<StockConsumptionResult> {
     await delay()
     const items = this.getStore()

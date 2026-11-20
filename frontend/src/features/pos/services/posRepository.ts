@@ -5,16 +5,23 @@ import type {
   SaleFilters,
   SalePage,
   SaleMetrics,
-  SaleInput,
+  CreateSaleInput,
 } from '../types/sale'
 
+export type PosErrorKind =
+  | 'validation'
+  | 'insufficient_availability'
+  | 'not_found'
+  | 'service_unavailable'
+  | 'unknown'
+
 export class PosApiError extends Error {
-  readonly kind: 'validation' | 'not_found' | 'service_unavailable' | 'unknown'
+  readonly kind: PosErrorKind
   readonly details?: Record<string, string>
 
   constructor(
     message: string,
-    kind: 'validation' | 'not_found' | 'service_unavailable' | 'unknown',
+    kind: PosErrorKind,
     details?: Record<string, string>
   ) {
     super(message)
@@ -28,5 +35,5 @@ export interface PosRepository {
   list(filters?: SaleFilters, page?: number): Promise<SalePage>
   getById(id: string): Promise<Sale>
   getMetrics?(): Promise<SaleMetrics>
-  createSale?(input: SaleInput): Promise<Sale>
+  createSale(input: CreateSaleInput): Promise<Sale>
 }

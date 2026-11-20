@@ -5,12 +5,20 @@ import type {
   SaleFilters,
   SalePage,
   SaleMetrics,
-  SaleInput,
+  SaleLine,
   SaleStatus,
+  SaleType,
+  CreateSaleInput,
 } from '../types/sale'
 import { PosApiError, type PosRepository } from './posRepository'
-import { calcSaleTotals } from '../utils/calculations'
+import { calcLineSubtotal, calcSaleTotals } from '../utils/calculations'
 import { MOCK_USER } from '../../identity/services/sessionMock'
+import { InventoryMockRepository } from '../../inventory/services/inventoryMock'
+import {
+  InventoryApiError,
+  type InventoryRepository,
+} from '../../inventory/services/inventoryRepository'
+import type { Product } from '../../inventory/types/product'
 
 const DEFAULT_TENANT_ID = MOCK_USER.tenantId
 
@@ -380,10 +388,16 @@ function matchesSaleSearch(sale: Sale, search: string): boolean {
 export class PosMockRepository implements PosRepository {
   private explicitTenantId?: string
   private nowFn: DateProvider
+  private inventoryRepoOverride?: InventoryRepository
 
-  constructor(explicitTenantId?: string, nowFn?: DateProvider) {
+  constructor(
+    explicitTenantId?: string,
+    nowFn?: DateProvider,
+    inventoryRepoOverride?: InventoryRepository
+  ) {
     this.explicitTenantId = explicitTenantId
     this.nowFn = nowFn ?? activeDateProvider
+    this.inventoryRepoOverride = inventoryRepoOverride
   }
 
   private getActiveTenant(): string {
@@ -487,9 +501,157 @@ export class PosMockRepository implements PosRepository {
     }
   }
 
-  async createSale(_input: SaleInput): Promise<Sale> {
+  // SOLID: SRP — CREA UNA VENTA VALIDANDO ENTRADAS, RECALCULANDO IMPORTES Y APLICANDO DESCUENTO ATÓMICO EN INVENTARIO.
+  async createSale(input: CreateSaleInput): Promise<Sale> {
     await delay()
-    throw new PosApiError('Creación de ventas desde POS no implementada en este alcance.', 'service_unavailable')
+
+    // 1. Validaciones de cliente
+    if (!input.customerName || !input.customerName.trim()) {
+      throw new PosApiError('El nombre o razón social del cliente es obligatorio.', 'validation', {
+        customerName: 'El nombre o razón social del cliente es obligatorio.',
+      })
+    }
+    if (!input.customerIdentification || !input.customerIdentification.trim()) {
+      throw new PosApiError('La identificación (RUC o cédula) del cliente es obligatoria.', 'validation', {
+        customerIdentification: 'La identificación (RUC o cédula) del cliente es obligatoria.',
+      })
+    }
+
+    // 2. Validaciones de líneas
+    if (!input.lines || input.lines.length === 0) {
+      throw new PosApiError('La venta debe incluir al menos una línea de producto.', 'validation', {
+        lines: 'La venta debe incluir al menos una línea de producto.',
+      })
+    }
+
+    for (const [idx, line] of input.lines.entries()) {
+      if (!line.productId || !line.productId.trim()) {
+        throw new PosApiError(`La línea ${idx + 1} no tiene un producto seleccionado.`, 'validation', {
+          [`lines.${idx}.productId`]: 'Producto requerido.',
+        })
+      }
+      if (!Number.isInteger(line.quantity) || line.quantity <= 0) {
+        throw new PosApiError(`La cantidad en la línea ${idx + 1} debe ser un entero mayor a 0.`, 'validation', {
+          [`lines.${idx}.quantity`]: 'La cantidad debe ser un entero mayor a 0.',
+        })
+      }
+    }
+
+    // 3. Validación de descuento
+    if (input.discountCents !== undefined) {
+      if (input.discountCents < 0 || !Number.isInteger(input.discountCents)) {
+        throw new PosApiError('El descuento comercial debe ser un valor entero no negativo.', 'validation', {
+          discountCents: 'El descuento comercial no puede ser negativo.',
+        })
+      }
+    }
+
+    const inventoryRepo =
+      this.inventoryRepoOverride ?? new InventoryMockRepository(this.getActiveTenant())
+
+    // 4. Verificación y recalculación de líneas con datos reales del catálogo (no confía en importes del cliente)
+    const recalculatedLines: SaleLine[] = []
+    for (const line of input.lines) {
+      let product: Product | null = null
+      if (inventoryRepo.getById) {
+        try {
+          product = await inventoryRepo.getById(line.productId)
+        } catch {
+          product = null
+        }
+      }
+      if (!product) {
+        throw new PosApiError(`Producto con ID "${line.productId}" no encontrado en inventario.`, 'not_found', {
+          productId: line.productId,
+        })
+      }
+
+      const unitPriceCents =
+        line.unitPriceCents !== undefined && line.unitPriceCents >= 0
+          ? Math.round(line.unitPriceCents)
+          : product.sellingPriceCents
+
+      const subtotalCents = calcLineSubtotal(line.quantity, unitPriceCents)
+
+      recalculatedLines.push({
+        productId: product.id,
+        name: product.name,
+        sku: product.sku,
+        quantity: line.quantity,
+        unitPriceCents,
+        subtotalCents,
+      })
+    }
+
+    // 5. Orquestación atómica: descontar stock en inventario
+    // Si el stock es insuficiente o falla, consumeStock lanza error y se propaga; la venta NO se crea (ACID)
+    try {
+      if (inventoryRepo.consumeStock) {
+        await inventoryRepo.consumeStock(
+          recalculatedLines.map((l) => ({ productId: l.productId, quantity: l.quantity }))
+        )
+      }
+    } catch (err) {
+      if (err instanceof InventoryApiError) {
+        throw new PosApiError(
+          err.message,
+          err.kind === 'insufficient_availability' ? 'insufficient_availability' : 'validation',
+          err.details
+        )
+      }
+      throw err
+    }
+
+    // 6. Recálculo del resumen con IVA 15% HALF_UP y descuento
+    const totals = calcSaleTotals(recalculatedLines, input.discountCents ?? 0)
+
+    // 7. Determinación de estado según forma de pago
+    // 'Crédito 30 días' -> 'pending', resto ('Efectivo', 'Transferencia', 'Transferencia bancaria') -> 'paid'
+    const status: SaleStatus = input.paymentMethod === 'Crédito 30 días' ? 'pending' : 'paid'
+
+    // 8. Generación de número secuencial determinista
+    const store = this.getStore()
+    let maxNum = 105
+    for (const s of store) {
+      const match = s.receiptNumber.match(/001-001-(\d+)/)
+      if (match) {
+        const num = parseInt(match[1], 10)
+        if (num > maxNum) maxNum = num
+      }
+    }
+    const nextNum = maxNum + 1
+    const receiptNumber = `001-001-${String(nextNum).padStart(9, '0')}`
+
+    const now = this.nowFn()
+    const issuedAt =
+      input.issuedAt?.trim() ||
+      formatIsoCalendarDate(now.getFullYear(), now.getMonth(), now.getDate())
+
+    const type: SaleType = input.type ?? 'Factura Electrónica'
+
+    const newSale: Sale = {
+      id: `sal-${this.getActiveTenant()}-${nextNum}`,
+      receiptNumber,
+      type,
+      customerName: input.customerName.trim(),
+      customerIdentification: input.customerIdentification.trim(),
+      issuedAt,
+      paymentMethod: input.paymentMethod,
+      status,
+      lines: recalculatedLines,
+      subtotal0Cents: totals.subtotal0Cents,
+      subtotalGravadoCents: totals.subtotalGravadoCents,
+      discountCents: totals.discountCents,
+      ivaCents: totals.ivaCents,
+      totalCents: totals.totalCents,
+      notes: input.notes?.trim() || undefined,
+    }
+
+    store.unshift(newSale)
+    return {
+      ...newSale,
+      lines: newSale.lines.map((l) => ({ ...l })),
+    }
   }
 }
 

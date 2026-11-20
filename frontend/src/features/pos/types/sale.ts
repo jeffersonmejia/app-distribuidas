@@ -2,7 +2,13 @@
 
 export type SaleStatus = 'paid' | 'pending' | 'overdue'
 
-export type PaymentMethod = 'Efectivo' | 'Transferencia' | 'Tarjeta de Crédito' | 'Cheque'
+export type PaymentMethod =
+  | 'Efectivo'
+  | 'Transferencia'
+  | 'Transferencia bancaria'
+  | 'Crédito 30 días'
+  | 'Tarjeta de Crédito'
+  | 'Cheque'
 
 export type SaleType = 'Factura Electrónica' | 'Nota de Venta' | 'Recibo'
 
@@ -21,7 +27,7 @@ export interface Sale {
   type: SaleType
   customerName: string
   customerIdentification: string // cédula o RUC
-  issuedAt: string // ISO date
+  issuedAt: string // ISO date o YYYY-MM-DD
   paymentMethod: PaymentMethod
   status: SaleStatus
   lines: SaleLine[]
@@ -30,15 +36,29 @@ export interface Sale {
   discountCents: number
   ivaCents: number
   totalCents: number
+  notes?: string
 }
 
-export interface SaleInput {
-  customerId: string
-  lines: { productId: string; quantity: number; unitPriceCents: number }[]
-  paymentMethod: PaymentMethod
-  type: SaleType
-  discountCents?: number
+export interface CreateSaleLineInput {
+  productId: string
+  quantity: number
+  unitPriceCents?: number
 }
+
+export interface CreateSaleInput {
+  customerId?: string
+  customerName: string
+  customerIdentification: string
+  issuedAt?: string
+  paymentMethod: PaymentMethod
+  type?: SaleType
+  lines: CreateSaleLineInput[]
+  discountCents?: number
+  notes?: string
+}
+
+/** Alias para compatibilidad con firmas previas */
+export type SaleInput = CreateSaleInput
 
 export interface SaleFilters {
   search?: string

@@ -32,4 +32,5 @@ export interface InventoryRepository {
   getMetrics?(): Promise<InventoryMetrics>
   getAvailability?(productId: string): Promise<number>
   consumeStock?(lines: StockLineCommand[]): Promise<StockConsumptionResult>
+  getById?(productId: string): Promise<Product>
 }

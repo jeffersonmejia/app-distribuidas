@@ -20,6 +20,10 @@ class UnavailablePosApiRepository implements PosRepository {
   async getById(): Promise<Sale> {
     throw new PosApiError('Servicio de ventas en backend no disponible todavía.', 'service_unavailable')
   }
+
+  async createSale(): Promise<Sale> {
+    throw new PosApiError('Servicio de ventas en backend no disponible todavía.', 'service_unavailable')
+  }
 }
 
 let repositoryInstance: PosRepository | null = null
