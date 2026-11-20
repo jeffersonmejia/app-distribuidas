@@ -1,0 +1,100 @@
+/* CustomerDetailDrawer styles — Tokens del sistema sin hex sueltos */
+
+.customer-detail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4, 1rem);
+  padding-block: var(--space-2, 0.5rem);
+}
+
+.customer-detail__empty {
+  color: var(--text-muted);
+  font-size: var(--text-sm, 0.875rem);
+}
+
+.customer-detail__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4, 1rem);
+}
+
+.customer-detail__avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: var(--radius-full, 9999px);
+  background: var(--brand-soft);
+  color: var(--brand);
+  font-weight: 700;
+  font-size: var(--text-lg, 1.125rem);
+  flex-shrink: 0;
+}
+
+.customer-detail__header-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1, 0.25rem);
+}
+
+.customer-detail__name {
+  margin: 0;
+  font-size: var(--text-lg, 1.125rem);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.customer-detail__divider {
+  height: 1px;
+  background-color: var(--border-subtle);
+  margin-block: var(--space-2, 0.5rem);
+}
+
+.customer-detail__section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3, 0.75rem);
+}
+
+.customer-detail__section-title {
+  margin: 0;
+  font-size: var(--text-xs, 0.75rem);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+.customer-detail__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3, 0.75rem);
+  margin: 0;
+  padding: 0;
+}
+
+.customer-detail__item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1, 0.25rem);
+}
+
+.customer-detail__term {
+  font-size: var(--text-xs, 0.75rem);
+  color: var(--text-secondary);
+}
+
+.customer-detail__desc {
+  margin: 0;
+  font-size: var(--text-sm, 0.875rem);
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.customer-detail-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-3, 0.75rem);
+}

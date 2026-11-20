@@ -7,6 +7,7 @@ import { Pagination } from '../../../components/navigation/Pagination'
 import { Button, Badge } from '../../../components/ui'
 import { Spinner, Alert, EmptyState } from '../../../components/feedback'
 import { CustomerDrawer } from '../components/CustomerDrawer'
+import { CustomerDetailDrawer } from '../components/CustomerDetailDrawer'
 import { ConfirmDialog } from '../components/ConfirmDialog'
 import { CustomerActionsMenu } from '../components/CustomerActionsMenu'
 import { CustomerApiError, getCustomerRepository, type CustomerRepository } from '../services'
@@ -52,6 +53,7 @@ export function CustomersPage({ repository }: CustomersPageProps) {
 
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [customerToEdit, setCustomerToEdit] = useState<CustomerView | null>(null)
+  const [customerToView, setCustomerToView] = useState<CustomerView | null>(null)
   const [actionError, setActionError] = useState<string | null>(null)
 
   // Métricas opcionales: solo se cargan si repo.getMetrics existe (modo simulado)
@@ -221,6 +223,10 @@ export function CustomersPage({ repository }: CustomersPageProps) {
     void loadMetrics()
   }
 
+  function handleViewDetail(customer: CustomerView) {
+    setCustomerToView(customer)
+  }
+
   function handleEdit(customer: CustomerView) {
     setCustomerToEdit(customer)
     setDrawerOpen(true)
@@ -320,6 +326,7 @@ export function CustomersPage({ repository }: CustomersPageProps) {
                 <CustomerActionsMenu
                   customer={c}
                   onToggleStatus={(customer) => handleRequestToggle(customer)}
+                  onViewDetail={handleViewDetail}
                   onEdit={handleEdit}
                   onArchive={(customer) => handleRequestArchive(customer)}
                 />
@@ -477,6 +484,16 @@ export function CustomersPage({ repository }: CustomersPageProps) {
         onCreated={handleCreated}
         customerToEdit={customerToEdit}
         onUpdated={handleUpdated}
+      />
+
+      <CustomerDetailDrawer
+        isOpen={customerToView !== null}
+        customer={customerToView}
+        onClose={() => setCustomerToView(null)}
+        onEdit={(c) => {
+          setCustomerToView(null)
+          handleEdit(c)
+        }}
       />
 
       <ConfirmDialog

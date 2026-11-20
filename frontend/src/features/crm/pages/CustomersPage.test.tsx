@@ -406,4 +406,34 @@ describe('CustomersPage', () => {
     expect(repo.archive).not.toHaveBeenCalled()
     expect(screen.getByText('Cliente Que Se Queda')).toBeInTheDocument()
   })
+
+  it('abre el drawer de detalle al hacer clic en "Ver detalle" desde el menú de acciones', async () => {
+    const item = makeView(
+      {
+        id: 'id-view-1',
+        fullName: 'Detalle Ejemplo Persona',
+        cedula: '1799887766',
+        email: 'detalle@ficcion.test',
+        phone: '0998877665',
+      },
+      1,
+    )
+    const repo = makeRepo({
+      list: vi.fn().mockResolvedValue(makePage([item])),
+    })
+    render(<CustomersPage repository={repo} />)
+
+    const trigger = await screen.findByRole('button', {
+      name: /acciones de detalle ejemplo persona/i,
+    })
+    fireEvent.click(trigger)
+
+    const viewItem = screen.getByRole('menuitem', { name: /ver detalle/i })
+    fireEvent.click(viewItem)
+
+    expect(screen.getByRole('heading', { name: /detalle de cliente/i })).toBeInTheDocument()
+    expect(screen.getByText('Detalle Ejemplo Persona')).toBeInTheDocument()
+    expect(screen.getByText('1799887766')).toBeInTheDocument()
+    expect(screen.getByText('detalle@ficcion.test')).toBeInTheDocument()
+  })
 })
