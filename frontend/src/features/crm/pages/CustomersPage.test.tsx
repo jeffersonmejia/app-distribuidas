@@ -28,6 +28,10 @@ function makeRepo(overrides: Partial<CustomerRepository> = {}): CustomerReposito
   return {
     list: vi.fn().mockResolvedValue(makePage([])),
     create: vi.fn().mockResolvedValue(makeView({}, 99)),
+    update: vi.fn().mockImplementation(async (id: string, input) => {
+      return makeView({ id, fullName: input.fullName }, 1)
+    }),
+    archive: vi.fn().mockResolvedValue(undefined),
     setStatus: vi.fn().mockImplementation(async (id: string, status: CustomerView['status']) => {
       return makeView({ id, status }, 1)
     }),
@@ -347,5 +351,59 @@ describe('CustomersPage', () => {
     expect(screen.getByText('1723456789')).toBeInTheDocument()
     expect(screen.getByText('Cédula')).toBeInTheDocument()
     expect(screen.getByText('diana@ficcion.test')).toBeInTheDocument()
+  })
+
+  it('permite archivar un cliente desde el menú de acciones con confirmación accesible', async () => {
+    const item = makeView({ id: 'id-arch', fullName: 'Cliente Para Archivar' }, 1)
+    const repo = makeRepo({
+      list: vi.fn().mockResolvedValue(makePage([item])),
+      archive: vi.fn().mockResolvedValue(undefined),
+    })
+    render(<CustomersPage repository={repo} />)
+
+    // Abre menú de acciones
+    const trigger = await screen.findByRole('button', { name: /acciones de cliente para archivar/i })
+    fireEvent.click(trigger)
+
+    // Hace clic en "Archivar"
+    const archiveItem = screen.getByRole('menuitem', { name: /archivar/i })
+    fireEvent.click(archiveItem)
+
+    // Diálogo de confirmación accesible con role="alertdialog"
+    const dialog = screen.getByRole('alertdialog')
+    expect(within(dialog).getByText(/archivar cliente/i)).toBeInTheDocument()
+    expect(within(dialog).getByText(/cliente para archivar/i)).toBeInTheDocument()
+
+    // Confirma el archivado
+    const confirmBtn = within(dialog).getByRole('button', { name: 'Archivar' })
+    fireEvent.click(confirmBtn)
+
+    await waitFor(() => {
+      expect(repo.archive).toHaveBeenCalledWith('id-arch')
+    })
+    // El cliente se retira de la lista
+    expect(screen.queryByText('Cliente Para Archivar')).toBeNull()
+  })
+
+  it('cancelar el diálogo de archivado no llama a repo.archive ni quita al cliente', async () => {
+    const item = makeView({ id: 'id-arch-2', fullName: 'Cliente Que Se Queda' }, 2)
+    const repo = makeRepo({
+      list: vi.fn().mockResolvedValue(makePage([item])),
+      archive: vi.fn().mockResolvedValue(undefined),
+    })
+    render(<CustomersPage repository={repo} />)
+
+    const trigger = await screen.findByRole('button', { name: /acciones de cliente que se queda/i })
+    fireEvent.click(trigger)
+
+    const archiveItem = screen.getByRole('menuitem', { name: /archivar/i })
+    fireEvent.click(archiveItem)
+
+    const dialog = screen.getByRole('alertdialog')
+    const cancelBtn = within(dialog).getByRole('button', { name: /cancelar/i })
+    fireEvent.click(cancelBtn)
+
+    expect(repo.archive).not.toHaveBeenCalled()
+    expect(screen.getByText('Cliente Que Se Queda')).toBeInTheDocument()
   })
 })

@@ -61,6 +61,10 @@ export function CustomersPage({ repository }: CustomersPageProps) {
   const [customerToToggle, setCustomerToToggle] = useState<CustomerView | null>(null)
   const toggleTriggerRef = useRef<HTMLElement | null>(null)
 
+  // Estado para la confirmación accesible de archivado
+  const [customerToArchive, setCustomerToArchive] = useState<CustomerView | null>(null)
+  const archiveTriggerRef = useRef<HTMLElement | null>(null)
+
   // ID incremental por petición: la respuesta solo se aplica si su ID coincide
   // con el último emitido, descartando únicamente peticiones ANTERIORES.
   const currentRequestId = useRef(0)
@@ -177,6 +181,39 @@ export function CustomersPage({ repository }: CustomersPageProps) {
     setCustomerToToggle(null)
   }
 
+  // Abre el diálogo de confirmación accesible de archivado
+  function handleRequestArchive(customer: CustomerView, triggerEl?: HTMLElement | null) {
+    if (triggerEl) archiveTriggerRef.current = triggerEl
+    setCustomerToArchive(customer)
+  }
+
+  //SOLID: SRP — ARCHIVA EL CLIENTE TRAS LA CONFIRMACIÓN ACCESIBLE.
+  async function handleConfirmArchive() {
+    if (!customerToArchive) return
+    const customer = customerToArchive
+    setCustomerToArchive(null)
+
+    setActionError(null)
+    try {
+      if (!repo.archive) {
+        throw new CustomerApiError('Operación no soportada.', 'unknown')
+      }
+      await repo.archive(customer.id)
+      setCustomers((prev) => prev.filter((c) => c.id !== customer.id))
+      void loadMetrics()
+    } catch (err) {
+      if (err instanceof CustomerApiError && err.kind === 'forbidden') {
+        setActionError('No tienes permiso para archivar clientes.')
+      } else {
+        setActionError('No se pudo archivar el cliente. Inténtalo de nuevo.')
+      }
+    }
+  }
+
+  function handleCancelArchive() {
+    setCustomerToArchive(null)
+  }
+
   function handleCreated() {
     // Recarga desde la primera página para mostrar el nuevo cliente
     setPage(0)
@@ -284,6 +321,7 @@ export function CustomersPage({ repository }: CustomersPageProps) {
                   customer={c}
                   onToggleStatus={(customer) => handleRequestToggle(customer)}
                   onEdit={handleEdit}
+                  onArchive={(customer) => handleRequestArchive(customer)}
                 />
               </td>
             </tr>
@@ -462,6 +500,21 @@ export function CustomersPage({ repository }: CustomersPageProps) {
         onConfirm={handleConfirmToggle}
         onCancel={handleCancelToggle}
         triggerRef={toggleTriggerRef}
+      />
+
+      <ConfirmDialog
+        isOpen={customerToArchive !== null}
+        title="Archivar cliente"
+        description={
+          customerToArchive
+            ? `¿Estás seguro de archivar a "${customerToArchive.fullName}"? El cliente será retirado del directorio activo.`
+            : ''
+        }
+        confirmLabel="Archivar"
+        cancelLabel="Cancelar"
+        onConfirm={handleConfirmArchive}
+        onCancel={handleCancelArchive}
+        triggerRef={archiveTriggerRef}
       />
     </div>
   )
