@@ -254,6 +254,8 @@ export function InventoryPage({ repository }: InventoryPageProps) {
           hasNext={hasNext}
           onPageChange={handlePageChange}
           itemsCount={products.length}
+          itemLabel="producto"
+          itemLabelPlural="productos"
         />
       </>
     )
