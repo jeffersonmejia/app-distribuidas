@@ -16,6 +16,7 @@ import { ProductSelectModal } from '../../components/ProductSelectModal'
 import { ConfirmDialog } from '../../../../components/feedback/ConfirmDialog'
 import { Spinner } from '../../../../components/feedback/Spinner'
 import { Alert } from '../../../../components/feedback/Alert'
+import { Input, Select } from '../../../../components/forms'
 import './NewSalePage.css'
 
 export interface NewSalePageProps {
@@ -387,106 +388,96 @@ export function NewSalePage({
                     Identificación fiscal y términos del comprobante
                   </p>
                 </div>
-                <span className="new-sale-card__step-tag">Paso 1 de 2</span>
               </div>
 
               <div className="new-sale-card__body">
                 {/* Cliente / Razón Social Combobox */}
-                <div className="form-group" ref={customerDropdownRef}>
-                  <label
-                    htmlFor="customer-input"
-                    className="form-label new-sale-card__customer-label"
-                  >
-                    <span>
-                      Cliente / Razón Social <span className="new-sale-card__required">*</span>
-                    </span>
-                  </label>
-                  <div className="new-sale-card__input-wrapper">
-                    <input
+                <div className="new-sale-card__col new-sale-card__col--full" ref={customerDropdownRef}>
+                  <div className="new-sale-card__combobox-wrapper">
+                    <Input
                       id="customer-input"
-                      type="text"
-                      className="form-input new-sale-card__customer-input"
+                      label="Cliente / Razón Social *"
                       placeholder="Buscar cliente por nombre o RUC..."
                       value={customerSearch}
                       onChange={(e) => {
-                        setCustomerSearch(e.target.value)
-                        setCustomerName(e.target.value)
+                        const val = e.target.value
+                        setCustomerSearch(val)
+                        setCustomerName(val)
+                        if (selectedCustomerId) {
+                          setSelectedCustomerId('')
+                        }
                         setIsCustomerDropdownOpen(true)
                       }}
                       onFocus={() => setIsCustomerDropdownOpen(true)}
                       autoComplete="off"
                       aria-label="Buscar o ingresar cliente"
+                      endAdornment={
+                        <button
+                          type="button"
+                          className="new-sale-card__dropdown-toggle"
+                          onClick={() => setIsCustomerDropdownOpen((prev) => !prev)}
+                          aria-label="Mostrar lista de clientes"
+                          aria-expanded={isCustomerDropdownOpen}
+                        >
+                          ▾
+                        </button>
+                      }
                     />
-                    <button
-                      type="button"
-                      className="new-sale-card__dropdown-toggle"
-                      onClick={() => setIsCustomerDropdownOpen((prev) => !prev)}
-                      aria-label="Mostrar lista de clientes"
-                      aria-expanded={isCustomerDropdownOpen}
-                    >
-                      ▾
-                    </button>
-                  </div>
 
-                  {isCustomerDropdownOpen && (
-                    <div className="new-sale-card__customer-dropdown" role="listbox">
-                      {filteredCustomers.length === 0 ? (
-                        <div className="new-sale-card__customer-option new-sale-card__customer-option--empty">
-                          No se encontraron clientes. Puedes escribir el nombre e identificación
-                          directamente.
-                        </div>
-                      ) : (
-                        filteredCustomers.map((c) => (
-                          <div
-                            key={c.id}
-                            role="option"
-                            aria-selected={selectedCustomerId === c.id}
-                            className={`new-sale-card__customer-option ${
-                              selectedCustomerId === c.id
-                                ? 'new-sale-card__customer-option--active'
-                                : ''
-                            }`}
-                            onClick={() => handleSelectCustomer(c)}
-                          >
-                            <span className="new-sale-card__customer-option-name">{c.fullName}</span>
-                            <span className="new-sale-card__customer-option-meta">
-                              RUC/CI: {c.cedula || 'S/N'}
-                            </span>
+                    {isCustomerDropdownOpen && (
+                      <div className="new-sale-card__customer-dropdown" role="listbox">
+                        {filteredCustomers.length === 0 ? (
+                          <div className="new-sale-card__customer-option new-sale-card__customer-option--empty">
+                            No se encontraron clientes. Puedes escribir el nombre e identificación
+                            directamente.
                           </div>
-                        ))
-                      )}
-                    </div>
-                  )}
+                        ) : (
+                          filteredCustomers.map((c) => (
+                            <div
+                              key={c.id}
+                              role="option"
+                              aria-selected={selectedCustomerId === c.id}
+                              className={`new-sale-card__customer-option ${
+                                selectedCustomerId === c.id
+                                  ? 'new-sale-card__customer-option--active'
+                                  : ''
+                              }`}
+                              onClick={() => handleSelectCustomer(c)}
+                            >
+                              <span className="new-sale-card__customer-option-name">{c.fullName}</span>
+                              <span className="new-sale-card__customer-option-meta">
+                                RUC/CI: {c.cedula || 'S/N'}
+                              </span>
+                            </div>
+                          ))
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </div>
 
-                  {selectedCustomerId ? (
-                    <div className="new-sale-card__customer-helper">
-                      <span className="new-sale-card__customer-helper-active">✓ Cliente seleccionado</span>
-                      <span>• RUC/CI: {customerIdentification}</span>
-                    </div>
-                  ) : (
-                    <div className="new-sale-card__customer-fields-manual">
-                      <input
-                        type="text"
-                        className="form-input new-sale-card__subinput"
-                        placeholder="Cédula o RUC del cliente *"
-                        value={customerIdentification}
-                        onChange={(e) => setCustomerIdentification(e.target.value)}
-                        aria-label="Cédula o RUC del cliente"
-                      />
-                    </div>
-                  )}
+                {/* Cédula o RUC (autocompletado de solo lectura al elegir cliente, o manual alineado al ancho) */}
+                <div className="new-sale-card__col new-sale-card__col--full">
+                  <Input
+                    id="customer-identification"
+                    label="Cédula o RUC *"
+                    placeholder="Cédula o RUC del cliente *"
+                    value={customerIdentification}
+                    onChange={(e) => setCustomerIdentification(e.target.value)}
+                    readOnly={Boolean(selectedCustomerId)}
+                    aria-label="Cédula o RUC del cliente"
+                    hint={selectedCustomerId ? '✓ Cliente seleccionado' : undefined}
+                    className={selectedCustomerId ? 'new-sale-card__readonly-field' : ''}
+                  />
                 </div>
 
                 <div className="new-sale-card__row">
                   {/* Fecha de emisión */}
-                  <div className="form-group new-sale-card__col">
-                    <label htmlFor="issue-date" className="form-label">
-                      Fecha de emisión <span className="new-sale-card__required">*</span>
-                    </label>
-                    <input
+                  <div className="new-sale-card__col">
+                    <Input
                       id="issue-date"
                       type="date"
-                      className="form-input"
+                      label="Fecha de emisión *"
                       value={issuedAt}
                       onChange={(e) => setIssuedAt(e.target.value)}
                       required
@@ -494,35 +485,29 @@ export function NewSalePage({
                   </div>
 
                   {/* Forma de pago */}
-                  <div className="form-group new-sale-card__col">
-                    <label htmlFor="payment-method" className="form-label">
-                      Forma de pago <span className="new-sale-card__required">*</span>
-                    </label>
-                    <select
+                  <div className="new-sale-card__col">
+                    <Select
                       id="payment-method"
-                      className="form-select"
+                      label="Forma de pago *"
                       value={paymentMethod}
                       onChange={(e) => setPaymentMethod(e.target.value as PaymentMethod)}
-                    >
-                      <option value="Transferencia bancaria">Transferencia bancaria</option>
-                      <option value="Efectivo">Efectivo contra entrega</option>
-                      <option value="Crédito 30 días">Crédito 30 días</option>
-                    </select>
+                      options={[
+                        { value: 'Transferencia bancaria', label: 'Transferencia bancaria' },
+                        { value: 'Efectivo', label: 'Efectivo contra entrega' },
+                        { value: 'Crédito 30 días', label: 'Crédito 30 días' },
+                      ]}
+                    />
                   </div>
                 </div>
 
                 {/* Punto de emisión / Serie */}
-                <div className="form-group">
-                  <label htmlFor="establishment-point" className="form-label">
-                    Punto de emisión / Establecimiento
-                  </label>
-                  <input
+                <div className="new-sale-card__col new-sale-card__col--full">
+                  <Input
                     id="establishment-point"
-                    type="text"
-                    className="form-input new-sale-card__readonly-input"
-                    value="001-001 Matriz Quito (Bodega Central Pusuquí)"
-                    disabled
+                    label="Punto de emisión / Establecimiento"
+                    value="001-001 Matriz"
                     readOnly
+                    className="new-sale-card__readonly-field"
                   />
                 </div>
               </div>
@@ -666,16 +651,13 @@ export function NewSalePage({
                   </span>
                 </div>
 
-                <div className="new-sale-summary-row new-sale-summary-row--discount">
-                  <label htmlFor="discount-input" className="new-sale-summary-discount-label">
-                    Descuento comercial (USD):
-                  </label>
-                  <input
+                <div className="new-sale-summary-discount-wrapper">
+                  <Input
                     id="discount-input"
                     type="number"
                     min="0"
                     step="0.01"
-                    className="new-sale-summary-discount-input"
+                    label="Descuento comercial (USD)"
                     value={discountCentsInput ? (discountCentsInput / 100).toFixed(2) : '0.00'}
                     onChange={(e) => {
                       const val = parseFloat(e.target.value) || 0
@@ -702,19 +684,21 @@ export function NewSalePage({
               </div>
 
               {/* Condiciones y notas */}
-              <div className="form-group new-sale-card__notes-group">
-                <label htmlFor="notes-input" className="form-label new-sale-card__notes-label">
+              <div className="input-field new-sale-card__notes-field">
+                <label className="input-field__label" htmlFor="notes-input">
                   <span>Condiciones y notas</span>
-                  <span className="new-sale-card__optional">(Opcional)</span>
+                  <span className="new-sale-card__optional"> (Opcional)</span>
                 </label>
-                <textarea
-                  id="notes-input"
-                  className="form-textarea new-sale-card__notes-input"
-                  rows={2}
-                  placeholder="Ej: Condiciones de entrega en obra, descarga programada..."
-                  value={notes}
-                  onChange={(e) => setNotes(e.target.value)}
-                />
+                <div className="input-field__wrapper">
+                  <textarea
+                    id="notes-input"
+                    className="input-field__control new-sale-card__notes-textarea"
+                    rows={2}
+                    placeholder="Ej: Condiciones de entrega en obra, descarga programada..."
+                    value={notes}
+                    onChange={(e) => setNotes(e.target.value)}
+                  />
+                </div>
               </div>
 
               {/* Botones de acción */}

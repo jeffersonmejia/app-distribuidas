@@ -54,7 +54,7 @@ describe('NewSalePage', () => {
 
     // Comprobar punto de emisión
     const establishmentInput = screen.getByLabelText(/punto de emisión/i)
-    expect(establishmentInput).toHaveValue('001-001 Matriz Quito (Bodega Central Pusuquí)')
+    expect(establishmentInput).toHaveValue('001-001 Matriz')
   })
 
   it('permite buscar y seleccionar un cliente de la lista', async () => {

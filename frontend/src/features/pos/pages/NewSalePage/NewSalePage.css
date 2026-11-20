@@ -141,7 +141,7 @@
 
 /* Tarjeta Bento */
 .new-sale-card {
-  background-color: var(--surface-card, var(--surface-raised, #ffffff));
+  background-color: var(--surface-raised);
   border-radius: var(--radius-2xl, 1.5rem);
   border: 1px solid var(--border-subtle);
   box-shadow: var(--shadow-sm);
@@ -219,6 +219,15 @@
   flex-direction: column;
 }
 
+.new-sale-card__col--full {
+  width: 100%;
+}
+
+.new-sale-card__combobox-wrapper {
+  position: relative;
+  width: 100%;
+}
+
 .new-sale-card__required {
   color: var(--text-error);
 }
@@ -242,29 +251,29 @@
 }
 
 .new-sale-card__dropdown-toggle {
-  position: absolute;
-  right: var(--space-2, 0.5rem);
   background: transparent;
   border: none;
   color: var(--text-secondary);
   font-size: 1rem;
   cursor: pointer;
   padding: var(--space-1, 0.25rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .new-sale-card__customer-dropdown {
   position: absolute;
-  top: 100%;
+  top: calc(100% + var(--space-1, 0.25rem));
   left: 0;
   right: 0;
   max-height: 220px;
   overflow-y: auto;
-  background-color: var(--surface-card, #ffffff);
+  background-color: var(--surface-raised);
   border: 1px solid var(--border-default);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-lg);
   z-index: 50;
-  margin-top: var(--space-1, 0.25rem);
 }
 
 .new-sale-card__customer-option {
@@ -319,10 +328,21 @@
   margin-top: var(--space-2, 0.5rem);
 }
 
-.new-sale-card__readonly-input {
+.new-sale-card__readonly-field .input-field__control {
   background-color: var(--surface-sunken);
   color: var(--text-secondary);
-  cursor: not-allowed;
+  cursor: default;
+}
+
+.new-sale-card__notes-textarea {
+  min-height: 4.5rem;
+  padding: var(--space-3, 0.75rem) var(--space-4, 1rem);
+  resize: vertical;
+  line-height: 1.45;
+}
+
+.new-sale-summary-discount-wrapper {
+  margin: var(--space-2, 0.5rem) 0;
 }
 
 /* Tabla de líneas */
@@ -611,7 +631,7 @@
   display: flex;
   align-items: center;
   gap: var(--space-3, 0.75rem);
-  background-color: var(--surface-card, #ffffff);
+  background-color: var(--surface-raised);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-xl);
   padding: var(--space-4, 1rem);
@@ -656,7 +676,7 @@
 }
 
 .new-sale-success-card {
-  background-color: var(--surface-card, #ffffff);
+  background-color: var(--surface-raised);
   border-radius: var(--radius-2xl, 1.5rem);
   border: 1px solid var(--border-subtle);
   box-shadow: var(--shadow-lg);
