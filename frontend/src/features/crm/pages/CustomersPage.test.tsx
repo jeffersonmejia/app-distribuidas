@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event'
 import { describe, it, expect, vi, afterEach } from 'vitest'
 import { CustomersPage } from './CustomersPage'
 import { CustomerApiError, type CustomerRepository } from '../services/customerRepository'
-import type { CustomerPage, CustomerView } from '../types/customer'
+import type { CustomerInput, CustomerPage, CustomerView } from '../types/customer'
 
 // ── Helpers ──────────────────────────────────────────────────────────────
 function makeView(overrides: Partial<CustomerView> = {}, i = 1): CustomerView {
@@ -27,7 +27,11 @@ function makePage(items: CustomerView[], hasNext = false, page = 0): CustomerPag
 function makeRepo(overrides: Partial<CustomerRepository> = {}): CustomerRepository {
   return {
     list: vi.fn().mockResolvedValue(makePage([])),
-    create: vi.fn().mockResolvedValue(makeView({}, 99)),
+    create: vi.fn<(input: CustomerInput) => Promise<CustomerView>>().mockResolvedValue(makeView({}, 99)),
+    update: vi.fn<(id: string, input: CustomerInput) => Promise<CustomerView>>().mockImplementation(async (id: string, input: CustomerInput) => {
+      return makeView({ id, fullName: input.fullName }, 1)
+    }),
+    archive: vi.fn().mockResolvedValue(undefined),
     setStatus: vi.fn().mockImplementation(async (id: string, status: CustomerView['status']) => {
       return makeView({ id, status }, 1)
     }),
@@ -124,13 +128,14 @@ describe('CustomersPage', () => {
     )
   })
 
-  it('el filtro de estado llama a list con el status seleccionado', async () => {
+  it('el filtro de pestañas de estado llama a list con el status seleccionado', async () => {
     const list = vi.fn().mockResolvedValue(makePage([]))
     const repo = makeRepo({ list })
     render(<CustomersPage repository={repo} />)
     await waitFor(() => expect(list).toHaveBeenCalledOnce())
 
-    await userEvent.selectOptions(screen.getByLabelText(/estado/i), 'ACTIVE')
+    // En lugar de select nativo, ahora se usan las pestañas de estado tipo píldora
+    await userEvent.click(screen.getByRole('tab', { name: /^activos/i }))
     await waitFor(() => expect(list).toHaveBeenCalledWith(
       expect.objectContaining({ status: 'ACTIVE' }),
       0,
@@ -191,7 +196,9 @@ describe('CustomersPage', () => {
     render(<CustomersPage repository={repo} />)
     await screen.findByText('Cliente de Ejemplo 01')
 
-    await userEvent.click(screen.getByRole('button', { name: /activar cliente de ejemplo 01/i }))
+    // Abre el menú de acciones y hace clic en Activar
+    await userEvent.click(screen.getByRole('button', { name: /acciones de cliente de ejemplo 01/i }))
+    await userEvent.click(screen.getByRole('menuitem', { name: /activar/i }))
     
     // Se abre el alertdialog de confirmación accesible
     const dialog = screen.getByRole('alertdialog')
@@ -217,7 +224,9 @@ describe('CustomersPage', () => {
     render(<CustomersPage repository={repo} />)
     await screen.findByText('Cliente de Ejemplo 02')
 
-    await userEvent.click(screen.getByRole('button', { name: /desactivar cliente de ejemplo 02/i }))
+    // Abre el menú de acciones y hace clic en Desactivar
+    await userEvent.click(screen.getByRole('button', { name: /acciones de cliente de ejemplo 02/i }))
+    await userEvent.click(screen.getByRole('menuitem', { name: /desactivar/i }))
     
     // Se abre el alertdialog de confirmación accesible
     const dialog = screen.getByRole('alertdialog')
@@ -243,7 +252,8 @@ describe('CustomersPage', () => {
     render(<CustomersPage repository={repo} />)
     await screen.findByText('Cliente de Ejemplo 03')
 
-    await userEvent.click(screen.getByRole('button', { name: /desactivar/i }))
+    await userEvent.click(screen.getByRole('button', { name: /acciones de cliente de ejemplo 03/i }))
+    await userEvent.click(screen.getByRole('menuitem', { name: /desactivar/i }))
     
     const dialog = screen.getByRole('alertdialog')
     expect(dialog).toBeInTheDocument()
@@ -265,7 +275,8 @@ describe('CustomersPage', () => {
     render(<CustomersPage repository={repo} />)
     await screen.findByText('Cliente de Ejemplo 03')
 
-    await userEvent.click(screen.getByRole('button', { name: /desactivar/i }))
+    await userEvent.click(screen.getByRole('button', { name: /acciones de cliente de ejemplo 03/i }))
+    await userEvent.click(screen.getByRole('menuitem', { name: /desactivar/i }))
     expect(screen.getByRole('alertdialog')).toBeInTheDocument()
     expect(document.body.style.overflow).toBe('hidden')
 
@@ -283,7 +294,8 @@ describe('CustomersPage', () => {
 
     render(<CustomersPage repository={repo} />)
     await screen.findByText('Cliente de Ejemplo 04')
-    await userEvent.click(screen.getByRole('button', { name: /desactivar/i }))
+    await userEvent.click(screen.getByRole('button', { name: /acciones de cliente de ejemplo 04/i }))
+    await userEvent.click(screen.getByRole('menuitem', { name: /desactivar/i }))
 
     const dialog = screen.getByRole('alertdialog')
     await userEvent.click(within(dialog).getByRole('button', { name: 'Desactivar' }))
@@ -304,5 +316,129 @@ describe('CustomersPage', () => {
     // fila 1 (índice 1 porque índice 0 es header)
     expect(within(rows[1]).getByText('Activo')).toBeInTheDocument()
     expect(within(rows[2]).getByText('Inactivo')).toBeInTheDocument()
+  })
+
+  it('muestra las tarjetas de métricas cuando el repositorio implementa getMetrics', async () => {
+    const repo = makeRepo({
+      list: vi.fn().mockResolvedValue(makePage([])),
+      getMetrics: vi.fn().mockResolvedValue({
+        totalClientes: 42,
+        activos: 35,
+        inactivos: 7,
+        nuevosEsteMes: 3,
+      }),
+    })
+    render(<CustomersPage repository={repo} />)
+    const metricsRegion = await screen.findByRole('region', { name: /resumen de cartera/i })
+    expect(within(metricsRegion).getByText('42')).toBeInTheDocument()
+    expect(within(metricsRegion).getByText('35')).toBeInTheDocument()
+    expect(within(metricsRegion).getByText('7')).toBeInTheDocument()
+  })
+
+  it('no muestra las tarjetas de métricas cuando repo no tiene getMetrics', async () => {
+    const repo = makeRepo({ list: vi.fn().mockResolvedValue(makePage([])) })
+    render(<CustomersPage repository={repo} />)
+    await screen.findByText(/sin clientes/i)
+    expect(screen.queryByRole('region', { name: /resumen de cartera/i })).toBeNull()
+  })
+
+  it('renderiza iniciales y detalles en la fila del cliente', async () => {
+    const item = makeView({ fullName: 'Diana Gómez', cedula: '1723456789', email: 'diana@ficcion.test' })
+    const repo = makeRepo({ list: vi.fn().mockResolvedValue(makePage([item])) })
+    render(<CustomersPage repository={repo} />)
+
+    const rows = await screen.findAllByRole('row')
+    const dataRow = rows[1]
+
+    expect(within(dataRow).getByText('DG')).toBeInTheDocument()
+    expect(within(dataRow).getByText('Diana Gómez')).toBeInTheDocument()
+    expect(within(dataRow).getByText('1723456789')).toBeInTheDocument()
+    expect(within(dataRow).getByText('Cédula')).toBeInTheDocument()
+    expect(within(dataRow).getByText('diana@ficcion.test')).toBeInTheDocument()
+  })
+
+  it('permite archivar un cliente desde el menú de acciones con confirmación accesible', async () => {
+    const item = makeView({ id: 'id-arch', fullName: 'Cliente Para Archivar' }, 1)
+    const repo = makeRepo({
+      list: vi.fn().mockResolvedValue(makePage([item])),
+      archive: vi.fn().mockResolvedValue(undefined),
+    })
+    render(<CustomersPage repository={repo} />)
+
+    // Abre menú de acciones
+    const trigger = await screen.findByRole('button', { name: /acciones de cliente para archivar/i })
+    fireEvent.click(trigger)
+
+    // Hace clic en "Archivar"
+    const archiveItem = screen.getByRole('menuitem', { name: /archivar/i })
+    fireEvent.click(archiveItem)
+
+    // Diálogo de confirmación accesible con role="alertdialog"
+    const dialog = screen.getByRole('alertdialog')
+    expect(within(dialog).getByText(/archivar cliente/i)).toBeInTheDocument()
+    expect(within(dialog).getByText(/cliente para archivar/i)).toBeInTheDocument()
+
+    // Confirma el archivado
+    const confirmBtn = within(dialog).getByRole('button', { name: 'Archivar' })
+    fireEvent.click(confirmBtn)
+
+    await waitFor(() => {
+      expect(repo.archive).toHaveBeenCalledWith('id-arch')
+    })
+    // El cliente se retira de la lista
+    expect(screen.queryByText('Cliente Para Archivar')).toBeNull()
+  })
+
+  it('cancelar el diálogo de archivado no llama a repo.archive ni quita al cliente', async () => {
+    const item = makeView({ id: 'id-arch-2', fullName: 'Cliente Que Se Queda' }, 2)
+    const repo = makeRepo({
+      list: vi.fn().mockResolvedValue(makePage([item])),
+      archive: vi.fn().mockResolvedValue(undefined),
+    })
+    render(<CustomersPage repository={repo} />)
+
+    const trigger = await screen.findByRole('button', { name: /acciones de cliente que se queda/i })
+    fireEvent.click(trigger)
+
+    const archiveItem = screen.getByRole('menuitem', { name: /archivar/i })
+    fireEvent.click(archiveItem)
+
+    const dialog = screen.getByRole('alertdialog')
+    const cancelBtn = within(dialog).getByRole('button', { name: /cancelar/i })
+    fireEvent.click(cancelBtn)
+
+    expect(repo.archive).not.toHaveBeenCalled()
+    expect(screen.getByText('Cliente Que Se Queda')).toBeInTheDocument()
+  })
+
+  it('abre el drawer de detalle al hacer clic en "Ver detalle" desde el menú de acciones', async () => {
+    const item = makeView(
+      {
+        id: 'id-view-1',
+        fullName: 'Detalle Ejemplo Persona',
+        cedula: '1799887766',
+        email: 'detalle@ficcion.test',
+        phone: '0998877665',
+      },
+      1,
+    )
+    const repo = makeRepo({
+      list: vi.fn().mockResolvedValue(makePage([item])),
+    })
+    render(<CustomersPage repository={repo} />)
+
+    const trigger = await screen.findByRole('button', {
+      name: /acciones de detalle ejemplo persona/i,
+    })
+    fireEvent.click(trigger)
+
+    const viewItem = screen.getByRole('menuitem', { name: /ver detalle/i })
+    fireEvent.click(viewItem)
+
+    const dialog = screen.getByRole('dialog')
+    expect(within(dialog).getByRole('heading', { name: /detalle de cliente/i })).toBeInTheDocument()
+    expect(within(dialog).getByText('Detalle Ejemplo Persona')).toBeInTheDocument()
+    expect(within(dialog).getByText('1799887766')).toBeInTheDocument()
+    expect(within(dialog).getByText('detalle@ficcion.test')).toBeInTheDocument()
   })
 })

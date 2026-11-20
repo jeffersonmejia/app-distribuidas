@@ -31,3 +31,10 @@ export interface CustomerFilters {
   search?: string
   status?: CustomerStatus
 }
+
+export interface CustomerMetrics {
+  totalClientes: number
+  activos: number
+  inactivos: number
+  nuevosEsteMes: number
+}

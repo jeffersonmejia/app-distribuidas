@@ -108,6 +108,38 @@ export class CustomerApiRepository implements CustomerRepository {
     return await response.json() as CustomerView
   }
 
+  async update(id: string, input: CustomerInput): Promise<CustomerView> {
+    const body = {
+      fullName: input.fullName.trim(),
+      cedula: input.cedula?.trim() || null,
+      email: input.email?.trim().toLowerCase() || null,
+      phone: input.phone?.trim() || null,
+    }
+
+    const response = await fetch(`${BASE}/${id}`, {
+      method: 'PATCH',
+      headers: buildHeaders(),
+      body: JSON.stringify(body),
+    })
+
+    if (!response.ok) {
+      throw await mapError(response)
+    }
+
+    return await response.json() as CustomerView
+  }
+
+  async archive(id: string): Promise<void> {
+    const response = await fetch(`${BASE}/${id}`, {
+      method: 'DELETE',
+      headers: buildHeaders(),
+    })
+
+    if (!response.ok) {
+      throw await mapError(response)
+    }
+  }
+
   async setStatus(id: string, status: CustomerStatus): Promise<CustomerView> {
     const response = await fetch(`${BASE}/${id}/status`, {
       method: 'PATCH',

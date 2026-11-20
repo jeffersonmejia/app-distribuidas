@@ -1,4 +1,4 @@
-// SOLID: SRP — ESTE COMPONENTE SE ENCARGA EXCLUSIVAMENTE DEL FORMULARIO DE ALTA DE UN CLIENTE.
+// SOLID: SRP — ESTE COMPONENTE SE ENCARGA DEL FORMULARIO DE ALTA Y EDICIÓN DE UN CLIENTE.
 
 import { useState, useId, type FormEvent } from 'react'
 import { Drawer } from '../../../components/ui/Drawer'
@@ -7,12 +7,15 @@ import { Button } from '../../../components/ui'
 import { Alert } from '../../../components/feedback'
 import { CustomerApiError, type CustomerRepository } from '../services/customerRepository'
 import type { CustomerInput, CustomerView } from '../types/customer'
+import './CustomerDrawer.css'
 
 export interface CustomerDrawerProps {
   isOpen: boolean
   onClose: () => void
   repository: CustomerRepository
   onCreated: (customer: CustomerView) => void
+  customerToEdit?: CustomerView | null
+  onUpdated?: (customer: CustomerView) => void
 }
 
 interface FormState {
@@ -62,9 +65,28 @@ function validate(values: FormState): FormErrors {
 
 const EMPTY_FORM: FormState = { fullName: '', cedula: '', email: '', phone: '' }
 
-export function CustomerDrawer({ isOpen, onClose, repository, onCreated }: CustomerDrawerProps) {
+function getInitialFormState(customerToEdit?: CustomerView | null): FormState {
+  if (customerToEdit) {
+    return {
+      fullName: customerToEdit.fullName,
+      cedula: customerToEdit.cedula ?? '',
+      email: customerToEdit.email ?? '',
+      phone: customerToEdit.phone ?? '',
+    }
+  }
+  return EMPTY_FORM
+}
+
+export function CustomerDrawer({
+  isOpen,
+  onClose,
+  repository,
+  onCreated,
+  customerToEdit,
+  onUpdated,
+}: CustomerDrawerProps) {
   const formId = useId()
-  const [values, setValues] = useState<FormState>(EMPTY_FORM)
+  const [values, setValues] = useState<FormState>(() => getInitialFormState(customerToEdit))
   const [errors, setErrors] = useState<FormErrors>({})
   const [submitting, setSubmitting] = useState(false)
   const [serverError, setServerError] = useState<string | null>(null)
@@ -84,7 +106,7 @@ export function CustomerDrawer({ isOpen, onClose, repository, onCreated }: Custo
 
   function handleClose() {
     if (submitting) return
-    setValues(EMPTY_FORM)
+    setValues(getInitialFormState(customerToEdit))
     setErrors({})
     setServerError(null)
     onClose()
@@ -109,11 +131,22 @@ export function CustomerDrawer({ isOpen, onClose, repository, onCreated }: Custo
     }
 
     try {
-      const created = await repository.create(input)
-      setValues(EMPTY_FORM)
-      setErrors({})
-      onCreated(created)
-      onClose()
+      if (customerToEdit) {
+        if (!repository.update) {
+          throw new CustomerApiError('Operación no soportada.', 'unknown')
+        }
+        const updated = await repository.update(customerToEdit.id, input)
+        setValues(EMPTY_FORM)
+        setErrors({})
+        onUpdated?.(updated)
+        onClose()
+      } else {
+        const created = await repository.create(input)
+        setValues(EMPTY_FORM)
+        setErrors({})
+        onCreated(created)
+        onClose()
+      }
     } catch (err) {
       if (err instanceof CustomerApiError) {
         if (err.kind === 'duplicate') {
@@ -121,7 +154,11 @@ export function CustomerDrawer({ isOpen, onClose, repository, onCreated }: Custo
         } else if (err.kind === 'validation') {
           setServerError('Los datos ingresados no son válidos. Revísalos e inténtalo de nuevo.')
         } else if (err.kind === 'forbidden') {
-          setServerError('No tienes permiso para crear clientes.')
+          setServerError(
+            customerToEdit
+              ? 'No tienes permiso para actualizar clientes.'
+              : 'No tienes permiso para crear clientes.',
+          )
         } else {
           setServerError('Ocurrió un error inesperado. Inténtalo de nuevo.')
         }
@@ -156,7 +193,12 @@ export function CustomerDrawer({ isOpen, onClose, repository, onCreated }: Custo
   )
 
   return (
-    <Drawer isOpen={isOpen} onClose={handleClose} title="Nuevo cliente" footer={footer}>
+    <Drawer
+      isOpen={isOpen}
+      onClose={handleClose}
+      title={customerToEdit ? 'Editar cliente' : 'Nuevo cliente'}
+      footer={footer}
+    >
       {serverError && (
         <Alert variant="error" title="No se pudo guardar">
           {serverError}

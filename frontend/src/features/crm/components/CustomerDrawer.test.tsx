@@ -3,13 +3,13 @@ import userEvent from '@testing-library/user-event'
 import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest'
 import { CustomerDrawer } from './CustomerDrawer'
 import { CustomerApiError, type CustomerRepository } from '../services/customerRepository'
-import type { CustomerView } from '../types/customer'
+import type { CustomerInput, CustomerView } from '../types/customer'
 
 // Doble de repositorio para pruebas
 function makeRepo(overrides: Partial<CustomerRepository> = {}): CustomerRepository {
   return {
     list: vi.fn<() => Promise<{ items: CustomerView[]; page: number; size: number; hasNext: boolean }>>().mockResolvedValue({ items: [], page: 0, size: 0, hasNext: false }),
-    create: vi.fn<() => Promise<CustomerView>>().mockResolvedValue({
+    create: vi.fn<(input: CustomerInput) => Promise<CustomerView>>().mockResolvedValue({
       id: 'test-001',
       fullName: 'Nombre Prueba',
       cedula: null,
@@ -18,7 +18,21 @@ function makeRepo(overrides: Partial<CustomerRepository> = {}): CustomerReposito
       status: 'ACTIVE',
       createdAt: '2026-01-01T00:00:00Z',
       updatedAt: '2026-01-01T00:00:00Z',
-    } as CustomerView),
+    } satisfies CustomerView),
+    update: vi.fn<(id: string, input: CustomerInput) => Promise<CustomerView>>().mockImplementation(async (_id: string, input: CustomerInput) => {
+      const updated: CustomerView = {
+        id: 'test-001',
+        fullName: input.fullName,
+        cedula: input.cedula ?? null,
+        email: input.email ?? null,
+        phone: input.phone ?? null,
+        status: 'ACTIVE',
+        createdAt: '2026-01-01T00:00:00Z',
+        updatedAt: '2026-01-01T00:00:00Z',
+      }
+      return updated
+    }),
+    archive: vi.fn<() => Promise<void>>().mockResolvedValue(),
     setStatus: vi.fn(),
     ...overrides,
   }
@@ -148,5 +162,95 @@ describe('CustomerDrawer', () => {
     expect(screen.getByRole('button', { name: /guardar/i })).toBeDisabled()
     resolveCreate()
     await waitFor(() => expect(onClose).toHaveBeenCalled())
+  })
+
+  it('en modo edición renderiza el título "Editar cliente" y pre-llena los campos', () => {
+    const customer: CustomerView = {
+      id: 'cust-123',
+      fullName: 'Juan Pérez',
+      cedula: '1700000001',
+      email: 'juan@ficcion.test',
+      phone: '0991234567',
+      status: 'ACTIVE',
+      createdAt: '2026-01-01T00:00:00Z',
+      updatedAt: '2026-01-01T00:00:00Z',
+    }
+    render(
+      <CustomerDrawer
+        isOpen
+        onClose={onClose}
+        repository={makeRepo()}
+        onCreated={onCreated}
+        customerToEdit={customer}
+      />,
+    )
+    expect(screen.getByRole('heading', { name: /editar cliente/i })).toBeInTheDocument()
+    expect(screen.getByLabelText(/nombre completo/i)).toHaveValue('Juan Pérez')
+    expect(screen.getByLabelText('Cédula', { selector: 'input' })).toHaveValue('1700000001')
+    expect(screen.getByLabelText(/correo electrónico/i)).toHaveValue('juan@ficcion.test')
+    expect(screen.getByLabelText(/teléfono/i)).toHaveValue('0991234567')
+  })
+
+  it('en modo edición llama a repository.update y onUpdated al guardar', async () => {
+    const customer: CustomerView = {
+      id: 'cust-123',
+      fullName: 'Juan Pérez',
+      cedula: '1700000001',
+      email: 'juan@ficcion.test',
+      phone: '0991234567',
+      status: 'ACTIVE',
+      createdAt: '2026-01-01T00:00:00Z',
+      updatedAt: '2026-01-01T00:00:00Z',
+    }
+    const onUpdated = vi.fn<(customer: CustomerView) => void>()
+    const repo = makeRepo()
+    render(
+      <CustomerDrawer
+        isOpen
+        onClose={onClose}
+        repository={repo}
+        onCreated={onCreated}
+        customerToEdit={customer}
+        onUpdated={onUpdated}
+      />,
+    )
+    const nameInput = screen.getByLabelText(/nombre completo/i)
+    fireEvent.change(nameInput, { target: { value: 'Juan Carlos Pérez' } })
+    fireEvent.click(screen.getByRole('button', { name: /guardar/i }))
+
+    await waitFor(() => {
+      expect(repo.update).toHaveBeenCalledWith('cust-123', expect.objectContaining({
+        fullName: 'Juan Carlos Pérez',
+      }))
+    })
+    expect(onUpdated).toHaveBeenCalledOnce()
+    expect(onClose).toHaveBeenCalledOnce()
+  })
+
+  it('en modo edición muestra error si la actualización da duplicado', async () => {
+    const customer: CustomerView = {
+      id: 'cust-123',
+      fullName: 'Juan Pérez',
+      cedula: null,
+      email: null,
+      phone: null,
+      status: 'ACTIVE',
+      createdAt: '2026-01-01T00:00:00Z',
+      updatedAt: '2026-01-01T00:00:00Z',
+    }
+    const repo = makeRepo({
+      update: vi.fn().mockRejectedValue(new CustomerApiError('dup', 'duplicate', 409)),
+    })
+    render(
+      <CustomerDrawer
+        isOpen
+        onClose={onClose}
+        repository={repo}
+        onCreated={onCreated}
+        customerToEdit={customer}
+      />,
+    )
+    fireEvent.click(screen.getByRole('button', { name: /guardar/i }))
+    expect(await screen.findByText(/cédula o correo/i)).toBeInTheDocument()
   })
 })
