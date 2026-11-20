@@ -101,7 +101,7 @@ export function CustomerActionsMenu({
   }
 
   return (
-    <div className="customer-actions-menu-container">
+    <div className={`customer-actions-menu-container${isOpen ? ' customer-actions-menu-container--open' : ''}`}>
       <button
         ref={buttonRef}
         type="button"

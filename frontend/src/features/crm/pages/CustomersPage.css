@@ -210,6 +210,11 @@
   transition: background-color var(--transition-fast);
 }
 
+.customers-page__row:has(.customer-actions-menu-container--open) {
+  position: relative;
+  z-index: var(--z-dropdown);
+}
+
 .customers-page__row:hover {
   background-color: var(--surface-sunken);
 }
@@ -223,6 +228,11 @@
 
 .customers-page__cell--right {
   text-align: right;
+}
+
+.customers-page__cell--right:has(.customer-actions-menu-container--open) {
+  position: relative;
+  z-index: var(--z-dropdown);
 }
 
 .customers-page__customer-cell {
