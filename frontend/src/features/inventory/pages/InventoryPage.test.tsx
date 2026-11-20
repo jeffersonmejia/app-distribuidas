@@ -52,7 +52,7 @@ describe('InventoryPage', () => {
     })
 
     // Filtrar por Equipos
-    const tabEquipos = screen.getByRole('tab', { name: 'Equipos' })
+    const tabEquipos = screen.getByRole('tab', { name: /^equipos/i })
     await user.click(tabEquipos)
 
     await waitFor(() => {

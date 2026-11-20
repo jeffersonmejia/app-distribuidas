@@ -28,6 +28,42 @@ export interface InventoryPageProps {
   repository?: InventoryRepository
 }
 
+// SOLID: SRP — DEVUELVE EL ICONO REPRESENTATIVO SEGÚN LA CATEGORÍA DEL PRODUCTO.
+function getProductCategoryIcon(category: ProductCategory) {
+  switch (category) {
+    case 'Materiales':
+      return (
+        <svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 3L2 8l10 5 10-5-10-5zm0 8.7L4.5 8 12 4.3 19.5 8 12 11.7zM2 13.5l10 5 10-5v2l-10 5-10-5v-2zm0-4.5l10 5 10-5v2l-10 5-10-5v-2z" />
+        </svg>
+      )
+    case 'Equipos':
+      return (
+        <svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 6h16v10H4V6zm18-2H2c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h7v2H8v2h8v-2h-3v-2h7c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-8 10h-4v-2h4v2z" />
+        </svg>
+      )
+    case 'Herramientas':
+      return (
+        <svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.6C.4 7.1.9 10 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z" />
+        </svg>
+      )
+    case 'Repuestos':
+      return (
+        <svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z" />
+        </svg>
+      )
+    case 'Servicios':
+      return (
+        <svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z" />
+        </svg>
+      )
+  }
+}
+
 export function InventoryPage({ repository }: InventoryPageProps) {
   const repo = repository ?? getInventoryRepository()
 
@@ -130,12 +166,32 @@ export function InventoryPage({ repository }: InventoryPageProps) {
   }
 
   const categoryTabs = [
-    { id: '' as const, label: 'Todos' },
-    { id: 'Materiales' as const, label: 'Materiales' },
-    { id: 'Equipos' as const, label: 'Equipos' },
-    { id: 'Herramientas' as const, label: 'Herramientas' },
-    { id: 'Repuestos' as const, label: 'Repuestos' },
-    { id: 'Servicios' as const, label: 'Servicios' },
+    { id: '' as const, label: 'Todos', count: metrics ? metrics.totalProducts : undefined },
+    {
+      id: 'Materiales' as const,
+      label: 'Materiales',
+      count: metrics?.categoryCounts ? metrics.categoryCounts.Materiales : undefined,
+    },
+    {
+      id: 'Equipos' as const,
+      label: 'Equipos',
+      count: metrics?.categoryCounts ? metrics.categoryCounts.Equipos : undefined,
+    },
+    {
+      id: 'Herramientas' as const,
+      label: 'Herramientas',
+      count: metrics?.categoryCounts ? metrics.categoryCounts.Herramientas : undefined,
+    },
+    {
+      id: 'Repuestos' as const,
+      label: 'Repuestos',
+      count: metrics?.categoryCounts ? metrics.categoryCounts.Repuestos : undefined,
+    },
+    {
+      id: 'Servicios' as const,
+      label: 'Servicios',
+      count: metrics?.categoryCounts ? metrics.categoryCounts.Servicios : undefined,
+    },
   ]
 
   const headerFooter = (
@@ -198,9 +254,7 @@ export function InventoryPage({ repository }: InventoryPageProps) {
                 <td className="inventory-page__cell">
                   <div className="inventory-page__product-cell">
                     <div className="inventory-page__product-icon" aria-hidden="true">
-                      <svg fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M20 2H4c-1.1 0-2 .9-2 2v3.01c0 .72.38 1.36.95 1.7L3 9.7V20c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V9.7l.05-.99c.57-.34.95-.98.95-1.7V4c0-1.1-.9-2-2-2zM4 4h16v3H4V4zm15 16H5V10h14v10zm-9-8h4v2h-4v-2z" />
-                      </svg>
+                      {getProductCategoryIcon(p.category)}
                     </div>
                     <div className="inventory-page__product-info">
                       <span className="inventory-page__product-name">{p.name}</span>
@@ -313,7 +367,11 @@ export function InventoryPage({ repository }: InventoryPageProps) {
           <MetricCard
             title="Total de productos"
             value={metrics.totalProducts}
-            subtitle="En categorías activas"
+            subtitle={
+              metrics.activeCategoryCount !== undefined
+                ? `En ${metrics.activeCategoryCount} categorías activas`
+                : 'En categorías activas'
+            }
             iconVariant="primary"
             icon={
               <svg fill="currentColor" viewBox="0 0 24 24">
@@ -325,7 +383,11 @@ export function InventoryPage({ repository }: InventoryPageProps) {
           <MetricCard
             title="Stock bajo"
             value={metrics.lowStockCount}
-            subtitle="Requieren reposición inmediata"
+            subtitle={
+              metrics.lowStockCount === 1
+                ? '1 ítem crítico'
+                : `${metrics.lowStockCount} ítems críticos`
+            }
             badge={<Badge variant="warning">Atención</Badge>}
             iconVariant="warning"
             icon={

@@ -2,6 +2,7 @@
 
 import type {
   Product,
+  ProductCategory,
   ProductInput,
   ProductFilters,
   ProductPage,
@@ -333,10 +334,28 @@ export class InventoryMockRepository implements InventoryRepository {
       0
     )
 
+    const categoryCounts: Record<ProductCategory, number> = {
+      Materiales: 0,
+      Equipos: 0,
+      Herramientas: 0,
+      Repuestos: 0,
+      Servicios: 0,
+    }
+
+    for (const p of items) {
+      if (categoryCounts[p.category] !== undefined) {
+        categoryCounts[p.category] += 1
+      }
+    }
+
+    const activeCategoryCount = Object.values(categoryCounts).filter((c) => c > 0).length
+
     return {
       totalProducts,
       lowStockCount,
       totalInventoryValueCents,
+      categoryCounts,
+      activeCategoryCount,
     }
   }
 

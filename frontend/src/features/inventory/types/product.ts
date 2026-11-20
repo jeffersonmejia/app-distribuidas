@@ -51,6 +51,8 @@ export interface InventoryMetrics {
   totalProducts: number
   lowStockCount: number
   totalInventoryValueCents: number // Suma de (stock * purchasePriceCents)
+  categoryCounts?: Record<ProductCategory, number>
+  activeCategoryCount?: number
 }
 
 export interface StockLineCommand {

@@ -131,5 +131,8 @@ describe('InventoryMockRepository', () => {
     expect(metrics.totalProducts).toBe(9)
     expect(metrics.lowStockCount).toBe(2)
     expect(metrics.totalInventoryValueCents).toBeGreaterThan(0)
+    expect(metrics.categoryCounts?.Materiales).toBe(3)
+    expect(metrics.categoryCounts?.Equipos).toBe(2)
+    expect(metrics.activeCategoryCount).toBe(5)
   })
 })
