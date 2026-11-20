@@ -177,6 +177,14 @@ export function PosPage({ repository }: PosPageProps) {
     },
   ]
 
+  const totalTransactions = metrics
+    ? metrics.countByStatus.paid + metrics.countByStatus.pending + metrics.countByStatus.overdue
+    : sales.length
+
+  const headerDescription = metrics
+    ? `Ventas del mes: ${formatMoney(metrics.totalSalesThisMonthCents)} · ${totalTransactions} ${totalTransactions === 1 ? 'transacción registrada' : 'transacciones registradas'}`
+    : `Ventas del mes: $0.00 · ${sales.length} ${sales.length === 1 ? 'transacción registrada' : 'transacciones registradas'}`
+
   let content: ReactNode = null
 
   if (loadState === 'loading' && sales.length === 0) {
@@ -264,12 +272,12 @@ export function PosPage({ repository }: PosPageProps) {
   return (
     <div className="pos-page">
       <PageHeader
-        title="Ventas y Facturación"
-        description="Gestiona comprobantes electrónicos, cobros y ventas del punto de venta"
+        title="Ventas"
+        description={headerDescription}
         badgeText="MÓDULO ACTIVO"
         searchValue={searchInput}
         onSearchChange={handleSearchInput}
-        searchPlaceholder="Buscar por número de comprobante, cliente o RUC..."
+        searchPlaceholder="Buscar por comprobante, cliente o RUC..."
         actions={
           <div className="pos-page__header-actions">
             <Button
@@ -288,6 +296,15 @@ export function PosPage({ repository }: PosPageProps) {
             </Button>
           </div>
         }
+        footer={
+          <FilterTabs<SaleStatus | ''>
+            tabs={tabs}
+            activeTab={statusFilter}
+            onTabChange={handleStatusTab}
+            ariaLabel="Filtro por estado de venta"
+            className="pos-page__tabs"
+          />
+        }
       />
 
       {/* Métricas KPI */}
@@ -295,7 +312,11 @@ export function PosPage({ repository }: PosPageProps) {
         <MetricCard
           title="Ventas del mes"
           value={metrics ? formatMoney(metrics.totalSalesThisMonthCents) : '$0.00'}
-          subtitle="+12% vs mes anterior"
+          subtitle={
+            metrics
+              ? `${metrics.countByStatus.paid} ${metrics.countByStatus.paid === 1 ? 'comprobante pagado' : 'comprobantes pagados'}`
+              : undefined
+          }
           iconVariant="primary"
           icon={
             <svg fill="currentColor" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
@@ -332,16 +353,6 @@ export function PosPage({ repository }: PosPageProps) {
               <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z" />
             </svg>
           }
-        />
-      </section>
-
-      {/* Barra de Filtros */}
-      <section className="pos-page__filters" aria-label="Filtrado por estado">
-        <FilterTabs<SaleStatus | ''>
-          tabs={tabs}
-          activeTab={statusFilter}
-          onTabChange={handleStatusTab}
-          ariaLabel="Filtro por estado de venta"
         />
       </section>
 

@@ -16,10 +16,8 @@ describe('PosPage', () => {
   it('renderiza encabezado, métricas KPI y tabla con ventas cargadas', async () => {
     render(<PosPage repository={mockRepo} />)
 
-    expect(screen.getByRole('heading', { name: 'Ventas y Facturación' })).toBeInTheDocument()
-    expect(
-      screen.getByText('Gestiona comprobantes electrónicos, cobros y ventas del punto de venta')
-    ).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 1, name: 'Ventas' })).toBeInTheDocument()
+    expect(screen.getByText(/Ventas del mes:/i)).toBeInTheDocument()
 
     // KPIs
     const kpiSection = screen.getByLabelText('Resumen de ventas')
@@ -62,7 +60,7 @@ describe('PosPage', () => {
       expect(screen.getByText('001-001-000000101')).toBeInTheDocument()
     })
 
-    const searchInput = screen.getByPlaceholderText(/buscar por número de comprobante/i)
+    const searchInput = screen.getByPlaceholderText(/buscar por comprobante/i)
     await user.type(searchInput, 'Medina')
 
     await waitFor(
@@ -99,7 +97,7 @@ describe('PosPage', () => {
       expect(screen.getByText('001-001-000000101')).toBeInTheDocument()
     })
 
-    const searchInput = screen.getByPlaceholderText(/buscar por número de comprobante/i)
+    const searchInput = screen.getByPlaceholderText(/buscar por comprobante/i)
     await user.type(searchInput, 'cadena-sin-coincidencia-xyz')
 
     await waitFor(

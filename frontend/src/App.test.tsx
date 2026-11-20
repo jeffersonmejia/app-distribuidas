@@ -83,7 +83,7 @@ describe('App Routing Integration', () => {
     const posLink = screen.getByRole('link', { name: 'Ventas' })
     expect(posLink).toHaveAttribute('aria-current', 'page')
 
-    expect(screen.getByRole('heading', { level: 1, name: 'Ventas y Facturación' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 1, name: 'Ventas' })).toBeInTheDocument()
   })
 
   it('renderiza EmptyState de página no encontrada para rutas desconocidas dentro de AppLayout', async () => {
