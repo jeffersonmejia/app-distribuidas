@@ -237,7 +237,7 @@ export class InventoryMockRepository implements InventoryRepository {
       items = items.filter((p) => matchesProductSearch(p, term))
     }
 
-    if (filters.category && filters.category !== '') {
+    if (filters.category) {
       items = items.filter((p) => p.category === filters.category)
     }
 
@@ -290,7 +290,12 @@ export class InventoryMockRepository implements InventoryRepository {
 
     const currentStore = this.getStore()
     if (skuNormalized && currentStore.some((p) => p.sku === skuNormalized)) {
-      errors.sku = `El código / SKU "${skuNormalized}" ya está registrado.`
+      // Lanzar directamente con mensaje descriptivo para facilitar la detección en el llamador.
+      throw new InventoryApiError(
+        `El código / SKU "${skuNormalized}" ya está registrado.`,
+        'validation',
+        { sku: `El código / SKU "${skuNormalized}" ya está registrado.` }
+      )
     }
 
     if (Object.keys(errors).length > 0) {

@@ -97,8 +97,8 @@ export function InventoryPage({ repository }: InventoryPageProps) {
     void loadMetrics()
   }, [loadPage, loadMetrics, page, search, categoryFilter])
 
-  function handleSearchInput(e: React.ChangeEvent<HTMLInputElement>) {
-    const val = e.target.value
+  // PageHeader pasa el valor de búsqueda como string, no como ChangeEvent.
+  function handleSearchInput(val: string) {
     setSearchInput(val)
 
     if (debounceRef.current) clearTimeout(debounceRef.current)
@@ -177,8 +177,13 @@ export function InventoryPage({ repository }: InventoryPageProps) {
             ? 'No se encontraron artículos con los filtros aplicados.'
             : 'No hay productos registrados en esta organización.'
         }
-        actionLabel={search || categoryFilter ? undefined : '+ Nuevo producto'}
-        onAction={search || categoryFilter ? undefined : handleOpenCreate}
+        action={
+          search || categoryFilter ? undefined : (
+            <Button variant="primary" onClick={handleOpenCreate}>
+              + Nuevo producto
+            </Button>
+          )
+        }
       />
     )
   } else {

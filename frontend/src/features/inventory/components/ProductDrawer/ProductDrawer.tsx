@@ -129,10 +129,11 @@ export function ProductDrawer({
       isOpen={isOpen}
       onClose={onClose}
       title="Nuevo producto"
-      description="Ingresa los datos para registrar un nuevo artículo en bodega."
       footer={drawerFooter}
-      width="480px"
     >
+      <p className="product-drawer-subtitle">
+        Ingresa los datos para registrar un nuevo artículo en bodega.
+      </p>
       <form
         id="product-drawer-form"
         className="product-drawer-form"

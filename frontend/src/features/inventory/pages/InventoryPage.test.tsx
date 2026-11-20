@@ -1,8 +1,12 @@
-import { screen, waitFor, within } from '@testing-library/react'
+import { screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import { InventoryPage } from './InventoryPage'
-import { InventoryMockRepository, resetInventoryMockStore } from '../services'
+import {
+  InventoryMockRepository,
+  resetInventoryMockStore,
+  type InventoryRepository,
+} from '../services'
 import { renderWithProviders, cleanupSessionTestState } from '../../../test/renderWithProviders'
 
 describe('InventoryPage', () => {
@@ -119,8 +123,9 @@ describe('InventoryPage', () => {
   })
 
   it('muestra mensaje de alerta y botón de reintentar si el repositorio falla', async () => {
-    const failingRepo = {
+    const failingRepo: InventoryRepository = {
       list: vi.fn().mockRejectedValue(new Error('Fallo de conexión en inventario')),
+      create: vi.fn(),
     }
 
     renderWithProviders(<InventoryPage repository={failingRepo} />, { initialPath: '/inventory' })

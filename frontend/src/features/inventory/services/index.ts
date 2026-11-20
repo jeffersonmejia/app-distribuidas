@@ -1,6 +1,7 @@
 // SOLID: OCP — FACTORY PARA OBTENER LA INSTANCIA DE REPOSITORIO DE INVENTARIO SEGÚN LA FUENTE DE DATOS.
 
 import type { InventoryRepository } from './inventoryRepository'
+import type { Product, ProductPage } from '../types/product'
 import { InventoryMockRepository } from './inventoryMock'
 import { InventoryApiError } from './inventoryRepository'
 
@@ -12,11 +13,11 @@ export * from './inventoryMock'
  * Se conectará una vez que los contratos y endpoints sean aprobados por el backend.
  */
 class UnavailableInventoryApiRepository implements InventoryRepository {
-  async list() {
+  async list(): Promise<ProductPage> {
     throw new InventoryApiError('Servicio de inventario en backend no disponible todavía.', 'service_unavailable')
   }
 
-  async create() {
+  async create(): Promise<Product> {
     throw new InventoryApiError('Servicio de inventario en backend no disponible todavía.', 'service_unavailable')
   }
 }
@@ -28,13 +29,12 @@ export function getInventoryRepository(): InventoryRepository {
 
   const dataSource = (import.meta.env.VITE_DATA_SOURCE || 'mock').toLowerCase().trim()
 
-  if (dataSource === 'api') {
-    repositoryInstance = new UnavailableInventoryApiRepository()
-  } else {
-    repositoryInstance = new InventoryMockRepository()
-  }
+  const repo = dataSource === 'api'
+    ? new UnavailableInventoryApiRepository()
+    : new InventoryMockRepository()
 
-  return repositoryInstance
+  repositoryInstance = repo
+  return repo
 }
 
 export function setInventoryRepositoryForTesting(repo: InventoryRepository | null): void {
