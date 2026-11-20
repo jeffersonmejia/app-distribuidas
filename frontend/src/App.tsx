@@ -1,9 +1,12 @@
+import { useEffect } from 'react'
 import { RouterProvider, useRouter } from './app/router'
 import { AppLayout, PlaceholderPage } from './app/layouts'
 import LoginPage from './features/identity/pages/LoginPage'
 import { CustomersPage } from './features/crm/pages/CustomersPage'
 import { Card } from './components/ui/Card'
 import { EmptyState } from './components/feedback/EmptyState'
+import { SessionProvider } from './features/identity/context'
+import { useSession } from './features/identity/hooks'
 
 //SOLID: SRP — ORQUESTA EL RENDERIZADO DE RUTAS BASE DEL SISTEMA DENTRO O FUERA DE APPLAYOUT.
 
@@ -43,11 +46,26 @@ export const MODULE_DESCRIPTIONS: Record<string, { title: string; description: s
 }
 
 export function AppContent() {
-  const { pathname, route } = useRouter()
+  const { pathname, route, navigate } = useRouter()
+  const { user, isLoading } = useSession()
+
+  useEffect(() => {
+    if (!isLoading && !user && route.path !== '/login') {
+      navigate('/login', { replace: true })
+    }
+  }, [isLoading, user, route.path, navigate])
 
   // Rutas que se renderizan fuera del layout (Login y accesos)
   if (route.path === '/login') {
     return <LoginPage />
+  }
+
+  if (isLoading) {
+    return null
+  }
+
+  if (!user) {
+    return null
   }
 
   // Si la ruta no está registrada en la tabla de rutas
@@ -86,9 +104,11 @@ export function AppContent() {
 
 function App() {
   return (
-    <RouterProvider>
-      <AppContent />
-    </RouterProvider>
+    <SessionProvider>
+      <RouterProvider>
+        <AppContent />
+      </RouterProvider>
+    </SessionProvider>
   )
 }
 

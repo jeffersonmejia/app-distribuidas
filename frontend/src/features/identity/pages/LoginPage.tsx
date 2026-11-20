@@ -1,6 +1,8 @@
 import { useState, type FormEvent } from 'react'
 import { Input } from '../../../components/forms'
 import { Button } from '../../../components/ui'
+import { useSession } from '../hooks'
+import { useRouter } from '../../../app/router'
 import './LoginPage.css'
 
 // SOLID: SRP — ESTA PÁGINA SE ENCARGA EXCLUSIVAMENTE DE RENDERIZAR LA PANTALLA DE INICIO DE SESIÓN.
@@ -8,11 +10,22 @@ import './LoginPage.css'
 function LoginPage() {
   const [passwordVisible, setPasswordVisible] = useState(false)
   const [notice, setNotice] = useState('')
+  const { signIn } = useSession()
+  const { navigate } = useRouter()
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    // El proveedor de identidad aún no está configurado; no se envían credenciales.
-    setNotice('El proveedor de identidad aún no está configurado. No se enviaron credenciales.')
+    try {
+      const formData = new FormData(e.currentTarget)
+      const email = (formData.get('email') as string) || ''
+      if (signIn) {
+        await signIn(email)
+      }
+      setNotice('Sesión iniciada con éxito. Redirigiendo...')
+      navigate('/')
+    } catch {
+      setNotice('El proveedor de identidad aún no está configurado. No se enviaron credenciales.')
+    }
   }
 
   const EyeIcon = ({ open }: { open: boolean }) =>

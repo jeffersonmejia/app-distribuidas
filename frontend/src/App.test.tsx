@@ -3,11 +3,14 @@ import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { RouterProvider } from './app/router'
 import { AppContent } from './App'
+import { SessionProvider } from './features/identity/context'
+import { resetSessionMockStore } from './features/identity/services/sessionMock'
 
 describe('App Routing Integration', () => {
   const originalTitle = document.title
 
   beforeEach(() => {
+    resetSessionMockStore()
     window.history.replaceState({}, '', '/')
     document.title = originalTitle
   })
@@ -19,9 +22,11 @@ describe('App Routing Integration', () => {
 
   it('renderiza LoginPage en /login SIN barra lateral de navegación', () => {
     render(
-      <RouterProvider initialPath="/login">
-        <AppContent />
-      </RouterProvider>
+      <SessionProvider>
+        <RouterProvider initialPath="/login">
+          <AppContent />
+        </RouterProvider>
+      </SessionProvider>
     )
 
     // LoginPage está presente
@@ -33,13 +38,17 @@ describe('App Routing Integration', () => {
 
   it('renderiza /crm dentro de AppLayout con Sidebar y la página de Clientes', async () => {
     render(
-      <RouterProvider initialPath="/crm">
-        <AppContent />
-      </RouterProvider>
+      <SessionProvider>
+        <RouterProvider initialPath="/crm">
+          <AppContent />
+        </RouterProvider>
+      </SessionProvider>
     )
 
-    // Sidebar presente
-    expect(screen.getByRole('navigation', { name: 'Módulos del sistema' })).toBeInTheDocument()
+    // Espera a que cargue la sesión y el layout esté presente
+    await waitFor(() => {
+      expect(screen.getByRole('navigation', { name: 'Módulos del sistema' })).toBeInTheDocument()
+    })
 
     // Enlace Clientes activo
     const crmLink = screen.getByRole('link', { name: 'Clientes' })
@@ -58,15 +67,19 @@ describe('App Routing Integration', () => {
     })
   })
 
-  it('renderiza EmptyState de página no encontrada para rutas desconocidas dentro de AppLayout', () => {
+  it('renderiza EmptyState de página no encontrada para rutas desconocidas dentro de AppLayout', async () => {
     render(
-      <RouterProvider initialPath="/ruta-inexistente">
-        <AppContent />
-      </RouterProvider>
+      <SessionProvider>
+        <RouterProvider initialPath="/ruta-inexistente">
+          <AppContent />
+        </RouterProvider>
+      </SessionProvider>
     )
 
-    // Sidebar presente
-    expect(screen.getByRole('navigation', { name: 'Módulos del sistema' })).toBeInTheDocument()
+    // Espera a que cargue la sesión y se muestre el Sidebar
+    await waitFor(() => {
+      expect(screen.getByRole('navigation', { name: 'Módulos del sistema' })).toBeInTheDocument()
+    })
     // Mensaje de página no encontrada
     expect(screen.getByText('Página no encontrada')).toBeInTheDocument()
   })
@@ -75,12 +88,16 @@ describe('App Routing Integration', () => {
     const user = userEvent.setup()
 
     render(
-      <RouterProvider initialPath="/">
-        <AppContent />
-      </RouterProvider>
+      <SessionProvider>
+        <RouterProvider initialPath="/">
+          <AppContent />
+        </RouterProvider>
+      </SessionProvider>
     )
 
-    expect(screen.getByRole('heading', { level: 1, name: 'Panel general' })).toBeInTheDocument()
+    await waitFor(() => {
+      expect(screen.getByRole('heading', { level: 1, name: 'Panel general' })).toBeInTheDocument()
+    })
     expect(document.title).toBe('Panel General — ERP + CRM')
 
     // Clic en Proyectos en el Sidebar
