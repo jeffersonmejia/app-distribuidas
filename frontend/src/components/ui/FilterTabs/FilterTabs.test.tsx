@@ -24,22 +24,35 @@ describe('FilterTabs', () => {
     const user = userEvent.setup()
     render(<FilterTabs tabs={tabs} activeTab="all" onTabChange={handleChange} />)
 
-    await user.click(screen.getByRole('tab', { name: /activos/i }))
+    // Usar nombre exacto para evitar ambigüedad con "Inactivos"
+    await user.click(screen.getByRole('tab', { name: /^activos/i }))
     expect(handleChange).toHaveBeenCalledWith('active')
   })
 
   it('soporta navegación con teclado (ArrowRight, ArrowLeft, Home, End)', () => {
     const handleChange = vi.fn()
-    render(<FilterTabs tabs={tabs} activeTab="all" onTabChange={handleChange} />)
+    const { rerender } = render(
+      <FilterTabs tabs={tabs} activeTab="all" onTabChange={handleChange} />
+    )
 
     const tablist = screen.getByRole('tablist')
+
+    // ArrowRight: all → active
     fireEvent.keyDown(tablist, { key: 'ArrowRight' })
-    expect(handleChange).toHaveBeenCalledWith('active')
+    expect(handleChange).toHaveBeenLastCalledWith('active')
 
+    // Simular que el padre actualizó activeTab
+    rerender(<FilterTabs tabs={tabs} activeTab="active" onTabChange={handleChange} />)
+
+    // End: active → inactive (último)
     fireEvent.keyDown(tablist, { key: 'End' })
-    expect(handleChange).toHaveBeenCalledWith('inactive')
+    expect(handleChange).toHaveBeenLastCalledWith('inactive')
 
+    // Simular que el padre actualizó activeTab
+    rerender(<FilterTabs tabs={tabs} activeTab="inactive" onTabChange={handleChange} />)
+
+    // Home: inactive → all (primero)
     fireEvent.keyDown(tablist, { key: 'Home' })
-    expect(handleChange).toHaveBeenCalledWith('all')
+    expect(handleChange).toHaveBeenLastCalledWith('all')
   })
 })
