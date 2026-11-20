@@ -67,6 +67,25 @@ describe('App Routing Integration', () => {
     })
   })
 
+  it('renderiza /pos dentro de AppLayout con Sidebar y la página de Ventas', async () => {
+    render(
+      <SessionProvider>
+        <RouterProvider initialPath="/pos">
+          <AppContent />
+        </RouterProvider>
+      </SessionProvider>
+    )
+
+    await waitFor(() => {
+      expect(screen.getByRole('navigation', { name: 'Módulos del sistema' })).toBeInTheDocument()
+    })
+
+    const posLink = screen.getByRole('link', { name: 'Ventas' })
+    expect(posLink).toHaveAttribute('aria-current', 'page')
+
+    expect(screen.getByRole('heading', { level: 1, name: 'Ventas y Facturación' })).toBeInTheDocument()
+  })
+
   it('renderiza EmptyState de página no encontrada para rutas desconocidas dentro de AppLayout', async () => {
     render(
       <SessionProvider>

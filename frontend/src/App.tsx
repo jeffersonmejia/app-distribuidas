@@ -4,6 +4,7 @@ import { AppLayout, PlaceholderPage } from './app/layouts'
 import LoginPage from './features/identity/pages/LoginPage'
 import { CustomersPage } from './features/crm/pages/CustomersPage'
 import { InventoryPage } from './features/inventory/pages/InventoryPage'
+import { PosPage } from './features/pos/pages/PosPage'
 import { Card } from './components/ui/Card'
 import { EmptyState } from './components/feedback/EmptyState'
 import { SessionProvider } from './features/identity/context'
@@ -95,6 +96,8 @@ export function AppContent() {
         <CustomersPage />
       ) : route.path === '/inventory' ? (
         <InventoryPage />
+      ) : route.path === '/pos' ? (
+        <PosPage />
       ) : (
         <PlaceholderPage
           title={moduleInfo.title}

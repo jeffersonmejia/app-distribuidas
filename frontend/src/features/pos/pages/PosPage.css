@@ -1,0 +1,142 @@
+.pos-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  width: 100%;
+}
+
+.pos-page__header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.pos-page__kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-4);
+}
+
+.pos-page__filters {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pos-page__loading,
+.pos-page__empty,
+.pos-page__error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-12) var(--space-4);
+  background-color: var(--surface-canvas);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-sm);
+}
+
+.pos-page__error {
+  gap: var(--space-4);
+}
+
+.pos-page__error-action {
+  margin-top: var(--space-2);
+}
+
+.pos-page__list {
+  background-color: var(--surface-canvas);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-subtle);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.pos-page__table-row {
+  transition: background-color var(--transition-fast);
+}
+
+.pos-page__table-row:hover {
+  background-color: var(--surface-sunken);
+}
+
+.pos-page__receipt-cell {
+  padding-left: var(--space-4);
+}
+
+.pos-page__receipt-wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.pos-page__receipt-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: var(--radius-pill);
+  background-color: var(--brand-soft);
+  color: var(--brand);
+  flex-shrink: 0;
+}
+
+.pos-page__receipt-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.pos-page__receipt-number {
+  font-weight: 700;
+  font-family: var(--font-mono);
+  color: var(--text-primary);
+  font-size: var(--font-size-sm);
+}
+
+.pos-page__receipt-type {
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+}
+
+.pos-page__customer-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.pos-page__customer-name {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: var(--font-size-sm);
+}
+
+.pos-page__customer-id {
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+}
+
+.pos-page__date-cell {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+.pos-page__cell--right {
+  text-align: right;
+}
+
+.pos-page__cell--center {
+  text-align: center;
+}
+
+.pos-page__total-amount {
+  font-weight: 700;
+  font-family: var(--font-mono);
+  color: var(--text-primary);
+  font-size: var(--font-size-sm);
+}
+
+.pos-page__actions-cell {
+  padding-right: var(--space-4);
+}
