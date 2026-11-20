@@ -1,4 +1,4 @@
-// SOLID: SRP — IMPLEMENTACIÓN EN MEMORIA DEL REPOSITORIO DE CLIENTES PARA DESARROLLO Y PRUEBAS CON AISLAMIENTO MULTITENANT.
+// SOLID: SRP — IMPLEMENTACIÓN EN MEMORIA DEL REPOSITORIO DE CLIENTES PARA DESARROLLO Y PRUEBAS CON AISLAMIENTO MULTITENANT DERIVADO DE LA SESIÓN.
 
 import type {
   CustomerFilters,
@@ -9,8 +9,9 @@ import type {
   CustomerView,
 } from '../types/customer'
 import { CustomerApiError, type CustomerRepository } from './customerRepository'
+import { MOCK_USER } from '../../identity/services/sessionMock'
 
-const DEFAULT_TENANT_ID = 'tnt-andina-001'
+const DEFAULT_TENANT_ID = MOCK_USER.tenantId
 
 // Datos ficticios de clientes por organización (tenant)
 const MOCK_SEED_BY_TENANT: Record<string, CustomerView[]> = {
@@ -147,11 +148,7 @@ function initStores(): void {
 initStores()
 
 function getSafeActiveTenantId(): string {
-  try {
-    return localStorage.getItem('app_active_tenant_id') || DEFAULT_TENANT_ID
-  } catch {
-    return DEFAULT_TENANT_ID
-  }
+  return DEFAULT_TENANT_ID
 }
 
 function delay(ms = 300): Promise<void> {

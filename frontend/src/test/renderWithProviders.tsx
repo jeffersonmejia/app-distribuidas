@@ -8,7 +8,7 @@ import {
   SessionMockRepository,
   resetSessionMockStore,
   MOCK_USER,
-  MOCK_TENANTS,
+  MOCK_TENANT,
 } from '../features/identity/services/sessionMock'
 import type { SessionRepository } from '../features/identity/services/sessionRepository'
 
@@ -37,8 +37,11 @@ class ConfigurableTestSessionRepository extends SessionMockRepository {
     return MOCK_USER
   }
 
-  override async listTenants() {
-    return [...MOCK_TENANTS]
+  override async getCurrentTenant() {
+    if (!this.customAuthenticated) {
+      return null
+    }
+    return MOCK_TENANT
   }
 
   override async signIn(email?: string) {

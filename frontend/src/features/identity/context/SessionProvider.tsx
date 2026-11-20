@@ -1,4 +1,4 @@
-// SOLID: SRP — PROVEE EL ESTADO GLOBAL DE SESIÓN Y TENANTS A LA APLICACIÓN.
+// SOLID: SRP — PROVEE EL ESTADO GLOBAL DE SESIÓN Y TENANT DEL USUARIO A LA APLICACIÓN.
 
 import { useState, useEffect, useCallback, type ReactNode } from 'react'
 import { SessionContext, type SessionContextValue } from './SessionContext'
@@ -14,25 +14,20 @@ export function SessionProvider({ children, repository }: SessionProviderProps) 
   const repo = repository ?? getSessionRepository()
 
   const [user, setUser] = useState<SessionUser | null>(null)
-  const [tenants, setTenants] = useState<Tenant[]>([])
-  const [activeTenant, setActiveTenantState] = useState<Tenant | null>(null)
+  const [tenant, setTenant] = useState<Tenant | null>(null)
   const [isLoading, setIsLoading] = useState(true)
 
   const loadSession = useCallback(async () => {
     setIsLoading(true)
     try {
       const currentUser = await repo.getCurrentUser()
-      const tenantList = await repo.listTenants()
-      const activeId = await repo.getActiveTenantId()
-      const matchedActive = tenantList.find((t) => t.id === activeId) ?? tenantList[0] ?? null
+      const currentTenant = await repo.getCurrentTenant()
 
       setUser(currentUser)
-      setTenants(tenantList)
-      setActiveTenantState(matchedActive)
+      setTenant(currentTenant)
     } catch {
       setUser(null)
-      setTenants([])
-      setActiveTenantState(null)
+      setTenant(null)
     } finally {
       setIsLoading(false)
     }
@@ -42,29 +37,18 @@ export function SessionProvider({ children, repository }: SessionProviderProps) 
     void loadSession()
   }, [loadSession])
 
-  const handleSetActiveTenant = useCallback(
-    async (id: string) => {
-      await repo.setActiveTenant(id)
-      const matched = tenants.find((t) => t.id === id) ?? null
-      setActiveTenantState(matched)
-    },
-    [repo, tenants],
-  )
-
   const handleSignIn = useCallback(
     async (email?: string) => {
+      let signedInUser: SessionUser | null = null
       if (repo.signIn) {
-        const signedInUser = await repo.signIn(email ?? '')
+        signedInUser = await repo.signIn(email ?? '')
         setUser(signedInUser)
       } else {
-        const u = await repo.getCurrentUser()
-        setUser(u)
+        signedInUser = await repo.getCurrentUser()
+        setUser(signedInUser)
       }
-      const tenantList = await repo.listTenants()
-      const activeId = await repo.getActiveTenantId()
-      const matchedActive = tenantList.find((t) => t.id === activeId) ?? tenantList[0] ?? null
-      setTenants(tenantList)
-      setActiveTenantState(matchedActive)
+      const currentTenant = await repo.getCurrentTenant()
+      setTenant(currentTenant)
     },
     [repo],
   )
@@ -72,15 +56,13 @@ export function SessionProvider({ children, repository }: SessionProviderProps) 
   const handleSignOut = useCallback(async () => {
     await repo.signOut()
     setUser(null)
-    setActiveTenantState(null)
+    setTenant(null)
   }, [repo])
 
   const value: SessionContextValue = {
     user,
-    tenants,
-    activeTenant,
+    tenant,
     isLoading,
-    setActiveTenant: handleSetActiveTenant,
     signIn: handleSignIn,
     signOut: handleSignOut,
   }

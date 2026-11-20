@@ -23,7 +23,7 @@ describe('UserMenu', () => {
     })
   })
 
-  it('despliega el menú al pulsar el botón mostrando datos de usuario', async () => {
+  it('despliega el menú al pulsar el botón mostrando datos de usuario y nombre de organización informativa', async () => {
     const user = userEvent.setup()
     renderWithProviders(<UserMenu />)
 
@@ -39,6 +39,7 @@ describe('UserMenu', () => {
     expect(screen.getByText('Carlos Alberto Mendoza')).toBeInTheDocument()
     expect(screen.getByText('carlos.mendoza@ficcion.test')).toBeInTheDocument()
     expect(screen.getByText('Administrador Comercial')).toBeInTheDocument()
+    expect(screen.getByText('Andina Importaciones S.A.')).toBeInTheDocument()
     expect(screen.getByRole('menuitem', { name: /cerrar sesión/i })).toBeInTheDocument()
   })
 

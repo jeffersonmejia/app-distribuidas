@@ -91,6 +91,17 @@
   width: fit-content;
 }
 
+.user-menu__tenant {
+  display: inline-block;
+  margin-top: var(--space-1);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-normal);
+  color: var(--text-secondary);
+  border-top: 1px dashed var(--border-subtle);
+  padding-top: var(--space-1);
+  word-break: break-word;
+}
+
 .user-menu__divider {
   height: 1px;
   background-color: var(--border-subtle);

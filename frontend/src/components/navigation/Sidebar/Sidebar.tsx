@@ -1,6 +1,5 @@
 import type { ReactNode } from 'react'
 import { Link } from '../../../app/router/Link'
-import { TenantSelector } from '../../../features/identity/components/TenantSelector'
 import { UserMenu } from '../../../features/identity/components/UserMenu'
 import './Sidebar.css'
 
@@ -154,14 +153,7 @@ export function Sidebar({ currentPath, footer }: SidebarProps) {
       </div>
 
       <div className="app-sidebar__footer">
-        {footer ? (
-          footer
-        ) : (
-          <>
-            <TenantSelector />
-            <UserMenu />
-          </>
-        )}
+        {footer ? footer : <UserMenu />}
       </div>
     </aside>
   )

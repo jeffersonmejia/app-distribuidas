@@ -6,7 +6,7 @@ import { useRouter } from '../../../../app/router'
 import './UserMenu.css'
 
 export function UserMenu() {
-  const { user, signOut } = useSession()
+  const { user, tenant, signOut } = useSession()
   const { navigate } = useRouter()
   const [isOpen, setIsOpen] = useState(false)
 
@@ -75,6 +75,8 @@ export function UserMenu() {
 
   if (!user) return null
 
+  const organizationName = tenant?.name ?? user.tenantName
+
   return (
     <div className={`user-menu-container${isOpen ? ' user-menu-container--open' : ''}`}>
       <button
@@ -100,11 +102,14 @@ export function UserMenu() {
           className="user-menu__dropdown"
           onKeyDown={handleMenuKeyDown}
         >
-          {/* Cabecera con datos del usuario */}
+          {/* Cabecera con datos del usuario y organización informativa */}
           <div className="user-menu__header">
             <span className="user-menu__name">{user.fullName}</span>
             <span className="user-menu__email">{user.email}</span>
             <span className="user-menu__role">{user.role}</span>
+            {organizationName && (
+              <span className="user-menu__tenant" title="Organización">{organizationName}</span>
+            )}
           </div>
 
           <div className="user-menu__divider" />

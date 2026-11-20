@@ -1,10 +1,15 @@
-// SOLID: SRP — REPOSITORIO EN MEMORIA PARA LA GESTIÓN DE SESIÓN Y MULTITENANCY SIMULADOS.
+// SOLID: SRP — REPOSITORIO EN MEMORIA PARA LA GESTIÓN DE SESIÓN SIMULADA CON TENANT RESUELTO DESDE EL USUARIO.
 
 import type { SessionUser, Tenant } from '../types/session'
 import type { SessionRepository } from './sessionRepository'
 
-const STORAGE_KEY_TENANT = 'app_active_tenant_id'
 const STORAGE_KEY_AUTH = 'app_session_authenticated'
+
+export const MOCK_TENANT: Tenant = {
+  id: 'tnt-andina-001',
+  name: 'Andina Importaciones S.A.',
+  tier: 'Plan Pyme',
+}
 
 export const MOCK_USER: SessionUser = {
   id: 'usr-00000001-0000-0000-0000-000000000001',
@@ -12,28 +17,12 @@ export const MOCK_USER: SessionUser = {
   email: 'carlos.mendoza@ficcion.test',
   role: 'Administrador Comercial',
   initials: 'CM',
+  tenantId: MOCK_TENANT.id,
+  tenantName: MOCK_TENANT.name,
+  tenant: MOCK_TENANT,
 }
 
-export const MOCK_TENANTS: Tenant[] = [
-  {
-    id: 'tnt-andina-001',
-    name: 'Andina Importaciones S.A.',
-    tier: 'Plan Pyme',
-  },
-  {
-    id: 'tnt-pacifico-002',
-    name: 'Distribuidora del Pacífico Cía. Ltda.',
-    tier: 'Plan Corporativo',
-  },
-  {
-    id: 'tnt-austro-003',
-    name: 'Industrias del Austro Ecuatoriano',
-    tier: 'Plan Emprendedor',
-  },
-]
-
 let isSessionActive = true
-let inMemoryActiveTenantId: string = MOCK_TENANTS[0].id
 
 function getSafeLocalStorageItem(key: string): string | null {
   try {
@@ -59,7 +48,7 @@ function removeSafeLocalStorageItem(key: string): void {
   }
 }
 
-// SOLID: SRP — IMPLEMENTA EL REPOSITORIO DE SESIÓN CON ALMACENAMIENTO LOCAL SEGURO Y DATOS SIMULADOS.
+// SOLID: SRP — IMPLEMENTA EL REPOSITORIO DE SESIÓN CON TENANT ASOCIADO DIRECTAMENTE AL USUARIO.
 export class SessionMockRepository implements SessionRepository {
   async getCurrentUser(): Promise<SessionUser | null> {
     const authStored = getSafeLocalStorageItem(STORAGE_KEY_AUTH)
@@ -72,25 +61,13 @@ export class SessionMockRepository implements SessionRepository {
     return MOCK_USER
   }
 
-  async listTenants(): Promise<Tenant[]> {
-    return [...MOCK_TENANTS]
-  }
-
-  async getActiveTenantId(): Promise<string | null> {
-    const stored = getSafeLocalStorageItem(STORAGE_KEY_TENANT)
-    if (stored && MOCK_TENANTS.some((t) => t.id === stored)) {
-      return stored
+  async getCurrentTenant(): Promise<Tenant | null> {
+    const user = await this.getCurrentUser()
+    if (!user) return null
+    return user.tenant ?? {
+      id: user.tenantId,
+      name: user.tenantName,
     }
-    return inMemoryActiveTenantId
-  }
-
-  async setActiveTenant(id: string): Promise<void> {
-    const valid = MOCK_TENANTS.some((t) => t.id === id)
-    if (!valid) {
-      throw new Error(`El tenant con ID "${id}" no existe.`)
-    }
-    inMemoryActiveTenantId = id
-    setSafeLocalStorageItem(STORAGE_KEY_TENANT, id)
   }
 
   async signIn(_email?: string): Promise<SessionUser> {
@@ -102,15 +79,11 @@ export class SessionMockRepository implements SessionRepository {
   async signOut(): Promise<void> {
     isSessionActive = false
     setSafeLocalStorageItem(STORAGE_KEY_AUTH, 'false')
-    removeSafeLocalStorageItem(STORAGE_KEY_TENANT)
-    inMemoryActiveTenantId = MOCK_TENANTS[0].id
   }
 }
 
 /** Permite reiniciar el estado del mock en pruebas */
 export function resetSessionMockStore(): void {
   isSessionActive = true
-  inMemoryActiveTenantId = MOCK_TENANTS[0].id
   removeSafeLocalStorageItem(STORAGE_KEY_AUTH)
-  removeSafeLocalStorageItem(STORAGE_KEY_TENANT)
 }

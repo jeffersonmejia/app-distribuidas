@@ -1,2 +1,3 @@
-export * from './TenantSelector'
+// SOLID: SRP — EXPORTA LOS COMPONENTES DEL MÓDULO DE IDENTIDAD Y SESIÓN.
+
 export * from './UserMenu'
