@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event'
 import { describe, it, expect, vi, afterEach } from 'vitest'
 import { CustomersPage } from './CustomersPage'
 import { CustomerApiError, type CustomerRepository } from '../services/customerRepository'
-import type { CustomerPage, CustomerView } from '../types/customer'
+import type { CustomerInput, CustomerPage, CustomerView } from '../types/customer'
 
 // ── Helpers ──────────────────────────────────────────────────────────────
 function makeView(overrides: Partial<CustomerView> = {}, i = 1): CustomerView {
@@ -27,8 +27,8 @@ function makePage(items: CustomerView[], hasNext = false, page = 0): CustomerPag
 function makeRepo(overrides: Partial<CustomerRepository> = {}): CustomerRepository {
   return {
     list: vi.fn().mockResolvedValue(makePage([])),
-    create: vi.fn().mockResolvedValue(makeView({}, 99)),
-    update: vi.fn().mockImplementation(async (id: string, input) => {
+    create: vi.fn<(input: CustomerInput) => Promise<CustomerView>>().mockResolvedValue(makeView({}, 99)),
+    update: vi.fn<(id: string, input: CustomerInput) => Promise<CustomerView>>().mockImplementation(async (id: string, input: CustomerInput) => {
       return makeView({ id, fullName: input.fullName }, 1)
     }),
     archive: vi.fn().mockResolvedValue(undefined),

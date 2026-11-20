@@ -3,13 +3,13 @@ import userEvent from '@testing-library/user-event'
 import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest'
 import { CustomerDrawer } from './CustomerDrawer'
 import { CustomerApiError, type CustomerRepository } from '../services/customerRepository'
-import type { CustomerView } from '../types/customer'
+import type { CustomerInput, CustomerView } from '../types/customer'
 
 // Doble de repositorio para pruebas
 function makeRepo(overrides: Partial<CustomerRepository> = {}): CustomerRepository {
   return {
     list: vi.fn<() => Promise<{ items: CustomerView[]; page: number; size: number; hasNext: boolean }>>().mockResolvedValue({ items: [], page: 0, size: 0, hasNext: false }),
-    create: vi.fn<() => Promise<CustomerView>>().mockResolvedValue({
+    create: vi.fn<(input: CustomerInput) => Promise<CustomerView>>().mockResolvedValue({
       id: 'test-001',
       fullName: 'Nombre Prueba',
       cedula: null,
@@ -18,17 +18,20 @@ function makeRepo(overrides: Partial<CustomerRepository> = {}): CustomerReposito
       status: 'ACTIVE',
       createdAt: '2026-01-01T00:00:00Z',
       updatedAt: '2026-01-01T00:00:00Z',
-    } as CustomerView),
-    update: vi.fn<() => Promise<CustomerView>>().mockImplementation(async (_id, input) => ({
-      id: 'test-001',
-      fullName: input.fullName,
-      cedula: input.cedula ?? null,
-      email: input.email ?? null,
-      phone: input.phone ?? null,
-      status: 'ACTIVE',
-      createdAt: '2026-01-01T00:00:00Z',
-      updatedAt: '2026-01-01T00:00:00Z',
-    })),
+    } satisfies CustomerView),
+    update: vi.fn<(id: string, input: CustomerInput) => Promise<CustomerView>>().mockImplementation(async (_id: string, input: CustomerInput) => {
+      const updated: CustomerView = {
+        id: 'test-001',
+        fullName: input.fullName,
+        cedula: input.cedula ?? null,
+        email: input.email ?? null,
+        phone: input.phone ?? null,
+        status: 'ACTIVE',
+        createdAt: '2026-01-01T00:00:00Z',
+        updatedAt: '2026-01-01T00:00:00Z',
+      }
+      return updated
+    }),
     archive: vi.fn<() => Promise<void>>().mockResolvedValue(),
     setStatus: vi.fn(),
     ...overrides,
