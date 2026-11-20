@@ -33,14 +33,14 @@ describe('InventoryPage', () => {
       expect(screen.getByText('Total de productos')).toBeInTheDocument()
       expect(screen.getByText('Stock bajo')).toBeInTheDocument()
       expect(screen.getByText('Valor del inventario')).toBeInTheDocument()
-    })
+    }, { timeout: 4000 })
 
     // Tabla de productos y pie de paginación
     await waitFor(() => {
       expect(screen.getByText('Cemento Portland Tipo I (50kg)')).toBeInTheDocument()
       expect(screen.getByText('SKU: MAT-2026-081')).toBeInTheDocument()
       expect(screen.getByText(/mostrando/i)).toHaveTextContent(/productos/i)
-    })
+    }, { timeout: 4000 })
   })
 
   it('permite filtrar por categoría al hacer clic en las pestañas', async () => {

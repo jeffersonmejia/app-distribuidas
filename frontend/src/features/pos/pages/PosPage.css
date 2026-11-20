@@ -15,39 +15,6 @@
   gap: var(--space-3);
 }
 
-/* Pestañas de estado con contraste AA sobre el degradado de marca */
-.pos-page__tabs .ui-filter-tabs__pill {
-  background-color: color-mix(in oklch, var(--brand) 38%, black);
-  border: 1px solid var(--border-on-brand);
-  color: var(--text-on-brand);
-  font-weight: 600;
-}
-
-.pos-page__tabs .ui-filter-tabs__pill:hover {
-  background-color: color-mix(in oklch, var(--brand) 52%, black);
-}
-
-.pos-page__tabs .ui-filter-tabs__pill--active {
-  background-color: var(--surface-canvas);
-  color: var(--brand);
-  border-color: transparent;
-  box-shadow: var(--shadow-sm);
-}
-
-.pos-page__tabs .ui-filter-tabs__pill--active:hover {
-  background-color: var(--surface-canvas);
-}
-
-.pos-page__tabs .ui-filter-tabs__badge {
-  background-color: rgb(255 255 255 / 20%);
-  color: var(--text-on-brand);
-}
-
-.pos-page__tabs .ui-filter-tabs__pill--active .ui-filter-tabs__badge {
-  background-color: var(--brand-soft);
-  color: var(--brand);
-}
-
 .pos-page__kpis {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
