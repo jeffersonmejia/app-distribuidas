@@ -51,6 +51,7 @@ export function CustomersPage({ repository }: CustomersPageProps) {
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const [drawerOpen, setDrawerOpen] = useState(false)
+  const [customerToEdit, setCustomerToEdit] = useState<CustomerView | null>(null)
   const [actionError, setActionError] = useState<string | null>(null)
 
   // Métricas opcionales: solo se cargan si repo.getMetrics existe (modo simulado)
@@ -183,6 +184,21 @@ export function CustomersPage({ repository }: CustomersPageProps) {
     void loadMetrics()
   }
 
+  function handleEdit(customer: CustomerView) {
+    setCustomerToEdit(customer)
+    setDrawerOpen(true)
+  }
+
+  function handleUpdated(updated: CustomerView) {
+    setCustomers((prev) => prev.map((c) => (c.id === updated.id ? updated : c)))
+    void loadMetrics()
+  }
+
+  function handleCloseDrawer() {
+    setDrawerOpen(false)
+    setCustomerToEdit(null)
+  }
+
   // ── Renderizado según estado ──
 
   let content: ReactNode
@@ -218,7 +234,13 @@ export function CustomersPage({ repository }: CustomersPageProps) {
         title="Sin clientes"
         description="No se encontraron clientes con los filtros seleccionados."
         action={
-          <Button variant="primary" onClick={() => setDrawerOpen(true)}>
+          <Button
+            variant="primary"
+            onClick={() => {
+              setCustomerToEdit(null)
+              setDrawerOpen(true)
+            }}
+          >
             + Nuevo cliente
           </Button>
         }
@@ -261,6 +283,7 @@ export function CustomersPage({ repository }: CustomersPageProps) {
                 <CustomerActionsMenu
                   customer={c}
                   onToggleStatus={(customer) => handleRequestToggle(customer)}
+                  onEdit={handleEdit}
                 />
               </td>
             </tr>
@@ -337,7 +360,10 @@ export function CustomersPage({ repository }: CustomersPageProps) {
             </button>
             <Button
               variant="primary"
-              onClick={() => setDrawerOpen(true)}
+              onClick={() => {
+                setCustomerToEdit(null)
+                setDrawerOpen(true)
+              }}
               className="customers-page__header-btn--primary"
             >
               + Nuevo cliente
@@ -408,9 +434,11 @@ export function CustomersPage({ repository }: CustomersPageProps) {
 
       <CustomerDrawer
         isOpen={drawerOpen}
-        onClose={() => setDrawerOpen(false)}
+        onClose={handleCloseDrawer}
         repository={repo}
         onCreated={handleCreated}
+        customerToEdit={customerToEdit}
+        onUpdated={handleUpdated}
       />
 
       <ConfirmDialog

@@ -31,6 +31,8 @@ export class CustomerApiError extends Error {
 export interface CustomerRepository {
   list(filters?: CustomerFilters, page?: number): Promise<CustomerPage>
   create(input: CustomerInput): Promise<CustomerView>
+  update?(id: string, input: CustomerInput): Promise<CustomerView>
+  archive?(id: string): Promise<void>
   setStatus(id: string, status: CustomerStatus): Promise<CustomerView>
   /** Opcional: Métricas de clientes calculadas en memoria para modo simulado. No presente en API real. */
   getMetrics?(): Promise<CustomerMetrics>

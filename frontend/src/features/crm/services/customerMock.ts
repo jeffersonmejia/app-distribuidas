@@ -193,6 +193,60 @@ export class CustomerMockRepository implements CustomerRepository {
     return created
   }
 
+  async update(id: string, input: CustomerInput): Promise<CustomerView> {
+    await delay(300)
+
+    const idx = store.findIndex((c) => c.id === id)
+    if (idx === -1) {
+      throw new CustomerApiError('Cliente no encontrado.', 'unknown', 404)
+    }
+
+    const trimmedName = input.fullName.trim()
+    if (!trimmedName) {
+      throw new CustomerApiError('El nombre completo es obligatorio.', 'validation', 400)
+    }
+
+    const cedula = input.cedula?.trim() || null
+    if (cedula) {
+      if (!/^\d{10}$/.test(cedula)) {
+        throw new CustomerApiError('La cédula debe tener exactamente 10 dígitos numéricos.', 'validation', 400)
+      }
+      const duplicate = store.find((c) => c.id !== id && c.cedula === cedula)
+      if (duplicate) {
+        throw new CustomerApiError('Ya existe un cliente con esa cédula.', 'duplicate', 409)
+      }
+    }
+
+    const email = input.email?.trim().toLowerCase() || null
+    if (email) {
+      const duplicate = store.find((c) => c.id !== id && c.email === email)
+      if (duplicate) {
+        throw new CustomerApiError('Ya existe un cliente con ese correo.', 'duplicate', 409)
+      }
+    }
+
+    const updated: CustomerView = {
+      ...store[idx],
+      fullName: trimmedName,
+      cedula,
+      email,
+      phone: input.phone?.trim() || null,
+      updatedAt: now(),
+    }
+
+    store = store.map((c) => (c.id === id ? updated : c))
+    return updated
+  }
+
+  async archive(id: string): Promise<void> {
+    await delay(300)
+    const idx = store.findIndex((c) => c.id === id)
+    if (idx === -1) {
+      throw new CustomerApiError('Cliente no encontrado.', 'unknown', 404)
+    }
+    store = store.filter((c) => c.id !== id)
+  }
+
   async setStatus(id: string, status: CustomerStatus): Promise<CustomerView> {
     await delay(300)
 
