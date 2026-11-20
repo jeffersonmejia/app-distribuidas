@@ -10,13 +10,13 @@ import type {
 } from '../types/customer'
 import { CustomerApiError, type CustomerRepository } from './customerRepository'
 
-// Datos claramente ficticios — no representan personas reales.
+// Datos claramente ficticios de personas naturales inventadas — no representan personas reales.
 const MOCK_SEED: CustomerView[] = [
   {
     id: 'mock-00000001-0000-0000-0000-000000000001',
-    fullName: 'Cliente de Ejemplo 01',
-    cedula: '1700000001',
-    email: 'ejemplo01@ficcion.test',
+    fullName: 'Carlos Alberto Mendoza',
+    cedula: '1790000001',
+    email: 'carlos.mendoza@ficcion.test',
     phone: '0991000001',
     status: 'ACTIVE',
     createdAt: '2026-01-10T10:00:00Z',
@@ -24,9 +24,9 @@ const MOCK_SEED: CustomerView[] = [
   },
   {
     id: 'mock-00000001-0000-0000-0000-000000000002',
-    fullName: 'Cliente de Ejemplo 02',
-    cedula: '1700000002',
-    email: 'ejemplo02@ficcion.test',
+    fullName: 'Lucía del Carmen Viteri',
+    cedula: '1790000002',
+    email: 'lucia.viteri@ficcion.test',
     phone: '0991000002',
     status: 'ACTIVE',
     createdAt: '2026-01-11T10:00:00Z',
@@ -34,9 +34,9 @@ const MOCK_SEED: CustomerView[] = [
   },
   {
     id: 'mock-00000001-0000-0000-0000-000000000003',
-    fullName: 'Cliente de Ejemplo 03',
-    cedula: '1700000003',
-    email: 'ejemplo03@ficcion.test',
+    fullName: 'Esteban Patricio Paredes',
+    cedula: '1790000003',
+    email: 'esteban.paredes@ficcion.test',
     phone: '0991000003',
     status: 'INACTIVE',
     createdAt: '2026-01-12T10:00:00Z',
@@ -44,9 +44,9 @@ const MOCK_SEED: CustomerView[] = [
   },
   {
     id: 'mock-00000001-0000-0000-0000-000000000004',
-    fullName: 'Cliente de Ejemplo 04',
-    cedula: '1700000004',
-    email: 'ejemplo04@ficcion.test',
+    fullName: 'Valeria Sofía Espinoza',
+    cedula: '1790000004',
+    email: 'valeria.espinoza@ficcion.test',
     phone: null,
     status: 'ACTIVE',
     createdAt: '2026-01-13T10:00:00Z',
@@ -54,9 +54,9 @@ const MOCK_SEED: CustomerView[] = [
   },
   {
     id: 'mock-00000001-0000-0000-0000-000000000005',
-    fullName: 'Cliente de Ejemplo 05',
+    fullName: 'Gabriel Alejandro Salazar',
     cedula: null,
-    email: 'ejemplo05@ficcion.test',
+    email: 'gabriel.salazar@ficcion.test',
     phone: '0991000005',
     status: 'ACTIVE',
     createdAt: '2026-01-14T10:00:00Z',
@@ -64,8 +64,8 @@ const MOCK_SEED: CustomerView[] = [
   },
   {
     id: 'mock-00000001-0000-0000-0000-000000000006',
-    fullName: 'Cliente de Ejemplo 06',
-    cedula: '1700000006',
+    fullName: 'Camila Mercedes Benítez',
+    cedula: '1790000006',
     email: null,
     phone: '0991000006',
     status: 'ACTIVE',
@@ -74,9 +74,9 @@ const MOCK_SEED: CustomerView[] = [
   },
   {
     id: 'mock-00000001-0000-0000-0000-000000000007',
-    fullName: 'Cliente de Ejemplo 07',
-    cedula: '1700000007',
-    email: 'ejemplo07@ficcion.test',
+    fullName: 'Mateo Daniel Cevallos',
+    cedula: '1790000007',
+    email: 'mateo.cevallos@ficcion.test',
     phone: '0991000007',
     status: 'INACTIVE',
     createdAt: '2026-01-16T10:00:00Z',

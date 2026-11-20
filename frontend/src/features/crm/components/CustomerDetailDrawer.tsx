@@ -3,7 +3,7 @@
 import { Drawer } from '../../../components/ui/Drawer'
 import { Button, Badge } from '../../../components/ui'
 import type { CustomerView } from '../types/customer'
-import { getCustomerInitials } from '../utils/initials'
+import { getCustomerInitials, getAvatarColorVariant } from '../utils/initials'
 import './CustomerDetailDrawer.css'
 
 export interface CustomerDetailDrawerProps {
@@ -67,7 +67,10 @@ export function CustomerDetailDrawer({
       <div className="customer-detail">
         {/* Cabecera del detalle */}
         <div className="customer-detail__header">
-          <div className="customer-detail__avatar" aria-hidden="true">
+          <div
+            className={`customer-detail__avatar customer-detail__avatar--${getAvatarColorVariant(customer.fullName)}`}
+            aria-hidden="true"
+          >
             {getCustomerInitials(customer.fullName)}
           </div>
           <div className="customer-detail__header-info">

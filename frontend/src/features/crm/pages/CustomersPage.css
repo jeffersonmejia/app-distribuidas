@@ -246,8 +246,6 @@
   width: 2.75rem;
   height: 2.75rem;
   border-radius: var(--radius-full);
-  background: var(--brand-gradient);
-  color: var(--text-on-brand);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -255,6 +253,26 @@
   font-size: var(--font-size-sm);
   flex-shrink: 0;
   box-shadow: var(--shadow-sm);
+}
+
+.customers-page__avatar--brand {
+  background-color: var(--brand-soft);
+  color: var(--brand);
+}
+
+.customers-page__avatar--success {
+  background-color: var(--surface-success);
+  color: var(--text-success);
+}
+
+.customers-page__avatar--warning {
+  background-color: var(--surface-warning);
+  color: var(--text-warning);
+}
+
+.customers-page__avatar--neutral {
+  background-color: var(--surface-sunken);
+  color: var(--text-secondary);
 }
 
 .customers-page__name-wrapper {

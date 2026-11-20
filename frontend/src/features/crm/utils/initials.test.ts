@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { getCustomerInitials } from './initials'
+import { getCustomerInitials, getAvatarColorVariant } from './initials'
 
 describe('getCustomerInitials', () => {
   it('combina la primera letra de la primera palabra y de la última palabra', () => {
@@ -27,5 +27,15 @@ describe('getCustomerInitials', () => {
 
   it('usa los tokens originales si todas las palabras son partículas', () => {
     expect(getCustomerInitials('de la')).toBe('DL')
+  })
+
+  it('determina una variante de color determinista entre brand, success, warning y neutral', () => {
+    const variant1 = getAvatarColorVariant('Carlos Alberto Mendoza')
+    const variant2 = getAvatarColorVariant('Carlos Alberto Mendoza')
+    expect(variant1).toBe(variant2) // Determinista
+    expect(['brand', 'success', 'warning', 'neutral']).toContain(variant1)
+
+    const variantB = getAvatarColorVariant('Lucía del Carmen Viteri')
+    expect(['brand', 'success', 'warning', 'neutral']).toContain(variantB)
   })
 })

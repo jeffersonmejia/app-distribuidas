@@ -12,7 +12,7 @@ import { ConfirmDialog } from '../components/ConfirmDialog'
 import { CustomerActionsMenu } from '../components/CustomerActionsMenu'
 import { CustomerApiError, getCustomerRepository, type CustomerRepository } from '../services'
 import type { CustomerFilters, CustomerMetrics, CustomerStatus, CustomerView } from '../types/customer'
-import { getCustomerInitials } from '../utils/initials'
+import { getCustomerInitials, getAvatarColorVariant } from '../utils/initials'
 import './CustomersPage.css'
 
 const COLUMNS = [
@@ -290,7 +290,10 @@ export function CustomersPage({ repository }: CustomersPageProps) {
             <tr key={c.id} className="customers-page__row">
               <td className="customers-page__cell">
                 <div className="customers-page__customer-cell">
-                  <div className="customers-page__avatar" aria-hidden="true">
+                  <div
+                    className={`customers-page__avatar customers-page__avatar--${getAvatarColorVariant(c.fullName)}`}
+                    aria-hidden="true"
+                  >
                     {getCustomerInitials(c.fullName)}
                   </div>
                   <div className="customers-page__name-wrapper">
