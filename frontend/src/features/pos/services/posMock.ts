@@ -1,3 +1,19 @@
+/**
+ * @module posMock
+ * @description Repositorio simulado de Ventas (POS) con datos de demostración multitenant.
+ *
+ * **Fuente de datos activa**: controlada por la variable de entorno VITE_DATA_SOURCE.
+ *   - `mock` (valor por defecto): este módulo → PosMockRepository.
+ *   - `api`: UnavailablePosApiRepository (ver services/index.ts) → lanza error controlado
+ *     "servicio no disponible todavía" hasta que el contrato POS-002 sea aprobado y desplegado.
+ *
+ * **Interacción con Inventario**: createSale() descuenta stock de forma atómica usando
+ * InventoryMockRepository del mismo tenant (ver features/inventory/services/inventoryMock.ts).
+ * Cuando Inventario cambie a 'api', createSale() debe coordinarse con el backend real
+ * (contrato INV-003 pendiente de aprobación; ver docs/api-contracts/).
+ *
+ * **No existe backend HTTP de POS**. No crear posApi.ts hasta que POS-002 sea aprobado.
+ */
 // SOLID: SRP — REPOSITORIO EN MEMORIA PARA LA GESTIÓN DE VENTAS CON AISLAMIENTO MULTITENANT, FECHAS RELATIVAS Y PAGINACIÓN.
 
 import type {

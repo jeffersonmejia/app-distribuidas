@@ -1,4 +1,9 @@
 // SOLID: OCP — FACTORY PARA OBTENER LA INSTANCIA DE REPOSITORIO DE INVENTARIO SEGÚN LA FUENTE DE DATOS.
+//
+// Contratos pendientes de aprobación por el backend:
+//   • INV-003: endpoints de creación, listado, detalle y consumo de stock de productos.
+// Mientras no exista backend HTTP, VITE_DATA_SOURCE=api devuelve UnavailableInventoryApiRepository.
+// Ver también: frontend/.env.example y features/pos/services/posMock.ts (interacción createSale ↔ stock).
 
 import type { InventoryRepository } from './inventoryRepository'
 import type { Product, ProductPage } from '../types/product'

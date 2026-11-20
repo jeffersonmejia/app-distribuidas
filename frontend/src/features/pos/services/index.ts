@@ -1,4 +1,9 @@
 // SOLID: OCP — FACTORY PARA OBTENER LA INSTANCIA DE REPOSITORIO DE VENTAS SEGÚN LA FUENTE DE DATOS.
+//
+// Contratos pendientes de aprobación por el backend:
+//   • POS-002: endpoints de creación, listado y detalle de ventas.
+// Mientras no exista backend HTTP, VITE_DATA_SOURCE=api devuelve UnavailablePosApiRepository.
+// Ver también: frontend/.env.example y features/pos/services/posMock.ts (JSDoc de módulo).
 
 import type { PosRepository } from './posRepository'
 import type { Sale, SalePage } from '../types/sale'
