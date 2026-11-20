@@ -1,6 +1,6 @@
 // SOLID: SRP — ESTA PÁGINA SE ENCARGA EXCLUSIVAMENTE DE LA VISUALIZACIÓN Y GESTIÓN DEL CATÁLOGO DE INVENTARIO.
 
-import { useState, useEffect, useCallback, useRef, type ReactNode } from 'react'
+import { useState, useEffect, useRef, type ReactNode } from 'react'
 import { PageHeader } from '../../../components/navigation'
 import { Table } from '../../../components/ui/Table'
 import { Pagination } from '../../../components/navigation/Pagination'
@@ -70,7 +70,7 @@ export function InventoryPage({ repository }: InventoryPageProps) {
   const [products, setProducts] = useState<Product[]>([])
   const [page, setPage] = useState(0)
   const [hasNext, setHasNext] = useState(false)
-  const [loadState, setLoadState] = useState<LoadState>('idle')
+  const [loadState, setLoadState] = useState<LoadState>('loading')
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const [successNotice, setSuccessNotice] = useState<string | null>(null)
 
@@ -82,56 +82,50 @@ export function InventoryPage({ repository }: InventoryPageProps) {
   const [metrics, setMetrics] = useState<InventoryMetrics | null>(null)
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [drawerKey, setDrawerKey] = useState(0)
+  const [reloadKey, setReloadKey] = useState(0)
 
-  const currentRequestId = useRef(0)
+  useEffect(() => {
+    let ignore = false
 
-  const loadPage = useCallback(
-    async (p: number, currentSearch: string, currentCategory: ProductCategory | '') => {
-      currentRequestId.current += 1
-      const thisRequest = currentRequestId.current
-
-      setLoadState('loading')
-      setErrorMessage(null)
-
-      try {
-        const res = await repo.list(
-          {
-            search: currentSearch || undefined,
-            category: currentCategory || undefined,
-          },
-          p
-        )
-
-        if (thisRequest === currentRequestId.current) {
+    repo
+      .list(
+        {
+          search: search || undefined,
+          category: categoryFilter || undefined,
+        },
+        page
+      )
+      .then((res) => {
+        if (!ignore) {
           setProducts(res.items)
           setHasNext(res.hasNext)
+          setErrorMessage(null)
           setLoadState('success')
         }
-      } catch (err) {
-        if (thisRequest === currentRequestId.current) {
+      })
+      .catch((err) => {
+        if (!ignore) {
           const msg = err instanceof Error ? err.message : 'No se pudo cargar el inventario.'
           setErrorMessage(msg)
           setLoadState('error')
         }
-      }
-    },
-    [repo]
-  )
+      })
 
-  const loadMetrics = useCallback(async () => {
-    if (!repo.getMetrics) return
-    try {
-      const data = await repo.getMetrics()
-      setMetrics(data)
-    } catch {
-      // Si falla métricas, no bloquea el listado
+    if (repo.getMetrics) {
+      repo
+        .getMetrics()
+        .then((data) => {
+          if (!ignore) setMetrics(data)
+        })
+        .catch(() => {
+          // Si falla métricas, no bloquea el listado
+        })
     }
-  }, [repo])
 
-  useEffect(() => {
-    void loadPage(page, search, categoryFilter)
-    void loadMetrics()
-  }, [loadPage, loadMetrics, page, search, categoryFilter])
+    return () => {
+      ignore = true
+    }
+  }, [repo, page, search, categoryFilter, reloadKey])
 
   // PageHeader pasa el valor de búsqueda como string, no como ChangeEvent.
   function handleSearchInput(val: string) {
@@ -139,17 +133,20 @@ export function InventoryPage({ repository }: InventoryPageProps) {
 
     if (debounceRef.current) clearTimeout(debounceRef.current)
     debounceRef.current = setTimeout(() => {
+      setLoadState('loading')
       setSearch(val)
       setPage(0)
     }, 300)
   }
 
   function handleCategoryTab(cat: ProductCategory | '') {
+    setLoadState('loading')
     setCategoryFilter(cat)
     setPage(0)
   }
 
   function handlePageChange(newPage: number) {
+    setLoadState('loading')
     setPage(newPage)
   }
 
@@ -160,9 +157,9 @@ export function InventoryPage({ repository }: InventoryPageProps) {
 
   function handleProductCreated(newPrd: Product) {
     setSuccessNotice(`Producto "${newPrd.name}" registrado con éxito.`)
+    setLoadState('loading')
     setPage(0)
-    void loadPage(0, search, categoryFilter)
-    void loadMetrics()
+    setReloadKey((prev) => prev + 1)
   }
 
   const categoryTabs = [
@@ -218,7 +215,11 @@ export function InventoryPage({ repository }: InventoryPageProps) {
         <Button
           variant="secondary"
           size="sm"
-          onClick={() => void loadPage(page, search, categoryFilter)}
+          onClick={() => {
+            setLoadState('loading')
+            setErrorMessage(null)
+            setReloadKey((prev) => prev + 1)
+          }}
         >
           Reintentar
         </Button>
