@@ -1,21 +1,20 @@
-import { describe, it, expect, beforeEach } from 'vitest'
-import { render, screen, waitFor } from '@testing-library/react'
+import { describe, it, expect, beforeEach, afterEach } from 'vitest'
+import { screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { TenantSelector } from './TenantSelector'
-import { SessionProvider } from '../../context'
-import { resetSessionMockStore } from '../../services/sessionMock'
+import { renderWithProviders, cleanupSessionTestState } from '../../../../test/renderWithProviders'
 
 describe('TenantSelector', () => {
   beforeEach(() => {
-    resetSessionMockStore()
+    cleanupSessionTestState()
+  })
+
+  afterEach(() => {
+    cleanupSessionTestState()
   })
 
   it('renderiza el botón de activación con el avatar e iniciales de la organización', async () => {
-    render(
-      <SessionProvider>
-        <TenantSelector />
-      </SessionProvider>
-    )
+    renderWithProviders(<TenantSelector />)
 
     await waitFor(() => {
       expect(
@@ -26,11 +25,7 @@ describe('TenantSelector', () => {
 
   it('despliega la lista de organizaciones al hacer clic en el botón', async () => {
     const user = userEvent.setup()
-    render(
-      <SessionProvider>
-        <TenantSelector />
-      </SessionProvider>
-    )
+    renderWithProviders(<TenantSelector />)
 
     const trigger = await screen.findByRole('button', {
       name: /organización activa: andina importaciones s\.a\./i,
@@ -51,11 +46,7 @@ describe('TenantSelector', () => {
 
   it('permite cambiar el tenant activo al seleccionar una opción', async () => {
     const user = userEvent.setup()
-    render(
-      <SessionProvider>
-        <TenantSelector />
-      </SessionProvider>
-    )
+    renderWithProviders(<TenantSelector />)
 
     const trigger = await screen.findByRole('button', {
       name: /organización activa: andina importaciones s\.a\./i,
@@ -79,11 +70,7 @@ describe('TenantSelector', () => {
 
   it('cierra el dropdown con la tecla Escape', async () => {
     const user = userEvent.setup()
-    render(
-      <SessionProvider>
-        <TenantSelector />
-      </SessionProvider>
-    )
+    renderWithProviders(<TenantSelector />)
 
     const trigger = await screen.findByRole('button', {
       name: /organización activa: andina importaciones s\.a\./i,
