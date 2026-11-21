@@ -1,0 +1,99 @@
+.accounting-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+}
+
+.accounting-page__metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--spacing-md);
+}
+
+.accounting-page__state {
+  display: flex;
+  justify-content: center;
+  padding: var(--spacing-2xl) 0;
+}
+
+.accounting-page__period {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  color: var(--color-text-inverse);
+}
+
+.accounting-page__period-label {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+.accounting-page__period-select {
+  min-height: 40px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  padding: 0 var(--spacing-md);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+}
+
+.accounting-page__period-select:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.accounting-page__date-code,
+.accounting-page__accounts {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.accounting-page__code {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+}
+
+.accounting-page__date,
+.accounting-page__account-item,
+.accounting-page__account-more {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.accounting-page__glosa {
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+}
+
+.accounting-page__amount {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.accounting-page__cell--right {
+  text-align: right;
+}
+
+@media (max-width: 1100px) {
+  .accounting-page__metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .accounting-page__metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .accounting-page__period {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .accounting-page__period-select {
+    flex: 1;
+  }
+}

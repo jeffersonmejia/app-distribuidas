@@ -1,0 +1,61 @@
+.project-drawer__form,
+.task-drawer__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.project-drawer__field,
+.task-drawer__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.project-drawer__label,
+.task-drawer__label {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+}
+
+.project-drawer__textarea,
+.task-drawer__textarea {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-input);
+  background-color: var(--surface-canvas);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: var(--font-size-sm);
+  resize: vertical;
+}
+
+.project-drawer__textarea:focus,
+.task-drawer__textarea:focus {
+  outline: none;
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px var(--brand-soft);
+}
+
+.project-drawer__row,
+.task-drawer__row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+}
+
+@media (min-width: 480px) {
+  .project-drawer__row,
+  .task-drawer__row {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.project-drawer__footer,
+.task-drawer__footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+}
