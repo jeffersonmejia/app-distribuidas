@@ -154,7 +154,7 @@ describe('AccountingPage', () => {
     const dialog = await screen.findByRole('dialog', { name: /detalle de asiento/i })
     expect(within(dialog).getByText('AS-2026-0412')).toBeInTheDocument()
     expect(within(dialog).getByText('Verificación de cuadre: asiento balanceado.')).toBeInTheDocument()
-    expect(within(dialog).getAllByText('1250.00').length).toBeGreaterThan(0)
+    expect(within(dialog).getAllByText('1.250,00').length).toBeGreaterThan(0)
   })
 
   it('muestra estado vacío, error y reintento', async () => {

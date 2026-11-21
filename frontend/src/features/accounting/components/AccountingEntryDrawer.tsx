@@ -5,6 +5,8 @@ import { Drawer } from '../../../components/ui/Drawer'
 import { Badge } from '../../../components/ui/Badge'
 import { Table, type TableColumn } from '../../../components/ui/Table'
 import type { JournalEntry, JournalEntryStatus } from '../types/accounting'
+import { formatAccountingAmount } from '../utils/formatters'
+import { formatCalendarDate } from '../../../utils/formatDate'
 import './AccountingEntryDrawer.css'
 
 const LINE_COLUMNS: TableColumn[] = [
@@ -14,7 +16,7 @@ const LINE_COLUMNS: TableColumn[] = [
 ]
 
 function formatAmount(cents: number): string {
-  return (cents / 100).toFixed(2)
+  return formatAccountingAmount(cents)
 }
 
 function statusVariant(status: JournalEntryStatus): 'success' | 'warning' | 'neutral' {
@@ -51,7 +53,7 @@ export function AccountingEntryDrawer({ isOpen, entry, onClose }: AccountingEntr
             </div>
             <div>
               <dt>Fecha</dt>
-              <dd>{entry.date}</dd>
+              <dd>{formatCalendarDate(entry.date)}</dd>
             </div>
             <div>
               <dt>Estado</dt>

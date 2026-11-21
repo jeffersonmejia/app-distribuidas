@@ -9,6 +9,8 @@ import { Spinner, Alert, EmptyState } from '../../../components/feedback'
 import { useSession } from '../../identity/hooks'
 import { getAccountingRepository, type AccountingRepository } from '../services'
 import type { AccountingSummary, JournalEntry, JournalEntryStatus } from '../types/accounting'
+import { formatAccountingAmount } from '../utils/formatters'
+import { formatCalendarDate } from '../../../utils/formatDate'
 import { AccountingEntryDrawer } from '../components/AccountingEntryDrawer'
 import './AccountingPage.css'
 
@@ -25,7 +27,7 @@ const COLUMNS: TableColumn[] = [
 type LoadState = 'idle' | 'loading' | 'success' | 'error'
 
 function formatAmount(cents: number): string {
-  return (cents / 100).toFixed(2)
+  return formatAccountingAmount(cents)
 }
 
 function statusLabel(status: JournalEntryStatus): string {
@@ -195,7 +197,7 @@ export function AccountingPage({ repository }: AccountingPageProps) {
                 <td className="accounting-page__cell">
                   <div className="accounting-page__date-code">
                     <span className="accounting-page__code">{entry.code}</span>
-                    <span className="accounting-page__date">{entry.date}</span>
+                    <span className="accounting-page__date">{formatCalendarDate(entry.date)}</span>
                   </div>
                 </td>
                 <td className="accounting-page__cell">
@@ -258,9 +260,9 @@ export function AccountingPage({ repository }: AccountingPageProps) {
         searchValue={searchInput}
         onSearchChange={handleSearchChange}
         actions={
-          <label className="accounting-page__period">
+          <label className="accounting-page__period" htmlFor="accounting-period-select">
             <span className="accounting-page__period-label">Período</span>
-            <select
+            <select id="accounting-period-select"
               className="accounting-page__period-select"
               value={period}
               onChange={(e) => handlePeriodChange(e.target.value)}
