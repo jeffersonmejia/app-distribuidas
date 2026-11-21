@@ -66,6 +66,7 @@ function LoginPage() {
 
   return (
     <main className="login-screen">
+      <div className="login-shell">
       {/* ── TARJETA IZQUIERDA: Branding + Mockup ── */}
       <section className="login-brand-card" aria-labelledby="login-brand-heading">
         {/* Destellos decorativos */}
@@ -234,9 +235,10 @@ function LoginPage() {
 
         {/* Pie */}
         <footer className="login-footer">
-          <span>© 2026 ERP + CRM</span>
+          <span>� 2026 ERP + CRM</span>
         </footer>
       </section>
+      </div>
     </main>
   )
 }
