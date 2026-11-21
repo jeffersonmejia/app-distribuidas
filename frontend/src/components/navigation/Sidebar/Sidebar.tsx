@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import { Link } from '../../../app/router/Link'
+import { UserMenu } from '../../../features/identity/components/UserMenu'
 import './Sidebar.css'
 
 //SOLID: SRP — RENDERIZA LA BARRA LATERAL PRINCIPAL DE NAVEGACIÓN GLOBAL DEL ERP + CRM CON ESTILO STITCH.
@@ -151,7 +152,9 @@ export function Sidebar({ currentPath, footer }: SidebarProps) {
         </nav>
       </div>
 
-      {footer && <div className="app-sidebar__footer">{footer}</div>}
+      <div className="app-sidebar__footer">
+        {footer ? footer : <UserMenu />}
+      </div>
     </aside>
   )
 }

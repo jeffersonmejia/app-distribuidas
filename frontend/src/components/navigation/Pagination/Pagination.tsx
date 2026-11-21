@@ -8,6 +8,8 @@ export interface PaginationProps {
   onPageChange: (page: number) => void
   isLoading?: boolean
   itemsCount?: number
+  itemLabel?: string
+  itemLabelPlural?: string
 }
 
 export function Pagination({
@@ -16,16 +18,22 @@ export function Pagination({
   onPageChange,
   isLoading = false,
   itemsCount,
+  itemLabel,
+  itemLabelPlural,
 }: PaginationProps) {
   const isPreviousDisabled = currentPage <= 0 || isLoading
   const isNextDisabled = !hasNext || isLoading
+
+  const singular = itemLabel ?? 'cliente'
+  const plural = itemLabelPlural ?? (itemLabel ? `${itemLabel}s` : 'clientes')
+  const noun = itemsCount === 1 ? singular : plural
 
   return (
     <nav className="pagination" aria-label="Navegación de páginas">
       <div className="pagination__summary">
         {itemsCount !== undefined ? (
           <span>
-            Mostrando <strong>{itemsCount}</strong> clientes (Página {currentPage + 1})
+            Mostrando <strong>{itemsCount}</strong> {noun} (Página {currentPage + 1})
           </span>
         ) : (
           <span>Página {currentPage + 1}</span>
