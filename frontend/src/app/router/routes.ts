@@ -44,6 +44,12 @@ export const APP_ROUTES: Record<string, RouteDefinition> = {
     label: 'Ventas',
     requiresLayout: true,
   },
+  posNew: {
+    path: '/pos/new',
+    title: 'Nueva Venta — ERP + CRM',
+    label: 'Nueva venta',
+    requiresLayout: true,
+  },
   projects: {
     path: '/projects',
     title: 'Proyectos — ERP + CRM',

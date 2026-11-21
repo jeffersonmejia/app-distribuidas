@@ -47,7 +47,37 @@ describe('Pagination Component', () => {
 
   it('muestra el resumen de conteo cuando se pasa itemsCount', () => {
     render(<Pagination currentPage={0} hasNext={true} onPageChange={vi.fn()} itemsCount={5} />)
-    expect(screen.getByText(/mostrando/i)).toBeInTheDocument()
-    expect(screen.getByText('5')).toBeInTheDocument()
+    expect(screen.getByText(/mostrando/i)).toHaveTextContent('Mostrando 5 clientes (Página 1)')
+  })
+
+  it('muestra la etiqueta en singular cuando itemsCount es 1', () => {
+    render(<Pagination currentPage={0} hasNext={false} onPageChange={vi.fn()} itemsCount={1} />)
+    expect(screen.getByText(/mostrando/i)).toHaveTextContent('Mostrando 1 cliente (Página 1)')
+  })
+
+  it('permite personalizar el sustantivo mediante itemLabel e itemLabelPlural', () => {
+    const { rerender } = render(
+      <Pagination
+        currentPage={0}
+        hasNext={true}
+        onPageChange={vi.fn()}
+        itemsCount={5}
+        itemLabel="producto"
+        itemLabelPlural="productos"
+      />
+    )
+    expect(screen.getByText(/mostrando/i)).toHaveTextContent('Mostrando 5 productos (Página 1)')
+
+    rerender(
+      <Pagination
+        currentPage={0}
+        hasNext={false}
+        onPageChange={vi.fn()}
+        itemsCount={1}
+        itemLabel="producto"
+        itemLabelPlural="productos"
+      />
+    )
+    expect(screen.getByText(/mostrando/i)).toHaveTextContent('Mostrando 1 producto (Página 1)')
   })
 })

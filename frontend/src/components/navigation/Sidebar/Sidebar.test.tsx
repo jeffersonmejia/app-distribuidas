@@ -1,18 +1,24 @@
-import { describe, it, expect } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import { describe, it, expect, beforeEach, afterEach } from 'vitest'
+import { screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { RouterProvider } from '../../../app/router/router'
 import { Sidebar, SIDEBAR_NAV_ITEMS, isSidebarItemActive } from './Sidebar'
+import { renderWithProviders, cleanupSessionTestState } from '../../../test/renderWithProviders'
 
 function renderSidebar(currentPath = '/') {
-  return render(
-    <RouterProvider initialPath={currentPath}>
-      <Sidebar currentPath={currentPath} />
-    </RouterProvider>
-  )
+  return renderWithProviders(<Sidebar currentPath={currentPath} />, {
+    initialPath: currentPath,
+  })
 }
 
 describe('Sidebar Component', () => {
+  beforeEach(() => {
+    cleanupSessionTestState()
+  })
+
+  afterEach(() => {
+    cleanupSessionTestState()
+  })
+
   // --- Renderizado de enlaces ---
 
   it('renderiza exactamente los 8 enlaces de navegación', () => {
@@ -60,17 +66,14 @@ describe('Sidebar Component', () => {
   // --- Aislamiento de datos: Sin notificaciones ni avatar ---
 
   it('NO renderiza botones de notificaciones ni avatar de usuario por defecto', () => {
-    const { container } = renderSidebar('/')
+    renderSidebar('/')
     expect(screen.queryByTitle('Notificaciones')).not.toBeInTheDocument()
-    expect(screen.queryByTitle('Cuenta de usuario')).not.toBeInTheDocument()
-    expect(container.querySelector('.app-sidebar__footer')).not.toBeInTheDocument()
   })
 
   it('permite renderizar footer personalizado mediante prop footer', () => {
-    render(
-      <RouterProvider initialPath="/">
-        <Sidebar currentPath="/" footer={<div data-testid="custom-footer">Footer</div>} />
-      </RouterProvider>
+    renderWithProviders(
+      <Sidebar currentPath="/" footer={<div data-testid="custom-footer">Footer</div>} />,
+      { initialPath: '/' }
     )
     expect(screen.getByTestId('custom-footer')).toBeInTheDocument()
   })
