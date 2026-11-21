@@ -3,6 +3,7 @@ import { Input } from '../../../components/forms'
 import { Button } from '../../../components/ui'
 import { useSession } from '../hooks'
 import { useRouter } from '../../../app/router'
+import { LoginPreviewCard } from '../components/LoginPreviewCard'
 import './LoginPage.css'
 
 // SOLID: SRP — ESTA PÁGINA SE ENCARGA EXCLUSIVAMENTE DE RENDERIZAR LA PANTALLA DE INICIO DE SESIÓN.
@@ -65,11 +66,13 @@ function LoginPage() {
 
   return (
     <main className="login-screen">
+      <div className="login-shell">
       {/* ── TARJETA IZQUIERDA: Branding + Mockup ── */}
       <section className="login-brand-card" aria-labelledby="login-brand-heading">
-        {/* Destellos decorativos */}
-        <div className="login-glow login-glow--top" aria-hidden="true" />
-        <div className="login-glow login-glow--bottom" aria-hidden="true" />
+        <div className="login-brand-surface" aria-hidden="true">
+          <div className="login-glow login-glow--top" />
+          <div className="login-glow login-glow--bottom" />
+        </div>
 
         {/* Encabezado de texto */}
         <div className="login-brand-copy">
@@ -81,73 +84,13 @@ function LoginPage() {
           </p>
         </div>
 
-        {/* Mockup en perspectiva (sin datos reales) */}
         <div className="login-perspective" aria-hidden="true">
-          <div className="login-mockup">
-            {/* Barra superior del mockup */}
-            <div className="login-mockup__bar">
-              <div className="login-mockup__dots">
-                <span className="login-mockup__dot login-mockup__dot--red" />
-                <span className="login-mockup__dot login-mockup__dot--amber" />
-                <span className="login-mockup__dot login-mockup__dot--green" />
-                <span className="login-mockup__label">Panel Ejecutivo</span>
-              </div>
-              <span className="login-mockup__badge">En línea</span>
-            </div>
-
-            {/* KPI cards — solo bloques neutros de placeholder */}
-            <div className="login-mockup__kpis">
-              <div className="login-mockup__kpi">
-                <div className="login-mockup__ph login-mockup__ph--sm" />
-                <div className="login-mockup__ph login-mockup__ph--lg" />
-                <div className="login-mockup__ph login-mockup__ph--xs login-mockup__ph--accent" />
-              </div>
-              <div className="login-mockup__kpi">
-                <div className="login-mockup__ph login-mockup__ph--sm" />
-                <div className="login-mockup__ph login-mockup__ph--lg" />
-                <div className="login-mockup__ph login-mockup__ph--xs login-mockup__ph--muted" />
-              </div>
-              <div className="login-mockup__kpi">
-                <div className="login-mockup__ph login-mockup__ph--sm" />
-                <div className="login-mockup__ph login-mockup__ph--lg" />
-                <div className="login-mockup__ph login-mockup__ph--xs login-mockup__ph--warn" />
-              </div>
-            </div>
-
-            {/* Mini-tabla placeholder */}
-            <div className="login-mockup__table">
-              <div className="login-mockup__table-header">
-                <span>Últimas operaciones</span>
-              </div>
-              {[1, 2, 3].map((n) => (
-                <div key={n} className="login-mockup__table-row">
-                  <div>
-                    <div className="login-mockup__ph login-mockup__ph--md" />
-                    <div className="login-mockup__ph login-mockup__ph--sm" />
-                  </div>
-                  <div className="login-mockup__table-row-right">
-                    <div className="login-mockup__ph login-mockup__ph--md" />
-                    <div className="login-mockup__ph login-mockup__ph--xs login-mockup__ph--accent" />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+          <LoginPreviewCard />
         </div>
 
-        {/* Badge inferior */}
-        <div className="login-brand-badge" aria-hidden="true">
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+        <div className="login-brand-pill" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
           </svg>
           <span>Plataforma empresarial unificada</span>
         </div>
@@ -299,9 +242,10 @@ function LoginPage() {
 
         {/* Pie */}
         <footer className="login-footer">
-          <span>© 2026 ERP + CRM</span>
+          <span>� 2026 ERP + CRM</span>
         </footer>
       </section>
+      </div>
     </main>
   )
 }
