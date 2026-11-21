@@ -27,12 +27,15 @@ test('accepts conventional commits and rejects invalid types and subject case', 
   const loaded = await load({}, { cwd: process.cwd() });
   const valid = await lint('feat(crm): agrega clientes', loaded.rules, { plugins: loaded.plugins });
   const validTest = await lint('test(identity): agrega pruebas de sesion', loaded.rules, { plugins: loaded.plugins });
+  const longFooter = await lint(`chore: prueba\n\nCo-authored-by: ${'a'.repeat(120)}`, loaded.rules, { plugins: loaded.plugins });
   const invalidType = await lint('build: agrega clientes', loaded.rules, { plugins: loaded.plugins });
   const invalidSubjectCase = await lint('feat(crm): Agrega clientes', loaded.rules, { plugins: loaded.plugins });
 
   assert.equal(valid.valid, true);
   assert.equal(validTest.valid, true);
+  assert.equal(longFooter.valid, true);
   assert.equal(invalidType.valid, false);
   assert.equal(invalidSubjectCase.valid, false);
   assert.deepEqual(config.rules['body-max-line-length'], [0]);
+  assert.deepEqual(config.rules['footer-max-line-length'], [0]);
 });
