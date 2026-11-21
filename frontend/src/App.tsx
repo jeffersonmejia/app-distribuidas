@@ -1,6 +1,7 @@
 import { RouterProvider, useRouter } from './app/router'
 import { AppLayout, PlaceholderPage } from './app/layouts'
 import LoginPage from './features/identity/pages/LoginPage'
+import { CustomersPage } from './features/crm/pages/CustomersPage'
 import { Card } from './components/ui/Card'
 import { EmptyState } from './components/feedback/EmptyState'
 
@@ -71,10 +72,14 @@ export function AppContent() {
 
   return (
     <AppLayout currentPath={pathname}>
-      <PlaceholderPage
-        title={moduleInfo.title}
-        description={moduleInfo.description}
-      />
+      {route.path === '/crm' ? (
+        <CustomersPage />
+      ) : (
+        <PlaceholderPage
+          title={moduleInfo.title}
+          description={moduleInfo.description}
+        />
+      )}
     </AppLayout>
   )
 }
