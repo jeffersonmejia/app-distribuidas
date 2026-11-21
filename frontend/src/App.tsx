@@ -7,6 +7,7 @@ import { InventoryPage } from './features/inventory/pages/InventoryPage'
 import { PosPage } from './features/pos/pages/PosPage'
 import { NewSalePage } from './features/pos/pages/NewSalePage'
 import { ProjectsPage } from './features/projects/pages'
+import { AccountingPage } from './features/accounting/pages'
 import { Card } from './components/ui/Card'
 import { EmptyState } from './components/feedback/EmptyState'
 import { SessionProvider } from './features/identity/context'
@@ -108,6 +109,8 @@ export function AppContent() {
         <NewSalePage />
       ) : route.path === '/projects' ? (
         <ProjectsPage />
+      ) : route.path === '/accounting' ? (
+        <AccountingPage />
       ) : (
         <PlaceholderPage
           title={moduleInfo.title}

@@ -1,9 +1,10 @@
-import { beforeEach, describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import {
   AccountingApiError,
   AccountingMockRepository,
   getAccountingRepository,
   resetAccountingMockStore,
+  setAccountingMockLatency,
   setAccountingRepositoryForTesting,
 } from './index'
 
@@ -12,7 +13,12 @@ describe('AccountingMockRepository', () => {
 
   beforeEach(() => {
     resetAccountingMockStore()
+    setAccountingMockLatency(0)
     repo = new AccountingMockRepository()
+  })
+
+  afterEach(() => {
+    setAccountingMockLatency(300)
   })
 
   it('lista asientos paginados con tamaño máximo de 5', async () => {

@@ -13,7 +13,11 @@ import { MOCK_USER } from '../../identity/services/sessionMock'
 
 const DEFAULT_TENANT_ID = MOCK_USER.tenantId
 const PAGE_SIZE = 5
-const LATENCY_MS = 300
+let latencyMs = 300
+
+export function setAccountingMockLatency(ms: number): void {
+  latencyMs = ms
+}
 
 interface SeedLine {
   accountCode: string
@@ -269,7 +273,8 @@ function initStores(): void {
 
 initStores()
 
-function delay(ms = LATENCY_MS): Promise<void> {
+function delay(ms = latencyMs): Promise<void> {
+  if (ms <= 0) return Promise.resolve()
   return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
@@ -365,5 +370,6 @@ export class AccountingMockRepository implements AccountingRepository {
 }
 
 export function resetAccountingMockStore(): void {
+  latencyMs = 300
   initStores()
 }
