@@ -69,16 +69,16 @@
   position: relative;
   z-index: 1;
   text-align: center;
-  max-width: 36rem;
+  max-width: 40rem;
   margin-inline: auto;
   padding-top: var(--space-6);
 }
 
 .login-brand-heading {
   color: var(--text-on-brand);
-  font-size: clamp(2rem, 2.8vw, 2.25rem);
+  font-size: clamp(2.25rem, 3.2vw, 2.5rem);
   font-weight: var(--font-weight-semibold);
-  line-height: 1.2;
+  line-height: 1.15;
   letter-spacing: -0.02em;
   margin: 0;
   text-wrap: balance;
@@ -90,8 +90,9 @@
   font-weight: var(--font-weight-regular);
   margin-top: var(--space-4);
   line-height: 1.6;
-  max-width: 34rem;
+  max-width: 42rem;
   margin-inline: auto;
+  white-space: nowrap;
 }
 
 .login-perspective {
@@ -102,7 +103,8 @@
   justify-content: center;
   perspective: 1400px;
   z-index: 1;
-  padding: var(--space-8) 0 var(--space-12);
+  padding: var(--space-10) 0 var(--space-12);
+  pointer-events: auto;
 }
 
 .login-brand-pill {
