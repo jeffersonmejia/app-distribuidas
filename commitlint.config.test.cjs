@@ -23,6 +23,11 @@ test('does not ignore partial or unrelated merge-title matches', () => {
   assert.equal(isIgnored('chore: merge cleanup'), false);
 });
 
+test('ignores the known malformed historical commit title only', () => {
+  assert.equal(isIgnored('fix(se ajusta readme)'), true);
+  assert.equal(isIgnored('fix(se ajusta readme ahora)'), false);
+});
+
 test('accepts conventional commits and rejects invalid types and subject case', async () => {
   const loaded = await load({}, { cwd: process.cwd() });
   const valid = await lint('feat(crm): agrega clientes', loaded.rules, { plugins: loaded.plugins });

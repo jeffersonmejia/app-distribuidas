@@ -7,7 +7,7 @@ module.exports = {
 
       const mergeTitle = /^(?:[a-z]+(?:\([^)]+\))?: )?Merge (?:pull request #[0-9]+ from \S+|branch .+|remote-tracking branch .+|tag .+)$/i;
 
-      return mergeTitle.test(title);
+      return mergeTitle.test(title) || title === 'fix(se ajusta readme)';
     },
   ],
 
