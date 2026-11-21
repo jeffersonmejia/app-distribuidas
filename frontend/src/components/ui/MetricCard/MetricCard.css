@@ -1,0 +1,92 @@
+/* MetricCard.css — Tarjeta métrica Stitch con tokens CSS */
+
+.ui-metric-card {
+  background-color: var(--surface-card);
+  border-radius: var(--radius-xl);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid var(--border-subtle);
+  position: relative;
+  overflow: hidden;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.ui-metric-card__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  z-index: 1;
+}
+
+.ui-metric-card__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.ui-metric-card__title {
+  margin: 0;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+}
+
+.ui-metric-card__value-row {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+}
+
+.ui-metric-card__value {
+  margin: 0;
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.ui-metric-card__subtitle {
+  margin: 0;
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+}
+
+.ui-metric-card__icon-wrapper {
+  width: 3rem;
+  height: 3rem;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ui-metric-card__icon-wrapper--primary {
+  background-color: var(--brand-soft);
+  color: var(--brand);
+}
+
+.ui-metric-card__icon-wrapper--success {
+  background-color: var(--surface-success);
+  color: var(--text-success);
+}
+
+.ui-metric-card__icon-wrapper--warning {
+  background-color: var(--surface-warning);
+  color: var(--text-warning);
+}
+
+.ui-metric-card__icon-wrapper--neutral {
+  background-color: var(--surface-sunken);
+  color: var(--text-secondary);
+}
+
+.ui-metric-card__icon-wrapper svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}

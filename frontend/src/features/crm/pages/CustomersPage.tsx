@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback, useRef, type ReactNode } from 'react'
 import { PageHeader } from '../../../components/navigation'
 import { Table } from '../../../components/ui/Table'
 import { Pagination } from '../../../components/navigation/Pagination'
-import { Button, Badge } from '../../../components/ui'
+import { Button, Badge, MetricCard, FilterTabs } from '../../../components/ui'
 import { Spinner, Alert, EmptyState } from '../../../components/feedback'
 import { CustomerDrawer } from '../components/CustomerDrawer'
 import { CustomerDetailDrawer } from '../components/CustomerDetailDrawer'
@@ -342,41 +342,20 @@ export function CustomersPage({ repository }: CustomersPageProps) {
   }
 
   // Footer con pestañas tipo píldora (Stitch)
+  const statusTabs = [
+    { id: '' as const, label: 'Todos', count: metrics ? metrics.totalClientes : undefined },
+    { id: 'ACTIVE' as const, label: 'Activos', count: metrics ? metrics.activos : undefined },
+    { id: 'INACTIVE' as const, label: 'Inactivos', count: metrics ? metrics.inactivos : undefined },
+  ]
+
   const headerFooter = (
-    <div className="customers-page__tabs" role="tablist" aria-label="Filtro de clientes por estado">
-      <button
-        type="button"
-        role="tab"
-        aria-selected={statusFilter === ''}
-        className={`customers-page__tab-pill${statusFilter === '' ? ' customers-page__tab-pill--active' : ''}`}
-        onClick={() => handleStatusTab('')}
-      >
-        <span>Todos</span>
-        {metrics && <span className="customers-page__tab-badge">{metrics.totalClientes}</span>}
-      </button>
-
-      <button
-        type="button"
-        role="tab"
-        aria-selected={statusFilter === 'ACTIVE'}
-        className={`customers-page__tab-pill${statusFilter === 'ACTIVE' ? ' customers-page__tab-pill--active' : ''}`}
-        onClick={() => handleStatusTab('ACTIVE')}
-      >
-        <span>Activos</span>
-        {metrics && <span className="customers-page__tab-badge">{metrics.activos}</span>}
-      </button>
-
-      <button
-        type="button"
-        role="tab"
-        aria-selected={statusFilter === 'INACTIVE'}
-        className={`customers-page__tab-pill${statusFilter === 'INACTIVE' ? ' customers-page__tab-pill--active' : ''}`}
-        onClick={() => handleStatusTab('INACTIVE')}
-      >
-        <span>Inactivos</span>
-        {metrics && <span className="customers-page__tab-badge">{metrics.inactivos}</span>}
-      </button>
-    </div>
+    <FilterTabs
+      tabs={statusTabs}
+      activeTab={statusFilter}
+      onTabChange={(id) => handleStatusTab(id as CustomerStatus | '')}
+      ariaLabel="Filtro de clientes por estado"
+      className="customers-page__tabs"
+    />
   )
 
   return (
@@ -417,53 +396,53 @@ export function CustomersPage({ repository }: CustomersPageProps) {
       {/* Resumen métrico rápido Stitch — SOLO visible con datos simulados (si metrics !== null) */}
       {metrics && (
         <section className="customers-page__metrics" aria-label="Resumen de cartera">
-          <div className="customers-page__metric-card">
-            <div>
-              <p className="customers-page__metric-label">Total Clientes</p>
-              <p className="customers-page__metric-value">{metrics.totalClientes}</p>
-            </div>
-            <div className="customers-page__metric-icon customers-page__metric-icon--primary" aria-hidden="true">
+          <MetricCard
+            title="Total Clientes"
+            value={metrics.totalClientes}
+            className="customers-page__metric-card"
+            iconVariant="primary"
+            icon={
               <svg fill="currentColor" viewBox="0 0 24 24">
                 <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" />
               </svg>
-            </div>
-          </div>
+            }
+          />
 
-          <div className="customers-page__metric-card">
-            <div>
-              <p className="customers-page__metric-label">Clientes Activos</p>
-              <p className="customers-page__metric-value">{metrics.activos}</p>
-            </div>
-            <div className="customers-page__metric-icon customers-page__metric-icon--success" aria-hidden="true">
+          <MetricCard
+            title="Clientes Activos"
+            value={metrics.activos}
+            className="customers-page__metric-card"
+            iconVariant="success"
+            icon={
               <svg fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
               </svg>
-            </div>
-          </div>
+            }
+          />
 
-          <div className="customers-page__metric-card">
-            <div>
-              <p className="customers-page__metric-label">Clientes Inactivos</p>
-              <p className="customers-page__metric-value">{metrics.inactivos}</p>
-            </div>
-            <div className="customers-page__metric-icon customers-page__metric-icon--neutral" aria-hidden="true">
+          <MetricCard
+            title="Clientes Inactivos"
+            value={metrics.inactivos}
+            className="customers-page__metric-card"
+            iconVariant="neutral"
+            icon={
               <svg fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
               </svg>
-            </div>
-          </div>
+            }
+          />
 
-          <div className="customers-page__metric-card">
-            <div>
-              <p className="customers-page__metric-label">Nuevos este mes</p>
-              <p className="customers-page__metric-value">{metrics.nuevosEsteMes}</p>
-            </div>
-            <div className="customers-page__metric-icon customers-page__metric-icon--info" aria-hidden="true">
+          <MetricCard
+            title="Nuevos este mes"
+            value={metrics.nuevosEsteMes}
+            className="customers-page__metric-card"
+            iconVariant="primary"
+            icon={
               <svg fill="currentColor" viewBox="0 0 24 24">
                 <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
               </svg>
-            </div>
-          </div>
+            }
+          />
         </section>
       )}
 
