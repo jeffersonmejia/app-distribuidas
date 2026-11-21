@@ -15,12 +15,20 @@ interface DrawerProps {
   title: string
   children: ReactNode
   footer?: ReactNode
+  panelClassName?: string
 }
 
 const FOCUSABLE =
   'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
 
-export function Drawer({ isOpen, onClose, title, children, footer }: DrawerProps) {
+export function Drawer({
+  isOpen,
+  onClose,
+  title,
+  children,
+  footer,
+  panelClassName,
+}: DrawerProps) {
   const titleId = useId()
   const panelRef = useRef<HTMLElement>(null)
   const triggerRef = useRef<Element | null>(null)
@@ -108,7 +116,7 @@ export function Drawer({ isOpen, onClose, title, children, footer }: DrawerProps
         aria-labelledby={titleId}
         aria-hidden={!isOpen}
         inert={!isOpen ? true : undefined}
-        className={`drawer-panel${isOpen ? ' drawer-panel--open' : ''}`}
+        className={`drawer-panel${isOpen ? ' drawer-panel--open' : ''}${panelClassName ? ` ${panelClassName}` : ''}`}
         onKeyDown={handleKeyDown}
       >
         {/* Cabecera */}

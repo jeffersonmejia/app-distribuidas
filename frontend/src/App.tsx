@@ -6,6 +6,7 @@ import { CustomersPage } from './features/crm/pages/CustomersPage'
 import { InventoryPage } from './features/inventory/pages/InventoryPage'
 import { PosPage } from './features/pos/pages/PosPage'
 import { NewSalePage } from './features/pos/pages/NewSalePage'
+import { ProjectsPage } from './features/projects/pages'
 import { Card } from './components/ui/Card'
 import { EmptyState } from './components/feedback/EmptyState'
 import { SessionProvider } from './features/identity/context'
@@ -105,6 +106,8 @@ export function AppContent() {
         <PosPage />
       ) : route.path === '/pos/new' ? (
         <NewSalePage />
+      ) : route.path === '/projects' ? (
+        <ProjectsPage />
       ) : (
         <PlaceholderPage
           title={moduleInfo.title}
