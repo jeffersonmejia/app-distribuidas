@@ -1,4 +1,5 @@
 requerimientos_iniciales.md
+*.txt
 
 # Entorno local
 .env
