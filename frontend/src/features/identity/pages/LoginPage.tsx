@@ -69,9 +69,10 @@ function LoginPage() {
       <div className="login-shell">
       {/* ── TARJETA IZQUIERDA: Branding + Mockup ── */}
       <section className="login-brand-card" aria-labelledby="login-brand-heading">
-        {/* Destellos decorativos */}
-        <div className="login-glow login-glow--top" aria-hidden="true" />
-        <div className="login-glow login-glow--bottom" aria-hidden="true" />
+        <div className="login-brand-surface" aria-hidden="true">
+          <div className="login-glow login-glow--top" />
+          <div className="login-glow login-glow--bottom" />
+        </div>
 
         {/* Encabezado de texto */}
         <div className="login-brand-copy">
@@ -87,6 +88,12 @@ function LoginPage() {
           <LoginPreviewCard />
         </div>
 
+        <div className="login-brand-pill" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+          </svg>
+          <span>Plataforma empresarial unificada</span>
+        </div>
       </section>
 
       {/* ── TARJETA DERECHA: Formulario ── */}
