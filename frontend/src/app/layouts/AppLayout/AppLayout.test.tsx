@@ -1,17 +1,24 @@
-import { describe, it, expect } from 'vitest'
-import { render, screen } from '@testing-library/react'
-import { RouterProvider } from '../../router/router'
+import { describe, it, expect, beforeEach, afterEach } from 'vitest'
+import { screen } from '@testing-library/react'
 import { AppLayout } from './AppLayout'
 import { PlaceholderPage } from '../PlaceholderPage'
+import { renderWithProviders, cleanupSessionTestState } from '../../../test/renderWithProviders'
 
 describe('AppLayout and PlaceholderPage', () => {
+  beforeEach(() => {
+    cleanupSessionTestState()
+  })
+
+  afterEach(() => {
+    cleanupSessionTestState()
+  })
+
   it('renderiza el skip link con destino #main-content', () => {
-    render(
-      <RouterProvider initialPath="/crm">
-        <AppLayout currentPath="/crm">
-          <div>Contenido de prueba</div>
-        </AppLayout>
-      </RouterProvider>
+    renderWithProviders(
+      <AppLayout currentPath="/crm">
+        <div>Contenido de prueba</div>
+      </AppLayout>,
+      { initialPath: '/crm' }
     )
 
     const skipLink = screen.getByRole('link', { name: 'Saltar al contenido principal' })
@@ -20,12 +27,11 @@ describe('AppLayout and PlaceholderPage', () => {
   })
 
   it('renderiza el elemento main con id="main-content" y tabIndex={-1}', () => {
-    render(
-      <RouterProvider initialPath="/crm">
-        <AppLayout currentPath="/crm">
-          <div>Contenido</div>
-        </AppLayout>
-      </RouterProvider>
+    renderWithProviders(
+      <AppLayout currentPath="/crm">
+        <div>Contenido</div>
+      </AppLayout>,
+      { initialPath: '/crm' }
     )
 
     const main = screen.getByRole('main')
@@ -34,12 +40,11 @@ describe('AppLayout and PlaceholderPage', () => {
   })
 
   it('renderiza la barra lateral con aria-current en el ítem activo', () => {
-    render(
-      <RouterProvider initialPath="/crm">
-        <AppLayout currentPath="/crm">
-          <div>Contenido CRM</div>
-        </AppLayout>
-      </RouterProvider>
+    renderWithProviders(
+      <AppLayout currentPath="/crm">
+        <div>Contenido CRM</div>
+      </AppLayout>,
+      { initialPath: '/crm' }
     )
 
     const crmLink = screen.getByRole('link', { name: 'Clientes' })
@@ -47,15 +52,14 @@ describe('AppLayout and PlaceholderPage', () => {
   })
 
   it('PlaceholderPage renderiza el PageHeader y Card con EmptyState conforme a arquitectura', () => {
-    render(
-      <RouterProvider initialPath="/projects">
-        <AppLayout currentPath="/projects">
-          <PlaceholderPage
-            title="Proyectos"
-            description="18 proyectos activos · Seguimiento y ejecución de entregables"
-          />
-        </AppLayout>
-      </RouterProvider>
+    renderWithProviders(
+      <AppLayout currentPath="/projects">
+        <PlaceholderPage
+          title="Proyectos"
+          description="18 proyectos activos · Seguimiento y ejecución de entregables"
+        />
+      </AppLayout>,
+      { initialPath: '/projects' }
     )
 
     expect(screen.getByRole('heading', { level: 1, name: 'Proyectos' })).toBeInTheDocument()
