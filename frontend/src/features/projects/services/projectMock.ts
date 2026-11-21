@@ -43,7 +43,7 @@ function compareDateStrings(a?: string | null, b?: string | null): number {
   return a.localeCompare(b)
 }
 
-function buildSeed(now: string): Record<string, { projects: Project[]; tasks: Task[] }> {
+function buildSeed(): Record<string, { projects: Project[]; tasks: Task[] }> {
   const andinaProjects: ProjectSeed[] = [
     {
       id: 'prj-andina-001',
@@ -210,7 +210,7 @@ let nextTaskId = 5000
 
 function initStores(): void {
   stores = new Map<string, { projects: Project[]; tasks: Task[] }>()
-  const seed = buildSeed(nowIso())
+  const seed = buildSeed()
   for (const [tenantId, data] of Object.entries(seed)) {
     stores.set(tenantId, {
       projects: data.projects.map((p) => ({ ...p })),
@@ -499,3 +499,4 @@ export class ProjectMockRepository implements ProjectRepository {
 export function resetProjectMockStore(): void {
   initStores()
 }
+
