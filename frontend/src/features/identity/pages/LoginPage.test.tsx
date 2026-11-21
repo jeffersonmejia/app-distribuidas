@@ -122,4 +122,13 @@ describe('LoginPage', () => {
     const brandSection = document.querySelector('.login-brand-card')
     expect(brandSection).toBeInTheDocument()
   })
+
+  it('la tarjeta de vista previa es decorativa y no agrega controles al formulario', () => {
+    const { container } = renderWithProviders(<LoginPage />, { initialPath: '/login', authenticated: false })
+    const preview = container.querySelector('.login-preview')
+    expect(preview).toBeInTheDocument()
+    expect(preview?.closest('[aria-hidden="true"]')).not.toBeNull()
+    expect(preview?.querySelectorAll('button, a[href], input, select, textarea')).toHaveLength(0)
+    expect(screen.getAllByRole('button', { name: /iniciar sesi\u00f3n/i })).toHaveLength(1)
+  })
 })
