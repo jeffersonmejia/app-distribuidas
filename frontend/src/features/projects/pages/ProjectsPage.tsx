@@ -342,14 +342,14 @@ export function ProjectsPage({ repository }: ProjectsPageProps) {
           value={metrics?.totalProjects ?? (metricsLoading ? '…' : 0)}
           subtitle="Registrados en la organización"
           iconVariant="primary"
-          icon={<span aria-hidden="true">P</span>}
+          icon={<svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 4h4v3h4a2 2 0 012 2v9a2 2 0 01-2 2H6a2 2 0 01-2-2V9a2 2 0 012-2h4V4zm4 5h-4v2h4V9zM6 11v7h12v-7H6z" /></svg>}
         />
         <MetricCard
           title="Tareas totales"
           value={metrics?.totalTasks ?? (metricsLoading ? '…' : 0)}
           subtitle="En todos los proyectos"
           iconVariant="neutral"
-          icon={<span aria-hidden="true">T</span>}
+          icon={<svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11l3 3L22 4l-1.41-1.41L12 11.17 10.41 9.59 9 11zm-5 9h16v-2H4v2zm0-6h8v-2H4v2zm0-6h8V6H4v2z" /></svg>}
         />
         <MetricCard
           title="Completadas"

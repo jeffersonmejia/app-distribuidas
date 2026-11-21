@@ -280,10 +280,50 @@ export function AccountingPage({ repository }: AccountingPageProps) {
       />
 
       <section className="accounting-page__metrics" aria-label="Métricas contables">
-        <MetricCard title="Asientos" value={summary?.totalEntries ?? (summaryLoading ? '...' : 0)} subtitle="Registrados en el período consultado" iconVariant="primary" icon={<span aria-hidden="true">#</span>} />
-        <MetricCard title="Total debe" value={formatAmount(summary?.totalDebitCents ?? 0)} subtitle="Suma de débitos" iconVariant="neutral" icon={<span aria-hidden="true">D</span>} />
-        <MetricCard title="Total haber" value={formatAmount(summary?.totalCreditCents ?? 0)} subtitle="Suma de créditos" iconVariant="neutral" icon={<span aria-hidden="true">H</span>} />
-        <MetricCard title="Pendientes" value={summary?.pendingEntries ?? (summaryLoading ? '...' : 0)} subtitle="Asientos por mayorización" iconVariant="warning" icon={<span aria-hidden="true">!</span>} />
+        <MetricCard
+          title="Asientos"
+          value={summary?.totalEntries ?? (summaryLoading ? '...' : 0)}
+          subtitle="Registrados en el período consultado"
+          iconVariant="primary"
+          icon={
+            <svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M7 3h10a2 2 0 012 2v14a2 2 0 01-2 2H7a2 2 0 01-2-2V5a2 2 0 012-2zm0 2v14h10V5H7zm2 2h6v2H9V7zm0 4h6v2H9v-2zm0 4h4v2H9v-2z" />
+            </svg>
+          }
+        />
+        <MetricCard
+          title="Total debe"
+          value={formatAmount(summary?.totalDebitCents ?? 0)}
+          subtitle="Suma de débitos"
+          iconVariant="neutral"
+          icon={
+            <svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 4l7 7h-4v9h-6v-9H5l7-7z" />
+            </svg>
+          }
+        />
+        <MetricCard
+          title="Total haber"
+          value={formatAmount(summary?.totalCreditCents ?? 0)}
+          subtitle="Suma de créditos"
+          iconVariant="neutral"
+          icon={
+            <svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 20l-7-7h4V4h6v9h4l-7 7z" />
+            </svg>
+          }
+        />
+        <MetricCard
+          title="Pendientes"
+          value={summary?.pendingEntries ?? (summaryLoading ? '...' : 0)}
+          subtitle="Asientos por mayorización"
+          iconVariant="warning"
+          icon={
+            <svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 5v5.59l3.3 3.3-1.42 1.41L11 13V7h2z" />
+            </svg>
+          }
+        />
       </section>
 
       {content}
