@@ -21,7 +21,7 @@
   <img src="https://img.shields.io/badge/k6-7D64FF?style=for-the-badge&logo=k6&logoColor=white" />
 </p>
 
----
+Applicación de multitenant contabilidad
 
 ## Descripción general
 
