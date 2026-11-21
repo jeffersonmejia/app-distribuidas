@@ -63,12 +63,13 @@ export function CampaignDrawer({ isOpen, campaign, repository, onClose, onSaved 
 
   useEffect(() => {
     if (!isOpen || !campaign) return
+    const campaignId = campaign.id
     let ignore = false
     async function loadContacts() {
       setContactsLoading(true)
       setContactsError(null)
       try {
-        const result = await repository.listContacts(campaign.id, 0)
+        const result = await repository.listContacts(campaignId, 0)
         if (!ignore) setContacts(result.items)
       } catch (err) {
         if (!ignore) setContactsError(err instanceof Error ? err.message : 'No se pudieron cargar los contactos.')

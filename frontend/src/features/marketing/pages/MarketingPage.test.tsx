@@ -13,7 +13,7 @@ function makeCampaign(id: string, name: string, status: Campaign['status']): Cam
 
 class TestRepo implements MarketingRepository {
   campaigns = [makeCampaign('c1', 'Campaña Activa', 'ACTIVE'), makeCampaign('c2', 'Campaña Borrador', 'DRAFT')]
-  contacts = [{ customerId: 'u1', fullName: 'Ana Demo', email: 'ana@demo.test', consent: 'NONE' as const }]
+  contacts: Array<{ customerId: string; fullName: string; email: string | null; consent: 'CONSENTED' | 'UNSUBSCRIBED' | 'NONE' }> = [{ customerId: 'u1', fullName: 'Ana Demo', email: 'ana@demo.test', consent: 'NONE' }]
   sendManual = vi.fn(async () => ({ sent: 1, failed: 0, remainingToday: 19 } as SendResult))
   async listCampaigns(filters: { status?: string } = {}, page = 0): Promise<CampaignPage> {
     let items = [...this.campaigns]
