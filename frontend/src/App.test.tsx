@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { RouterProvider } from './app/router'
 import { AppContent } from './App'
@@ -31,7 +31,7 @@ describe('App Routing Integration', () => {
     expect(screen.queryByRole('link', { name: 'Saltar al contenido principal' })).not.toBeInTheDocument()
   })
 
-  it('renderiza /crm dentro de AppLayout con Sidebar y Clientes activo', () => {
+  it('renderiza /crm dentro de AppLayout con Sidebar y la página de Clientes', async () => {
     render(
       <RouterProvider initialPath="/crm">
         <AppContent />
@@ -48,8 +48,14 @@ describe('App Routing Integration', () => {
     // PageHeader con título Clientes
     expect(screen.getByRole('heading', { level: 1, name: 'Clientes' })).toBeInTheDocument()
 
-    // Card con EmptyState de módulo en desarrollo
-    expect(screen.getByText('Módulo en desarrollo')).toBeInTheDocument()
+    // CustomersPage cargando (spinner o tabla — esperamos que el spinner aparezca o la tabla)
+    await waitFor(() => {
+      const hasSpinner = screen.queryByRole('status', { name: /cargando/i }) !== null
+      const hasTable = screen.queryByRole('table') !== null
+      const hasEmpty = screen.queryByText(/sin clientes/i) !== null
+      const hasError = screen.queryByText(/no se pudo/i) !== null
+      expect(hasSpinner || hasTable || hasEmpty || hasError).toBe(true)
+    })
   })
 
   it('renderiza EmptyState de página no encontrada para rutas desconocidas dentro de AppLayout', () => {

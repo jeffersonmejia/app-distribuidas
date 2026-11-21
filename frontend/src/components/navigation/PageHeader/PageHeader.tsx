@@ -11,6 +11,7 @@ export interface PageHeaderProps {
   searchValue?: string
   onSearchChange?: (value: string) => void
   actions?: ReactNode
+  footer?: ReactNode
 }
 
 export function PageHeader({
@@ -21,6 +22,7 @@ export function PageHeader({
   searchValue,
   onSearchChange,
   actions,
+  footer,
 }: PageHeaderProps) {
   return (
     <header className="page-header">
@@ -72,6 +74,8 @@ export function PageHeader({
           </div>
         )}
       </div>
+
+      {footer && <div className="page-header__footer">{footer}</div>}
     </header>
   )
 }

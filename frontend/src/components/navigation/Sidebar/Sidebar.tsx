@@ -114,11 +114,18 @@ export function Sidebar({ currentPath, footer }: SidebarProps) {
             aria-hidden="true"
           >
             <rect width="20" height="20" x="2" y="2" rx="6" fill="var(--brand)" />
+            {/* Ícono SVG de cubo isométrico neutro Stitch */}
             <path
-              d="M7 12h10M12 7v10"
+              d="M12 6.5l5.5 3.2v6.4L12 19.3l-5.5-3.2V9.7L12 6.5z"
               stroke="var(--text-on-brand)"
-              strokeWidth="2.2"
-              strokeLinecap="round"
+              strokeWidth="1.8"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M12 6.5v12.8M12 12.9l5.5-3.2M12 12.9l-5.5-3.2"
+              stroke="var(--text-on-brand)"
+              strokeWidth="1.8"
+              strokeLinejoin="round"
             />
           </svg>
         </Link>

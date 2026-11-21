@@ -44,4 +44,10 @@ describe('Pagination Component', () => {
     expect(screen.getByRole('button', { name: 'Ir a página anterior' })).toBeDisabled()
     expect(screen.getByRole('button', { name: 'Ir a página siguiente' })).toBeDisabled()
   })
+
+  it('muestra el resumen de conteo cuando se pasa itemsCount', () => {
+    render(<Pagination currentPage={0} hasNext={true} onPageChange={vi.fn()} itemsCount={5} />)
+    expect(screen.getByText(/mostrando/i)).toBeInTheDocument()
+    expect(screen.getByText('5')).toBeInTheDocument()
+  })
 })
