@@ -35,11 +35,18 @@ public class JpaSaleStore implements SaleStore {
         List<SaleEntity> rows = entityManager.createQuery(
                 "select s from SaleEntity s where s.tenantId = :tenant and (:saleId is null or s.saleId = :saleId) "
                         + "order by s.createdAt desc, s.saleId desc", SaleEntity.class)
-                .setParameter("tenant", tenantId).setParameter("saleId", saleId).setFirstResult(page * size)
+                .setParameter("tenant", tenantId).setParameter("saleId", saleId).setFirstResult(firstResult(page, size))
                 .setMaxResults(size + 1).getResultList();
         boolean hasNext = rows.size() > size;
         List<Sale> items = rows.stream().limit(size).map(row -> find(tenantId, row.saleId).orElseThrow().sale()).toList();
         return new Slice(items, hasNext);
+    }
+
+    //SOLID: SRP — VALIDA Y CONVIERTE EL OFFSET DE PÁGINA SIN DESBORDAR ENTEROS.
+    private static int firstResult(int page, int size) {
+        if (page < 0 || size < 1 || size > 5) { throw new IllegalArgumentException("Invalid page request"); }
+        if (page > Integer.MAX_VALUE / size) { throw new IllegalArgumentException("Page offset is too large"); }
+        return page * size;
     }
     @Override public void save(UUID tenantId, UUID actorId, String fingerprint, Sale sale) {
         SaleEntity entity = new SaleEntity();

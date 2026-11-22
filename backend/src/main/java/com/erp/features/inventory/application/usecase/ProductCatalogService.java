@@ -77,11 +77,12 @@ public class ProductCatalogService {
         return access.execute(tenant, "inventory:catalog:manage", context -> {
             UUID tenantId = context.tenantId().value();
             Product previous = requiredProduct(tenantId, id);
+            if (!previous.unit().equals(input.unit().trim())) { throw new InventoryException(INVALID_REQUEST); }
             String sku = input.sku().trim();
             if (products.skuExists(tenantId, sku, id)) { throw new InventoryException(SKU_ALREADY_EXISTS); }
             Product updated;
             try {
-                updated = previous.update(input.name().trim(), sku, input.category(), input.description(), input.unit().trim(),
+                updated = previous.update(input.name().trim(), sku, input.category(), input.description(), previous.unit(),
                         money(input.purchasePrice()), money(input.sellingPrice()), quantity(input.minStock()),
                         context.actorId().value(), now());
                 updated = products.save(updated);

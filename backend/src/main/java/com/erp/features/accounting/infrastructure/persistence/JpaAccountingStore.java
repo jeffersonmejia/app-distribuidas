@@ -9,6 +9,7 @@ import com.erp.features.accounting.api.AccountingEntries.Entry;
 import com.erp.features.accounting.api.AccountingEntries.Movement;
 import com.erp.features.accounting.application.AccountingStore;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -52,16 +53,27 @@ public class JpaAccountingStore implements AccountingStore {
 
     //SOLID: SRP — PÁGINA ASIENTOS EN POSTGRESQL CON ORDEN ESTABLE Y FILTROS OPCIONALES.
     @Override public Slice list(UUID tenantId, UUID saleId, Instant from, Instant to, int page, int size) {
-        List<JournalEntity> rows = entityManager.createQuery(
-                "select j from JournalEntity j where j.tenantId = :tenant "
-                        + "and (:saleId is null or j.saleId = :saleId) "
-                        + "and (:from is null or j.createdAt >= :from) and (:to is null or j.createdAt < :to) "
-                        + "order by j.createdAt desc, j.id desc", JournalEntity.class)
-                .setParameter("tenant", tenantId).setParameter("saleId", saleId).setParameter("from", from)
-                .setParameter("to", to).setFirstResult(page * size).setMaxResults(size + 1).getResultList();
+        StringBuilder statement = new StringBuilder("select j from JournalEntity j where j.tenantId = :tenant");
+        if (saleId != null) { statement.append(" and j.saleId = :saleId"); }
+        if (from != null) { statement.append(" and j.createdAt >= :from"); }
+        if (to != null) { statement.append(" and j.createdAt < :to"); }
+        statement.append(" order by j.createdAt desc, j.id desc");
+        TypedQuery<JournalEntity> query = entityManager.createQuery(statement.toString(), JournalEntity.class)
+                .setParameter("tenant", tenantId);
+        if (saleId != null) { query.setParameter("saleId", saleId); }
+        if (from != null) { query.setParameter("from", from); }
+        if (to != null) { query.setParameter("to", to); }
+        List<JournalEntity> rows = query.setFirstResult(firstResult(page, size)).setMaxResults(size + 1).getResultList();
         boolean hasNext = rows.size() > size;
         List<Entry> items = rows.stream().limit(size).map(row -> view(tenantId, row)).toList();
         return new Slice(items, hasNext);
+    }
+
+    //SOLID: SRP — VALIDA Y CONVIERTE EL OFFSET DE PÁGINA SIN DESBORDAR ENTEROS.
+    private static int firstResult(int page, int size) {
+        if (page < 0 || size < 1 || size > 5) { throw new IllegalArgumentException("Invalid page request"); }
+        if (page > Integer.MAX_VALUE / size) { throw new IllegalArgumentException("Page offset is too large"); }
+        return page * size;
     }
 
     //SOLID: SRP — AGREGA TOTALES CONTABLES A PARTIR DE LOS MOVIMIENTOS TENANT-SCOPED.

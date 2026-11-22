@@ -83,7 +83,9 @@ public class AccountingService implements AccountingEntries {
 
     //SOLID: SRP — LEE UNA PÁGINA DE ASIENTOS EXISTENTES CON FILTROS DEL SERVIDOR.
     @Override public Page list(TenantId tenant, String search, String period, int page, int size) {
-        if (page < 0 || size < 1 || size > 5) { throw new AccountingException(INVALID_REQUEST); }
+        if (page < 0 || size < 1 || size > 5 || page > Integer.MAX_VALUE / size) {
+            throw new AccountingException(INVALID_REQUEST);
+        }
         UUID saleId = null;
         if (search != null && !search.isBlank()) {
             try { saleId = UUID.fromString(search.trim()); }

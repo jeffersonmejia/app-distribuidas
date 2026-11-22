@@ -1,6 +1,9 @@
 package com.erp.features.inventory;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.mockito.Mockito.when;
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -22,10 +25,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.http.MediaType;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
@@ -34,6 +40,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 //SOLID: SRP — ESTA SUITE VALIDA TRANSACCIONES, CONCURRENCIA Y RLS CON POSTGRESQL REAL.
 @SpringBootTest(properties = {"AUTH_ISSUER_URI=https://issuer.example.test/", "AUTH_AUDIENCE=erp-api"})
+@AutoConfigureMockMvc
 @Testcontainers
 class InventoryIntegrationTest {
     private static final UUID ACTOR = UUID.fromString("e1000000-0000-4000-8000-000000000001");
@@ -45,6 +52,7 @@ class InventoryIntegrationTest {
     @Autowired InventoryMovements inventory;
     @Autowired TenantAccess access;
     @Autowired JdbcTemplate jdbc;
+    @Autowired MockMvc mvc;
     @Autowired com.erp.features.inventory.application.port.out.InventoryStore store;
     @MockBean JwtDecoder decoder;
     @MockBean AuthenticatedActor actor;
@@ -92,9 +100,59 @@ class InventoryIntegrationTest {
                             sql.setString(3, "inventory:stock:" + action); sql.executeUpdate();
                         }
                     }
+                    if (user.equals(ACTOR)) {
+                        for (String permission : List.of("inventory:catalog:read", "inventory:catalog:manage")) {
+                            try (PreparedStatement sql = db.prepareStatement("""
+                                    INSERT INTO tenant_membership_permission(tenant_id,membership_id,permission_code)
+                                    VALUES (?,?,?) ON CONFLICT DO NOTHING
+                                    """)) {
+                                sql.setObject(1, tenant.value()); sql.setObject(2, member); sql.setString(3, permission);
+                                sql.executeUpdate();
+                            }
+                        }
+                    }
                 }
             }
         }
+    }
+
+    @Test void productCatalogHttpRoutesPersistTenantScopedProductsAndMetrics() throws Exception {
+        String path = "/api/v1/inventory/products";
+        String create = """
+                {"name":"Widget","sku":"W-001","category":"Equipos","description":"Prueba","unit":"unidad",
+                 "purchasePrice":"2.50","sellingPrice":"3.50","minStock":"2","initialStock":"4"}
+                """;
+        String response = mvc.perform(post(path).with(jwt().jwt(token -> token.subject(ACTOR.toString())))
+                        .header("X-Tenant-ID", A.value()).contentType(MediaType.APPLICATION_JSON).content(create))
+                .andExpect(status().isCreated()).andExpect(jsonPath("$.sku").value("W-001"))
+                .andExpect(jsonPath("$.stock").value("4")).andReturn().getResponse().getContentAsString();
+        UUID id = UUID.fromString(new com.fasterxml.jackson.databind.ObjectMapper().readTree(response).get("id").asText());
+
+        mvc.perform(get(path).with(jwt().jwt(token -> token.subject(ACTOR.toString())))
+                        .header("X-Tenant-ID", A.value()).param("search", "W-001"))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.items[0].id").value(id.toString()));
+        mvc.perform(get(path + "/" + id).with(jwt().jwt(token -> token.subject(ACTOR.toString())))
+                        .header("X-Tenant-ID", A.value()))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.unit").value("unidad"));
+        mvc.perform(put(path + "/" + id).with(jwt().jwt(token -> token.subject(ACTOR.toString())))
+                        .header("X-Tenant-ID", A.value()).contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"name\":\"Widget editado\",\"sku\":\"W-001\",\"category\":\"Equipos\",\"unit\":\"unidad\",\"purchasePrice\":\"2.50\",\"sellingPrice\":\"3.50\",\"minStock\":\"2\"}"))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.name").value("Widget editado"));
+        mvc.perform(get(path + "/" + id + "/availability").with(jwt().jwt(token -> token.subject(ACTOR.toString())))
+                        .header("X-Tenant-ID", A.value()))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.available").value("4"));
+        mvc.perform(get(path + "/metrics").with(jwt().jwt(token -> token.subject(ACTOR.toString())))
+                        .header("X-Tenant-ID", A.value()))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.totalProducts").value(1));
+        mvc.perform(post(path).with(jwt().jwt(token -> token.subject(ACTOR.toString())))
+                        .header("X-Tenant-ID", A.value()).contentType(MediaType.APPLICATION_JSON).content(create))
+                .andExpect(status().isConflict()).andExpect(jsonPath("$.code").value("SKU_ALREADY_EXISTS"));
+        mvc.perform(get(path + "/" + id).with(jwt().jwt(token -> token.subject(ACTOR.toString())))
+                        .header("X-Tenant-ID", B.value()))
+                .andExpect(status().isNotFound());
+        mvc.perform(get(path).with(jwt().jwt(token -> token.subject(ACTOR.toString())))
+                        .header("X-Tenant-ID", A.value()).param("size", "6"))
+                .andExpect(status().isBadRequest()).andExpect(jsonPath("$.code").value("INVALID_REQUEST"));
     }
 
     @Test void receiptReservationConfirmationAndRetryHaveOneEffect() {

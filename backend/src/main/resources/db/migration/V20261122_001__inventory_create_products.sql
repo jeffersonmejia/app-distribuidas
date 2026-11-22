@@ -19,7 +19,7 @@ CREATE TABLE inventory_product (
 );
 
 GRANT SELECT, INSERT ON inventory_product TO erp_runtime;
-GRANT UPDATE (name, sku, category, description, purchase_price, selling_price, min_stock, updated_at, updated_by)
+GRANT UPDATE (name, sku, category, description, unit, purchase_price, selling_price, min_stock, updated_at, updated_by, deleted_at)
     ON inventory_product TO erp_runtime;
 
 ALTER TABLE inventory_product ENABLE ROW LEVEL SECURITY;

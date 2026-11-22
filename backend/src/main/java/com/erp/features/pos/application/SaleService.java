@@ -98,7 +98,9 @@ public class SaleService implements Sales {
 
     //SOLID: SRP — RECHAZA PAGINACIÓN INVÁLIDA O SUPERIOR A CINCO.
     private static void validatePage(int page, int size) {
-        if (page < 0 || size < 1 || size > 5) { throw new SaleException(INVALID_REQUEST); }
+        if (page < 0 || size < 1 || size > 5 || page > Integer.MAX_VALUE / size) {
+            throw new SaleException(INVALID_REQUEST);
+        }
     }
 
     private void recordAccounting(TenantId tenant, Sale sale) {
