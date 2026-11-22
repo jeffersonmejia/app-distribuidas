@@ -1,0 +1,114 @@
+.accounting-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.accounting-page__metrics {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: var(--space-4);
+  padding-inline: var(--space-6);
+}
+
+@media (min-width: 640px) {
+  .accounting-page__metrics {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .accounting-page__metrics {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.accounting-page__state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 16rem;
+}
+
+.accounting-page__period {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--text-on-brand);
+}
+
+.accounting-page__period-label {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-on-brand);
+}
+
+.accounting-page__period-select {
+  min-height: 2.75rem;
+  min-width: 11rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-on-brand-subtle);
+  padding: 0 var(--space-4);
+  background: var(--surface-on-brand-soft);
+  backdrop-filter: blur(8px);
+  color: var(--text-on-brand);
+  font: inherit;
+  font-size: var(--font-size-sm);
+}
+
+.accounting-page__period-select option {
+  color: var(--text-primary);
+  background: var(--surface-canvas);
+}
+
+.accounting-page__period-select:focus-visible {
+  outline: none;
+  border-color: var(--border-on-brand);
+  box-shadow: 0 0 0 3px var(--surface-on-brand-hover);
+}
+
+.accounting-page__date-code,
+.accounting-page__accounts {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.accounting-page__code {
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+}
+
+.accounting-page__date,
+.accounting-page__account-item,
+.accounting-page__account-more {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+.accounting-page__glosa {
+  color: var(--text-primary);
+  font-size: var(--font-size-sm);
+}
+
+.accounting-page__amount {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.accounting-page__cell--right {
+  text-align: right;
+}
+
+@media (max-width: 640px) {
+  .accounting-page__period {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .accounting-page__period-select {
+    flex: 1;
+    min-width: 0;
+  }
+}
