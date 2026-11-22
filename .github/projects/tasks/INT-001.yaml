@@ -9,7 +9,7 @@ issue:
 
     - **Feature:** Arquitectura
 
-    - **Responsable:** @EMLarco
+    - **Responsable:** @jeffersonmejia
 
     - **Rutas:** backend/, frontend/, docs/arquitectura.md, docs/tasks/INT-001.md
 
@@ -25,11 +25,11 @@ issue:
 
     ## Criterios de aceptación
 
-    - [ ] El Quality Gate requerido pasó para el estado integrado en develop.
+    - [x] El Quality Gate requerido pasó para el estado integrado en develop.
 
-    - [ ] Las features respetan límites Feature-First: usan APIs públicas y no crean dependencias internas ni ciclos.
+    - [x] Las features respetan límites Feature-First: usan APIs públicas y no crean dependencias internas ni ciclos.
 
-    - [ ] Las migraciones aplican desde una base vacía y Hibernate valida el esquema conforme a docs/orm-code-first.md.
+    - [x] Las migraciones aplican desde una base vacía y Hibernate valida el esquema conforme a docs/orm-code-first.md.
 
     - [ ] Rutas, DTOs, errores y permisos de UI/API son compatibles y respetan el contexto tenant de docs/multitenancy.md.
 
@@ -38,7 +38,7 @@ issue:
 
     ## Bloqueo actual
 
-    Dependencias completadas: AUTH-002, TEN-001, CRM-001, INV-003, PROJ-001, FRONT-001, POS-002, ACC-002, MKT-002, FRONT-002. Bloqueada por: @Dayanarablb (FRONT-003, FRONT-004, FRONT-005).
+    Las dependencias de implementación están completadas. La revisión encontró integraciones UI/API pendientes: Projects y Marketing tienen controladores, pero el frontend solo usa mocks; Inventory, POS y Accounting carecen de controladores HTTP y adaptadores frontend. Falta acordar el alcance HTTP antes de asignar las correcciones por feature. Evidencia: docs/tasks/INT-001.md.
 
 
     ## Especificación de lógica
@@ -60,10 +60,10 @@ project:
   Área: Arquitectura
   Identificador de tarea: INT-001
   Fecha objetivo: '2026-11-20'
-  Bloqueado por: '@Dayanarablb (FRONT-003, FRONT-004, FRONT-005)'
+  Bloqueado por: Acordar el alcance de APIs HTTP y asignar correcciones a los owners de cada feature.
 planning:
   area: Arquitectura
-  assignee: EMLarco
+  assignee: jeffersonmejia
   paths:
   - backend/
   - frontend/
@@ -87,9 +87,7 @@ planning:
   state: Blocked
   priority: Alta
   blocked_by:
-  - FRONT-003
-  - FRONT-004
-  - FRONT-005
+  - Decisión de alcance de las APIs HTTP pendientes.
   description: Validar compatibilidad de las features integradas en develop. Los workflows cubren PR, builds, pruebas, cobertura y CodeQL; INT-001 revisa compatibilidad de módulos, migraciones y contratos UI/API.
   acceptanceCriteria:
   - El Quality Gate requerido pasó para el estado integrado en develop.
