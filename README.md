@@ -123,59 +123,19 @@ app-distribuidas/
 
 ## Puesta en marcha
 
-### Requisitos previos
+Para una copia limpia en Windows, sigue la [guía de ejecución local y recuperación](docs/ejecucion-local.md). Incluye PowerShell, PostgreSQL, roles separados de runtime y migración, requisitos OIDC, frontend y SonarQube opcional.
 
-- Java 21
-- Maven
-- Node.js 20 o superior
-- Docker y Docker Compose
-
-### 1. Levantar la base de datos
-
-```bash
-cd docker
-cp .env.example .env          # definir ERP_POSTGRES_DB, ERP_POSTGRES_USER y ERP_POSTGRES_PASSWORD
-docker compose up -d
-```
-
-PostgreSQL solo queda expuesto en `127.0.0.1:5432`.
-
-### 2. Ejecutar el backend
-
-```bash
-cd backend
-mvn spring-boot:run -Dspring-boot.run.profiles=dev
-```
-
-Flyway aplica las migraciones automáticamente al arrancar. Configura `AUTH_ISSUER_URI` y `AUTH_AUDIENCE` según tu proveedor de identidad.
-
-### 3. Ejecutar el frontend
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-### Opcional: SonarQube
-
-```bash
-cd docker
-docker compose -f compose.sonarqube.yml up -d
-```
+El proyecto usa Java 21, Maven, Node.js 24 y Docker Compose. PostgreSQL local se publica solo en `127.0.0.1:5432`. El modo predeterminado del frontend usa datos simulados; para probar la API se necesita, además, un proveedor de identidad y una membresía autorizada.
 
 ## Pruebas
 
-```bash
-# Backend: pruebas unitarias, de integración y de aislamiento RLS (requiere Docker para Testcontainers)
-cd backend
-mvn verify
-
-# Frontend
-cd frontend
-npm test
-npm run test:coverage
-npm run lint
+```powershell
+# Desde la raíz; el backend requiere Docker para Testcontainers.
+mvn -B -ntp -f backend/pom.xml verify
+npm --prefix frontend ci
+npm --prefix frontend run build
+npm --prefix frontend run test:coverage
+npm --prefix frontend run lint
 ```
 
 ## Documentación
@@ -191,6 +151,7 @@ npm run lint
 | Prueba de APIs | [`docs/prueba-apis.md`](docs/prueba-apis.md) |
 | Estrategia de pruebas | [`docs/testing.md`](docs/testing.md) |
 | Calidad de código | [`docs/quality.md`](docs/quality.md) |
+| Ejecución local, recuperación y Azure | [`docs/ejecucion-local.md`](docs/ejecucion-local.md) |
 | Requerimientos del CRM | [`docs/crm/requerimientos.md`](docs/crm/requerimientos.md) |
 
 ## Equipo
