@@ -38,7 +38,7 @@ issue:
 
     ## Bloqueo actual
 
-    Las dependencias de implementación están completadas. La revisión encontró integraciones UI/API pendientes: Projects y Marketing tienen controladores, pero el frontend solo usa mocks; Inventory, POS y Accounting carecen de controladores HTTP y adaptadores frontend. FRONT-004 (#34) se reabrió y está bloqueada por INT-001; FRONT-005 (#35) se reabrió para conectar Projects/Marketing y resolver Accounting después. El test intermitente está asignado a Dayanara en FRONT-006 (#183). Falta acordar el alcance HTTP antes de asignar las correcciones de contratos por feature. Evidencia: docs/tasks/INT-001.md.
+    Las dependencias de implementación están completadas. La revisión encontró integraciones UI/API pendientes: Projects y Marketing tienen controladores, pero el frontend solo usa mocks; Inventory, POS y Accounting carecen de controladores HTTP y adaptadores frontend. Falta acordar el alcance HTTP antes de asignar las correcciones por feature. Evidencia: docs/tasks/INT-001.md.
 
 
     ## Especificación de lógica
