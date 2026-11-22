@@ -17,6 +17,7 @@ import com.erp.features.pos.api.Sales;
 import com.erp.features.pos.application.SaleService;
 import com.erp.features.pos.application.SaleStore;
 import com.erp.features.tenancy.api.TenantId;
+import com.erp.features.tenancy.api.TenantAccess;
 import org.junit.jupiter.api.Test;
 
 //SOLID: SRP — ESTA SUITE VERIFICA VALIDACIÓN E IDEMPOTENCIA DE VENTAS.
@@ -24,7 +25,8 @@ class SaleServiceTest {
     private final InventoryMovements inventory = mock(InventoryMovements.class);
     private final SaleStore store = mock(SaleStore.class);
     private final AccountingEntries accounting = mock(AccountingEntries.class);
-    private final SaleService service = new SaleService(inventory, store, accounting);
+    private final TenantAccess access = mock(TenantAccess.class);
+    private final SaleService service = new SaleService(inventory, store, accounting, access);
     private final TenantId tenant = new TenantId(UUID.randomUUID());
     private final UUID actor = UUID.randomUUID();
     private final UUID product = UUID.randomUUID();

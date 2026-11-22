@@ -5,7 +5,7 @@ github:
 issue:
   title: '[FRONT-003] Completar interfaz de clientes y sesión'
   body: "<!-- managed-task-id: FRONT-003 -->\n\n**Feature:** Frontend  \n**Responsable:** @Dayanarablb  \n**Rutas:** frontend/src/features/identity/, frontend/src/features/tenancy/, frontend/src/features/crm/, frontend/src/app/  \n**Dependencias:** FRONT-001, FRONT-002, AUTH-002, TEN-001, CRM-001  \n**Fecha objetivo:** 2026-11-19\n\n## Alcance\nImplementar acceso, selección de tenant y gestión de clientes sobre contratos backend aprobados. El backend valida identidad, membresía activa y permisos; el tenant elegido por el usuario es solo un selector y nunca una prueba de autorización.\n\n## Criterios de aceptación\n- [ ] Sesión, selección de tenant y CRUD consumen APIs reales.\n- [ ] La interfaz no usa actor_id, tenant_id ni permisos del cliente como autorización.\n- [ ] Errores no filtran detalles sensibles.\n- [ ] Listas usan máximo 5 y muestran estados de carga, vacío y error.\n- [ ] Navegación se adapta a tamaños de pantalla acordados.\n- [ ] Pruebas de componentes cubren los flujos y\
-    \ estados implementados.\n\n## Bloqueo actual\nBloqueada por: FRONT-001 y FRONT-002 (@Dayanarablb). CRM-001 está completada.\n\n## Especificación de lógica\n[Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/FRONT-003.md)."
+    \ estados implementados.\n\n## Bloqueo actual\nSin bloqueos: FRONT-001, FRONT-002, AUTH-002, TEN-001 y CRM-001 están completadas.\n\n## Especificación de lógica\n[Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/FRONT-003.md)."
   state: open
   assignees:
   - Dayanarablb
@@ -15,13 +15,13 @@ issue:
 project:
   Repository: jeffersonmejia/app-distribuidas
   Title: '[FRONT-003] Completar interfaz de clientes y sesión'
-  Status: Blocked
-  Estado: Blocked
+  Status: In Progress
+  Estado: Todo
   Prioridad: Alta
   Área: Frontend
   Identificador de tarea: FRONT-003
   Fecha objetivo: '2026-11-19'
-  Bloqueado por: '@Dayanarablb (FRONT-001, FRONT-002)'
+  Bloqueado por: Nadie
 planning:
   area: Frontend
   assignee: Dayanarablb
@@ -32,17 +32,14 @@ planning:
   - frontend/src/app/
   - docs/tasks/FRONT-003.md
   dependencies:
-  - FRONT-001
   - FRONT-002
   - AUTH-002
   - TEN-001
   - CRM-001
   targetDate: '2026-11-19'
-  state: Blocked
+  state: Todo
   priority: Alta
-  blocked_by:
-  - FRONT-001
-  - FRONT-002
+  blocked_by: []
   description: Implementar acceso, selección autorizada de tenant y gestión de clientes sobre contratos backend aprobados.
   acceptanceCriteria:
   - Sesión, selección de tenant y CRUD consumen APIs reales.

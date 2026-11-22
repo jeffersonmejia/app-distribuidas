@@ -1,0 +1,3 @@
+// SOLID: ISP — EXPORTA TIPOS PÚBLICOS DE LA FEATURE DE VENTAS (POS).
+
+export * from './sale'

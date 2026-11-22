@@ -1,0 +1,17 @@
+.campaign-drawer__form, .campaign-drawer__detail { display: flex; flex-direction: column; gap: var(--space-4); }
+.campaign-drawer__field { display: flex; flex-direction: column; gap: var(--space-2); }
+.campaign-drawer__label { font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); color: var(--text-primary); }
+.campaign-drawer__textarea { width: 100%; min-height: 6.5rem; padding: var(--space-3) var(--space-4); border-radius: var(--radius-md); border: 1px solid var(--border-default); background: var(--surface-raised); color: var(--text-primary); font-family: var(--font-sans); font-size: var(--font-size-sm); }
+.campaign-drawer__textarea:focus-visible { outline: none; border-color: var(--border-brand); box-shadow: 0 0 0 3px color-mix(in oklch, var(--focus-ring) 15%, transparent); }
+.campaign-drawer__row { display: grid; grid-template-columns: 1fr; gap: var(--space-4); }
+@media (min-width: 480px) { .campaign-drawer__row { grid-template-columns: 1fr 1fr; } }
+.campaign-drawer__footer, .campaign-drawer__status-actions, .campaign-drawer__contact-actions { display: flex; gap: var(--space-3); flex-wrap: wrap; }
+.campaign-drawer__footer { justify-content: flex-end; }
+.campaign-drawer__section { display: flex; flex-direction: column; gap: var(--space-3); padding-top: var(--space-4); border-top: 1px solid var(--border-subtle); }
+.campaign-drawer__section-title { margin: 0; font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); color: var(--text-primary); }
+.campaign-drawer__contacts { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-3); }
+.campaign-drawer__contact { display: flex; justify-content: space-between; gap: var(--space-3); padding: var(--space-3); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); }
+.campaign-drawer__contact-name { font-size: var(--font-size-sm); font-weight: var(--font-weight-medium); color: var(--text-primary); }
+.campaign-drawer__contact-email, .campaign-drawer__hint, .campaign-drawer__description { font-size: var(--font-size-sm); color: var(--text-secondary); margin: 0; }
+.campaign-drawer__notice { padding: var(--space-3); border-radius: var(--radius-md); background: var(--surface-success); color: var(--text-success); font-size: var(--font-size-sm); }
+@media (max-width: 640px) { .campaign-drawer__contact { flex-direction: column; } }

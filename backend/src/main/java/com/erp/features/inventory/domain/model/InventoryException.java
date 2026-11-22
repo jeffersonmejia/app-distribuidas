@@ -6,7 +6,7 @@ import com.erp.features.inventory.api.InventoryFailure;
 public class InventoryException extends RuntimeException implements InventoryFailure {
     public enum Code {
         INVALID_REQUEST, PRODUCT_NOT_FOUND, RESERVATION_NOT_FOUND, UNIT_MISMATCH,
-        INSUFFICIENT_AVAILABILITY, RESERVATION_STATE_CONFLICT, SOURCE_REFERENCE_MISMATCH,
+        INSUFFICIENT_AVAILABILITY, RESERVATION_STATE_CONFLICT, SOURCE_REFERENCE_MISMATCH, SKU_ALREADY_EXISTS,
         IDEMPOTENCY_CONFLICT
     }
     private final Code code;
