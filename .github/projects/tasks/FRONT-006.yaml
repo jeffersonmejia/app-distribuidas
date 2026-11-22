@@ -1,0 +1,67 @@
+id: FRONT-006
+github:
+  repository: jeffersonmejia/app-distribuidas
+  issue_number: 183
+issue:
+  title: '[FRONT-006] Estabilizar prueba de métricas de inventario'
+  body: '<!-- managed-task-id: FRONT-006 -->
+
+
+    - **Feature:** Frontend / Inventario
+
+    - **Responsable:** @Dayanarablb
+
+    - **Rama:** Dayanara
+
+    - **Rutas:** frontend/src/features/inventory/pages/InventoryPage.test.tsx
+
+    - **Dependencias:** Ninguna
+
+    - **Origen:** Hallazgo de INT-001 en la suite local del 22 de noviembre de 2026.
+
+
+    ## Alcance
+
+    Estabilizar la prueba de InventoryPage que verifica las métricas KPI y la tabla de productos. En la suite completa, `getByText(''Stock bajo'')` encontró el título KPI y varias insignias de productos; al correr la prueba aislada pasó. El pipeline de develop también pasó, así que el fallo requiere reproducirse y corregirse sin cambiar el comportamiento de negocio.
+
+
+    ## Criterios de aceptación
+
+    - [ ] La prueba identifica la métrica KPI de forma inequívoca y verifica las insignias por separado.
+
+    - [ ] La prueba pasa aislada y al ejecutar la suite frontend completa.
+
+    - [ ] `npm run test:coverage` termina sin fallos repetidos.
+
+
+    ## Instructivo
+
+    Consulta `docs/tasks/FRONT-006.md` para el alcance y los criterios de aceptación.'
+  state: open
+  assignees:
+  - Dayanarablb
+  labels:
+  - frontend
+  - testing
+project:
+  Repository: jeffersonmejia/app-distribuidas
+  Title: '[FRONT-006] Estabilizar prueba de métricas de inventario'
+  Status: Todo
+  Estado: Todo
+  Prioridad: Media
+  Área: Frontend
+  Identificador de tarea: FRONT-006
+planning:
+  area: Frontend
+  assignee: Dayanarablb
+  paths:
+  - frontend/src/features/inventory/pages/InventoryPage.test.tsx
+  - docs/tasks/FRONT-006.md
+  dependencies: []
+  state: Todo
+  priority: Media
+  description: Estabilizar una prueba frontend que consulta de forma ambigua el texto KPI "Stock bajo".
+  acceptanceCriteria:
+  - La prueba identifica la métrica KPI de forma inequívoca y verifica las insignias por separado.
+  - La prueba pasa aislada y al ejecutar la suite frontend completa.
+  - npm run test:coverage termina sin fallos repetidos.
