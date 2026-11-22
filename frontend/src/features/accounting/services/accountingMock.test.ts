@@ -96,7 +96,7 @@ describe('getAccountingRepository', () => {
       return (
         err instanceof AccountingApiError &&
         err.kind === 'service_unavailable' &&
-        err.message === 'servicio contable no disponible todavía'
+        err.message === 'No se pudo conectar con Accounting.'
       )
     })
     import.meta.env.VITE_DATA_SOURCE = original

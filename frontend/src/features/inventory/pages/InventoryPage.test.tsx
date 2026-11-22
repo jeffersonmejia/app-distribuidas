@@ -97,6 +97,7 @@ describe('InventoryPage', () => {
     // Llenar campos requeridos
     await user.type(screen.getByLabelText(/nombre del producto/i), 'Tornillo Autorroscante')
     await user.type(screen.getByLabelText(/código \/ sku/i), 'TOR-2026-001')
+    await user.type(screen.getByLabelText(/unidad de medida/i), 'unidad')
 
     await user.click(screen.getByRole('button', { name: /guardar producto/i }))
 

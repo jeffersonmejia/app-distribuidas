@@ -32,6 +32,7 @@ export function ProductDrawer({
 }: ProductDrawerProps) {
   const [name, setName] = useState('')
   const [sku, setSku] = useState('')
+  const [unit, setUnit] = useState('')
   const [category, setCategory] = useState<ProductCategory>('Materiales')
   const [description, setDescription] = useState('')
   const [purchasePrice, setPurchasePrice] = useState('0.00')
@@ -51,6 +52,7 @@ export function ProductDrawer({
     const errors: Record<string, string> = {}
     if (!name.trim()) errors.name = 'El nombre del producto es obligatorio.'
     if (!sku.trim()) errors.sku = 'El código / SKU es obligatorio.'
+    if (!unit.trim()) errors.unit = 'La unidad del producto es obligatoria.'
 
     const parsedSelling = parseFloat(sellingPrice)
     if (isNaN(parsedSelling) || parsedSelling < 0) {
@@ -62,12 +64,12 @@ export function ProductDrawer({
       errors.purchasePrice = 'Ingresa un precio de compra válido mayor o igual a 0.'
     }
 
-    const parsedStock = parseInt(stock, 10)
+    const parsedStock = Number(stock)
     if (isNaN(parsedStock) || parsedStock < 0) {
       errors.stock = 'El stock inicial debe ser mayor o igual a 0.'
     }
 
-    const parsedMinStock = parseInt(minStock, 10)
+    const parsedMinStock = Number(minStock)
     if (isNaN(parsedMinStock) || parsedMinStock < 0) {
       errors.minStock = 'El stock mínimo debe ser mayor o igual a 0.'
     }
@@ -82,6 +84,7 @@ export function ProductDrawer({
       const input: ProductInput = {
         name: name.trim(),
         sku: sku.trim().toUpperCase(),
+        unit: unit.trim(),
         category,
         description: description.trim() || undefined,
         purchasePriceCents: Math.round(parsedPurchase * 100),
@@ -190,6 +193,16 @@ export function ProductDrawer({
           />
         </div>
 
+        <Input
+          id="product-unit"
+          label="Unidad de medida"
+          value={unit}
+          onChange={(e) => setUnit(e.target.value)}
+          placeholder="Ej. kg, litro, unidad"
+          required
+          error={fieldErrors.unit}
+        />
+
         <div className="product-drawer-field">
           <label htmlFor="product-description" className="product-drawer-label">
             Descripción técnica
@@ -237,6 +250,7 @@ export function ProductDrawer({
             label="Stock inicial"
             type="number"
             min="0"
+            step="any"
             value={stock}
             onChange={(e) => setStock(e.target.value)}
             error={fieldErrors.stock}
@@ -247,6 +261,7 @@ export function ProductDrawer({
             label="Stock mínimo (Alerta)"
             type="number"
             min="0"
+            step="any"
             value={minStock}
             onChange={(e) => setMinStock(e.target.value)}
             error={fieldErrors.minStock}

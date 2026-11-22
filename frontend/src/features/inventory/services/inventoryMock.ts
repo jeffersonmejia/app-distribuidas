@@ -22,6 +22,7 @@ const MOCK_PRODUCTS_BY_TENANT: Record<string, Product[]> = {
       id: 'prd-andina-001',
       name: 'Cemento Portland Tipo I (50kg)',
       sku: 'MAT-2026-081',
+      unit: 'unidad',
       category: 'Materiales',
       description: 'Saco de Cemento Portland Tipo I para construcción pesada e infraestructura comercial de 50 kilogramos.',
       purchasePriceCents: 650,
@@ -36,6 +37,7 @@ const MOCK_PRODUCTS_BY_TENANT: Record<string, Product[]> = {
       id: 'prd-andina-002',
       name: 'Varilla de Acero Corrugado 12mm',
       sku: 'MAT-2026-044',
+      unit: 'unidad',
       category: 'Materiales',
       description: 'Haz de varillas de acero corrugado de alta resistencia de 12 milímetros para obras de hormigón armado.',
       purchasePriceCents: 1100,
@@ -50,6 +52,7 @@ const MOCK_PRODUCTS_BY_TENANT: Record<string, Product[]> = {
       id: 'prd-andina-003',
       name: 'Taladro Percutor Industrial 850W',
       sku: 'EQP-2026-112',
+      unit: 'unidad',
       category: 'Equipos',
       description: 'Taladro percutor con velocidad variable y mandril metálico reforzado de 13mm.',
       purchasePriceCents: 6800,
@@ -64,6 +67,7 @@ const MOCK_PRODUCTS_BY_TENANT: Record<string, Product[]> = {
       id: 'prd-andina-004',
       name: 'Disco de Corte Diamantado 7"',
       sku: 'HER-2026-095',
+      unit: 'unidad',
       category: 'Herramientas',
       description: 'Disco circular de corte diamantado profesional de 7 pulgadas para concreto y mampostería pesada.',
       purchasePriceCents: 1350,
@@ -78,6 +82,7 @@ const MOCK_PRODUCTS_BY_TENANT: Record<string, Product[]> = {
       id: 'prd-andina-005',
       name: 'Generador Eléctrico a Gasolina 5.5kW',
       sku: 'EQP-2026-019',
+      unit: 'unidad',
       category: 'Equipos',
       description: 'Grupo electrógeno portátil con arranque eléctrico y regulación automática de voltaje AVR.',
       purchasePriceCents: 45000,
@@ -92,6 +97,7 @@ const MOCK_PRODUCTS_BY_TENANT: Record<string, Product[]> = {
       id: 'prd-andina-006',
       name: 'Filtro de Aire Primario para Maquinaria',
       sku: 'REP-2026-302',
+      unit: 'unidad',
       category: 'Repuestos',
       description: 'Elemento filtrante de alta eficiencia para motores diésel de maquinaria pesada.',
       purchasePriceCents: 2200,
@@ -106,6 +112,7 @@ const MOCK_PRODUCTS_BY_TENANT: Record<string, Product[]> = {
       id: 'prd-andina-007',
       name: 'Juego de Llaves Combinadas Cromo Vanadio (12 pzs)',
       sku: 'HER-2026-031',
+      unit: 'unidad',
       category: 'Herramientas',
       description: 'Set de llaves combinadas de 6 a 22 mm forjadas en acero al cromo vanadio satinado.',
       purchasePriceCents: 2800,
@@ -120,6 +127,7 @@ const MOCK_PRODUCTS_BY_TENANT: Record<string, Product[]> = {
       id: 'prd-andina-008',
       name: 'Arena Fina de Río Lavada (m3)',
       sku: 'MAT-2026-105',
+      unit: 'unidad',
       category: 'Materiales',
       description: 'Árido clasificado y lavado para morteros finos y enlucidos técnicos.',
       purchasePriceCents: 1800,
@@ -134,6 +142,7 @@ const MOCK_PRODUCTS_BY_TENANT: Record<string, Product[]> = {
       id: 'prd-andina-009',
       name: 'Mantenimiento Preventivo de Maquinaria en Obra',
       sku: 'SRV-2026-001',
+      unit: 'unidad',
       category: 'Servicios',
       description: 'Servicio técnico especializado de revisión y calibración de equipos en sitio.',
       purchasePriceCents: 5000,
@@ -150,6 +159,7 @@ const MOCK_PRODUCTS_BY_TENANT: Record<string, Product[]> = {
       id: 'prd-pacifico-001',
       name: 'Pintura Epóxica de Alto Tráfico (Galón)',
       sku: 'MAT-2026-501',
+      unit: 'unidad',
       category: 'Materiales',
       description: 'Recubrimiento epóxico bicomponente para pisos industriales.',
       purchasePriceCents: 3200,
@@ -164,6 +174,7 @@ const MOCK_PRODUCTS_BY_TENANT: Record<string, Product[]> = {
       id: 'prd-pacifico-002',
       name: 'Compresor de Aire 50L 2.5HP',
       sku: 'EQP-2026-502',
+      unit: 'unidad',
       category: 'Equipos',
       description: 'Compresor monofásico lubricado con cabezal de hierro fundido.',
       purchasePriceCents: 18000,
@@ -269,6 +280,10 @@ export class InventoryMockRepository implements InventoryRepository {
       errors.sku = 'El código / SKU es obligatorio.'
     }
 
+    if (!input.unit?.trim()) {
+      errors.unit = 'La unidad de medida es obligatoria.'
+    }
+
     if (!input.category) {
       errors.category = 'La categoría es obligatoria.'
     }
@@ -309,6 +324,7 @@ export class InventoryMockRepository implements InventoryRepository {
       id: `prd-${nextPrdId}`,
       name: input.name.trim(),
       sku: skuNormalized,
+      unit: input.unit.trim(),
       category: input.category,
       description: input.description?.trim() || undefined,
       purchasePriceCents: input.purchasePriceCents || 0,

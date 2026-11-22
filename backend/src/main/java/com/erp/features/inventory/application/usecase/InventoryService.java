@@ -52,6 +52,15 @@ public class InventoryService implements InventoryMovements {
     @Override public <T> T issueAndExecute(TenantId tenant, StockCommand command, Function<Operation, T> work) {
         return stockOperation(tenant, command, Type.ISSUE, work);
     }
+
+    //SOLID: SRP — REGISTRA UNA ENTRADA DENTRO DE LA TRANSACCIÓN AUTORIZADA DEL CATÁLOGO.
+    public Operation receiveJoined(TenantId tenant, StockCommand command) {
+        required(command); text(command.operationKey(), 256); text(command.sourceReference(), 1024);
+        List<Line> lines = validateLines(command.lines());
+        String fingerprint = fingerprint(Type.RECEIPT, command.sourceReference(), null, lines);
+        return access.executeJoined(tenant, permission(Type.RECEIPT), context ->
+                stockOperationAuthorized(context, command, Type.RECEIPT, lines, fingerprint, Function.identity()));
+    }
     @Override public <T> T confirmAndExecute(TenantId tenant, ReservationCommand command, Function<Operation, T> work) {
         return reservationOperation(tenant, command, Type.CONFIRM, work);
     }
@@ -77,37 +86,42 @@ public class InventoryService implements InventoryMovements {
         text(command.operationKey(), 256); text(command.sourceReference(), 1024);
         List<Line> lines = validateLines(command.lines());
         String fingerprint = fingerprint(type, command.sourceReference(), null, lines);
-        return access.execute(tenant, permission(type), context -> {
-            UUID tenantId = context.tenantId().value();
-            store.lockTenant(tenantId);
-            StoredOperation previous = store.findByKey(tenantId, command.operationKey()).orElse(null);
-            if (previous != null) { return work.apply(replay(previous, fingerprint)); }
-            Instant now = Instant.now().truncatedTo(java.time.temporal.ChronoUnit.MICROS);
-            List<Stock> changes = new ArrayList<>();
-            for (Line line : lines) {
-                Stock current = store.findStock(tenantId, line.productId()).orElse(null);
-                if (current == null) {
-                    if (type != Type.RECEIPT) { throw new InventoryException(PRODUCT_NOT_FOUND); }
-                    current = new Stock(UUID.randomUUID(), tenantId, line.productId(), line.unit(),
-                            BigDecimal.ZERO, BigDecimal.ZERO, now, context.actorId().value(), now, context.actorId().value());
-                }
-                if (!current.unit().equals(line.unit())) { throw new InventoryException(UNIT_MISMATCH); }
-                UUID actor = context.actorId().value();
-                changes.add(switch (type) {
-                    case RECEIPT -> current.receive(line.quantity(), actor, now);
-                    case ISSUE -> current.issue(line.quantity(), actor, now);
-                    case RESERVE -> current.reserve(line.quantity(), actor, now);
-                    default -> throw new InventoryException(INVALID_REQUEST);
-                });
+        return access.execute(tenant, permission(type), context ->
+                stockOperationAuthorized(context, command, type, lines, fingerprint, work));
+    }
+
+    //SOLID: SRP — APLICA Y PERSISTE UNA OPERACIÓN DE EXISTENCIAS CON EL CONTEXTO YA AUTORIZADO.
+    private <T> T stockOperationAuthorized(TenantContext context, StockCommand command, Type type,
+                                           List<Line> lines, String fingerprint, Function<Operation, T> work) {
+        UUID tenantId = context.tenantId().value();
+        store.lockTenant(tenantId);
+        StoredOperation previous = store.findByKey(tenantId, command.operationKey()).orElse(null);
+        if (previous != null) { return work.apply(replay(previous, fingerprint)); }
+        Instant now = Instant.now().truncatedTo(java.time.temporal.ChronoUnit.MICROS);
+        List<Stock> changes = new ArrayList<>();
+        for (Line line : lines) {
+            Stock current = store.findStock(tenantId, line.productId()).orElse(null);
+            if (current == null) {
+                if (type != Type.RECEIPT) { throw new InventoryException(PRODUCT_NOT_FOUND); }
+                current = new Stock(UUID.randomUUID(), tenantId, line.productId(), line.unit(),
+                        BigDecimal.ZERO, BigDecimal.ZERO, now, context.actorId().value(), now, context.actorId().value());
             }
-            changes.forEach(store::saveStock);
-            UUID id = UUID.randomUUID();
-            Operation result = new Operation(id, tenantId, context.actorId().value(), type,
-                    command.sourceReference(), type == Type.RESERVE ? id : null, lines, now);
-            store.saveOperation(new StoredOperation(result, command.operationKey(), fingerprint,
-                    type == Type.RESERVE ? Status.ACTIVE : null, null));
-            return work.apply(result);
-        });
+            if (!current.unit().equals(line.unit())) { throw new InventoryException(UNIT_MISMATCH); }
+            UUID actor = context.actorId().value();
+            changes.add(switch (type) {
+                case RECEIPT -> current.receive(line.quantity(), actor, now);
+                case ISSUE -> current.issue(line.quantity(), actor, now);
+                case RESERVE -> current.reserve(line.quantity(), actor, now);
+                default -> throw new InventoryException(INVALID_REQUEST);
+            });
+        }
+        changes.forEach(store::saveStock);
+        UUID id = UUID.randomUUID();
+        Operation result = new Operation(id, tenantId, context.actorId().value(), type,
+                command.sourceReference(), type == Type.RESERVE ? id : null, lines, now);
+        store.saveOperation(new StoredOperation(result, command.operationKey(), fingerprint,
+                type == Type.RESERVE ? Status.ACTIVE : null, null));
+        return work.apply(result);
     }
 
     private <T> T reservationOperation(TenantId tenant, ReservationCommand command, Type type, Function<Operation, T> work) {

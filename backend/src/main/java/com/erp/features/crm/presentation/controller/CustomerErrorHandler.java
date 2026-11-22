@@ -20,12 +20,12 @@ public class CustomerErrorHandler {
             case "CUSTOMER_CEDULA_ALREADY_EXISTS", "CUSTOMER_EMAIL_ALREADY_EXISTS" -> HttpStatus.CONFLICT;
             default -> HttpStatus.BAD_REQUEST;
         };
-        return ResponseEntity.status(status).body(Map.of("code", error.code()));
+        return ResponseEntity.status(status).body(Map.of("code", error.code(), "message", "No se pudo procesar la solicitud de CRM."));
     }
 
     @ExceptionHandler({HttpMessageNotReadableException.class, MethodArgumentTypeMismatchException.class,
             MissingRequestHeaderException.class})
     ResponseEntity<Map<String, String>> invalid(Exception error) {
-        return ResponseEntity.badRequest().body(Map.of("code", "INVALID_CUSTOMER_DATA"));
+        return ResponseEntity.badRequest().body(Map.of("code", "INVALID_CUSTOMER_DATA", "message", "Revisa los datos enviados."));
     }
 }

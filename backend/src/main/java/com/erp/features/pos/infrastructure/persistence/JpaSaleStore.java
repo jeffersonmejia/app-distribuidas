@@ -8,6 +8,7 @@ import com.erp.features.pos.api.Sales.SoldLine;
 import com.erp.features.pos.application.SaleStore;
 import jakarta.persistence.EntityManager;
 import org.springframework.stereotype.Repository;
+import jakarta.persistence.EntityManager;
 
 //SOLID: SRP — ESTE ADAPTADOR PERSISTE VENTAS DENTRO DE LA TRANSACCIÓN EXISTENTE.
 @Repository
@@ -27,6 +28,25 @@ public class JpaSaleStore implements SaleStore {
                             line.unitPrice, line.taxAmount, line.netAmount)).toList();
             return new StoredSale(entity.fingerprint, new Sale(entity.saleId, entity.movementId, entity.createdAt, lines));
         });
+    }
+
+    //SOLID: SRP — PÁGINA VENTAS ORDENADAS EN LA BASE Y LIMITADAS A CINCO.
+    @Override public Slice list(UUID tenantId, UUID saleId, int page, int size) {
+        List<SaleEntity> rows = entityManager.createQuery(
+                "select s from SaleEntity s where s.tenantId = :tenant and (:saleId is null or s.saleId = :saleId) "
+                        + "order by s.createdAt desc, s.saleId desc", SaleEntity.class)
+                .setParameter("tenant", tenantId).setParameter("saleId", saleId).setFirstResult(firstResult(page, size))
+                .setMaxResults(size + 1).getResultList();
+        boolean hasNext = rows.size() > size;
+        List<Sale> items = rows.stream().limit(size).map(row -> find(tenantId, row.saleId).orElseThrow().sale()).toList();
+        return new Slice(items, hasNext);
+    }
+
+    //SOLID: SRP — VALIDA Y CONVIERTE EL OFFSET DE PÁGINA SIN DESBORDAR ENTEROS.
+    private static int firstResult(int page, int size) {
+        if (page < 0 || size < 1 || size > 5) { throw new IllegalArgumentException("Invalid page request"); }
+        if (page > Integer.MAX_VALUE / size) { throw new IllegalArgumentException("Page offset is too large"); }
+        return page * size;
     }
     @Override public void save(UUID tenantId, UUID actorId, String fingerprint, Sale sale) {
         SaleEntity entity = new SaleEntity();

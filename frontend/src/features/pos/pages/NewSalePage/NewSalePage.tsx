@@ -18,6 +18,7 @@ import { Spinner } from '../../../../components/feedback/Spinner'
 import { Alert } from '../../../../components/feedback/Alert'
 import { Input, Select } from '../../../../components/forms'
 import './NewSalePage.css'
+import { ContractSaleForm } from './ContractSaleForm'
 
 export interface NewSalePageProps {
   posRepository?: PosRepository
@@ -38,7 +39,7 @@ function getTodayIsoDate(): string {
 }
 
 // SOLID: OCP — LA PANTALLA CONSUME REPOSITORIOS INYECTABLES PERMITIENDO VARIAR SU COMPORTAMIENTO SIN MODIFICAR EL FLUJO.
-export function NewSalePage({
+function LegacyNewSalePage({
   posRepository,
   inventoryRepository,
   customerRepository,
@@ -775,4 +776,16 @@ export function NewSalePage({
       />
     </div>
   )
+}
+
+//SOLID: OCP — SELECCIONA EL FORMULARIO QUE CORRESPONDE AL CONTRATO DEL REPOSITORIO.
+export function NewSalePage(props: NewSalePageProps) {
+  const posRepo = props.posRepository ?? getPosRepository()
+  if (posRepo.createFromContract) {
+    return <ContractSaleForm
+      posRepository={posRepo}
+      inventoryRepository={props.inventoryRepository ?? getInventoryRepository()}
+    />
+  }
+  return <LegacyNewSalePage {...props} posRepository={posRepo} />
 }
