@@ -21,7 +21,7 @@ project:
   Área: Frontend
   Identificador de tarea: FRONT-004
   Fecha objetivo: '2026-11-20'
-  Bloqueado por: '@jeffersonmejia (INT-001: contrato HTTP de Inventory/POS)'
+  Bloqueado por: Nadie
 planning:
   area: Frontend
   assignee: Dayanarablb
@@ -35,10 +35,9 @@ planning:
   - INV-003
   - POS-002
   targetDate: '2026-11-20'
-  state: Blocked
+  state: Todo
   priority: Alta
-  blocked_by:
-  - INT-001
+  blocked_by: []
   description: Implementar consulta de disponibilidad y registro de venta usando APIs de Inventory y POS.
   acceptanceCriteria:
   - Consultar disponibilidad y registrar ventas mediante APIs tenant-scoped autorizadas por el backend.
