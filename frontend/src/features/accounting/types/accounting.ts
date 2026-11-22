@@ -15,7 +15,7 @@ export interface JournalEntry {
   code: string
   date: string
   glosa: string
-  status: JournalEntryStatus
+  status?: JournalEntryStatus
   lines: JournalEntryLine[]
   createdAt: string
   updatedAt: string
@@ -37,5 +37,5 @@ export interface AccountingSummary {
   totalEntries: number
   totalDebitCents: number
   totalCreditCents: number
-  pendingEntries: number
+  pendingEntries?: number
 }

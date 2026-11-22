@@ -4,6 +4,20 @@
 
 Responsable: Sahid (`Sahid-B`). Tarea: [INV-001, issue #5](https://github.com/jeffersonmejia/app-distribuidas/issues/5).
 
+## Implementación actual
+
+El catálogo de productos tiene API REST y persistencia tenant-scoped. El contrato
+vigente, permisos y DTOs están en [docs/api-contracts.md](../../../../../../../../../docs/api-contracts.md).
+Las rutas son `GET/POST /api/v1/inventory/products`, `GET/PUT/DELETE
+/api/v1/inventory/products/{id}` y `GET /api/v1/inventory/metrics`; toda operación
+valida membresía y permiso mediante TenantAccess. La migración `V20261122.001`
+crea el catálogo con RLS y SKU único por tenant. Para existencias/movimientos,
+véase el contrato ejecutable descrito en INV-003.
+
+Las secciones siguientes preservan el diseño histórico de INV-001; sus afirmaciones
+de que no hay controlador o persistencia son anteriores y quedan reemplazadas por
+la implementación actual de arriba.
+
 Este documento conserva el diseño de INV-001. El núcleo ejecutable de movimientos,
 su contrato `InventoryMovements`, decisiones concretadas, permisos y pruebas se
 documentan en [INV-003](../../../../../../../../../docs/tasks/INV-003.md).

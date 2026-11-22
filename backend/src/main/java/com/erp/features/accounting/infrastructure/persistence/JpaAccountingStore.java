@@ -3,6 +3,8 @@ package com.erp.features.accounting.infrastructure.persistence;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.time.Instant;
+import java.math.BigDecimal;
 import com.erp.features.accounting.api.AccountingEntries.Entry;
 import com.erp.features.accounting.api.AccountingEntries.Movement;
 import com.erp.features.accounting.application.AccountingStore;
@@ -38,14 +40,49 @@ public class JpaAccountingStore implements AccountingStore {
         List<JournalEntity> rows = entityManager.createQuery(
                 query, JournalEntity.class).setParameter("tenant", tenantId).setParameter("value", value)
                 .setParameter("kind", kind).getResultList();
-        return rows.stream().findFirst().map(row -> {
-            List<Movement> movements = entityManager.createQuery(
-                    "select m from MovementEntity m where m.tenantId = :tenant and m.journalId = :id order by m.lineNumber",
-                    MovementEntity.class).setParameter("tenant", tenantId).setParameter("id", row.id)
-                    .getResultStream().map(m -> new Movement(m.account, m.side, m.amount)).toList();
-            return new Stored(new Entry(row.id, row.saleId, row.reversalId, row.originalId, row.createdAt, movements),
-                    row.fingerprint);
-        });
+        return rows.stream().findFirst().map(row -> new Stored(view(tenantId, row), row.fingerprint));
+    }
+
+    //SOLID: SRP — BUSCA UN ASIENTO DE FORMA TENANT-SCOPED.
+    @Override public Optional<Entry> findEntry(UUID tenantId, UUID id) {
+        return entityManager.createQuery("select j from JournalEntity j where j.tenantId = :tenant and j.id = :id",
+                JournalEntity.class).setParameter("tenant", tenantId).setParameter("id", id).getResultStream()
+                .findFirst().map(row -> view(tenantId, row));
+    }
+
+    //SOLID: SRP — PÁGINA ASIENTOS EN POSTGRESQL CON ORDEN ESTABLE Y FILTROS OPCIONALES.
+    @Override public Slice list(UUID tenantId, UUID saleId, Instant from, Instant to, int page, int size) {
+        List<JournalEntity> rows = entityManager.createQuery(
+                "select j from JournalEntity j where j.tenantId = :tenant "
+                        + "and (:saleId is null or j.saleId = :saleId) "
+                        + "and (:from is null or j.createdAt >= :from) and (:to is null or j.createdAt < :to) "
+                        + "order by j.createdAt desc, j.id desc", JournalEntity.class)
+                .setParameter("tenant", tenantId).setParameter("saleId", saleId).setParameter("from", from)
+                .setParameter("to", to).setFirstResult(page * size).setMaxResults(size + 1).getResultList();
+        boolean hasNext = rows.size() > size;
+        List<Entry> items = rows.stream().limit(size).map(row -> view(tenantId, row)).toList();
+        return new Slice(items, hasNext);
+    }
+
+    //SOLID: SRP — AGREGA TOTALES CONTABLES A PARTIR DE LOS MOVIMIENTOS TENANT-SCOPED.
+    @Override public Totals totals(UUID tenantId) {
+        Object[] values = (Object[]) entityManager.createQuery(
+                "select count(distinct j.id), "
+                        + "coalesce(sum(case when m.side = 'DEBIT' then m.amount else 0 end), 0), "
+                        + "coalesce(sum(case when m.side = 'CREDIT' then m.amount else 0 end), 0) "
+                        + "from JournalEntity j left join MovementEntity m on m.tenantId = j.tenantId and m.journalId = j.id "
+                        + "where j.tenantId = :tenant")
+                .setParameter("tenant", tenantId).getSingleResult();
+        return new Totals(((Number) values[0]).longValue(), (BigDecimal) values[1], (BigDecimal) values[2]);
+    }
+
+    //SOLID: SRP — RECONSTRUYE UN ASIENTO CON SUS MOVIMIENTOS ORDENADOS.
+    private Entry view(UUID tenantId, JournalEntity row) {
+        List<Movement> movements = entityManager.createQuery(
+                "select m from MovementEntity m where m.tenantId = :tenant and m.journalId = :id order by m.lineNumber",
+                MovementEntity.class).setParameter("tenant", tenantId).setParameter("id", row.id).getResultStream()
+                .map(m -> new Movement(m.account, m.side, m.amount)).toList();
+        return new Entry(row.id, row.saleId, row.reversalId, row.originalId, row.createdAt, movements);
     }
     @Override public void save(UUID tenantId, UUID actorId, boolean reversal, String fingerprint, Entry entry) {
         JournalEntity row = new JournalEntity();

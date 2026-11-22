@@ -22,12 +22,12 @@ public class MarketingErrorHandler {
             case "MAIL_PROVIDER_ERROR" -> HttpStatus.BAD_GATEWAY;
             default -> HttpStatus.BAD_REQUEST;
         };
-        return ResponseEntity.status(status).body(Map.of("code", error.code()));
+        return ResponseEntity.status(status).body(Map.of("code", error.code(), "message", "No se pudo procesar la solicitud de Marketing."));
     }
 
     @ExceptionHandler({HttpMessageNotReadableException.class, MethodArgumentTypeMismatchException.class,
             MissingRequestHeaderException.class})
     ResponseEntity<Map<String, String>> invalid(Exception error) {
-        return ResponseEntity.badRequest().body(Map.of("code", "INVALID_REQUEST"));
+        return ResponseEntity.badRequest().body(Map.of("code", "INVALID_REQUEST", "message", "Revisa los datos enviados."));
     }
 }

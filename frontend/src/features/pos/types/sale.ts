@@ -1,6 +1,6 @@
 // SOLID: ISP — DEFINE LOS MODELOS DE DATOS, FILTROS Y ENUMS PARA LA FEATURE DE VENTAS.
 
-export type SaleStatus = 'paid' | 'pending' | 'overdue'
+export type SaleStatus = 'paid' | 'pending' | 'overdue' | 'confirmed'
 
 export type PaymentMethod =
   | 'Efectivo'
@@ -14,35 +14,62 @@ export type SaleType = 'Factura Electrónica' | 'Nota de Venta' | 'Recibo'
 
 export interface SaleLine {
   productId: string
-  name: string
-  sku: string
+  name?: string
+  sku?: string
+  unit?: string
   quantity: number
   unitPriceCents: number
   subtotalCents: number
+  taxAmountCents?: number
 }
 
 export interface Sale {
   id: string
-  receiptNumber: string // e.g. '001-001-000000123'
-  type: SaleType
-  customerName: string
-  customerIdentification: string // cédula o RUC
-  issuedAt: string // ISO date o YYYY-MM-DD
-  paymentMethod: PaymentMethod
+  receiptNumber?: string // Solo existe en el mock de comprobantes.
+  type?: SaleType
+  customerName?: string
+  customerIdentification?: string
+  issuedAt?: string
+  paymentMethod?: PaymentMethod
   status: SaleStatus
   lines: SaleLine[]
-  subtotal0Cents: number
-  subtotalGravadoCents: number
-  discountCents: number
-  ivaCents: number
+  subtotal0Cents?: number
+  subtotalGravadoCents?: number
+  discountCents?: number
+  ivaCents?: number
   totalCents: number
   notes?: string
+  saleId?: string
+  movementId?: string
+  createdAt?: string
+}
+
+export interface ContractSaleLineInput {
+  productId: string
+  unit: string
+  quantity: string
+  unitPrice: string
+  taxAmount: string
+}
+
+export interface ContractSaleInput {
+  saleId: string
+  lines: ContractSaleLineInput[]
+}
+
+export interface ContractSaleView {
+  saleId: string
+  movementId: string
+  createdAt: string
+  lines: Array<ContractSaleLineInput & { netAmount: string }>
 }
 
 export interface CreateSaleLineInput {
   productId: string
   quantity: number
   unitPriceCents?: number
+  unit?: string
+  taxAmountCents?: number
 }
 
 export interface CreateSaleInput {

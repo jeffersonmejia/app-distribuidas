@@ -270,7 +270,7 @@ export function InventoryPage({ repository }: InventoryPageProps) {
                   <div className="inventory-page__stock-cell">
                     <div className="inventory-page__stock-meta">
                       <span className={`inventory-page__stock-current${isLow ? ' inventory-page__stock-current--low' : ''}`}>
-                        {p.stock} uds.
+                        {p.stock} {p.unit}
                       </span>
                       <span className="inventory-page__stock-min">mín. {p.minStock}</span>
                     </div>
@@ -295,7 +295,7 @@ export function InventoryPage({ repository }: InventoryPageProps) {
                   <ProductActionsMenu
                     product={p}
                     onViewAvailability={(product) => {
-                      setSuccessNotice(`Disponibilidad de "${product.name}": ${product.stock} unidades libres.`)
+                      setSuccessNotice(`Disponibilidad de "${product.name}": ${product.stock} ${product.unit} libres.`)
                     }}
                   />
                 </td>

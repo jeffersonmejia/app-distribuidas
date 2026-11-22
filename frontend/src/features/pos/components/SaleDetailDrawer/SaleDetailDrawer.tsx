@@ -25,6 +25,8 @@ function getStatusBadgeConfig(status: SaleStatus): { label: string; variant: Bad
       return { label: 'Pendiente', variant: 'warning' }
     case 'overdue':
       return { label: 'Vencida', variant: 'error' }
+    case 'confirmed':
+      return { label: 'Confirmada', variant: 'success' }
   }
 }
 
@@ -98,7 +100,49 @@ export function SaleDetailDrawer({
         </Alert>
       )}
 
-      {!isLoading && !errorMessage && sale && (
+      {!isLoading && !errorMessage && sale && (sale.saleId ? (
+        <div className="sale-detail-drawer__content">
+          <div className="sale-detail-drawer__receipt-header">
+            <div className="sale-detail-drawer__receipt-id">
+              <span className="sale-detail-drawer__receipt-type">Venta confirmada</span>
+              <h3 className="sale-detail-drawer__receipt-number">{sale.saleId}</h3>
+            </div>
+            <Badge variant="success">Confirmada</Badge>
+          </div>
+          <dl className="sale-detail-drawer__grid">
+            <div className="sale-detail-drawer__field">
+              <dt className="sale-detail-drawer__label">Movimiento de inventario</dt>
+              <dd className="sale-detail-drawer__value sale-detail-drawer__value--mono">{sale.movementId}</dd>
+            </div>
+            <div className="sale-detail-drawer__field">
+              <dt className="sale-detail-drawer__label">Fecha confirmada</dt>
+              <dd className="sale-detail-drawer__value">{formatCalendarDate(sale.createdAt ?? '')}</dd>
+            </div>
+          </dl>
+          <div className="sale-detail-drawer__section">
+            <h4 className="sale-detail-drawer__section-title">Líneas registradas</h4>
+            <div className="sale-detail-drawer__table-wrapper">
+              <table className="sale-detail-drawer__table" aria-label="Líneas de la venta">
+                <thead><tr><th>Producto</th><th>Unidad</th><th>Cantidad</th><th>Precio unitario</th><th>Impuesto</th><th>Neto</th></tr></thead>
+                <tbody>{sale.lines.map((line) => (
+                  <tr key={line.productId}>
+                    <td className="sale-detail-drawer__cell--mono">{line.productId}</td>
+                    <td>{line.unit ?? '—'}</td>
+                    <td>{line.quantity}</td>
+                    <td>{formatMoney(line.unitPriceCents)}</td>
+                    <td>{formatMoney(line.taxAmountCents ?? 0)}</td>
+                    <td>{formatMoney(line.subtotalCents)}</td>
+                  </tr>
+                ))}</tbody>
+              </table>
+            </div>
+          </div>
+          <div className="sale-detail-drawer__totals-box">
+            <h4 className="sale-detail-drawer__totals-title">Total confirmado</h4>
+            <strong className="sale-detail-drawer__total-value">{formatMoney(sale.totalCents)}</strong>
+          </div>
+        </div>
+      ) : (
         <div className="sale-detail-drawer__content">
           {/* Encabezado del comprobante */}
           <div className="sale-detail-drawer__receipt-header">
@@ -129,7 +173,7 @@ export function SaleDetailDrawer({
               </div>
               <div className="sale-detail-drawer__field">
                 <dt className="sale-detail-drawer__label">Fecha de emisión:</dt>
-                <dd className="sale-detail-drawer__value">{formatCalendarDate(sale.issuedAt)}</dd>
+                <dd className="sale-detail-drawer__value">{formatCalendarDate(sale.issuedAt ?? '')}</dd>
               </div>
               <div className="sale-detail-drawer__field">
                 <dt className="sale-detail-drawer__label">Forma de pago:</dt>
@@ -188,21 +232,21 @@ export function SaleDetailDrawer({
             <div className="sale-detail-drawer__totals-rows">
               <div className="sale-detail-drawer__totals-row">
                 <span>Subtotal 0% (exento)</span>
-                <span className="sale-detail-drawer__cell--mono">{formatMoney(sale.subtotal0Cents)}</span>
+                <span className="sale-detail-drawer__cell--mono">{formatMoney(sale.subtotal0Cents ?? 0)}</span>
               </div>
               <div className="sale-detail-drawer__totals-row">
                 <span>Subtotal gravado (15%)</span>
-                <span className="sale-detail-drawer__cell--mono">{formatMoney(sale.subtotalGravadoCents)}</span>
+                <span className="sale-detail-drawer__cell--mono">{formatMoney(sale.subtotalGravadoCents ?? 0)}</span>
               </div>
-              {sale.discountCents > 0 && (
+              {(sale.discountCents ?? 0) > 0 && (
                 <div className="sale-detail-drawer__totals-row sale-detail-drawer__totals-row--discount">
                   <span>Descuento comercial</span>
-                  <span className="sale-detail-drawer__cell--mono">-{formatMoney(sale.discountCents)}</span>
+                  <span className="sale-detail-drawer__cell--mono">-{formatMoney(sale.discountCents ?? 0)}</span>
                 </div>
               )}
               <div className="sale-detail-drawer__totals-row">
                 <span>IVA vigente (15%)</span>
-                <span className="sale-detail-drawer__cell--mono">{formatMoney(sale.ivaCents)}</span>
+                <span className="sale-detail-drawer__cell--mono">{formatMoney(sale.ivaCents ?? 0)}</span>
               </div>
               <div className="sale-detail-drawer__totals-row sale-detail-drawer__totals-row--total">
                 <span className="sale-detail-drawer__total-label">Total a liquidar</span>
@@ -211,7 +255,7 @@ export function SaleDetailDrawer({
             </div>
           </div>
         </div>
-      )}
+      ))}
     </Drawer>
   )
 }

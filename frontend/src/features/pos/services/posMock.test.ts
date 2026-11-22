@@ -33,11 +33,11 @@ describe('PosMockRepository', () => {
     const items = [...allSales.items, ...page1.items]
 
     // Comprobantes del mes en curso (noviembre 2026)
-    const currentMonthSales = items.filter((s) => s.issuedAt.startsWith('2026-11'))
+    const currentMonthSales = items.filter((s) => s.issuedAt!.startsWith('2026-11'))
     expect(currentMonthSales.length).toBe(6)
 
     // Comprobantes del mes anterior (octubre 2026) con estado overdue
-    const prevMonthSales = items.filter((s) => s.issuedAt.startsWith('2026-10'))
+    const prevMonthSales = items.filter((s) => s.issuedAt!.startsWith('2026-10'))
     expect(prevMonthSales.length).toBe(2)
     expect(prevMonthSales.every((s) => s.status === 'overdue')).toBe(true)
   })
@@ -90,7 +90,7 @@ describe('PosMockRepository', () => {
 
     // 1. Ventas del mes = suma exclusiva de comprobantes emitidos en el mes en curso (2026-11)
     const expectedCurrentMonthCents = allSales
-      .filter((s) => s.issuedAt.startsWith('2026-11'))
+      .filter((s) => s.issuedAt!.startsWith('2026-11'))
       .reduce((sum, s) => sum + s.totalCents, 0)
     expect(metrics.totalSalesThisMonthCents).toBe(expectedCurrentMonthCents)
 
