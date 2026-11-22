@@ -58,7 +58,7 @@ project:
   Área: Testing
   Identificador de tarea: QA-003
   Fecha objetivo: '2026-11-21'
-  Bloqueado por: '@EMLarco (INT-001)'
+  Bloqueado por: Nadie
 planning:
   area: Testing
   assignee: Jntorres2001
@@ -70,10 +70,9 @@ planning:
   - TEN-001
   - INT-001
   targetDate: '2026-11-21'
-  state: Blocked
+  state: Todo
   priority: Alta
-  blocked_by:
-  - INT-001
+  blocked_by: []
   description: Ejecutar pruebas unitarias y de integración de los flujos implementados, con foco en autorización, RLS y contratos.
   acceptanceCriteria:
   - Tenant A no lee ni modifica datos de tenant B.
