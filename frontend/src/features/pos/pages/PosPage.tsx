@@ -37,12 +37,24 @@ function getStatusBadgeConfig(status: SaleStatus): { label: string; variant: Bad
       return { label: 'Pendiente', variant: 'warning' }
     case 'overdue':
       return { label: 'Vencida', variant: 'error' }
+    case 'confirmed':
+      return { label: 'Confirmada', variant: 'success' }
   }
 }
 
 export function PosPage({ repository }: PosPageProps) {
   const router = useContext(RouterContext)
   const repo = repository ?? getPosRepository()
+  const contractOnly = repo.contractOnly === true
+  const columns = contractOnly
+    ? [
+        { key: 'receipt', label: 'UUID de venta' },
+        { key: 'date', label: 'Fecha confirmada' },
+        { key: 'total', label: 'Importe', align: 'right' as const },
+        { key: 'status', label: 'Estado', align: 'center' as const },
+        { key: 'actions', label: 'Detalle', align: 'right' as const },
+      ]
+    : COLUMNS
 
   const [sales, setSales] = useState<Sale[]>([])
   const [page, setPage] = useState(0)
@@ -169,7 +181,9 @@ export function PosPage({ repository }: PosPageProps) {
     ? metrics.countByStatus.paid + metrics.countByStatus.pending + metrics.countByStatus.overdue
     : sales.length
 
-  const headerDescription = metrics
+  const headerDescription = contractOnly
+    ? 'Ventas confirmadas por POS. El backend confirma también el movimiento de inventario y el asiento contable.'
+    : metrics
     ? `Ventas del mes: ${formatMoney(metrics.totalSalesThisMonthCents)} · ${totalTransactions} ${totalTransactions === 1 ? 'transacción registrada' : 'transacciones registradas'}`
     : `Ventas del mes: $0.00 · ${sales.length} ${sales.length === 1 ? 'transacción registrada' : 'transacciones registradas'}`
 
@@ -209,7 +223,7 @@ export function PosPage({ repository }: PosPageProps) {
     )
   } else {
     content = (
-      <Table columns={COLUMNS} ariaLabel="Listado de comprobantes de ventas">
+      <Table columns={columns} ariaLabel="Listado de ventas">
         {sales.map((sale) => {
           const badgeCfg = getStatusBadgeConfig(sale.status)
           return (
@@ -222,18 +236,18 @@ export function PosPage({ repository }: PosPageProps) {
                     </svg>
                   </div>
                   <div className="pos-page__receipt-text">
-                    <span className="pos-page__receipt-number">{sale.receiptNumber}</span>
-                    <span className="pos-page__receipt-type">{sale.type}</span>
+                    <span className="pos-page__receipt-number">{sale.saleId ?? sale.receiptNumber}</span>
+                    <span className="pos-page__receipt-type">{sale.saleId ? 'Venta confirmada' : sale.type}</span>
                   </div>
                 </div>
               </td>
-              <td className="pos-page__customer-cell">
+              {!contractOnly && <td className="pos-page__customer-cell">
                 <div className="pos-page__customer-wrapper">
-                  <span className="pos-page__customer-name">{sale.customerName}</span>
-                  <span className="pos-page__customer-id">{sale.customerIdentification}</span>
+                  <span className="pos-page__customer-name">{sale.customerName ?? '—'}</span>
+                  <span className="pos-page__customer-id">{sale.customerIdentification ?? ''}</span>
                 </div>
-              </td>
-              <td className="pos-page__date-cell">{formatCalendarDate(sale.issuedAt)}</td>
+              </td>}
+              <td className="pos-page__date-cell">{formatCalendarDate(sale.createdAt ?? sale.issuedAt ?? '')}</td>
               <td className="pos-page__total-cell pos-page__cell--right">
                 <span className="pos-page__total-amount">{formatMoney(sale.totalCents)}</span>
               </td>
@@ -245,7 +259,7 @@ export function PosPage({ repository }: PosPageProps) {
                   variant="secondary"
                   size="sm"
                   onClick={() => handleOpenDetail(sale.id)}
-                  aria-label={`Ver detalle del comprobante ${sale.receiptNumber}`}
+                  aria-label={`Ver detalle de la venta ${sale.saleId ?? sale.receiptNumber}`}
                 >
                   Ver detalle
                 </Button>
@@ -265,7 +279,7 @@ export function PosPage({ repository }: PosPageProps) {
         badgeText="MÓDULO ACTIVO"
         searchValue={searchInput}
         onSearchChange={handleSearchInput}
-        searchPlaceholder="Buscar por comprobante, cliente o RUC..."
+        searchPlaceholder={contractOnly ? 'Buscar por UUID de venta...' : 'Buscar por comprobante, cliente o RUC...'}
         actions={
           <div className="pos-page__header-actions">
             <Button
@@ -283,7 +297,7 @@ export function PosPage({ repository }: PosPageProps) {
             </Button>
           </div>
         }
-        footer={
+        footer={!contractOnly && (
           <FilterTabs<SaleStatus | ''>
             tabs={tabs}
             activeTab={statusFilter}
@@ -291,11 +305,11 @@ export function PosPage({ repository }: PosPageProps) {
             ariaLabel="Filtro por estado de venta"
             className="pos-page__tabs"
           />
-        }
+        )}
       />
 
       {/* Métricas KPI */}
-      <section className="pos-page__kpis" aria-label="Resumen de ventas">
+      {!contractOnly && <section className="pos-page__kpis" aria-label="Resumen de ventas">
         <MetricCard
           title="Ventas del mes"
           value={metrics ? formatMoney(metrics.totalSalesThisMonthCents) : '$0.00'}
@@ -341,7 +355,7 @@ export function PosPage({ repository }: PosPageProps) {
             </svg>
           }
         />
-      </section>
+      </section>}
 
       {/* Listado de comprobantes */}
       {content}

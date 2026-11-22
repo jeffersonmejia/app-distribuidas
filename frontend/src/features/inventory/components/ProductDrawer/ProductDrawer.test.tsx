@@ -12,6 +12,7 @@ function makeMockRepository(overrides: Partial<InventoryRepository> = {}): Inven
       id: 'prd-new',
       name: 'Nuevo Tubo PVC',
       sku: 'TUB-001',
+      unit: 'kg',
       category: 'Materiales',
       purchasePriceCents: 500,
       sellingPriceCents: 800,
@@ -44,6 +45,7 @@ describe('ProductDrawer', () => {
     expect(screen.getByRole('heading', { name: 'Nuevo producto' })).toBeInTheDocument()
     expect(screen.getByLabelText(/nombre del producto/i)).toBeInTheDocument()
     expect(screen.getByLabelText(/código \/ sku/i)).toBeInTheDocument()
+    expect(screen.getByLabelText(/unidad de medida/i)).toBeInTheDocument()
     expect(screen.getByLabelText(/categoría/i)).toBeInTheDocument()
     expect(screen.getByLabelText(/descripción técnica/i)).toBeInTheDocument()
     expect(screen.getByLabelText(/precio de compra/i)).toBeInTheDocument()
@@ -90,6 +92,7 @@ describe('ProductDrawer', () => {
 
     await user.type(screen.getByLabelText(/nombre del producto/i), 'Viga de Acero')
     await user.type(screen.getByLabelText(/código \/ sku/i), 'VIG-001')
+    await user.type(screen.getByLabelText(/unidad de medida/i), 'unidad')
     await user.click(screen.getByRole('button', { name: /guardar producto/i }))
 
     await waitFor(() => {

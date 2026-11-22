@@ -6,12 +6,15 @@ import type {
   SalePage,
   SaleMetrics,
   CreateSaleInput,
+  ContractSaleInput,
+  ContractSaleView,
 } from '../types/sale'
 
 export type PosErrorKind =
   | 'validation'
   | 'insufficient_availability'
   | 'not_found'
+  | 'conflict'
   | 'service_unavailable'
   | 'unknown'
 
@@ -36,4 +39,6 @@ export interface PosRepository {
   getById(id: string): Promise<Sale>
   getMetrics?(): Promise<SaleMetrics>
   createSale(input: CreateSaleInput): Promise<Sale>
+  createFromContract?(input: ContractSaleInput): Promise<ContractSaleView>
+  readonly contractOnly?: boolean
 }

@@ -15,7 +15,7 @@ import { AccountingEntryDrawer } from '../components/AccountingEntryDrawer'
 import './AccountingPage.css'
 
 const COLUMNS: TableColumn[] = [
-  { key: 'date', label: 'Fecha y código' },
+  { key: 'date', label: 'Fecha e identificador' },
   { key: 'glosa', label: 'Glosa' },
   { key: 'accounts', label: 'Cuentas' },
   { key: 'debit', label: 'Debe', align: 'right' },
@@ -68,6 +68,8 @@ export function AccountingPage({ repository }: AccountingPageProps) {
     void tenantId
     return repository ?? getAccountingRepository()
   }, [repository, tenantId])
+  const contractOnly = repo.contractOnly === true
+  const columns = contractOnly ? COLUMNS.filter((column) => column.key !== 'status') : COLUMNS
 
   const [entries, setEntries] = useState<JournalEntry[]>([])
   const [page, setPage] = useState(0)
@@ -188,7 +190,7 @@ export function AccountingPage({ repository }: AccountingPageProps) {
   } else {
     content = (
       <>
-        <Table columns={COLUMNS} caption="Libro diario contable">
+        <Table columns={columns} caption="Libro diario contable">
           {entries.map((entry) => {
             const debit = entryTotalDebit(entry)
             const credit = entryTotalCredit(entry)
@@ -218,7 +220,7 @@ export function AccountingPage({ repository }: AccountingPageProps) {
                 <td className="accounting-page__cell accounting-page__amount">{formatAmount(debit)}</td>
                 <td className="accounting-page__cell accounting-page__amount">{formatAmount(credit)}</td>
                 <td className="accounting-page__cell">
-                  <Badge variant={statusVariant(entry.status)}>{statusLabel(entry.status)}</Badge>
+                  {entry.status ? <Badge variant={statusVariant(entry.status)}>{statusLabel(entry.status)}</Badge> : '—'}
                 </td>
                 <td className="accounting-page__cell accounting-page__cell--right">
                   <Button
@@ -256,7 +258,7 @@ export function AccountingPage({ repository }: AccountingPageProps) {
         title="Contabilidad"
         description="Consulta del libro diario y estado de asientos contables."
         badgeText="Módulo contable · Solo consulta"
-        searchPlaceholder="Buscar por código, glosa o cuenta..."
+        searchPlaceholder={contractOnly ? 'Buscar por UUID de venta...' : 'Buscar por código, glosa o cuenta...'}
         searchValue={searchInput}
         onSearchChange={handleSearchChange}
         actions={
@@ -291,7 +293,7 @@ export function AccountingPage({ repository }: AccountingPageProps) {
             </svg>
           }
         />
-        <MetricCard
+        {!contractOnly && <MetricCard
           title="Total debe"
           value={formatAmount(summary?.totalDebitCents ?? 0)}
           subtitle="Suma de débitos"
@@ -301,7 +303,7 @@ export function AccountingPage({ repository }: AccountingPageProps) {
               <path d="M12 4l7 7h-4v9h-6v-9H5l7-7z" />
             </svg>
           }
-        />
+        />}
         <MetricCard
           title="Total haber"
           value={formatAmount(summary?.totalCreditCents ?? 0)}

@@ -4,15 +4,12 @@
  *
  * **Fuente de datos activa**: controlada por la variable de entorno VITE_DATA_SOURCE.
  *   - `mock` (valor por defecto): este módulo → PosMockRepository.
- *   - `api`: UnavailablePosApiRepository (ver services/index.ts) → lanza error controlado
- *     "servicio no disponible todavía" hasta que el contrato POS-002 sea aprobado y desplegado.
+ *   - `api`: PosApiRepository consume el contrato POS-002 aprobado.
  *
  * **Interacción con Inventario**: createSale() descuenta stock de forma atómica usando
  * InventoryMockRepository del mismo tenant (ver features/inventory/services/inventoryMock.ts).
- * Cuando Inventario cambie a 'api', createSale() debe coordinarse con el backend real
- * (contrato INV-003 pendiente de aprobación; ver docs/api-contracts/).
+ * Este adaptador conserva el escenario de demostración local independiente del backend real.
  *
- * **No existe backend HTTP de POS**. No crear posApi.ts hasta que POS-002 sea aprobado.
  */
 // SOLID: SRP — REPOSITORIO EN MEMORIA PARA LA GESTIÓN DE VENTAS CON AISLAMIENTO MULTITENANT, FECHAS RELATIVAS Y PAGINACIÓN.
 
@@ -393,10 +390,10 @@ function delay(ms = 300): Promise<void> {
 
 function matchesSaleSearch(sale: Sale, search: string): boolean {
   const q = search.toLowerCase()
-  return (
-    sale.receiptNumber.toLowerCase().includes(q) ||
-    sale.customerName.toLowerCase().includes(q) ||
-    sale.customerIdentification.toLowerCase().includes(q)
+  return Boolean(
+    sale.receiptNumber?.toLowerCase().includes(q) ||
+    sale.customerName?.toLowerCase().includes(q) ||
+    sale.customerIdentification?.toLowerCase().includes(q)
   )
 }
 
@@ -483,15 +480,17 @@ export class PosMockRepository implements PosRepository {
       paid: 0,
       pending: 0,
       overdue: 0,
+      confirmed: 0,
     }
 
     for (const sale of items) {
       countByStatus[sale.status] = (countByStatus[sale.status] ?? 0) + 1
 
       // 1. Extraer año y mes de la emisión tratando YYYY-MM-DD como fecha local sin desfase UTC
-      const match = sale.issuedAt.match(/^(\d{4})-(\d{2})/)
-      const saleYear = match ? parseInt(match[1], 10) : new Date(sale.issuedAt).getFullYear()
-      const saleMonth = match ? parseInt(match[2], 10) - 1 : new Date(sale.issuedAt).getMonth()
+      const saleDate = sale.issuedAt ?? sale.createdAt ?? ''
+      const match = saleDate.match(/^(\d{4})-(\d{2})/)
+      const saleYear = match ? parseInt(match[1], 10) : new Date(saleDate).getFullYear()
+      const saleMonth = match ? parseInt(match[2], 10) - 1 : new Date(saleDate).getMonth()
 
       // FÓRMULA 1: Ventas del mes (suma exclusivamente las emitidas en el año y mes en curso)
       if (saleYear === currentYear && saleMonth === currentMonth) {
@@ -629,7 +628,7 @@ export class PosMockRepository implements PosRepository {
     const store = this.getStore()
     let maxNum = 105
     for (const s of store) {
-      const match = s.receiptNumber.match(/001-001-(\d+)/)
+      const match = s.receiptNumber?.match(/001-001-(\d+)/)
       if (match) {
         const num = parseInt(match[1], 10)
         if (num > maxNum) maxNum = num

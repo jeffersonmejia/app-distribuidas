@@ -44,6 +44,7 @@ describe('InventoryMockRepository', () => {
     const invalidInput: ProductInput = {
       name: '',
       sku: '',
+      unit: 'unidad',
       category: 'Materiales',
       purchasePriceCents: 100,
       sellingPriceCents: -5,
@@ -58,6 +59,7 @@ describe('InventoryMockRepository', () => {
     const input: ProductInput = {
       name: 'Otro Cemento',
       sku: 'MAT-2026-081', // Ya existe
+      unit: 'unidad',
       category: 'Materiales',
       purchasePriceCents: 500,
       sellingPriceCents: 800,
@@ -72,6 +74,7 @@ describe('InventoryMockRepository', () => {
     const input: ProductInput = {
       name: 'Tubo PVC 110mm',
       sku: 'tub-2026-001',
+      unit: 'unidad',
       category: 'Materiales',
       description: 'Tubo de desagüe sanitario',
       purchasePriceCents: 800,

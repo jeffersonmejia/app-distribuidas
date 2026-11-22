@@ -23,6 +23,15 @@ public interface AccountingEntries {
                  List<Movement> movements) {
         public Entry { movements = List.copyOf(movements); }
     }
+    //SOLID: SRP — TRANSPORTA UNA PÁGINA DE ASIENTOS EXISTENTES.
+    record Page(List<Entry> items, int page, int size, boolean hasNext) {
+        public Page { items = List.copyOf(items); }
+    }
+    //SOLID: SRP — TRANSPORTA TOTALES CALCULADOS DESDE LOS MOVIMIENTOS PERSISTIDOS.
+    record Summary(long totalEntries, BigDecimal totalDebit, BigDecimal totalCredit) {}
     Entry recordSale(TenantId tenant, SaleCommand command);
     Entry reverse(TenantId tenant, ReversalCommand command);
+    Page list(TenantId tenant, String search, String period, int page, int size);
+    Entry get(TenantId tenant, UUID id);
+    Summary summary(TenantId tenant);
 }

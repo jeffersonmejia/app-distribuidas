@@ -20,6 +20,7 @@ export class AccountingApiError extends Error {
 }
 
 export interface AccountingRepository {
+  readonly contractOnly?: boolean
   listEntries(filters?: JournalEntryFilters, page?: number): Promise<JournalEntryPage>
   getEntry(id: string): Promise<JournalEntry>
   getSummary(): Promise<AccountingSummary>

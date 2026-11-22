@@ -19,6 +19,7 @@ import com.erp.features.inventory.api.InventoryFailure;
 import com.erp.features.pos.api.SaleException;
 import com.erp.features.pos.api.Sales;
 import com.erp.features.tenancy.api.TenantId;
+import com.erp.features.tenancy.api.TenantAccess;
 import org.springframework.stereotype.Service;
 import static com.erp.features.pos.api.SaleException.Code.*;
 
@@ -28,8 +29,9 @@ public class SaleService implements Sales {
     private final InventoryMovements inventory;
     private final SaleStore store;
     private final AccountingEntries accounting;
-    public SaleService(InventoryMovements inventory, SaleStore store, AccountingEntries accounting) {
-        this.inventory = inventory; this.store = store; this.accounting = accounting;
+    private final TenantAccess access;
+    public SaleService(InventoryMovements inventory, SaleStore store, AccountingEntries accounting, TenantAccess access) {
+        this.inventory = inventory; this.store = store; this.accounting = accounting; this.access = access;
     }
 
     @Override public Sale register(TenantId tenant, Command command) {
@@ -69,6 +71,35 @@ public class SaleService implements Sales {
                 throw new SaleException(code);
             }
             throw failure;
+        }
+    }
+
+    //SOLID: SRP — LEE UNA PÁGINA DE VENTAS CONFIRMADAS DEL TENANT AUTORIZADO.
+    @Override public Sales.Page list(TenantId tenant, String search, int page, int size) {
+        validatePage(page, size);
+        java.util.UUID saleFilter = null;
+        if (search != null && !search.isBlank()) {
+            try { saleFilter = java.util.UUID.fromString(search.trim()); }
+            catch (IllegalArgumentException invalid) { return new Sales.Page(List.of(), page, size, false); }
+        }
+        java.util.UUID filter = saleFilter;
+        return access.execute(tenant, "pos:sale:read", context -> {
+            var result = store.list(context.tenantId().value(), filter, page, size);
+            return new Sales.Page(result.items(), page, size, result.hasNext());
+        });
+    }
+
+    //SOLID: SRP — LEE UNA VENTA CONFIRMADA SIN REVELAR EXISTENCIA ENTRE TENANTS.
+    @Override public Sale get(TenantId tenant, java.util.UUID saleId) {
+        if (saleId == null) { throw new SaleException(INVALID_REQUEST); }
+        return access.execute(tenant, "pos:sale:read", context -> store.find(context.tenantId().value(), saleId)
+                .map(SaleStore.StoredSale::sale).orElseThrow(() -> new SaleException(SaleException.Code.SALE_NOT_FOUND)));
+    }
+
+    //SOLID: SRP — RECHAZA PAGINACIÓN INVÁLIDA O SUPERIOR A CINCO.
+    private static void validatePage(int page, int size) {
+        if (page < 0 || size < 1 || size > 5 || page > Integer.MAX_VALUE / size) {
+            throw new SaleException(INVALID_REQUEST);
         }
     }
 

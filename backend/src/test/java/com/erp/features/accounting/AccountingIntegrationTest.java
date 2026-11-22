@@ -12,6 +12,9 @@ import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import com.erp.features.accounting.api.AccountingEntries;
 import com.erp.features.accounting.api.AccountingException;
 import com.erp.features.accounting.application.AccountingStore;
@@ -25,6 +28,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -32,12 +36,14 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
+import org.springframework.test.web.servlet.MockMvc;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 //SOLID: SRP — ESTA SUITE VERIFICA ASIENTOS Y VENTAS EN POSTGRESQL REAL.
 @SpringBootTest(properties = {"AUTH_ISSUER_URI=https://issuer.example.test/", "AUTH_AUDIENCE=erp-api"})
+@AutoConfigureMockMvc
 @Testcontainers
 class AccountingIntegrationTest {
     private static final UUID ACTOR = UUID.fromString("ab000000-0000-4000-8000-000000000001");
@@ -51,6 +57,7 @@ class AccountingIntegrationTest {
     @Autowired AccountingEntries accounting;
     @Autowired TenantAccess access;
     @Autowired JdbcTemplate jdbc;
+    @Autowired MockMvc mvc;
     @SpyBean AccountingStore store;
     @MockBean AuthenticatedActor actor;
     @MockBean JwtDecoder decoder;
@@ -79,7 +86,7 @@ class AccountingIntegrationTest {
                                 tenant.value(), member, permission);
                     }
                     if (user.equals(ACTOR)) {
-                        for (String permission : List.of("accounting:entry:create", "accounting:entry:reverse")) {
+                        for (String permission : List.of("accounting:entry:create", "accounting:entry:reverse", "accounting:entry:read")) {
                             execute(db, "insert into tenant_membership_permission(tenant_id,membership_id,permission_code) values (?,?,?) on conflict do nothing",
                                     tenant.value(), member, permission);
                         }
@@ -87,6 +94,32 @@ class AccountingIntegrationTest {
                 }
             }
         }
+    }
+
+    @Test void persistedAccountingEntriesAreAvailableThroughTenantScopedReadApi() throws Exception {
+        long initialEntries = accounting.summary(A).totalEntries();
+        receive(A, "5");
+        UUID saleId = UUID.randomUUID();
+        sales.register(A, command(saleId, "2", "4.10", "0.25"));
+        String path = "/api/v1/accounting/entries";
+        String result = mvc.perform(get(path).with(jwt().jwt(token -> token.subject(ACTOR.toString())))
+                        .header("X-Tenant-ID", A.value()).param("search", saleId.toString()))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.items[0].saleId").value(saleId.toString()))
+                .andReturn().getResponse().getContentAsString();
+        UUID entryId = UUID.fromString(new com.fasterxml.jackson.databind.ObjectMapper().readTree(result)
+                .get("items").get(0).get("id").asText());
+        mvc.perform(get(path + "/" + entryId).with(jwt().jwt(token -> token.subject(ACTOR.toString())))
+                        .header("X-Tenant-ID", A.value()))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.movements.length()").value(3));
+        mvc.perform(get(path + "/summary").with(jwt().jwt(token -> token.subject(ACTOR.toString())))
+                        .header("X-Tenant-ID", A.value()))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.totalEntries").value(initialEntries + 1));
+        mvc.perform(get(path + "/" + UUID.randomUUID()).with(jwt().jwt(token -> token.subject(ACTOR.toString())))
+                        .header("X-Tenant-ID", A.value()))
+                .andExpect(status().isNotFound()).andExpect(jsonPath("$.code").value("JOURNAL_NOT_FOUND"));
+        mvc.perform(get(path).with(jwt().jwt(token -> token.subject(ACTOR.toString())))
+                        .header("X-Tenant-ID", A.value()).param("size", "6"))
+                .andExpect(status().isBadRequest()).andExpect(jsonPath("$.code").value("INVALID_REQUEST"));
     }
     @Test void saleIsRecordedOnceAndReversalIsTotalAndIdempotent() {
         receive(A, "5");

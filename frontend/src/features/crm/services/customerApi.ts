@@ -61,6 +61,9 @@ async function mapError(response: Response): Promise<CustomerApiError> {
 
 const BASE = '/api/v1/crm/customers'
 
+//SOLID: SRP — APLICA EL ORIGEN CONFIGURADO DEL BACKEND A LAS RUTAS REST.
+function apiUrl(path: string): string { return `${getApiConfig().baseUrl}${path}` }
+
 //SOLID: SRP — IMPLEMENTA EL REPOSITORIO HACIENDO PETICIONES HTTP A LA API DEL BACKEND.
 export class CustomerApiRepository implements CustomerRepository {
   async list(filters: CustomerFilters = {}, page = 0): Promise<CustomerPage> {
@@ -74,7 +77,7 @@ export class CustomerApiRepository implements CustomerRepository {
       params.set('status', filters.status)
     }
 
-    const response = await fetch(`${BASE}?${params.toString()}`, {
+    const response = await fetch(apiUrl(`${BASE}?${params.toString()}`), {
       method: 'GET',
       headers: buildHeaders(),
     })
@@ -95,7 +98,7 @@ export class CustomerApiRepository implements CustomerRepository {
       phone: input.phone?.trim() || null,
     }
 
-    const response = await fetch(BASE, {
+    const response = await fetch(apiUrl(BASE), {
       method: 'POST',
       headers: buildHeaders(),
       body: JSON.stringify(body),
@@ -116,7 +119,7 @@ export class CustomerApiRepository implements CustomerRepository {
       phone: input.phone?.trim() || null,
     }
 
-    const response = await fetch(`${BASE}/${id}`, {
+    const response = await fetch(apiUrl(`${BASE}/${id}`), {
       method: 'PATCH',
       headers: buildHeaders(),
       body: JSON.stringify(body),
@@ -130,7 +133,7 @@ export class CustomerApiRepository implements CustomerRepository {
   }
 
   async archive(id: string): Promise<void> {
-    const response = await fetch(`${BASE}/${id}`, {
+    const response = await fetch(apiUrl(`${BASE}/${id}`), {
       method: 'DELETE',
       headers: buildHeaders(),
     })
@@ -141,7 +144,7 @@ export class CustomerApiRepository implements CustomerRepository {
   }
 
   async setStatus(id: string, status: CustomerStatus): Promise<CustomerView> {
-    const response = await fetch(`${BASE}/${id}/status`, {
+    const response = await fetch(apiUrl(`${BASE}/${id}/status`), {
       method: 'PATCH',
       headers: buildHeaders(),
       body: JSON.stringify({ status }),

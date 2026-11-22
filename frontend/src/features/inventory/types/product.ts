@@ -13,6 +13,7 @@ export interface Product {
   id: string
   name: string
   sku: string
+  unit: string
   category: ProductCategory
   description?: string
   purchasePriceCents: number // En centavos de USD (ej. 850 para $8.50)
@@ -27,6 +28,7 @@ export interface Product {
 export interface ProductInput {
   name: string
   sku: string
+  unit: string
   category: ProductCategory
   description?: string
   purchasePriceCents: number

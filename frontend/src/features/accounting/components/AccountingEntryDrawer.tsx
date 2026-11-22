@@ -48,7 +48,7 @@ export function AccountingEntryDrawer({ isOpen, entry, onClose }: AccountingEntr
         <div className="accounting-entry-drawer__content">
           <dl className="accounting-entry-drawer__meta">
             <div>
-              <dt>Código</dt>
+              <dt>{entry.status ? 'Código' : 'UUID de venta'}</dt>
               <dd>{entry.code}</dd>
             </div>
             <div>
@@ -57,9 +57,7 @@ export function AccountingEntryDrawer({ isOpen, entry, onClose }: AccountingEntr
             </div>
             <div>
               <dt>Estado</dt>
-              <dd>
-                <Badge variant={statusVariant(entry.status)}>{statusLabel(entry.status)}</Badge>
-              </dd>
+              <dd>{entry.status ? <Badge variant={statusVariant(entry.status)}>{statusLabel(entry.status)}</Badge> : 'No forma parte del contrato persistido'}</dd>
             </div>
             <div className="accounting-entry-drawer__meta-full">
               <dt>Glosa</dt>
@@ -72,7 +70,7 @@ export function AccountingEntryDrawer({ isOpen, entry, onClose }: AccountingEntr
               <tr key={line.id}>
                 <td>
                   <div className="accounting-entry-drawer__account">
-                    <span className="accounting-entry-drawer__account-code">{line.accountCode}</span>
+                    {line.accountCode && <span className="accounting-entry-drawer__account-code">{line.accountCode}</span>}
                     <span className="accounting-entry-drawer__account-name">{line.accountName}</span>
                   </div>
                 </td>
