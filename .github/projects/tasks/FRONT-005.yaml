@@ -21,7 +21,7 @@ project:
   Área: Frontend
   Identificador de tarea: FRONT-005
   Fecha objetivo: '2026-11-21'
-  Bloqueado por: 'Accounting espera contrato HTTP de INT-001; Projects y Marketing pueden conectarse a sus APIs existentes.'
+  Bloqueado por: Nadie
 planning:
   area: Frontend
   assignee: Dayanarablb

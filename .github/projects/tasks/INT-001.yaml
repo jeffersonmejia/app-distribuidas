@@ -31,14 +31,14 @@ issue:
 
     - [x] Las migraciones aplican desde una base vacía y Hibernate valida el esquema conforme a docs/orm-code-first.md.
 
-    - [ ] Rutas, DTOs, errores y permisos de UI/API son compatibles y respetan el contexto tenant de docs/multitenancy.md.
+    - [x] Rutas, DTOs, errores y permisos de UI/API son compatibles y respetan el contexto tenant de docs/multitenancy.md.
 
-    - [ ] Las incompatibilidades encontradas tienen corrección asignada al feature responsable; no quedan conflictos de integración pendientes.
+    - [x] Las incompatibilidades encontradas tienen corrección asignada al feature responsable; no quedan conflictos de integración pendientes.
 
 
-    ## Bloqueo actual
+    ## Estado
 
-    Las dependencias de implementación están completadas. La revisión encontró integraciones UI/API pendientes: Projects y Marketing tienen controladores, pero el frontend solo usa mocks; Inventory, POS y Accounting carecen de controladores HTTP y adaptadores frontend. Falta acordar el alcance HTTP antes de asignar las correcciones por feature. Evidencia: docs/tasks/INT-001.md.
+    Completada. Las APIs y adaptadores HTTP quedaron integrados en develop mediante PR #185; FRONT-004 y FRONT-005 se desbloquean para completar el trabajo de interfaz. Evidencia: docs/tasks/INT-001.md.
 
 
     ## Especificación de lógica
@@ -54,13 +54,13 @@ issue:
 project:
   Repository: jeffersonmejia/app-distribuidas
   Title: '[INT-001] Integrar features y validar compatibilidad'
-  Status: Blocked
-  Estado: Blocked
+  Status: Done
+  Estado: Done
   Prioridad: Alta
   Área: Arquitectura
   Identificador de tarea: INT-001
   Fecha objetivo: '2026-11-20'
-  Bloqueado por: Acordar el alcance de APIs HTTP y asignar correcciones a los owners de cada feature.
+  Bloqueado por: Nadie
 planning:
   area: Arquitectura
   assignee: jeffersonmejia
@@ -84,10 +84,9 @@ planning:
   - FRONT-004
   - FRONT-005
   targetDate: '2026-11-20'
-  state: Blocked
+  state: Done
   priority: Alta
-  blocked_by:
-  - Decisión de alcance de las APIs HTTP pendientes.
+  blocked_by: []
   description: Validar compatibilidad de las features integradas en develop. Los workflows cubren PR, builds, pruebas, cobertura y CodeQL; INT-001 revisa compatibilidad de módulos, migraciones y contratos UI/API.
   acceptanceCriteria:
   - El Quality Gate requerido pasó para el estado integrado en develop.
