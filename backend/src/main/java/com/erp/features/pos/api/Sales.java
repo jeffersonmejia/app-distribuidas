@@ -23,5 +23,11 @@ public interface Sales {
     record Sale(UUID saleId, UUID movementId, Instant createdAt, List<SoldLine> lines) {
         public Sale { lines = List.copyOf(lines); }
     }
+    //SOLID: SRP — TRANSPORTA UNA PÁGINA DE VENTAS CONFIRMADAS.
+    record Page(List<Sale> items, int page, int size, boolean hasNext) {
+        public Page { items = List.copyOf(items); }
+    }
     Sale register(TenantId tenant, Command command);
+    Page list(TenantId tenant, String search, int page, int size);
+    Sale get(TenantId tenant, UUID saleId);
 }

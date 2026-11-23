@@ -57,7 +57,7 @@ project:
   Área: Calidad
   Identificador de tarea: OPS-002
   Fecha objetivo: '2026-11-21'
-  Bloqueado por: '@EMLarco (INT-001)'
+  Bloqueado por: Nadie
 planning:
   area: Calidad
   assignee: BruceRodri
@@ -72,10 +72,9 @@ planning:
   dependencies:
   - INT-001
   targetDate: '2026-11-21'
-  state: Blocked
+  state: Todo
   priority: Media
-  blocked_by:
-  - INT-001
+  blocked_by: []
   description: Dejar el MVP reproducible desde copia limpia y documentar el despliegue Azure existente definido en Terraform; no agregar un proveedor alternativo.
   acceptanceCriteria:
   - PostgreSQL y servicios existentes arrancan y reportan healthcheck.

@@ -1,4 +1,6 @@
 requerimientos_iniciales.md
+*.txt
+!.github/projects/sync/requirements.txt
 
 # Entorno local
 .env

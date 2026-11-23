@@ -11,6 +11,10 @@ import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import com.erp.features.identity.api.ActorId;
 import com.erp.features.identity.api.AuthenticatedActor;
 import com.erp.features.inventory.api.InventoryMovements;
@@ -22,9 +26,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.test.context.DynamicPropertyRegistry;
@@ -35,6 +42,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 //SOLID: SRP — ESTA SUITE VERIFICA VENTAS E INVENTARIO EN UNA TRANSACCIÓN REAL.
 @SpringBootTest(properties = {"AUTH_ISSUER_URI=https://issuer.example.test/", "AUTH_AUDIENCE=erp-api"})
+@AutoConfigureMockMvc
 @Testcontainers
 class SaleIntegrationTest {
     private static final UUID ACTOR = UUID.fromString("aa000000-0000-4000-8000-000000000001");
@@ -46,6 +54,7 @@ class SaleIntegrationTest {
     @Autowired Sales sales;
     @Autowired InventoryMovements inventory;
     @Autowired JdbcTemplate jdbc;
+    @Autowired MockMvc mvc;
     @MockBean AuthenticatedActor actor;
     @MockBean JwtDecoder decoder;
     @SpyBean SaleStore store;
@@ -76,10 +85,33 @@ class SaleIntegrationTest {
                     if (user.equals(ACTOR)) {
                         execute(db, "insert into tenant_membership_permission(tenant_id,membership_id,permission_code) values (?,?,?) on conflict do nothing",
                                 tenant.value(), member, "accounting:entry:create");
+                        execute(db, "insert into tenant_membership_permission(tenant_id,membership_id,permission_code) values (?,?,?) on conflict do nothing",
+                                tenant.value(), member, "pos:sale:read");
                     }
                 }
             }
         }
+    }
+
+    @Test void persistedSalesAreListedAndReadThroughTenantApi() throws Exception {
+        receive(A, "5");
+        UUID saleId = UUID.randomUUID();
+        String path = "/api/v1/pos/sales";
+        String body = "{\"saleId\":\"" + saleId + "\",\"lines\":[{\"productId\":\"" + product
+                + "\",\"unit\":\"unit\",\"quantity\":\"2\",\"unitPrice\":\"4.10\",\"taxAmount\":\"0.25\"}]}";
+        mvc.perform(post(path).with(jwt().jwt(token -> token.subject(ACTOR.toString())))
+                        .header("X-Tenant-ID", A.value()).contentType(MediaType.APPLICATION_JSON).content(body))
+                .andExpect(status().isCreated()).andExpect(jsonPath("$.saleId").value(saleId.toString()))
+                .andExpect(jsonPath("$.lines[0].netAmount").value("8.20"));
+        mvc.perform(get(path).with(jwt().jwt(token -> token.subject(ACTOR.toString())))
+                        .header("X-Tenant-ID", A.value()).param("search", saleId.toString()))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.items[0].saleId").value(saleId.toString()));
+        mvc.perform(get(path + "/" + saleId).with(jwt().jwt(token -> token.subject(ACTOR.toString())))
+                        .header("X-Tenant-ID", A.value()))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.lines.length()").value(1));
+        mvc.perform(get(path).with(jwt().jwt(token -> token.subject(ACTOR.toString())))
+                        .header("X-Tenant-ID", A.value()).param("page", "2147483647"))
+                .andExpect(status().isBadRequest()).andExpect(jsonPath("$.code").value("INVALID_REQUEST"));
     }
     @Test void successRetryConflictAndTenantIsolation() {
         receive(A, "10"); receive(B, "10");

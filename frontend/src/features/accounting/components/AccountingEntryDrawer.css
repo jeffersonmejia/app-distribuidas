@@ -1,0 +1,78 @@
+.accounting-entry-drawer__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.accounting-entry-drawer__meta {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+  margin: 0;
+}
+
+.accounting-entry-drawer__meta dt {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.accounting-entry-drawer__meta dd {
+  margin: var(--space-1) 0 0;
+  font-size: var(--font-size-sm);
+  color: var(--text-primary);
+}
+
+.accounting-entry-drawer__meta-full {
+  grid-column: 1 / -1;
+}
+
+.accounting-entry-drawer__account {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.accounting-entry-drawer__account-code {
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  font-weight: var(--font-weight-medium);
+}
+
+.accounting-entry-drawer__account-name {
+  font-size: var(--font-size-sm);
+  color: var(--text-primary);
+}
+
+.accounting-entry-drawer__amount {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.accounting-entry-drawer__totals-row td {
+  background: var(--surface-sunken);
+}
+
+.accounting-entry-drawer__balance {
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--surface-sunken);
+  color: var(--text-primary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+.accounting-entry-drawer__empty {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 640px) {
+  .accounting-entry-drawer__meta {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,3 @@
+// SOLID: ISP — BARREL EXPORT DEL COMPONENTE SALEDETAILDRAWER.
+
+export * from './SaleDetailDrawer'

@@ -14,10 +14,12 @@ function setup(isOpen = true, onClose = vi.fn(), footer?: React.ReactNode) {
 }
 
 describe('Drawer', () => {
-  it('no renderiza el panel cuando isOpen es false', () => {
+  it('no renderiza el panel accesible cuando isOpen es false', () => {
     setup(false)
+    expect(screen.queryByRole('dialog')).toBeNull()
     const panel = screen.getByRole('dialog', { hidden: true })
     expect(panel).not.toHaveClass('drawer-panel--open')
+    expect(panel).toHaveAttribute('aria-hidden', 'true')
   })
 
   it('muestra el panel cuando isOpen es true', () => {

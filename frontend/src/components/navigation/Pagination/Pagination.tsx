@@ -7,6 +7,9 @@ export interface PaginationProps {
   hasNext: boolean
   onPageChange: (page: number) => void
   isLoading?: boolean
+  itemsCount?: number
+  itemLabel?: string
+  itemLabelPlural?: string
 }
 
 export function Pagination({
@@ -14,37 +17,56 @@ export function Pagination({
   hasNext,
   onPageChange,
   isLoading = false,
+  itemsCount,
+  itemLabel,
+  itemLabelPlural,
 }: PaginationProps) {
   const isPreviousDisabled = currentPage <= 0 || isLoading
   const isNextDisabled = !hasNext || isLoading
 
+  const singular = itemLabel ?? 'cliente'
+  const plural = itemLabelPlural ?? (itemLabel ? `${itemLabel}s` : 'clientes')
+  const noun = itemsCount === 1 ? singular : plural
+
   return (
     <nav className="pagination" aria-label="Navegación de páginas">
-      <button
-        type="button"
-        className="pagination__button"
-        disabled={isPreviousDisabled}
-        onClick={() => onPageChange(currentPage - 1)}
-        aria-label="Ir a página anterior"
-      >
-        <span aria-hidden="true">&larr;</span>
-        <span>Anterior</span>
-      </button>
+      <div className="pagination__summary">
+        {itemsCount !== undefined ? (
+          <span>
+            Mostrando <strong>{itemsCount}</strong> {noun} (Página {currentPage + 1})
+          </span>
+        ) : (
+          <span>Página {currentPage + 1}</span>
+        )}
+      </div>
 
-      <span className="pagination__status" aria-current="page">
-        Página {currentPage + 1}
-      </span>
+      <div className="pagination__controls">
+        <button
+          type="button"
+          className="pagination__button pagination__button--nav"
+          disabled={isPreviousDisabled}
+          onClick={() => onPageChange(currentPage - 1)}
+          aria-label="Ir a página anterior"
+        >
+          <span aria-hidden="true">&larr;</span>
+          <span>Anterior</span>
+        </button>
 
-      <button
-        type="button"
-        className="pagination__button"
-        disabled={isNextDisabled}
-        onClick={() => onPageChange(currentPage + 1)}
-        aria-label="Ir a página siguiente"
-      >
-        <span>Siguiente</span>
-        <span aria-hidden="true">&rarr;</span>
-      </button>
+        <span className="pagination__page-badge" aria-current="page">
+          {currentPage + 1}
+        </span>
+
+        <button
+          type="button"
+          className="pagination__button pagination__button--nav"
+          disabled={isNextDisabled}
+          onClick={() => onPageChange(currentPage + 1)}
+          aria-label="Ir a página siguiente"
+        >
+          <span>Siguiente</span>
+          <span aria-hidden="true">&rarr;</span>
+        </button>
+      </div>
     </nav>
   )
 }

@@ -58,7 +58,7 @@ project:
   Área: Calidad
   Identificador de tarea: SEC-001
   Fecha objetivo: '2026-11-21'
-  Bloqueado por: '@EMLarco (INT-001)'
+  Bloqueado por: Nadie
 planning:
   area: Calidad
   assignee: EMLarco
@@ -73,10 +73,9 @@ planning:
   - TEN-001
   - INT-001
   targetDate: '2026-11-21'
-  state: Blocked
+  state: Todo
   priority: Alta
-  blocked_by:
-  - INT-001
+  blocked_by: []
   description: Revisar flujos implementados frente a OWASP Top 10:2025, autorización tenant, validación, secretos, dependencias y errores.
   acceptanceCriteria:
   - No quedan alertas High/Critical ni errores sin triage.
