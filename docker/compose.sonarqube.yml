@@ -48,7 +48,7 @@ services:
       - sonarqube_backend
       - sonarqube_frontend
     healthcheck:
-      test: ["CMD-SHELL", "curl -fsS http://localhost:9000/api/system/status >/dev/null || exit 1"]
+      test: ["CMD-SHELL", "curl -fsS http://localhost:9000/api/system/status | grep -Eq '\"status\"[[:space:]]*:[[:space:]]*\"UP\"'"]
       interval: 30s
       timeout: 10s
       retries: 10
