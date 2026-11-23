@@ -26,7 +26,7 @@ Antes de aplicar autoridad o responsabilidades personales, identifica al solicit
 | Esteban | `EMLarco` | Backend. Ejecuta trabajo asignado por feature. |
 | Sahid | `Sahid-B` | Backend. Ejecuta trabajo asignado por feature. |
 | Dayanara | `Dayanarablb` | Frontend. Ejecuta trabajo de frontend con alcance definido. |
-| Jennifer | `Jntorres2001` | Testing y calidad: pruebas unitarias, de integración y de rendimiento con k6; revisión preventiva de calidad y hallazgos con análisis estático/SonarQube local. Ejecuta y reporta con alcance y criterios definidos. |
+| Jennifer | `Jntorres2001` | Testing y calidad: pruebas unitarias, de integración, de rendimiento con k6 y E2E con Playwright; revisión preventiva de calidad y hallazgos con análisis estático/SonarQube local. Ejecuta y reporta con alcance y criterios definidos. |
 
 Jefferson es responsable de definir el alcance y los criterios de aceptación. El resto del equipo ejecuta tareas ya definidas; no debe tomar decisiones de alcance por su cuenta. Si una decisión o requisito no está definido, registra la pregunta y consúltala con Jefferson antes de implementarlo.
 
@@ -39,6 +39,7 @@ Jefferson es responsable de definir el alcance y los criterios de aceptación. E
 - Jennifer ejecuta las pruebas unitarias, de integración y de rendimiento con k6 que correspondan a las features implementadas, siguiendo criterios y umbrales definidos por Jefferson. No se crean pruebas de aplicación durante el scaffolding inicial prohibido por `requerimientos_iniciales.md`.
 - El bloqueo de pruebas de integración o rendimiento por dependencias no impide asignar a Jennifer revisiones independientes de código ya implementado. Puede ejecutar análisis estático/SonarQube Community local, revisar hallazgos y reportar evidencia y recomendaciones al responsable de la feature, sin modificar código ajeno ni cambiar criterios de aceptación. Estas revisiones no se bloquean ni hacen gate de PR por SonarQube.
 - En QA-005, Jennifer usa SonarQube para revisar el código de forma continua y ayudar a corregir hallazgos mientras avanza el desarrollo. Registra evidencia en `docs/quality-templates/formato_sonar_qube.docx`, prepara un PDF breve con imagen, descripción, prioridad y responsable, y avisa por el grupo de WhatsApp del proyecto mencionando al responsable y pidiendo atención pronta según prioridad. Prioriza P0 los riesgos de seguridad, exposición de datos o aislamiento tenant; P1 los defectos críticos/altos en flujos principales; P2 los defectos relevantes; P3 los hallazgos menores. No incluyas secretos ni datos reales de clientes/tenants en evidencia. SonarQube ayuda a corregir sobre la marcha, no es un gate de PR.
+- QA-006 incorpora Playwright en `frontend/e2e/` para verificar recorridos de usuario contra backend local y datos sintéticos aislados. Al inicio, Jennifer ejecuta estos E2E manualmente/localmente; no son un check requerido de CI ni gate de PR. Cuando los flujos y el entorno local se estabilicen, recuerda a Jefferson revisar si conviene añadir Playwright como un check adicional no bloqueante de CI. Cambiarlo a requerido necesita una decisión explícita de Jefferson y una verificación del entorno/criterios.
 
 ### Política de calidad obligatoria
 

@@ -15,6 +15,15 @@ Durante el scaffolding inicial este documento solo establece el plan. No se agre
 - **Rendimiento:** k6 mide los flujos críticos HTTP con datos representativos y un entorno identificado.
 - **Aislamiento tenant:** se comprueba que un tenant no pueda consultar ni modificar datos de otro. Es un criterio funcional y de seguridad, independiente de los umbrales de rendimiento.
 
+## E2E de frontend con Playwright — QA-006
+
+- La primera fase automatiza tres recorridos de usuario: POS (venta y confirmación del cambio de existencias), Inventario (consulta de disponibilidad) y CRM (búsqueda/listado). No repite reglas de negocio, validación de persistencia, autorización/RLS ni migraciones que ya se prueban en backend; comprueba navegación, interacción visible y persistencia observable desde el browser.
+- Jennifer ejecuta los E2E manualmente y en local al inicio, con backend local integrado y datos sintéticos aislados. Se autoriza un proveedor OIDC efímero local con Keycloak para emitir JWT de prueba y preparar una membresía de prueba. Nunca se usan producción, datos reales ni secretos permanentes.
+- El login real de la aplicación queda fuera de esta fase mientras FRONT-003 mantenga el proveedor/login del frontend simulado. Los tests preparan el estado de autenticación con credenciales/token de prueba locales sin presentar el mock como una prueba del login real. No cambian ni inventan un contrato de autenticación.
+- Las pruebas E2E se mantienen separadas de Vitest/Testing Library en `frontend/e2e/fixtures`, `frontend/e2e/specs/{auth,pos,inventory,crm}` y `frontend/e2e/support`. Vitest conserva las pruebas de componentes, páginas y servicios aislados; Playwright cubre los recorridos cross-page contra el backend.
+- Inicialmente Playwright no corre en CI y no es gate de PR. Cuando el entorno y los flujos se estabilicen, Jefferson revisará si conviene añadirlo como check adicional no bloqueante; hacerlo requerido exige una decisión posterior explícita y criterios estables.
+- Las pruebas usan un esquema/base aislada y datos deterministas. Credenciales y tokens solo por variables locales no versionadas; un reset nunca debe borrar ni modificar la base de desarrollo compartida.
+
 ## Flujos críticos para k6
 
 1. **POS:** registrar una venta y comprobar el descuento de existencias.
