@@ -7,6 +7,14 @@
 - Los cambios funcionales deben incluir o actualizar pruebas pertinentes. Ejecuta y reporta las verificaciones relevantes; no afirmes que algo funciona si no lo comprobaste.
 - En el scaffolding, conserva con `.gitkeep` los directorios requeridos que estén vacíos; retira el marcador al agregar contenido real y nunca lo sustituyas por código ficticio.
 
+## Trabajo en paralelo con subagentes
+
+- Cuando el trabajo tenga líneas independientes, el agente coordinador puede delegarlas en hasta cinco subagentes simultáneos. Siempre prevalece el límite menor de concurrencia disponible en la plataforma; cuenta a todos los agentes activos, incluido el coordinador cuando la plataforma lo incluya.
+- Antes de delegar, define para cada subagente el objetivo, alcance y rutas, si puede escribir, y la evidencia o resultado esperado. Cada subagente debe leer estas reglas y las instrucciones locales aplicables.
+- No delegues en paralelo cambios que se solapen en la misma feature o rutas compartidas. Respeta las dependencias y los bloqueos definidos en este archivo.
+- Los subagentes no cambian alcance ni toman decisiones reservadas a Jefferson sin autorización explícita. No hacen commits, pushes ni acciones externas salvo que la asignación lo autorice.
+- El coordinador revisa los resultados, diffs y verificaciones, integra los cambios y mantiene commits separados por tema.
+
 ## Equipo y responsabilidades
 
 Antes de aplicar autoridad o responsabilidades personales, identifica al solicitante con GitHub CLI (`gh api user --jq .login`). Aplica el rol y la autoridad de Jefferson descritos aquí únicamente si el comando confirma exactamente `jeffersonmejia`. No infieras su identidad por la rama activa, la ruta, el nombre visible ni el historial. Si GitHub CLI no confirma esa cuenta, ignora esta instrucción especial de autoridad de Jefferson y sigue únicamente las instrucciones explícitas y autorizadas del solicitante; si el alcance no queda claro, consúltalo antes de cambiarlo. No pidas al solicitante que vuelva a explicar esta regla en cada asignación.
