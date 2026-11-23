@@ -1,0 +1,46 @@
+id: SEC-001-H3
+github:
+  repository: jeffersonmejia/app-distribuidas
+  issue_number: 202
+issue:
+  title: '[SEC-001-H3] Corregir excepción CSRF de rutas CRM'
+  body: |
+    <!-- managed-task-id: SEC-001-H3 -->
+
+    Responsable: @BruceRodri. Revisión acotada: @EMLarco. Sin bloqueadores.
+
+    SonarQube reporta Security High en `SecurityConfiguration.java:25` por excluir rutas CRM de CSRF. Corregir de inmediato sin deshabilitar CSRF globalmente ni cambiar autenticación JWT/tenant. Evidencia y criterios completos en [SEC-001-H3.md](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/SEC-001-H3.md). PDFs: [informe Sonar](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/quality-templates/evidence/SEC-001-H3-2026-11-23/sonarqube-report-2026-11-23.pdf) y [formato diligenciado](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/quality-templates/evidence/SEC-001-H3-2026-11-23/formato-sonar-qube-2026-11-23.pdf).
+  state: open
+  assignees:
+    - BruceRodri
+  labels:
+    - backend
+    - testing
+project:
+  Repository: jeffersonmejia/app-distribuidas
+  Title: '[SEC-001-H3] Corregir excepción CSRF de rutas CRM'
+  Status: Todo
+  Estado: Todo
+  Prioridad: Alta
+  Área: Calidad
+  Identificador de tarea: SEC-001-H3
+  Bloqueado por: Nadie
+planning:
+  area: Calidad
+  assignee: BruceRodri
+  paths:
+    - backend/src/main/java/com/erp/features/identity/infrastructure/security/SecurityConfiguration.java
+    - backend/src/test/java/com/erp/features/identity/
+    - docs/tasks/SEC-001-H3.md
+    - docs/tasks/SEC-001.md
+    - docs/quality-templates/evidence/SEC-001-H3-2026-11-23/
+  dependencies: []
+  state: Todo
+  priority: Alta
+  blocked_by: []
+  description: Resolver la excepción CSRF CRM reportada por Sonar Security High con pruebas del JWT, rutas protegidas y cualquier excepción restante documentada.
+  acceptanceCriteria:
+    - Excepción amplia eliminada o acotada y sustentada; no desactivar CSRF globalmente.
+    - JWT y autorización tenant permanecen obligatorios e intactos.
+    - Pruebas y verificación real quedan documentadas.
+    - Larco revisa únicamente el diff y la evidencia de H3.

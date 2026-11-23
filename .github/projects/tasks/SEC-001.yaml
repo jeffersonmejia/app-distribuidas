@@ -4,47 +4,41 @@ github:
   issue_number: 40
 issue:
   title: '[SEC-001] Revisar seguridad y cerrar hallazgos del MVP'
-  body: '<!-- managed-task-id: SEC-001 -->
+  body: |
+    <!-- managed-task-id: SEC-001 -->
 
 
     - **Feature:** Calidad
 
-    - **Responsable:** @EMLarco
+    - **Coordinación/cierre:** @jeffersonmejia
+
+    - **Revisión H1:** @EMLarco en #196, limitada al diff de Bruce, pruebas y conteos agregados.
+
+    - **Corrección H3:** @BruceRodri en #202; Larco revisará el diff cuando esté listo.
 
     - **Rutas:** backend/, frontend/, .github/workflows/, docs/
 
-    - **Dependencias:** AUTH-002, TEN-001, INT-001
+    - **Dependencias:** AUTH-002, TEN-001, INT-001 (completadas)
 
     - **Fecha objetivo:** 2026-11-21
 
 
-    ## Alcance
+    ## Resultado
 
-    Revisar flujos implementados frente a OWASP Top 10:2025, autorización tenant, validación, secretos, dependencias y errores.
-
-
-    ## Criterios de aceptación
-
-    - [ ] No quedan alertas High/Critical ni errores sin triage.
-
-    - [ ] Cada hallazgo de seguridad se revisa manualmente.
-
-    - [ ] Logs y respuestas no exponen secretos ni datos de otros tenants.
-
-    - [ ] Hallazgos bloqueantes se corrigen y verifican antes de aceptar.
+    Revisión general de seguridad completada por Larco y Jefferson. Las correcciones específicas siguen tareas separadas: H1 en #196, H3 en #202. No repetir la auditoría ni duplicar asignación de Larco.
 
 
-    ## Bloqueo actual
+    ## Estado
 
-    Bloqueada por: INT-001 (@EMLarco).
+    Done, sin bloqueadores. Los pendientes de H1/H3 se manejan únicamente en sus issues específicos.
 
 
     ## Especificación de lógica
 
-    [Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/SEC-001.md).'
-  state: open
+    [Consultar documento](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/SEC-001.md).
+  state: closed
   assignees:
-  - EMLarco
+  - jeffersonmejia
   labels:
   - backend
   - frontend
@@ -52,8 +46,8 @@ issue:
 project:
   Repository: jeffersonmejia/app-distribuidas
   Title: '[SEC-001] Revisar seguridad y cerrar hallazgos del MVP'
-  Status: Blocked
-  Estado: Blocked
+  Status: Done
+  Estado: Done
   Prioridad: Alta
   Área: Calidad
   Identificador de tarea: SEC-001
@@ -61,7 +55,7 @@ project:
   Bloqueado por: Nadie
 planning:
   area: Calidad
-  assignee: EMLarco
+  assignee: jeffersonmejia
   paths:
   - backend/
   - frontend/
@@ -73,10 +67,10 @@ planning:
   - TEN-001
   - INT-001
   targetDate: '2026-11-21'
-  state: Todo
+  state: Done
   priority: Alta
   blocked_by: []
-  description: Revisar flujos implementados frente a OWASP Top 10:2025, autorización tenant, validación, secretos, dependencias y errores.
+  description: Revisión general de seguridad completada por Larco y Jefferson; los cambios pendientes H1/H3 siguen tareas hijas separadas.
   acceptanceCriteria:
   - No quedan alertas High/Critical ni errores sin triage.
   - Cada hallazgo de seguridad se revisa manualmente.
