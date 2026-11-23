@@ -11,6 +11,7 @@ import jakarta.persistence.Table;
 //SOLID: SRP — ESTA ENTIDAD REPRESENTA LA PERSISTENCIA DE UNA PLANTILLA DE CORREO.
 @Entity
 @Table(name = "marketing_template")
+@org.hibernate.annotations.Check(constraints = "char_length(html_body) <= 100000 AND char_length(text_body) <= 50000")
 public class TemplateEntity {
     @Id UUID id;
     @Column(name = "tenant_id", nullable = false, updatable = false) UUID tenantId;

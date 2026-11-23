@@ -26,7 +26,7 @@ public class TemplateService {
     }
 
     public TemplateView create(TenantId tenant, TemplateInput input) {
-        if (input == null) { throw new MarketingException("INVALID_TEMPLATE_DATA"); }
+        validateLength(input);
         return access.execute(tenant, MANAGE, context -> {
             try {
                 return view(templates.save(Template.create(UUID.randomUUID(), context.tenantId().value(),
@@ -39,7 +39,7 @@ public class TemplateService {
     }
 
     public TemplateView update(TenantId tenant, UUID id, TemplateInput input) {
-        if (input == null) { throw new MarketingException("INVALID_TEMPLATE_DATA"); }
+        validateLength(input);
         return access.execute(tenant, MANAGE, context -> {
             Template template = find(context.tenantId().value(), id);
             try {
@@ -66,6 +66,13 @@ public class TemplateService {
 
     private Template find(UUID tenantId, UUID id) {
         return templates.find(tenantId, id).orElseThrow(() -> new MarketingException("TEMPLATE_NOT_FOUND"));
+    }
+
+    private static void validateLength(TemplateInput input) {
+        if (input == null || CampaignService.tooLong(input.htmlBody(), 100000)
+                || CampaignService.tooLong(input.textBody(), 50000)) {
+            throw new MarketingException("INVALID_TEMPLATE_DATA");
+        }
     }
 
     private static TemplateView view(Template t) {

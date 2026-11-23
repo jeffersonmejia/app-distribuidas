@@ -83,6 +83,38 @@ class ProjectsHttpIntegrationTest {
     }
     private static RequestPostProcessor as(UUID actor) { return jwt().jwt(t -> t.subject(actor.toString())); }
 
+    @Test void projectAndTaskLimitsCountUnicodeCodePoints() throws Exception {
+        String path = "/api/v1/projects";
+        String name = "😀".repeat(150), description = "😀".repeat(2000), title = "😀".repeat(200);
+        String created = mvc.perform(post(path).with(as(FULL)).header("X-Tenant-ID", TENANT)
+                .contentType(MediaType.APPLICATION_JSON).content(json.writeValueAsString(
+                        java.util.Map.of("name", name, "description", description))))
+                .andExpect(status().isCreated()).andReturn().getResponse().getContentAsString();
+        String id = json.readTree(created).get("id").asText();
+        for (var fields : java.util.List.of(java.util.Map.of("name", name + "😀"),
+                java.util.Map.of("description", description + "😀"))) {
+            mvc.perform(patch(path + "/" + id).with(as(FULL)).header("X-Tenant-ID", TENANT)
+                    .contentType(MediaType.APPLICATION_JSON).content(json.writeValueAsString(fields)))
+                    .andExpect(status().isBadRequest()).andExpect(jsonPath("$.code").value("INVALID_PROJECT_DATA"))
+                    .andExpect(content().string(org.hamcrest.Matchers.not(org.hamcrest.Matchers.containsString("😀"))));
+            var createFields = new java.util.HashMap<String, String>();
+            createFields.put("name", name); createFields.put("description", description); createFields.putAll(fields);
+            mvc.perform(post(path).with(as(FULL)).header("X-Tenant-ID", TENANT)
+                    .contentType(MediaType.APPLICATION_JSON).content(json.writeValueAsString(createFields)))
+                    .andExpect(status().isBadRequest()).andExpect(jsonPath("$.code").value("INVALID_PROJECT_DATA"));
+        }
+        String tasks = path + "/" + id + "/tasks";
+        String task = json.readTree(mvc.perform(post(tasks).with(as(FULL)).header("X-Tenant-ID", TENANT)
+                .contentType(MediaType.APPLICATION_JSON).content(json.writeValueAsString(java.util.Map.of("title", title))))
+                .andExpect(status().isCreated()).andReturn().getResponse().getContentAsString()).get("id").asText();
+        mvc.perform(patch(tasks + "/" + task).with(as(FULL)).header("X-Tenant-ID", TENANT)
+                .contentType(MediaType.APPLICATION_JSON).content(json.writeValueAsString(java.util.Map.of("title", title + "😀"))))
+                .andExpect(status().isBadRequest()).andExpect(jsonPath("$.code").value("INVALID_TASK_DATA"));
+        mvc.perform(post(tasks).with(as(FULL)).header("X-Tenant-ID", TENANT)
+                .contentType(MediaType.APPLICATION_JSON).content(json.writeValueAsString(java.util.Map.of("title", title + "😀"))))
+                .andExpect(status().isBadRequest()).andExpect(jsonPath("$.code").value("INVALID_TASK_DATA"));
+    }
+
     @Test void projectAndTaskLifecycleWithPermissionsAndTenantIsolation() throws Exception {
         String projects = "/api/v1/projects";
         mvc.perform(get(projects)).andExpect(status().isUnauthorized());

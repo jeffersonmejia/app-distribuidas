@@ -100,12 +100,18 @@ public class ProjectService {
     }
 
     private static ProjectDetails details(ProjectInput input) {
-        if (input == null) { throw new ProjectsException("INVALID_PROJECT_DATA"); }
+        if (input == null || tooLong(input.name(), 150) || tooLong(input.description(), 2000)) {
+            throw new ProjectsException("INVALID_PROJECT_DATA");
+        }
         try {
             return new ProjectDetails(input.name(), input.description(), input.startDate(), input.endDate());
         } catch (IllegalArgumentException exception) {
             throw new ProjectsException("INVALID_PROJECT_DATA");
         }
+    }
+
+    static boolean tooLong(String value, int max) {
+        return value != null && value.codePointCount(0, value.length()) > max;
     }
 
     private static ProjectView view(Project project) {
