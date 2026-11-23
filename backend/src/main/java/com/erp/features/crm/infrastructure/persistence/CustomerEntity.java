@@ -15,6 +15,7 @@ import jakarta.persistence.Table;
 //SOLID: SRP — ESTA ENTIDAD REPRESENTA LA PERSISTENCIA DE UN CLIENTE.
 @Entity
 @Table(name = "crm_customer")
+@org.hibernate.annotations.Check(constraints = "char_length(full_name) <= 200")
 public class CustomerEntity {
     @Id UUID id;
     @Column(name = "tenant_id", nullable = false, updatable = false) UUID tenantId;
