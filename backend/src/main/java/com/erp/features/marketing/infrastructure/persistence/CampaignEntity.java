@@ -15,6 +15,7 @@ import jakarta.persistence.Table;
 //SOLID: SRP — ESTA ENTIDAD REPRESENTA LA PERSISTENCIA DE UNA CAMPAÑA.
 @Entity
 @Table(name = "marketing_campaign")
+@org.hibernate.annotations.Check(constraints = "char_length(name) <= 150 AND char_length(description) <= 2000")
 public class CampaignEntity {
     @Id UUID id;
     @Column(name = "tenant_id", nullable = false, updatable = false) UUID tenantId;

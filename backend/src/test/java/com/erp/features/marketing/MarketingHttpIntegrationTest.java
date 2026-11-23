@@ -87,6 +87,32 @@ class MarketingHttpIntegrationTest {
         }
     }
 
+    @Test void campaignAndTemplateLimitsCountUnicodeCodePoints() throws Exception {
+        String name = "😀".repeat(150), description = "😀".repeat(2000);
+        var campaign = new java.util.HashMap<String, String>();
+        campaign.put("name", name); campaign.put("description", description);
+        campaign.put("startDate", "2026-11-20"); campaign.put("endDate", "2026-11-30");
+        call(post(CAMPAIGNS), TENANT, json.writeValueAsString(campaign)).andExpect(status().isCreated());
+        for (String field : List.of("name", "description")) {
+            var invalid = new java.util.HashMap<>(campaign); invalid.put(field, invalid.get(field) + "😀");
+            call(post(CAMPAIGNS), TENANT, json.writeValueAsString(invalid)).andExpect(status().isBadRequest())
+                    .andExpect(jsonPath("$.code").value("INVALID_CAMPAIGN_DATA"))
+                    .andExpect(content().string(org.hamcrest.Matchers.not(org.hamcrest.Matchers.containsString("😀"))));
+        }
+        var template = new java.util.HashMap<String, String>();
+        template.put("name", "T"); template.put("subject", "S");
+        template.put("htmlBody", "😀".repeat(100000)); template.put("textBody", "😀".repeat(50000));
+        String id = id(call(post(TEMPLATES), TENANT, json.writeValueAsString(template)).andExpect(status().isCreated()));
+        for (String field : List.of("htmlBody", "textBody")) {
+            var invalid = new java.util.HashMap<>(template); invalid.put(field, invalid.get(field) + "😀");
+            for (var request : List.of(post(TEMPLATES), put(TEMPLATES + "/" + id))) {
+                call(request, TENANT, json.writeValueAsString(invalid)).andExpect(status().isBadRequest())
+                        .andExpect(jsonPath("$.code").value("INVALID_TEMPLATE_DATA"))
+                        .andExpect(content().string(org.hamcrest.Matchers.not(org.hamcrest.Matchers.containsString("😀"))));
+            }
+        }
+    }
+
     @Test void managesCampaignsContactsConsentAndManualSendWithTenantIsolation() throws Exception {
         mvc.perform(get(CAMPAIGNS)).andExpect(status().isUnauthorized());
         String a = customer("Ana", "ana@example.test");

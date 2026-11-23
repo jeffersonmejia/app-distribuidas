@@ -124,7 +124,9 @@ public class TaskService {
     }
 
     private static TaskDetails details(TaskInput input) {
-        if (input == null) { throw new ProjectsException("INVALID_TASK_DATA"); }
+        if (input == null || ProjectService.tooLong(input.title(), 200)) {
+            throw new ProjectsException("INVALID_TASK_DATA");
+        }
         try {
             return new TaskDetails(input.title(), input.description(), input.assigneeId(), input.priority(),
                     input.dueDate());

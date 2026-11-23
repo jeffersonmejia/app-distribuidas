@@ -109,7 +109,10 @@ public class CustomerService implements ActiveCustomers {
     }
 
     private static CustomerDetails details(CustomerInput input) {
-        if (input == null) { throw new CustomerException("INVALID_CUSTOMER_DATA"); }
+        if (input == null || (input.fullName() != null
+                && input.fullName().codePointCount(0, input.fullName().length()) > 200)) {
+            throw new CustomerException("INVALID_CUSTOMER_DATA");
+        }
         try {
             return new CustomerDetails(input.fullName(), input.cedula(), input.email(), input.phone());
         } catch (IllegalArgumentException exception) {

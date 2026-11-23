@@ -17,6 +17,7 @@ import jakarta.persistence.Table;
 //SOLID: SRP — ESTA ENTIDAD REPRESENTA LA PERSISTENCIA DE UNA TAREA.
 @Entity
 @Table(name = "projects_task")
+@org.hibernate.annotations.Check(constraints = "char_length(title) <= 200")
 public class TaskEntity {
     @Id UUID id;
     @Column(name = "tenant_id", nullable = false, updatable = false) UUID tenantId;
