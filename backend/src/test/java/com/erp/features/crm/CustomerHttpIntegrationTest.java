@@ -82,6 +82,25 @@ class CustomerHttpIntegrationTest {
         }
     }
 
+    @Test void customerNameUsesUnicodeCodePointsAndSafeErrors() throws Exception {
+        String path = "/api/v1/crm/customers";
+        String accepted = "😀".repeat(200);
+        String created = mvc.perform(post(path).with(jwt().jwt(t -> t.subject(ACTOR.toString())))
+                .header("X-Tenant-ID", TENANT).contentType(MediaType.APPLICATION_JSON)
+                .content(json.writeValueAsString(java.util.Map.of("fullName", accepted))))
+                .andExpect(status().isCreated()).andExpect(jsonPath("$.fullName").value(accepted))
+                .andReturn().getResponse().getContentAsString();
+        String id = json.readTree(created).get("id").asText();
+        String invalid = json.writeValueAsString(java.util.Map.of("fullName", accepted + "😀"));
+        mvc.perform(post(path).with(jwt().jwt(t -> t.subject(ACTOR.toString())))
+                .header("X-Tenant-ID", TENANT).contentType(MediaType.APPLICATION_JSON).content(invalid))
+                .andExpect(status().isBadRequest()).andExpect(jsonPath("$.code").value("INVALID_CUSTOMER_DATA"))
+                .andExpect(content().string(org.hamcrest.Matchers.not(org.hamcrest.Matchers.containsString(accepted))));
+        mvc.perform(patch(path + "/" + id).with(jwt().jwt(t -> t.subject(ACTOR.toString())))
+                .header("X-Tenant-ID", TENANT).contentType(MediaType.APPLICATION_JSON).content(invalid))
+                .andExpect(status().isBadRequest()).andExpect(jsonPath("$.code").value("INVALID_CUSTOMER_DATA"));
+    }
+
     @Test void managesCustomersAndEnforcesTenantAndPermissions() throws Exception {
         String path = "/api/v1/crm/customers";
         mvc.perform(get(path)).andExpect(status().isUnauthorized());

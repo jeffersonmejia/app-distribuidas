@@ -13,6 +13,7 @@ import jakarta.persistence.Table;
 //SOLID: SRP — ESTA ENTIDAD REPRESENTA LA PERSISTENCIA DE UN PROYECTO.
 @Entity
 @Table(name = "projects_project")
+@org.hibernate.annotations.Check(constraints = "char_length(name) <= 150 AND char_length(description) <= 2000")
 public class ProjectEntity {
     @Id UUID id;
     @Column(name = "tenant_id", nullable = false, updatable = false) UUID tenantId;

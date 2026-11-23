@@ -41,7 +41,9 @@ public class CampaignService {
     }
 
     public CampaignView create(TenantId tenant, CampaignInput input) {
-        if (input == null) { throw new MarketingException("INVALID_CAMPAIGN_DATA"); }
+        if (input == null || tooLong(input.name(), 150) || tooLong(input.description(), 2000)) {
+            throw new MarketingException("INVALID_CAMPAIGN_DATA");
+        }
         return access.execute(tenant, MANAGE, context -> {
             try {
                 return view(campaigns.save(Campaign.create(UUID.randomUUID(), context.tenantId().value(),
@@ -116,6 +118,10 @@ public class CampaignService {
 
     static void checkPage(int page, int size) {
         if (page < 0 || size < 1 || size > MAX_PAGE_SIZE) { throw new MarketingException("INVALID_PAGE"); }
+    }
+
+    static boolean tooLong(String value, int max) {
+        return value != null && value.codePointCount(0, value.length()) > max;
     }
 
     private Campaign find(UUID tenantId, UUID id) {
