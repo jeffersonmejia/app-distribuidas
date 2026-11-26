@@ -1,0 +1,52 @@
+id: QA-006
+github:
+  repository: jeffersonmejia/app-distribuidas
+  issue_number: 204
+issue:
+  title: '[QA-006] Automatizar flujos E2E con Playwright'
+  body: |
+    <!-- managed-task-id: QA-006 -->
+
+    Responsable: @Jntorres2001. Alcance definido y sin bloqueadores.
+
+    Flujos fase 1: POS, Inventario y CRM contra backend local con Keycloak OIDC efímero y datos sintéticos aislados. Playwright no corre en CI ni es gate inicialmente; después de estabilizar, recordar a Jefferson decidir sobre un check adicional no bloqueante. Separar suites bajo `frontend/e2e/` y no duplicar pruebas de backend/k6. Decisiones y criterios completos en [QA-006.md](https://github.com/jeffersonmejia/app-distribuidas/blob/Jefferson/docs/tasks/QA-006.md).
+  state: open
+  assignees:
+    - Jntorres2001
+  labels:
+    - testing
+    - frontend
+project:
+  Repository: jeffersonmejia/app-distribuidas
+  Title: '[QA-006] Automatizar flujos E2E con Playwright'
+  Status: Todo
+  Estado: Todo
+  Prioridad: Media
+  Área: Testing
+  Identificador de tarea: QA-006
+  Bloqueado por: Nadie
+planning:
+  area: Testing
+  assignee: Jntorres2001
+  paths:
+    - frontend/e2e/
+    - frontend/playwright.config.ts
+    - docker/compose.playwright.yml
+    - docs/testing.md
+    - docs/ejecucion-local.md
+    - docs/tasks/QA-006.md
+  dependencies:
+    - POS-002
+    - INV-003
+    - CRM-001
+  state: Todo
+  priority: Media
+  blocked_by: []
+  description: Configurar Playwright separado de Vitest y automatizar los recorridos POS, Inventario y CRM contra backend local con OIDC local y datos sintéticos aislados.
+  acceptanceCriteria:
+    - Playwright corre localmente, inicialmente con Chromium; no se agrega a CI en esta fase.
+    - Flujos POS, Inventario y CRM verifican UI y backend reales.
+    - OIDC, base, tenant y datos de prueba son locales, aislados, sintéticos y seguros.
+    - Se documentan arranque y limpieza sin tocar entornos compartidos.
+    - No duplica pruebas de integración/aislamiento backend de QA-003 ni k6 de QA-004.
+    - Recordar a Jefferson revisar un check CI futuro no bloqueante cuando el entorno se estabilice.
